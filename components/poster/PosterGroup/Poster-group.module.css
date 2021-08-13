@@ -1,0 +1,24 @@
+/*
+ * width <= 1329
+ */
+@media screen and (max-width: 1329px) {
+  .block {
+    display: flex;
+    flex: 1;
+  }
+}
+
+/*
+ * width > 1229
+ */
+@media screen and (min-width: 1229px) {
+  .block {
+    scroll-snap-align: start;
+    margin-right: 10px;
+    padding: 5px;
+  }
+
+  .block:last-child {
+    margin-right: 0;
+  }
+}

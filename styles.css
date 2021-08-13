@@ -1,0 +1,254 @@
+:root {
+  /* color */
+  --white: hsl(0, 0%, 97%);
+
+  /* hsl(0, 0%, 96%) */
+  --white-80: hsla(0, 0%, 100%, 0.8);
+  --black: rgb(31, 31, 31);
+  --black-80: hsla(0, 0%, 12%, 0.8);
+  --black-70: hsla(0, 0%, 0%, 0.7);
+  --black-50: hsla(0, 0%, 0%, 0.5);
+  --black-20: hsla(0, 0%, 0%, 0.2);
+  --black-14: hsla(0, 0%, 12%, 0.14);
+  --black-10: hsla(0, 0%, 12%, 0.1);
+  --gray: hsl(222, 13%, 60%);
+  --dark-gray: hsl(0, 0%, 24%);
+  --d-dark-gray: hsl(222, 13%, 28%, 1);
+
+  /* не используется */
+  --red: hsl(0, 98%, 60%);
+  --red-80: hsla(0, 98%, 60%, 0.8);
+  --blue: #0070f3;
+  --blue-dark: #04b;
+
+  /* #495569 */
+
+  /* #293448 */
+
+  /* --secondaryWhite: hsl(0, 0%, 96%); */
+  --accentColor: hsla(0, 98%, 60%, 0.685);
+
+  /* --menuLink: hsla(0, 0%, 8%, 0.85); */
+
+  --overlay-color: hsl(0, 0%, 19%);
+
+  /* Title SubTitle */
+  --subtitleColor: hsl(0, 0%, 45%);
+  --hoverColor: hsl(0, 0%, 91%);
+  --colorGrey: #929daf;
+  --light-green-cyan: #7bdcb5;
+  --cyan-bluish-gray: #abb8c3;
+  --pale-pink: #f78da7;
+  --vivid-red: #cf2e2e;
+  --luminous-vivid-orange: #ff6900;
+  --luminous-vivid-amber: #fcb900;
+  --vivid-green-cyan: #00d084;
+  --vivid-cyan-blue: #0693e3;
+  --pale-cyan-blue: #8ed1fc;
+
+  /* table */
+  --subtle-pale-gray: #f3f4f5;
+  --subtle-pale-green: #e9fbe5;
+  --subtle-pale-blue: #e7f5fe;
+  --subtle-pale-pink: #fcf0ef;
+
+  /* customs */
+  --font-R-S: "Roboto-Slab", serif;
+
+  /* --scrollbarWidth: "17px"; */
+  --bgWhite: #f2f2f2 /*var(--white); */;
+  --background-color-white: rgb(247, 247, 247);
+  --bg-controls: var(--white);
+  --menuLink: var(--black);
+  --titleColor: var(--dark-gray);
+  --borderLink: var(--red);
+  --secondary-color: var(--gray);
+
+  /* component color */
+  --link-color: var(--blue-dark);
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+/* html {
+  font-size: 16px;
+} */
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+@media screen and (max-width: 950px) {
+  .main {
+    margin-top: 80px;
+  }
+}
+
+@media screen and (min-width: 951px) {
+  .main {
+    margin-top: 100px;
+  }
+}
+
+/* .wp-block-gallery {
+  margin-bottom: 20px;
+} */
+
+.wp-block-gallery .blocks-gallery-item {
+  margin-bottom: 10px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  font-family: Roboto, "Arial", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bgWhite);
+
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* touch-action: manipulation; */
+}
+
+img {
+  /* border-radius: 6px; */
+  height: auto;
+}
+
+figcaption {
+  box-sizing: border-box;
+}
+
+.active::after {
+  transform: scale(1);
+}
+
+/*
+ * wp style
+ */
+
+.wp-block-embed {
+  width: 100%;
+  margin: 0 0 1em 0;
+}
+
+.wp-block-quote {
+  margin: 0 0 28px;
+  padding-left: 1em;
+  border-left: 4px solid var(--red-80);
+}
+
+.wp-block-quote cite {
+  position: relative;
+  margin-top: 1em;
+  color: var(--secondary-color);
+  font-size: 14px;
+  font-style: normal;
+}
+
+.full-screen {
+  position: relative;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+}
+
+.full-screen iframe,
+.full-screen object,
+.full-screen embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* .wp-block-file a.wp-block-file__button:visited:hover {
+  background-color: rgba(50, 55, 60, 0.85) !important;
+} */
+
+/*
+ * wp-class styles
+ */
+.w-90 {
+  width: 90%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.max-h--208 {
+  max-height: 208px;
+}
+
+.m-auto {
+  margin: auto !important;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.f-l,
+p img {
+  float: left;
+  margin-right: 10px;
+}
+
+.h-auto img {
+  height: auto;
+}
+
+.f-r {
+  float: right;
+  margin-left: 10px;
+}
+
+.o-h {
+  overflow: hidden;
+}

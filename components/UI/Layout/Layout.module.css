@@ -1,0 +1,40 @@
+.main {
+  flex: 1;
+  width: 100%;
+  margin: 0 auto;
+  padding: 100px 10px 20px;
+}
+
+@media screen and (max-width: 950px) {
+  .main {
+    padding: 81px 10px 20px;
+  }
+}
+
+.main_size_l {
+  max-width: 1502px;
+}
+
+.main_size_m {
+  max-width: 960px;
+}
+
+.top {
+  padding-top: 25px;
+}
+
+.page--p-none {
+  padding: 0;
+}
+
+/* @media screen and (max-width: 992px) {
+  .page {
+    padding-top: 80px;
+  }
+} */
+
+/* @media screen and (max-width: 720px) {
+  .layout {
+    width: 95%;
+  }
+} */

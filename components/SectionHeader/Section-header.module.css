@@ -1,0 +1,31 @@
+.block {
+  --button-border-width: 0;
+  --button-link-color: rgba(30, 30, 30, 0.9);
+
+  padding-left: 10px;
+  cursor: default;
+}
+
+.block:hover .link::before {
+  opacity: 0.8;
+}
+
+.title {
+  line-height: 1.8;
+}
+
+.link {
+  padding: 0;
+}
+
+/* .link::before {
+  content: "";
+  background-image: url("~/public/icons/arrow.svg");
+  position: absolute;
+  top: 6px;
+  right: 0;
+  width: 8px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.15s linear;
+} */

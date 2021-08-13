@@ -1,0 +1,165 @@
+.body {
+  position: relative;
+  flex: 1 0 auto;
+  width: 100%;
+  margin: -20px 0;
+}
+
+@media screen and (max-width: 980px) {
+  .body {
+    overflow: hidden;
+  }
+}
+
+.wrapper {
+  z-index: 1;
+
+  /* padding: 40px 0 23px 0; */
+
+  /* padding: 47px 0 53px; */
+
+  padding: 60px 0 60px;
+
+  /* padding: 60px 0 calc(60px - var(--scrollbarWidth)); */
+  overflow: hidden;
+}
+
+.scrolled {
+  display: flex;
+  margin: -80px 0;
+  padding: 40px 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolled_scroll-snap {
+  /* scroll-padding: 0; */
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.scrolled--center {
+  justify-content: center;
+}
+
+/*
+  width: 100% если делать опционально,
+  то перенести выравнивание(post) по центру по условию на уровень выше
+ */
+.items {
+  display: flex;
+
+  /* width: 100%; */
+}
+
+/* @media screen and (min-width: 961px) {
+  .items article:first-child {
+    margin-left: 0;
+  }
+
+  .items article:last-child {
+    margin-right: 0;
+  }
+} */
+
+.shadow-left {
+  position: absolute;
+  top: 8px;
+  bottom: 26px;
+  left: -20px;
+  display: none;
+  width: 20px;
+  box-shadow: rgb(0, 0, 0, 0.2) 10px 0 12px -6px;
+}
+
+.shadow-right {
+  position: absolute;
+  top: 6px;
+  right: -20px;
+  bottom: 26px;
+  display: none;
+  width: 20px;
+  box-shadow: rgb(0, 0, 0, 0.2) -10px 0 12px -6px;
+}
+
+.shadow-right--active,
+.shadow-left--active {
+  display: block;
+}
+
+/*
+* чтобы срабатывало событие скрола отключаем pointer-events
+*/
+.controls {
+  --button-width: var(--carousel-button-width, 44px);
+  --button-height: var(--carousel-button-height, 44px);
+  --button-box-shadow: 0 0 20px -15px;
+
+  position: absolute;
+  top: 0;
+  display: flex;
+  width: 100%;
+  padding: 0 10px;
+  pointer-events: none;
+}
+
+.controls-top {
+  justify-content: flex-end;
+  margin-top: var(--carousel-controls-margin-top, -6px);
+}
+.controls-center {
+  --button-background-color: white;
+  --button-border-radius: 50%;
+
+  align-items: center;
+  justify-content: space-between;
+  height: 94%;
+  margin-top: 7px;
+}
+
+.button_events {
+  pointer-events: initial;
+}
+
+/* .button-left {
+  left: -22px;
+}
+
+.button-right {
+  right: -22px;
+} */
+
+@media screen and (max-width: 768px) {
+  .button--inActive {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .button-left {
+    left: 8px;
+  }
+
+  .button-right {
+    right: 8px;
+  }
+}
+
+.button_full-screen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  cursor: default;
+  pointer-events: initial;
+}
+.button_full-screen_left {
+  left: 0;
+  width: 30%;
+}
+.button_full-screen_right {
+  left: 30%;
+  width: 70%;
+}

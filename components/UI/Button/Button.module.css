@@ -1,0 +1,114 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: var(--button-text-align, center);
+  box-sizing: border-box;
+  min-width: var(--button-width, 36px);
+  min-height: var(--button-height, 36px);
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  white-space: nowrap;
+  background-color: var(--button-background-color, transparent);
+  border-width: 0;
+  border-radius: var(--button-border-radius);
+  outline: 0;
+  box-shadow: var(--button-box-shadow);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+
+  /* font-family: var(--button-font-family); */
+  -moz-user-focus: ignore;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.link {
+  /* line-height: 2.5; */
+  justify-content: var(--button-text-align, left);
+  color: var(--button-link-color, --blue-dark);
+  text-decoration: none;
+  border: var(--button-border-width, 1px) solid
+    var(--button-view-link-border-color, --blue-dark);
+
+  /* color: var(--black-70); */
+
+  /* border-radius: 8px; */
+}
+
+.padding {
+  padding: var(--button-text-padding, 0 14px);
+}
+
+/* #696969 */
+.theme_gray {
+  background-color: #e6e6e6;
+  transition: background-color 0.15s linear;
+}
+
+.theme_gray:hover {
+  background-color: #dbdbdb;
+}
+
+.theme_gray_active {
+  color: white;
+  background-color: #545454;
+  cursor: default;
+  pointer-events: none;
+}
+
+.width_max {
+  width: 100%;
+}
+
+.icon {
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.padding_icon_left {
+  padding-left: 14px;
+}
+
+.padding_icon_right {
+  padding-right: 14px;
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.button[aria-disabled="true"],
+.button[aria-busy="true"] {
+  pointer-events: none;
+}
+
+.button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+.button::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: var(--button-border-radius);
+  content: "";
+}
+
+.button::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  transform: scale(0);
+  content: "";
+}

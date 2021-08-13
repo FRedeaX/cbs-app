@@ -1,0 +1,152 @@
+.body {
+  --button-border-width: 0;
+
+  margin: 0 auto;
+}
+
+.header {
+  margin: 1.3em 0 8px;
+}
+
+.title {
+  font-size: calc(22px + 0.52083vw);
+}
+
+.subtitle {
+  margin-bottom: 15px;
+  color: var(--subtitleColor);
+  font-weight: 400;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.link {
+  color: var(--subtitleColor);
+  font-size: 14px;
+  transition: color 0.15s linear;
+}
+
+.link::after {
+  position: absolute;
+  top: 30px;
+  right: 8px;
+  left: 8.3px;
+  height: 1px;
+  background-color: var(--borderLink);
+  transform: scaleX(0);
+  transition: transform 0.15s linear;
+  content: "";
+}
+
+.active::after {
+  transform: scaleX(1) !important;
+}
+
+@media screen and (min-width: 768px) {
+  .link:hover {
+    color: var(--accentColor);
+  }
+
+  .active:hover {
+    color: var(--subtitleColor) !important;
+  }
+}
+
+.content {
+  display: flex;
+
+  /* display: grid;
+  grid-template-areas:
+    'map contactInfo'
+    'info contactInfo';
+  grid-template-columns: 3fr minmax(350px, 1fr);
+  grid-template-rows: 578px 1fr;
+  grid-row-gap: 30px; */
+}
+
+.map {
+  flex-basis: 70%;
+  height: 578px;
+
+  /* grid-area: map; */
+}
+
+.aside {
+  flex-basis: 30%;
+  box-sizing: border-box;
+  min-width: 320px; /* 380px 325px; */
+
+  /* grid-area: contactInfo; */
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: 1px solid #dbdbdb;
+}
+
+.info {
+  grid-area: info;
+}
+
+@media screen and (max-width: 940px) {
+  .content {
+    flex-wrap: wrap;
+
+    /* grid-template-areas:
+      'map'
+      'contactInfo'
+      'info';
+    grid-template-columns: 1fr;
+    grid-template-rows: 420px 1fr; */
+  }
+
+  .map {
+    flex-basis: 100%;
+    height: 420px;
+  }
+
+  .aside {
+    display: grid;
+    flex-basis: 100%;
+    grid-column-gap: 40px;
+    grid-template-columns: 2fr 3fr;
+    margin-top: 20px;
+    margin-left: 0;
+    padding-left: 0;
+    border: none;
+  }
+}
+
+@media screen and (max-width: 446px) {
+  .aside {
+    display: block;
+  }
+
+  .controls {
+    margin-bottom: 10px;
+  }
+
+  /* .content { */
+
+  /* grid-template-rows: 320px 1fr;
+    grid-row-gap: 16px; */
+
+  /* } */
+
+  .map {
+    height: 320px;
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  /* .content {
+    grid-template-rows: 240px 1fr;
+  } */
+  .map {
+    height: 240px;
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  width: 95%;
+  max-width: 800px;
+  margin: 0 auto 80px;
+}
+
+.header {
+  margin: 1.3em 0;
+}
+
+.category {
+  letter-spacing: 0.034em;
+}
+
+.category-link {
+  color: rgb(154, 154, 154); /* var(--black-80); */
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.category-link::after {
+  background-color: var(--black-80);
+}

@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/*
+ *  desktop
+ */
+@media screen and (min-width: 951px) {
+  .wrapper {
+    padding-right: 36px;
+  }
+}
+
+/*
+ *  mobile
+ */
+@media screen and (max-width: 950px) {
+  .wrapper {
+    padding-right: 6px;
+  }
+}
+
+.svg {
+  width: 30px;
+  height: 30px;
+}
+
+.svg--vk {
+  fill: #4a76a8;
+}
+
+.svg--ok {
+  fill: #ee8208;
+}
+
+.svg--youtube {
+  fill: #cc0000;
+}

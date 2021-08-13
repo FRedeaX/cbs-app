@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  margin: 6px 0 20px;
+}
+.wrapper:first-child {
+  margin-top: 0;
+}
+.wrapper:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-wrap: wrap;
+  }
+}

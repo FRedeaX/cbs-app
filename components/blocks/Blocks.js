@@ -1,0 +1,140 @@
+import gql from "graphql-tag";
+import { useRouter } from "next/router";
+import { Columns } from "./Columns/Columns";
+import { Embed } from "./Embed/Embed";
+import { File } from "./File/File";
+import { Gallery } from "./Gallery/Gallery";
+import { Heading } from "./Heading/Heading";
+import { Html } from "./Html/Html";
+import { Image } from "./Image/Image";
+import { List } from "./List/List";
+import { Paragraph } from "./Paragraph/Paragraph";
+import { Pullquote } from "./Pullquote/Pullquote";
+import { Quote } from "./Quote/Quote";
+import { Separator } from "./Separator/Separator";
+import { Spacer } from "./Spacer/Spacer";
+import { Table } from "./Table/Table";
+import { Verse } from "./Verse/Verse";
+
+export const Blocks = ({ blocks, className }) => {
+  const router = useRouter();
+  // console.log(blocks);
+
+  return blocks.map((block, index) => {
+    const key = `${block?.name}_${index}`;
+    switch (block?.name) {
+      case "core/paragraph":
+        return (
+          <Paragraph
+            key={key}
+            {...block.attributes}
+            className={block.attributes.className}
+          />
+        );
+
+      case "core/gallery":
+        return <Gallery key={key} {...block.attributes} />;
+
+      case "core/image":
+        return (
+          <Image
+            key={key}
+            {...block.attributes}
+            className={[block.attributes.className, className?.image]}
+          />
+        );
+
+      case "core/columns":
+        return <Columns key={key} innerBlocks={block.innerBlocks} />;
+
+      case "core/embed":
+        return <Embed key={key} {...block.attributes} />;
+
+      case "core/html":
+        return <Html key={key} html={block.saveContent} />;
+
+      case "core/separator":
+        return <Separator key={key} {...block.attributes} />;
+
+      case "core/quote":
+        return <Quote key={key} {...block.attributes} />;
+
+      case "core/pullquote":
+        return <Pullquote key={key} {...block.attributes} />;
+
+      case "core/list":
+        return <List key={key} {...block.attributes} />;
+
+      // case "core/media-text":
+      //   return <MediaText key={key} {...block.attributes} />;
+
+      case "core/file":
+        return <File key={key} {...block.attributes} />;
+
+      case "core/spacer":
+        return <Spacer key={key} height={block.attributes.height} />;
+
+      case "core/heading":
+        return <Heading key={key} {...block.attributes} />;
+
+      case "core/table":
+        return <Table key={key} {...block.attributes} />;
+
+      case "core/verse":
+        return <Verse key={key} {...block.attributes} />;
+
+      case "core/more":
+        return null;
+
+      default: {
+        console.error({
+          message: block.message || "Блок не найден",
+          path: { asPath: router.asPath, route: router.route },
+          name: block.name,
+        });
+        return null;
+      }
+    }
+  });
+};
+
+// export const blocksGQL = {
+//   fragments: gql`
+//     fragment blocksGQL on Block {
+//       name
+//       ...paragraphBlockGQL
+//       ...galleryBlockGQL
+//       ...imageBlockGQL
+//       ...columnsBlockGQL
+//       ...htmlBlockGQL
+//       ...embedBlockGQL
+//       ...separatorBlockGQL
+//       ...quoteBlockGQL
+//       ...listBlockGQL
+//       ...mediaTextBlockGQL
+//       ...fileBlockGQL
+//       ...spacerBlockGQL
+//       ...headingBlockGQL
+//       ...tableBlockGQL
+//     }
+//     ${paragraphBlockGQL.fragments}
+//     ${galleryBlockGQL.fragments}
+//     ${imageBlockGQL.fragments}
+//     ${columnsBlockGQL.fragments}
+//     ${embedBlockGQL.fragments}
+//     ${htmlBlockGQL.fragments}
+//     ${separatorBlockGQL.fragments}
+//     ${quoteBlockGQL.fragments}
+//     ${listBlockGQL.fragments}
+//     ${mediaTextBlockGQL.fragments}
+//     ${fileBlockGQL.fragments}
+//     ${spacerBlockGQL.fragments}
+//     ${headingBlockGQL.fragments}
+//     ${tableBlockGQL.fragments}
+//   `,
+// };
+
+// конфликт типов поля value String and String!
+// ...pullquoteBlockGQL
+// ...quoteBlockGQL
+// ${pullquoteBlockGQL.fragments}

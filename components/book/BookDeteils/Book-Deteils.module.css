@@ -1,0 +1,33 @@
+.body {
+  font-size: 15px;
+  line-height: 1.1;
+  padding: 2px 0;
+}
+
+.label {
+  color: var(--dark-gray);
+  font-weight: 300;
+}
+
+/* .value {
+  display: inline-block;
+} */
+
+.link {
+  font-family: "Roboto Slab", serif;
+  padding: 0 4px 2px;
+  /* background-color: hsla(199, 100%, 33%, 0.08); */
+  border-radius: 4px;
+  color: #0073aa;
+  transition: background-color 0.150s linear;
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: hsla(199, 100%, 33%, 0.18);
+}
+
+/* .link:visited { */
+  /* color: rgb(85, 26, 139); */
+  /* background-color: rgba(85, 26, 139, 0.08); */
+/* } */

@@ -1,0 +1,175 @@
+.block {
+  --button-text-align: left;
+
+  z-index: 3;
+  font-size: 15px;
+  background-color: var(--bgWhite);
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.position {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1502px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.logo {
+  height: auto;
+  margin: 10px 0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transition: opacity 3s;
+}
+
+.primary {
+  width: 100%;
+}
+
+.secondary {
+  display: flex;
+  color: var(--menuLink);
+  font-size: 13px;
+}
+
+/*
+ *  desktop
+ */
+@media screen and (min-width: 951px) {
+  .position--hidden {
+    transform: translateY(-101px);
+  }
+  .logo {
+    width: 80px;
+    min-width: 80px;
+  }
+  .menu {
+    width: calc(100% - 86px);
+    margin: 16px 0 0 6px;
+  }
+  .secondary {
+    justify-content: flex-end;
+    width: 100%;
+    text-align: end;
+  }
+}
+
+/*
+ *  mobile
+ */
+@media screen and (max-width: 950px) {
+  .position--hidden {
+    transform: translateY(-81px);
+  }
+  .logo {
+    width: 60px;
+    min-width: 60px;
+  }
+  .menu {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    padding: 20px;
+    overflow-y: scroll;
+    background-color: var(--bgWhite);
+    transform: translateX(300px);
+    transition: transform 0.25s ease-in;
+  }
+  .menu_mobile_active {
+    transform: translateX(0);
+    transition: transform 0.25s ease-out;
+  }
+  .secondary {
+    order: -1;
+    margin-top: -1px;
+  }
+  .secondary > ul {
+    width: 55%;
+  }
+}
+
+.controls {
+  display: flex;
+}
+
+.controls_button {
+  right: -8px;
+  width: 40px;
+  height: 40px;
+
+  /* display: inline-block; */
+
+  /* background-color: transparent; */
+
+  /* border: 0; */
+}
+
+.inner {
+  left: 10px;
+  display: block;
+  margin-top: -1px;
+  transition: transform 0.1s linear;
+}
+
+.inner,
+.inner::after,
+.inner::before {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: #000;
+}
+
+.inner::before {
+  top: -6px;
+  left: 0;
+  display: block;
+  transition: top 0.1s 0.2s linear;
+  content: "";
+}
+
+.inner::after {
+  bottom: -6px;
+  left: 0;
+  display: block;
+  transition: bottom 0.1s 0.2s linear, transform 0.1s linear;
+  content: "";
+}
+
+/* .controls_button--active .inner {
+  transform: rotate(45deg);
+  transition: transform 0.1s 0.2s linear;
+} */
+
+.controls_button--active .inner {
+  transform: rotate(45deg);
+  transition: transform 0.1s 0.2s linear;
+}
+
+.controls_button--active .inner::before {
+  top: 0;
+  opacity: 0;
+  transition: top 0.1s linear, opacity 0.1s 0.2s linear;
+}
+
+.controls_button--active .inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition: bottom 0.1s linear, transform 0.1s 0.2s linear;
+}

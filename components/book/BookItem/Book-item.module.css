@@ -1,0 +1,65 @@
+.book {
+  position: relative;
+  width: 165px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 6px;
+  margin: 0 10px;
+}
+
+/* .book:first-child {
+  margin-left: 0;
+}
+.book:last-child {
+  margin-right: 0;
+} */
+
+/* .book:hover .image {
+  filter: blur(6px);
+} */
+
+.link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  /* display: flex;
+  flex-direction: column; */
+  padding: 8px 8px 12px;
+  background-color: hsla(222, 19%, 25%, 0.7);
+  z-index: 1;
+}
+
+.authors {
+  font-size: 13px;
+  font-weight: 300;
+
+
+  color: var(--white-80);
+  text-decoration: none;
+}
+
+.authors:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--white);
+  margin-top: 4px;
+  margin-bottom: 0;
+  pointer-events: none;
+}

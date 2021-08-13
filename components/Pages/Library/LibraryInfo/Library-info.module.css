@@ -1,0 +1,50 @@
+.info {
+  margin-bottom: 30px;
+}
+
+.title {
+  margin: 1.3em 0 90px;
+  padding-bottom: 90px;
+  color: var(--subtitleColor);
+  font-weight: 500;
+  font-size: 20px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  list-style: none;
+}
+
+.item {
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.item:last-child {
+  width: 100%;
+  border: none;
+}
+
+.left-column {
+  display: inline-block;
+  max-width: 290px;
+  margin-right: 20px;
+}
+
+.right-column {
+  letter-spacing: 10px;
+}
+
+@media screen and (max-width: 720px) {
+  .info {
+    min-width: 180px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .info {
+    width: 100%;
+  }
+}

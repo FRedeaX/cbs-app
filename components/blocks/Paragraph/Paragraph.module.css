@@ -1,0 +1,35 @@
+.align_center {
+  text-align: center;
+}
+
+.align_right {
+  text-align: right;
+}
+
+.block {
+  margin: 6px 0 20px;
+  color: var(--black);
+  font-size: calc(16px + 3 * (100vw / 1600));
+  line-height: 28px;
+  white-space: pre-line;
+}
+.block:first-child {
+  margin-top: 0;
+}
+.block:last-child {
+  margin-bottom: 0;
+}
+
+.block a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+.block a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 767px) {
+  .block {
+    font-size: calc(16px + (3 + 3 * 0.7) * ((100vw - 320px) / 1600));
+  }
+}

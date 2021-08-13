@@ -1,0 +1,8 @@
+.ua_browser_desktop .book-item__book--hover:hover .book-item__info--hover {
+  opacity: 1;
+}
+
+.book-item__info--hover {
+  opacity: 0;
+  transition: opacity 0.2s;
+}

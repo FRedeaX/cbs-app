@@ -1,0 +1,19 @@
+.title {
+  margin: 0;
+  padding-left: 10px;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--subtitleColor);
+  font-size: calc(17px + 2.6 * (100vw / 960));
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .subtitle {
+    font-size: calc(17px + (2.6 + 2.6 * 0.7) * ((100vw - 320px) / 990));
+  }
+}

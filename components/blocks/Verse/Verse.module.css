@@ -1,0 +1,17 @@
+.block {
+  margin: 6px 0 20px;
+}
+.block:first-child {
+  margin-top: 0;
+}
+.block:last-child {
+  margin-bottom: 0;
+}
+
+.align_center {
+  text-align: center;
+}
+
+.align_right {
+  text-align: right;
+}

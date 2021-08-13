@@ -1,0 +1,29 @@
+.root {
+  --button-border-width: 0;
+  --button-link-color: var(--black);
+  --button-border-radius: 6px;
+  --button-text-padding: 0;
+  --button-text-align: center;
+}
+
+.block {
+  display: flex;
+  padding: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  .block {
+    justify-content: center;
+  }
+}
+
+.link {
+  margin-right: 8px;
+}
+.link:last-child {
+  margin-right: 0;
+}
+
+.icon {
+  opacity: 80%;
+}

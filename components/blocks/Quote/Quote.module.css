@@ -1,0 +1,47 @@
+.block {
+  position: relative;
+  margin: 16px 20px 20px;
+}
+.block:last-child {
+  margin-bottom: 0;
+}
+
+.block::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -20px;
+  width: 4px;
+  background-color: var(--accentColor);
+  content: "";
+}
+
+.blockquote {
+  margin: 16px 0;
+}
+
+.p {
+  color: var(--titleColor);
+  font-weight: 300;
+  font-size: 24px;
+  font-family: var(--font-R-S);
+
+  /* 26px; */
+  font-style: italic;
+
+  /* hsl(42deg 100% 28%); */
+}
+
+.caption {
+  color: var(--black-50);
+  font-size: 14.5px;
+  line-height: 1;
+
+  /* margin-left: 78px; */
+}
+
+@media screen and (max-width: 425px) {
+  .p {
+    font-size: 22px;
+  }
+}

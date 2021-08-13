@@ -1,0 +1,25 @@
+.link {
+  display: inline-block;
+  line-height: 0;
+  padding: 2px;
+  margin-right: 4px;
+  transition: background-color, transform 0.2s linear;
+}
+
+.link:last-child {
+  margin-right: 0;
+}
+
+.link:hover {
+  /* background-color: var(--hoverColor); */
+  transform: translateY(-2px);
+  /* transition: background-color, transform 0.2s linear; */
+  transition: transform 0.2s linear;
+  border-radius: 8px;
+}
+
+.svg {
+  /* fill: var(--colorGrey); */
+  width: 36px;
+  height: 36px;
+}
