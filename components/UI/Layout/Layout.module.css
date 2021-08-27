@@ -10,6 +10,13 @@
     padding: 81px 10px 20px;
   }
 }
+@media screen and (max-width: 768px) {
+  .main {
+    /* stylelint-disable */
+    --scrollbarWidth: 0px;
+    /* stylelint-enable */
+  }
+}
 
 .main_size_l {
   max-width: 1502px;

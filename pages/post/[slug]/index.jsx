@@ -4,7 +4,7 @@ import { Post, GET_POST_CONTENT_BY_BLOCKS } from "~/components/Pages/Post/Post";
 import { SEO } from "~/components/SEO/SEO";
 import { transformBlocks, getMenu } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const PagePost = ({ menu, post }) => {
   const { isFallback } = useRouter();
@@ -35,7 +35,8 @@ export async function getStaticPaths() {
 
   const paths = data.posts.nodes.map((post) => ({
     params: {
-      slug: [post.slug],
+      slug: post.slug,
+      // slug: [post.slug],
     },
   }));
 
@@ -51,7 +52,7 @@ export async function getStaticProps({ params }) {
     .query({
       query: GET_POST_CONTENT_BY_BLOCKS,
       variables: {
-        id: params.slug[0],
+        id: params.slug, //params.slug[0],
         type: "SLUG",
       },
       fetchPolicy: "network-only",

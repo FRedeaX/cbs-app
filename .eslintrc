@@ -1,3 +1,6 @@
 {
-    "extends": "stylelint-config-airbnb"
-}
+    "extends": [
+        "stylelint-config-airbnb",
+        "plugin:react-hooks/recommended"
+    ]
+  }

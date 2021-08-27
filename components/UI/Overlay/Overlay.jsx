@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import classnames from "classnames";
-import { memo, useEffect, useRef } from "react";
-import { scrollbarWidth } from "~/helpers";
+import { memo, useEffect, useRef, useCallback } from "react";
 import { GET_OVERLAY, overlayVar } from "~/store/variables/overlay";
 import classes from "./Overlay.module.css";
 
@@ -17,15 +16,16 @@ const Overlay = ({ isTouch = false }) => {
     else removeStyle();
   }, [isOpen]);
 
-  const addStyle = () => {
-    if (isOverflow) document.body.style.overflow = "hidden";
-    if (scrollbarWidth !== 0)
-      document.body.style.marginRight = `${scrollbarWidth}px`;
-  };
-  const removeStyle = () => {
+  const addStyle = useCallback(() => {
+    if (isOverflow) {
+      document.body.style.overflow = "hidden";
+      document.body.style.marginRight = `var(--scrollbarWidth)`;
+    }
+  }, [isOverflow]);
+  const removeStyle = useCallback(() => {
     document.body.style.overflow = "";
     document.body.style.marginRight = "";
-  };
+  }, []);
 
   const _overlay = useRef();
   useEffect(() => {

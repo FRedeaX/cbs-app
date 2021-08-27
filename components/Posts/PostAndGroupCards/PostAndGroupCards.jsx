@@ -17,13 +17,13 @@ const PostAndGroupCards = ({ data }) => {
       return (
         // <>
         //   {tags.tagId}
-          <GroupCards
-            key={tags.id}
-            data={tags.posts}
-            title={tags.name}
-            description={tags.description}
-            length={tags.count}
-          />
+        <GroupCards
+          key={tags.id}
+          data={tags.posts}
+          title={tags.name}
+          description={tags.description}
+          length={tags.count}
+        />
         // </>
       );
     } else {
@@ -33,7 +33,15 @@ const PostAndGroupCards = ({ data }) => {
         isNewRow && (nextPost === undefined || !!nextPost.tags.nodes[0]);
       column++;
       if (isBig) column = 0;
-      return <Card key={post.id} data={post} horizontal={true} isBig={isBig} />;
+      return (
+        <Card
+          key={post.id}
+          data={post}
+          horizontal={true}
+          isBig={isBig}
+          index={index}
+        />
+      );
     }
   });
 

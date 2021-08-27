@@ -2,9 +2,9 @@ import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 // import Image from "next/image";
 import { default as ImageNext } from "next/image";
-import { useRef, useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useRef, useState, useEffect } from "react";
 import { delay } from "~/helpers/delay";
+import { isFront } from "~/helpers";
 import { GET_OVERLAY_FRAGMENT, overlayVar } from "~/store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
 import Button from "../../UI/Button/Button";
@@ -59,7 +59,7 @@ export const Image = ({
       isZoom
     ) {
       if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "white" });
+        overlayVar({ isOpen: false, color: "var(--bgWhite)" });
 
       setZoom(false);
       delay(250).then(() => (figureRef.current.style.zIndex = ""));
@@ -72,26 +72,31 @@ export const Image = ({
 
     const clientWidth = document.documentElement.clientWidth;
     const clientHeight = document.documentElement.clientHeight;
-    const imageX = image.x + image.clientWidth / 2;
-    const imageY = image.y + image.clientHeight / 2;
+    // const pxWidth = image.x + image.clientWidth;
+    // const pxHeight = image.y + image.clientHeight;
+    const devicePixelRatio = window.devicePixelRatio;
+
+    const imageX = image.x / devicePixelRatio + image.width / 2;
+    const imageY = image.y / devicePixelRatio + image.height / 2;
     const centerX = clientWidth / 2 - imageX;
     const centerY = clientHeight / 2 - imageY;
-    let scale = (
-      height < width || clientHeight > clientWidth
-        ? clientWidth / image.clientWidth
-        : clientHeight / image.clientHeight
+
+    const scaleX = clientWidth / image.width;
+    const scaleY = clientHeight / image.height;
+
+    return `translate(${centerX}px, ${centerY}px) scale(${Math.min(
+      scaleX,
+      scaleY,
+      1.6
     )
       .toString()
-      .substr(0, 3);
-
-    if (scale > 1.6) scale = 1.6;
-    return `translate(${centerX}px, ${centerY}px) scale(${scale})`;
+      .substr(0, 3)})`;
   };
   const hendleZoom = (event) => {
     event.stopPropagation();
     if (isZoom) {
       setZoom(false);
-      overlayVar({ isOpen: false, color: "white" });
+      overlayVar({ isOpen: false, color: "var(--bgWhite)" });
       delay(250).then(() => (figureRef.current.style.zIndex = ""));
     } else {
       setZoom(true);
@@ -123,7 +128,7 @@ export const Image = ({
         onClick={isImageZoom ? hendleZoom : null}
         style={{
           transform: isZoom ? getTransform() : "",
-          zIndex: isZoom ? "4" : delay(0).then(""),
+          zIndex: isZoom ? "4" : delay(250).then(""),
           cursor: isZoom && "default",
         }}
         className={classes.figure}

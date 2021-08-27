@@ -10,7 +10,6 @@ export const useTranslateCenterAndScale = (image) => {
 
   // const getTranslate = () => {
   const getTranslate = () => {
-    console.log(image);
     const clientWidth = document.documentElement.clientWidth;
     const clientHeight = document.documentElement.clientHeight;
     const imageX = image.x + image.clientWidth / 2;

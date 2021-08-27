@@ -15,7 +15,7 @@ const Button = forwardRef(
       isHidden = false,
       checked = false,
       isTextCenter = false,
-      theme = undefined,
+      theme,
       width,
       iconLeft,
       icon,
@@ -34,14 +34,15 @@ const Button = forwardRef(
               classes.button,
               classes.link,
               {
-                [classes[`theme_${theme}`]]: theme !== undefined,
+                [classes[`theme_${theme}`]]:
+                  theme !== undefined || theme !== null,
                 [classes["theme_gray_active"]]: checked,
 
                 [classes["width_max"]]: width === "max",
                 [classes["padding"]]: children,
 
-                [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
-                [classes["padding_icon_right"]]: iconRight && !isTextCenter,
+                // [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
+                // [classes["padding_icon_right"]]: iconRight && !isTextCenter,
               },
               className
             )}
@@ -72,7 +73,8 @@ const Button = forwardRef(
             )}
             href={href}
             aria-label={ariaLabel}
-            download=""
+            download
+            target="_blank"
           >
             {iconLeft && iconLeft}
             {icon && icon}
@@ -87,9 +89,12 @@ const Button = forwardRef(
             className={classNames(
               classes.button,
               {
+                [classes[`theme_${theme}`]]:
+                  theme !== undefined || theme !== null,
                 [classes["width_max"]]: width === "max",
-                [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
-                [classes["padding_icon_right"]]: iconRight && !isTextCenter,
+                [classes["padding"]]: children,
+                // [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
+                // [classes["padding_icon_right"]]: iconRight && !isTextCenter,
                 [classes["hidden"]]: isHidden,
                 [classes["icon"]]: icon,
               },
@@ -99,6 +104,7 @@ const Button = forwardRef(
             onClick={onClick}
             disabled={isDisabled}
             aria-label={ariaLabel}
+            data-href={href}
             title={title}
             ref={ref}
           >

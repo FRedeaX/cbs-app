@@ -1,11 +1,11 @@
 /* height: 292px; */
 
-.wrapper {
+.block {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 280px;
-  margin: 5px 6px;
+  margin: 10px 6px;
   padding: 12px;
   font-size: 16px;
   line-height: 20px;
@@ -13,8 +13,19 @@
   border-radius: 16px;
 
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 4px 12px; */
-  box-shadow: rgba(30, 30, 30, 0.1) 0 2px 12px -2px;
+
+  /* box-shadow: rgba(30, 30, 30, 0.1) 0 2px 12px -2px; */
+  box-shadow: rgba(30, 30, 30, 0.1) 0 2px 6px;
   cursor: default;
+}
+.block:first-child {
+  margin-left: 10px;
+}
+.block:last-child {
+  margin-right: 10px;
+}
+.block_count_1 {
+  flex: 1;
 }
 
 .header {
@@ -60,6 +71,7 @@
 .title {
   margin-top: 0;
   margin-bottom: 6px;
+  color: rgba(30, 30, 30, 0.92);
   font-weight: 500;
   font-size: 0.9375em;
 }
@@ -115,7 +127,7 @@
  * width >= 480
  */
 @media screen and (min-width: 480px) {
-  .wrapper {
+  .block {
     flex: 1;
     flex-direction: row;
     min-width: 330px;

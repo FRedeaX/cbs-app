@@ -1,16 +1,26 @@
 import { ApolloProvider } from "@apollo/client";
+import { useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
 import Overlay from "~/components/UI/Overlay/Overlay";
-import { isFront } from "~/helpers";
+import { ErrorBoundary } from "~/components/ErrorBoundary/ErrorBoundary";
 import { client } from "~/store/apollo-client";
 import "../styles.css";
-// import Script from "next/script";
+import Script from "next/script";
 
 /* eslint-disable react/jsx-props-no-spreading */
 function App({ Component, pageProps }) {
   // const modalRef = useRef();
   // modalVar(modalRef.current);
-  if (isFront) smoothscroll.polyfill();
+  // if (isFront) smoothscroll.polyfill();
+  useEffect(() => {
+    smoothscroll.polyfill();
+    //   // const _scrollbarWidth = scrollbarWidth();
+    //   // if (_scrollbarWidth !== 17)
+    //   //   document.body.style.setProperty(
+    //   //     "--scrollbarWidth",
+    //   //     `${_scrollbarWidth}px`
+    //   //   );
+  }, []);
 
   return (
     <>
@@ -30,10 +40,13 @@ function App({ Component, pageProps }) {
           d.body.removeChild(e);
         })(isFront ? document : null, "div")}`}
       </Script> */}
+      {/* <Script>{smoothscroll.polyfill()}</Script> */}
       <ApolloProvider client={client}>
-        {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-        <Component {...pageProps} />
-        {/* <div ref={modalRef} id="modal_root"></div> */}
+        <ErrorBoundary>
+          {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+          <Component {...pageProps} />
+          {/* <div ref={modalRef} id="modal_root"></div> */}
+        </ErrorBoundary>
         <Overlay />
       </ApolloProvider>
     </>

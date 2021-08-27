@@ -6,7 +6,7 @@ export const preparingPaths = (nodes) =>
     .filter(({ node }) => node.template.templateName !== "Redirect")
     .map(({ node }) => ({
       params: {
-        pageSlag: node.slug,
+        pageSlug: node.slug,
       },
     }));
 

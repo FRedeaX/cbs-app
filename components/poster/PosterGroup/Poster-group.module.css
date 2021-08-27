@@ -9,13 +9,13 @@
 }
 
 /*
- * width > 1229
+ * width > 1330
  */
-@media screen and (min-width: 1229px) {
+@media screen and (min-width: 1330px) {
   .block {
     scroll-snap-align: start;
     margin-right: 10px;
-    padding: 5px;
+    padding: 6px 10px;
   }
 
   .block:last-child {

@@ -1,9 +1,9 @@
 .block {
   --carousel-button-width: 36px;
   --carousel-button-height: 36px;
+  --carousel-scroll-snap-padding: 10px;
 
   display: flex;
   flex-wrap: wrap;
-
-  /* margin-top: -10px; */
+  margin-top: -10px;
 }

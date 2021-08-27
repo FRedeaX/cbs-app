@@ -2,7 +2,7 @@ import { gql, makeVar } from "@apollo/client";
 
 export const overlayVar = makeVar({
   isOpen: false,
-  zIndex: "",
+  zIndex: undefined,
   opacity: undefined,
   color: "var(--overlay-color)",
   isOverflow: true,

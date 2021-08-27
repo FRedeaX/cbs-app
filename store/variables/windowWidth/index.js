@@ -14,7 +14,9 @@ export const GET_WIDTH = gql`
   `;
 
 if (typeof window !== "undefined") {
-  window.addEventListener("resize", () =>
-    delay(350).then(() => windowWidthVar(window.innerWidth))
+  window.addEventListener(
+    "resize",
+    () => delay(350).then(() => windowWidthVar(window.innerWidth))
+    // throttler(() => windowWidthVar(window.innerWidth), 350)
   );
 }

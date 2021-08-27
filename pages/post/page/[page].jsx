@@ -14,7 +14,7 @@ import {
   getMenu,
 } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../../../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const Home = ({ menu, posts, pages, posters }) => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const Home = ({ menu, posts, pages, posters }) => {
     return <div>Загрузка...</div>;
   }
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} paddingSides={0}>
       <SEO
         title={`Страница ${router.query.page}`}
         description={`Мероприятия библиотек города Байконур страница №${router.query.page}`}
@@ -85,7 +85,7 @@ export async function getStaticProps({ params }) {
     props: {
       menu,
       posters,
-      pages: pagesInfo[pagesInfo.length - 1].number,
+      pages: pagesInfo[pagesInfo.length - 1].number - 1,
       posts,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10), //process.env.POST_REVALIDATE * 1,

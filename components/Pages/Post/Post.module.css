@@ -14,11 +14,13 @@
 }
 
 .category-link {
-  color: rgb(154, 154, 154); /* var(--black-80); */
   font-weight: 400;
   font-size: 14px;
+
+  /* color: rgb(154, 154, 154); */
+  font-family: var(--font-R-S);
 }
 
-.category-link::after {
-  background-color: var(--black-80);
-}
+/* .category-link::after {
+  background-color: rgb(154, 154, 154);
+} */

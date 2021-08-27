@@ -69,8 +69,8 @@ export const FETCH_CHILDREN_URI_PAGES = gql`
 `;
 
 export const FETCH_PAGE = gql`
-  query FetchPage($pathname: ID!) {
-    page(id: $pathname, idType: URI) {
+  query FetchPage($id: ID!, $type: PageIdType, $isPreview: Boolean) {
+    page(id: $id, idType: $type, asPreview: $isPreview) {
       blocks {
         name
         ...paragraphBlockGQL

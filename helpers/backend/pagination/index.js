@@ -1,6 +1,6 @@
 import { client } from "~/store/apollo-client";
 import { clientRedis } from "../../../store/redis";
-import { errorHelper } from "../../errorHendler";
+// import { errorHelper } from "../../errorHendler";
 import { removeDuplicateTag } from "../post";
 
 /**
@@ -23,7 +23,8 @@ export const paginationLoad = async ({
 }) => {
   let pagination = await clientRedis
     .get(key)
-    .then((response) => JSON.parse(response));
+    .then((response) => JSON.parse(response))
+    .catch((e) => console.error(e));
 
   // при частом фетче пересмотреть механизм обновления пагинации
   // вынести фетч на этап сборки и отдовать имеющиеся устаревшие данные

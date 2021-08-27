@@ -5,7 +5,7 @@ import {
 } from "~/components/Pages/Page";
 import { transformBlocks, preparingPaths, getMenu } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size={"m"}>
@@ -33,7 +33,8 @@ export async function getStaticProps({ params }) {
     .query({
       query: FETCH_PAGE,
       variables: {
-        pathname: `nashi-izdaniya/${params.pageSlag}`,
+        id: `nashi-izdaniya/${params.pageSlug}`,
+        type: "URI",
       },
       fetchPolicy: "network-only",
     })

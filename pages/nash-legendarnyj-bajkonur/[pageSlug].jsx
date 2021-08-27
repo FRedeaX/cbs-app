@@ -5,7 +5,7 @@ import {
 } from "~/components/Pages/Page";
 import { transformBlocks, preparingPaths, getMenu } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../../../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size={"m"}>
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const paths = await client
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
-      variables: { pathname: "o-nas/my-v-pechati" },
+      variables: { pathname: "nash-legendarnyj-bajkonur" },
     })
     .then(({ data }) => preparingPaths(data.page.children.edges));
 
@@ -32,16 +32,16 @@ export async function getStaticProps({ params }) {
   const page = await client
     .query({
       query: FETCH_PAGE,
-      variables: { pathname: `o-nas/my-v-pechati/${params.pageSlag}` },
+      variables: {
+        id: `nash-legendarnyj-bajkonur/${params.pageSlug}`,
+        type: "URI",
+      },
       fetchPolicy: "network-only",
     })
     .then(({ data }) => transformBlocks(data.page));
 
   return {
-    props: {
-      menu,
-      page,
-    },
+    props: { menu, page },
     revalidate: parseInt(process.env.PAGE_REVALIDATE, 10),
   };
 }

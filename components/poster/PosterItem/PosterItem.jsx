@@ -28,13 +28,18 @@ export const posterItemGQL = {
 
 const PosterItem = ({
   data: { posterDate, title, content, excerpt, posterDepartments },
+  count,
   className,
 }) => {
   const date = posterDate.date.split("/");
   const dayEnd = posterDate.dataend?.split("/")[0];
 
   return (
-    <div className={classNames(classes.wrapper, className)}>
+    <div
+      className={classNames(classes.block, className, {
+        [classes["block_count_1"]]: count !== undefined && count === 1,
+      })}
+    >
       <div className={classes.header}>
         <span
           className={classNames(classes.date, {

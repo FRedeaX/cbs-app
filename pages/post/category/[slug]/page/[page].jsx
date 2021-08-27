@@ -15,7 +15,7 @@ const Home = ({ menu, posts, pages, categoryName }) => {
     query: { slug, page },
   } = useRouter();
   return (
-    <Layout menu={menu} loading={isFallback}>
+    <Layout menu={menu} loading={isFallback} paddingSides={0}>
       <SEO
         title={`Категория: ${categoryName || ""} — cтраница ${page}`}
         description={`Мероприятия библиотек города Байконур по категории ${categoryName}, cтраница ${page}`}
@@ -76,7 +76,7 @@ export async function getStaticProps({ params: { slug, page } }) {
   return {
     props: {
       menu,
-      pages: pagesInfo[pagesInfo.length - 1].number,
+      pages: pagesInfo[pagesInfo.length - 1].number - 1,
       posts,
       categoryName,
     },

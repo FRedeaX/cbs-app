@@ -49,7 +49,7 @@ export async function getStaticProps() {
     key: "posts",
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
-  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number);
+  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1);
 
   const posters = await client
     .query({

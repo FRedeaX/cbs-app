@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import classNamesBind from "classnames/bind";
+import classNames from "classnames";
 import { memo } from "react";
 import ActiveLink from "~/components/UI/ActiveLink/ActiveLink";
 import Button from "~/components/UI/Button/Button";
@@ -16,29 +17,16 @@ const NavItems = ({
   parentIdList,
   // className,
   isRight,
-  isMobile,
   headerLabel,
   onClick,
 }) => {
   const cx = classNamesBind.bind(classes);
-  // const Button = compose(
-  //   withSizeM,
-  //   withViewDefault,
-  //   withWidthMax
-  // )(ButtonDesktop);
-  // const Icon = compose(withTypeArrow)(IconDesktop);
-
+  const liLvl = subLvl;
   // console.log("I_Render");
   return (
     <>
       {headerLabel && (
-        <li
-          style={{
-            marginBottom: isMobile ? "6px" : "",
-            marginLeft: "6px",
-            "--button-text-align": "center",
-          }}
-        >
+        <li className={classes["li_header"]}>
           <Button
             width="max"
             isTextCenter={true}
@@ -63,54 +51,64 @@ const NavItems = ({
           </Button>
         </li>
       )}
-
-      {data.map(({ id, parentId, label, url, childItems }) => {
-        const { host, pathname } = new URL(url || "https://cbsbaikonur.ru/");
+      {data.map(({ id, parentId, label, path, childItems }) => {
         if (!!childItems?.nodes.length && subItem) subLvl++;
 
         return (
           <li
             key={id}
-            className={cx({
-              li: true,
-              li_overlay:
-                !!childItems?.nodes.length &&
-                parentId === parentIdList &&
-                !isMobile,
-              li_radius: isRight,
+            className={classNames(classes.li, {
+              [classes["li_right"]]: isRight,
+              [classes.li_overlay]:
+                !!childItems?.nodes.length && parentId === parentIdList,
+
+              [classes[`li-left_lvl_${liLvl}`]]: subItem && !isRight,
+              [classes["li-left_lvl_0"]]:
+                !!childItems?.nodes.length && !subItem && !isRight,
+
+              [classes["li-left_length_1"]]: data.length === 1 && !isRight,
+
+              [classes[`li-right_lvl_${liLvl}`]]: subItem && isRight,
+              [classes["li-right_lvl_0"]]:
+                !!childItems?.nodes.length && !subItem && isRight,
             })}
           >
-            {!!childItems?.nodes.length && isMobile ? (
-              <Button
-                width="max"
-                iconRight={
-                  <Icon
-                    type="arrow"
-                    size="xs"
-                    side="right"
-                    direction="right"
-                    weight="small"
-                    // className={classes["icon_width"]}
-                  />
-                }
-                className={classes.button}
-                onClick={onClick}
+            {!!childItems?.nodes.length ? (
+              <ActiveLink
+                activeClassName={classes.link_active}
+                href={path}
+                isLink={false}
               >
-                <span
-                  className={classes.text}
-                  dangerouslySetInnerHTML={createMarkup(label)}
-                />
-              </Button>
+                <Button
+                  width="max"
+                  iconRight={
+                    <Icon
+                      type="arrow"
+                      size="xs"
+                      side="right"
+                      direction="right"
+                      weight="small"
+                    />
+                  }
+                  className={classes.button}
+                  onClick={onClick}
+                >
+                  <span
+                    className={classes.text}
+                    dangerouslySetInnerHTML={createMarkup(label)}
+                  />
+                </Button>
+              </ActiveLink>
             ) : (
               <>
-                {host === "37.230.203.238" ? (
-                  <a href={url} className={classes.link}>
+                {path === "/elcatalog/" ? (
+                  <a href={path} className={classes.link} target="_blank">
                     <span className={classes.text}>{label}</span>
                   </a>
                 ) : (
                   <ActiveLink
                     activeClassName={classes.link_active}
-                    href={pathname}
+                    href={path}
                     prefetch={false}
                   >
                     <a
@@ -138,8 +136,7 @@ const NavItems = ({
                 subLvl={subItem ? subLvl : 1}
                 isSubListReset={parentIdList && parentIdList === parentId}
                 isRight={isRight}
-                isMobile={isMobile}
-                headerLabel={!!childItems?.nodes.length && isMobile && label}
+                headerLabel={!!childItems?.nodes.length && label}
               />
             )}
           </li>
@@ -156,7 +153,7 @@ export const menuItemsGQL = {
     fragment menuItemsGQL on MenuItem {
       id
       label
-      url
+      path
       parentId
     }
   `,

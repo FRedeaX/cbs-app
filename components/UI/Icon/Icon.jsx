@@ -15,8 +15,8 @@ export const Icon = ({
       className={classNames(
         classes.icon,
         classes[`size_${size}`],
-        classes[`side_${side}`],
         {
+          [classes[`side_${side}`]]: side !== "center",
           [classes[`direction_${direction}`]]: direction !== undefined,
         },
         className
@@ -29,9 +29,10 @@ export const Icon = ({
     <span
       className={classNames(
         classes.icon,
+        classes[`type_${type}`],
         classes[`size_${size}`],
-        classes[`side_${side}`],
         {
+          [classes[`side_${side}`]]: side !== "center",
           [classes[`arrow_weight_${weight}`]]: type === "arrow",
           [classes[`direction_${direction}`]]: direction !== undefined,
         },

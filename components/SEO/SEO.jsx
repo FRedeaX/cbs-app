@@ -1,8 +1,35 @@
 import Head from "next/head";
+import Script from "next/script";
+// import scrollbarWidth from "~/public/scripts/scrollbarWidth";
 
 export const SEO = ({ title, description }) => (
   <>
     <Head>
+      <Script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: (function () {
+            if (typeof window === "undefined") return;
+            const outer = document.createElement("div");
+            outer.style.visibility = "hidden";
+            outer.style.overflow = "scroll";
+            document.body.appendChild(outer);
+            const inner = document.createElement("div");
+            outer.appendChild(inner);
+            const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+            outer.parentNode.removeChild(outer);
+            document.body.style.setProperty(
+              "--scrollbarWidth",
+              `${scrollbarWidth}px`
+            );
+          })(),
+        }}
+      />
+      {/* <Script strategy="afterInteractive" src={scrollbarWidth} /> */}
+      {/* <script type="text/javascript" src="/scripts/scrollbarWidth.js"></script> */}
+      {/* dangerouslySetInnerHTML={{
+    __html:``}} */}
+
       <title>
         {title
           ? `${title} | Библиотеки города Байконур`

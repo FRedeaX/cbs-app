@@ -3,22 +3,20 @@ import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import React, { Children } from "react";
 
-const ActiveLink = ({ children, activeClassName, ...props }) => {
+const ActiveLink = ({ children, activeClassName, isLink = true, ...props }) => {
   const { asPath } = useRouter();
   const child = Children.only(children);
   const childClassName = child.props.className || "";
 
   const className =
-    `${asPath}/` === props.href || `${asPath}/` === props.as
+    `${asPath}/`.indexOf(props.href) !== -1
       ? `${childClassName} ${activeClassName}`.trim()
       : childClassName;
 
-  return (
-    <Link {...props}>
-      {React.cloneElement(child, {
-        className: className || null,
-      })}
-    </Link>
+  return isLink ? (
+    <Link {...props}>{React.cloneElement(child, { className })}</Link>
+  ) : (
+    React.cloneElement(child, { className })
   );
 };
 

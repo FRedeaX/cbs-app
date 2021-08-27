@@ -81,9 +81,10 @@ export const Gallery = ({
     <div className={classNames(classes.block, className)}>
       <figure
         ref={figureRef}
-        className={classNames(classes.wrapper, {
-          [classes["wrapper_zoom"]]: zoom,
-        })}
+        className={classNames(
+          classes.wrapper,
+          classes[`wrapper_isZoom_${zoom}`]
+        )}
         style={{ zIndex: zoom ? "4" : delay(0).then("") }}
         onClick={hendleClick}
       >
@@ -97,16 +98,29 @@ export const Gallery = ({
             setCount={setCount}
           >
             {images.map((image) => {
-              // console.log(image.width, image.height);
               return (
-                <figure key={image.id} className={classes.image}>
+                // <div>
+                <figure
+                  key={image.id}
+                  style={{
+                    minWidth: "100%",
+                    margin: "auto",
+                    maxHeight: "94vh",
+                    scrollSnapAlign: "start",
+                  }}
+                  className={classNames(
+                    classes.image,
+                    classes[`image_isZoom_${zoom}`]
+                  )}
+                >
                   <Image
                     alt={image.alt}
                     src={image.url}
-                    // layout="fill"
-                    // layout="responsive"
+                    // layout="intrinsic"
+                    priority={zoom}
+                    layout="responsive"
                     // placeholder="blur"
-                    sizes={850}
+                    // sizes={2400}
                     width={image.width}
                     height={image.height}
                     objectFit={zoom ? "contain" : "cover"}
@@ -114,6 +128,7 @@ export const Gallery = ({
                   />
                   <figcaption>{image.caption}</figcaption>
                 </figure>
+                // </div>
               );
             })}
           </Carousel>
@@ -123,20 +138,23 @@ export const Gallery = ({
             length={images.length}
           />
         </div>
-        <div
-          className={classNames(classes.controls, {
-            [classes["controls_zoom"]]: zoom,
-          })}
-        >
-          <Button
-            className={classNames(classes["button_download"], {
-              [classes["button_download_fill"]]: !zoom,
-            })}
-            href={images[count].url}
-            view="download"
-            icon={<Icon type={"download"} isGlyph={true} side={false} />}
-          />
-        </div>
+        {images[count]?.url !== undefined && (
+          <div
+            className={classNames(
+              classes.controls,
+              classes[`controls_isZoom_${zoom}`]
+            )}
+          >
+            <Button
+              className={classNames(classes["button_download"], {
+                [classes["button_download_fill"]]: !zoom,
+              })}
+              href={images[count].url}
+              view="download"
+              icon={<Icon type={"download"} isGlyph={true} side={false} />}
+            />
+          </div>
+        )}
         <figcaption className={classes.caption}>{caption}</figcaption>
       </figure>
     </div>

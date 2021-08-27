@@ -42,7 +42,7 @@ const HomePage = ({
             posters={posters}
             className={{
               group: classes.group,
-              list: classes.list,
+              // list: classes.list,
               item: classes.item,
               controls: classes.controls,
             }}

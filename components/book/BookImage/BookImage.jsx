@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { memo } from "react";
 import classes from "./Book-image.module.css";
 
-const BookImage = ({ cls, width, height, src, srcSet, alt, cover }) => {
+const BookImage = ({ cls, width, height, src, srcSet, alt, cover, index }) => {
   const cx = classNames.bind(classes);
 
   // const img = useRef(new Image());
@@ -24,7 +24,7 @@ const BookImage = ({ cls, width, height, src, srcSet, alt, cover }) => {
   return (
     <img
       // onLoad={hendleLoad}
-      loading="lazy"
+      loading={index > 3 ? "lazy" : ""}
       className={cx({ img: true, "img--cover": cover }, cls)}
       // className={cx({ img: true, loaded: isLoaded, "img--cover": cover }, cls)}
       width={width && width}

@@ -3,6 +3,7 @@
   --button-link-color: rgba(30, 30, 30, 0.9);
 
   padding-left: 10px;
+  font-family: var(--font-R-S);
   cursor: default;
 }
 

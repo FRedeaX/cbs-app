@@ -8,13 +8,14 @@ import { throttler } from "~/helpers";
 import { delay } from "~/helpers/delay";
 import { GET_WIDTH } from "~/store/variables/windowWidth";
 import classes from "./Carousel.module.css";
+import smoothscroll from "smoothscroll-polyfill";
 
 const Carousel = ({
   children,
   length,
   itemWidth,
+  itemCountOfScreen,
   itemMargin = 0,
-  // itemCountOfScreen = 3,
   isShadow = true,
   isScrollSnap = false,
   isKeyPress = false,
@@ -25,10 +26,32 @@ const Carousel = ({
   classNameControl,
   classNameControls,
 }) => {
+  const { data } = useQuery(GET_WIDTH);
+
   const scrollRef = useRef();
   const alreadyScrolledRefVar = useRef(0);
   const countRefVar = useRef(0);
   // const dragXRefVar = useRef(0);
+
+  const itemWidthRef = useRef(itemWidth);
+  const itemCountOfScreenRef = useRef(itemCountOfScreen);
+  // ширина 1 элемента
+  // кол-во элементов на экране
+  useEffect(() => {
+    if (scrollRef.current === undefined) return;
+    const scrolled = scrollRef.current;
+    const scrolledOffsetW = scrolled.offsetWidth;
+
+    if (itemWidth === undefined)
+      itemWidthRef.current = scrolled.children[0].children[0].offsetWidth;
+    // else itemWidthRef.current = itemWidth;
+
+    if (itemCountOfScreenRef === undefined)
+      itemCountOfScreenRef.current = Math.max(
+        Math.floor(scrolledOffsetW / itemWidthRef.current),
+        1
+      );
+  }, [itemWidth, scrollRef, isOpen, data?.windowWidth]);
 
   const [isLeft, setLeft] = useState(false);
   const [isRight, setRight] = useState(false);
@@ -39,28 +62,27 @@ const Carousel = ({
     const wrapperWidth = scrolled.offsetWidth;
     const l = length || children.length;
 
-    if (itemWidth === undefined)
-      itemWidth = scrolled.children[0].children[0].offsetWidth;
-    const scrolledOffsetW = scrolled.offsetWidth;
-    const itemCountOfScreen = Math.floor(scrolledOffsetW / itemWidth);
-
-    if (wrapperWidth < (itemWidth + itemMargin) * l || l > itemCountOfScreen)
+    if (
+      wrapperWidth < (itemWidthRef.current + itemMargin) * l ||
+      l > itemCountOfScreenRef.current
+    ) {
       setRight(true);
-  }, [children.length, length, itemWidth, setRight]);
+    }
+  }, [
+    scrollRef,
+    children.length,
+    length,
+    itemWidthRef.current,
+    itemMargin,
+    itemCountOfScreenRef.current,
+    setRight,
+  ]);
 
   const hendleClick = (direction) => {
     if (!scrollRef.current) return;
     const scrolled = scrollRef.current;
-
-    if (itemWidth === undefined)
-      itemWidth = scrolled.children[0].children[0].offsetWidth;
-
-    const scrolledOffsetW = scrolled.offsetWidth;
-    const itemCountOfScreen = Math.floor(scrolledOffsetW / itemWidth);
-
-    const scrollTo = (itemWidth + itemMargin * 2) * itemCountOfScreen - 14;
-
-    console.log(itemCountOfScreen);
+    const scrollTo =
+      (itemWidthRef.current + itemMargin * 2) * itemCountOfScreenRef.current;
 
     if (direction === "left") alreadyScrolledRefVar.current -= scrollTo;
     else if (direction === "right") alreadyScrolledRefVar.current += scrollTo;
@@ -75,15 +97,16 @@ const Carousel = ({
       alreadyScrolledRefVar.current = 0;
     } else setLeft(true);
 
-    const scrolledScrollW = scrolled.scrollWidth - scrolled.offsetWidth;
+    const scrolledScrollW = Math.floor(
+      scrolled.scrollWidth - scrolled.offsetWidth
+    );
     if (alreadyScrolledRefVar.current >= scrolledScrollW) {
       setRight(false);
       alreadyScrolledRefVar.current = scrolledScrollW;
     } else setRight(true);
 
-    countRefVar.current = Math.round(
-      (alreadyScrolledRefVar.current + itemCountOfScreen) / scrollTo
-    );
+    countRefVar.current = Math.round(alreadyScrolledRefVar.current / scrollTo);
+
     if (setCount !== undefined) setCount(countRefVar.current);
   };
 
@@ -106,6 +129,7 @@ const Carousel = ({
       countRefVar.current = Math.round(
         alreadyScrolledRefVar.current / offsetWidth
       );
+
       if (setCount !== undefined) setCount(countRefVar.current);
     });
   };
@@ -150,15 +174,20 @@ const Carousel = ({
   // в браузерах не поддерживающие свойство scroll-snap
   // при изменении ширины окна браузера
   // изображение смещается относительно области просмотра
-  const { data } = useQuery(GET_WIDTH);
   useEffect(() => {
+    if (!scrollRef.current) return;
+
+    // if (!"scrollBehavior" in document.documentElement.style) {
+    //   smoothscroll.polyfill();
+    // }
     alreadyScrolledRefVar.current =
       scrollRef.current.children[0].children[0].offsetWidth *
       countRefVar.current;
 
-    scrollRef.current.scroll({
-      left: alreadyScrolledRefVar.current,
-    });
+    // console.log();
+    // scrollRef.current.scroll({
+    //   left: alreadyScrolledRefVar.current,
+    // });
   }, [isOpen, data?.windowWidth]);
 
   // console.log("render Carousel");
@@ -208,39 +237,45 @@ const Carousel = ({
             )}
           >
             {isOpen && (
-              <>
+              <div className={classes["controls-buttons_full-screen"]}>
                 <Button
                   className={classNames(
                     classes["button--inActive"],
-                    classes["button_full-screen"],
-                    classes["button_full-screen_left"],
                     classes["button-left"],
+                    classes["button_full-screen_left"],
                     classNameControl
                   )}
                   isHidden={!isLeft}
+                  isDisabled={!isLeft}
                   onClick={() => hendleClick("left")}
                 />
                 <Button
                   ref={buttonNextRef}
                   className={classNames(
                     classes["button--inActive"],
-                    classes["button_full-screen"],
-                    classes["button_full-screen_right"],
                     classes["button-right"],
+                    classes["button_full-screen_right"],
                     classNameControl
                   )}
                   isHidden={!isRight}
+                  isDisabled={!isRight}
                   onClick={() => hendleClick("right")}
                 />
-              </>
+              </div>
             )}
 
             <Button
-              className={classNames(classes["button-left"], classNameControl, {
-                [classes["button_events"]]: isLeft,
-                // [classes["button--inActive"]]: !isBrowser,
-              })}
+              className={classNames(
+                classes["button-left"],
+                classes["button-background_color"],
+                classNameControl,
+                {
+                  [classes["button_events"]]: isLeft,
+                  // [classes["button--inActive"]]: !isBrowser,
+                }
+              )}
               isHidden={!isLeft}
+              isDisabled={!isLeft}
               icon={
                 <Icon
                   weight={controlsPosition === "center" ? "medium" : "small"}
@@ -250,11 +285,17 @@ const Carousel = ({
               onClick={() => hendleClick("left")}
             />
             <Button
-              className={classNames(classes["button-right"], classNameControl, {
-                [classes["button_events"]]: isRight,
-                // [classes["button--inActive"]]: !isBrowser,
-              })}
+              className={classNames(
+                classes["button-right"],
+                classes["button-background_color"],
+                classNameControl,
+                {
+                  [classes["button_events"]]: isRight,
+                  // [classes["button--inActive"]]: !isBrowser,
+                }
+              )}
               isHidden={!isRight}
+              isDisabled={!isRight}
               icon={
                 <Icon
                   weight={controlsPosition === "center" ? "medium" : "small"}

@@ -11,9 +11,12 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
   images: {
-    domains: [process.env.PUBLIC_URL],
+    domains: [process.env.PUBLIC_IP],
   },
-  experimental: { optimizeCss: true },
+  experimental: {
+    optimizeCss: true,
+    // staticPageGenerationTimeout: 180,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

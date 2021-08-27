@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { memo } from "react";
 import Carousel from "~/components/Carusel/Carousel";
-import PosterGroup from "../PosterGroup/PosterGroup";
+// import PosterGroup from "../PosterGroup/PosterGroup";
 import PosterItem, { posterItemGQL } from "../PosterItem/PosterItem";
 import PosterList from "../PosterList/PosterList";
 
@@ -19,12 +19,17 @@ export const FETCH_POSTER = gql`
 const PosterRoot = ({ posters, className }) => {
   const RenderPoster = () =>
     posters.map((poster) => (
-      <PosterGroup key={poster[0].id} className={className.group}>
-        <PosterItem data={poster[0]} className={className.item} />
-        {poster[1] !== undefined && (
-          <PosterItem data={poster[1]} className={className.item} />
-        )}
-      </PosterGroup>
+      // <PosterGroup key={poster[0].id} className={className.group}>
+      <PosterItem
+        key={poster.id}
+        data={poster}
+        className={className.item}
+        count={posters.length}
+      />
+      //   {poster[1] !== undefined && (
+      //     <PosterItem data={poster[1]} className={className.item} />
+      //   )}
+      // </PosterGroup>
     ));
 
   // console.log(windowWidthVar());
@@ -37,7 +42,7 @@ const PosterRoot = ({ posters, className }) => {
           // itemWidth={isFront && window.innerWidth < 480 ? 280 : 440}
           isShadow={false}
           isScrollSnap={true}
-          itemMargin={0}
+          itemMargin={10}
           controlsPosition="top"
           classNameControl={className.control}
         >

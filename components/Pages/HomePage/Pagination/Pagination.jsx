@@ -28,7 +28,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
   return (
     <div className={classNames(classes.block, classes.root)}>
       {prevPage > 1 && (
-        <Link href={`${paginationURI}/page/1`} prefetch={false} passHref>
+        <Link href={`${paginationURI}/page/1`} passHref>
           <Button
             view="link"
             theme="gray"
@@ -38,6 +38,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
             <Icon
               type="double-arrow"
               size="xs"
+              side="cenert"
               direction="left"
               className={classes.icon}
             />
@@ -55,7 +56,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
       /> */}
       {Array(pages)
         .fill()
-        .map((node, index) => {
+        .map((_, index) => {
           if (!(prevPage <= ++index && index <= nextPage)) return null;
           const number = index++;
           const active =
@@ -64,7 +65,6 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
             <Link
               key={`p${number}`}
               href={`${paginationURI}/page/${number}`}
-              prefetch={false}
               passHref
             >
               <Button
@@ -80,7 +80,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
           );
         })}
       {nextPage < pages && (
-        <Link href={`${paginationURI}/page/${pages}`} prefetch={false} passHref>
+        <Link href={`${paginationURI}/page/${pages}`} passHref>
           <Button
             view="link"
             theme="gray"
@@ -90,6 +90,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
             <Icon
               type="double-arrow"
               size="xs"
+              side="cenert"
               direction="right"
               className={classes.icon}
             />

@@ -1,5 +1,7 @@
+/* 1. исправляет позиционирование subMenu и не ломает overlay */
 .block {
   --button-text-align: left;
+  --submenu-border-radius: 12px;
 
   z-index: 3;
   font-size: 15px;
@@ -46,6 +48,10 @@
   font-size: 13px;
 }
 
+/* .secondary > ul > li {
+  font-size: 13px;
+} */
+
 /*
  *  desktop
  */
@@ -58,13 +64,21 @@
     min-width: 80px;
   }
   .menu {
+    --icon-display: none;
+
     width: calc(100% - 86px);
     margin: 16px 0 0 6px;
   }
   .secondary {
+    --button-text-align: end;
+
+    position: relative; /* 1 */
     justify-content: flex-end;
     width: 100%;
     text-align: end;
+  }
+  .mobile {
+    display: none;
   }
 }
 
@@ -102,74 +116,67 @@
   .secondary > ul {
     width: 55%;
   }
-}
 
-.controls {
-  display: flex;
-}
+  .Social_desktope {
+    display: none !important;
+  }
 
-.controls_button {
-  right: -8px;
-  width: 40px;
-  height: 40px;
+  .mobile {
+    display: flex;
+  }
 
-  /* display: inline-block; */
+  .controls_button {
+    right: -8px;
+    width: 40px;
+    height: 40px;
+  }
 
-  /* background-color: transparent; */
+  .inner {
+    left: 10px;
+    display: block;
+    margin-top: -1px;
+    transition: transform 0.1s linear;
+  }
 
-  /* border: 0; */
-}
+  .inner,
+  .inner::after,
+  .inner::before {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: #000;
+  }
 
-.inner {
-  left: 10px;
-  display: block;
-  margin-top: -1px;
-  transition: transform 0.1s linear;
-}
+  .inner::before {
+    top: -6px;
+    left: 0;
+    display: block;
+    transition: top 0.1s 0.2s linear;
+    content: "";
+  }
 
-.inner,
-.inner::after,
-.inner::before {
-  position: absolute;
-  width: 20px;
-  height: 2px;
-  background-color: #000;
-}
+  .inner::after {
+    bottom: -6px;
+    left: 0;
+    display: block;
+    transition: bottom 0.1s 0.2s linear, transform 0.1s linear;
+    content: "";
+  }
 
-.inner::before {
-  top: -6px;
-  left: 0;
-  display: block;
-  transition: top 0.1s 0.2s linear;
-  content: "";
-}
+  .controls_button--active .inner {
+    transform: rotate(45deg);
+    transition: transform 0.1s 0.2s linear;
+  }
 
-.inner::after {
-  bottom: -6px;
-  left: 0;
-  display: block;
-  transition: bottom 0.1s 0.2s linear, transform 0.1s linear;
-  content: "";
-}
+  .controls_button--active .inner::before {
+    top: 0;
+    opacity: 0;
+    transition: top 0.1s linear, opacity 0.1s 0.2s linear;
+  }
 
-/* .controls_button--active .inner {
-  transform: rotate(45deg);
-  transition: transform 0.1s 0.2s linear;
-} */
-
-.controls_button--active .inner {
-  transform: rotate(45deg);
-  transition: transform 0.1s 0.2s linear;
-}
-
-.controls_button--active .inner::before {
-  top: 0;
-  opacity: 0;
-  transition: top 0.1s linear, opacity 0.1s 0.2s linear;
-}
-
-.controls_button--active .inner::after {
-  bottom: 0;
-  transform: rotate(-90deg);
-  transition: bottom 0.1s linear, transform 0.1s 0.2s linear;
+  .controls_button--active .inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+    transition: bottom 0.1s linear, transform 0.1s 0.2s linear;
+  }
 }

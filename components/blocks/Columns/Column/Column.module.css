@@ -6,7 +6,7 @@
   .wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0 10px;
+    margin: 10px;
   }
 
   .wrapper:first-child {
@@ -30,8 +30,10 @@
 @media screen and (max-width: 768px) {
   .wrapper {
     display: flex;
+    flex-direction: column;
     flex-grow: 100;
-    margin: 10px 0;
+    align-items: center;
+    margin: 10px;
   }
   .wrapper:first-child {
     margin-top: 0;
@@ -39,6 +41,12 @@
   .wrapper:last-child {
     margin-bottom: 0;
   }
+  .Image_width_max {
+    width: 50vmin;
+  }
+}
+
+@media screen and (max-width: 425px) {
   .Image_width_max {
     width: 100%;
   }

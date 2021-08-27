@@ -54,9 +54,8 @@
 
   /* customs */
   --font-R-S: "Roboto-Slab", serif;
-
-  /* --scrollbarWidth: "17px"; */
   --bgWhite: #f2f2f2 /*var(--white); */;
+  --scrollbarWidth: 17px;
   --background-color-white: rgb(247, 247, 247);
   --bg-controls: var(--white);
   --menuLink: var(--black);
@@ -67,6 +66,11 @@
   /* component color */
   --link-color: var(--blue-dark);
 }
+
+/* @media screen and (min-width: 769px) {
+  :root {
+  }
+} */
 
 *,
 *::after,
@@ -186,6 +190,10 @@ figcaption {
 /*
  * wp-class styles
  */
+.pl-40 {
+  padding-left: 40px;
+}
+
 .w-90 {
   width: 90%;
 }

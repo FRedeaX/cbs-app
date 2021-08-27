@@ -1,11 +1,11 @@
 import {
+  FETCH_CHILDREN_URI_PAGES,
   FETCH_PAGE,
-  FETCH_PARENT_URI_PAGES,
   PageRoot,
 } from "~/components/Pages/Page";
 import { transformBlocks, preparingPaths, getMenu } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size={"m"}>
@@ -15,8 +15,11 @@ const Page = ({ menu, page }) => (
 
 export async function getStaticPaths() {
   const paths = await client
-    .query({ query: FETCH_PARENT_URI_PAGES })
-    .then(({ data }) => preparingPaths(data.pages.edges));
+    .query({
+      query: FETCH_CHILDREN_URI_PAGES,
+      variables: { pathname: "o-nas" },
+    })
+    .then(({ data }) => preparingPaths(data.page.children.edges));
 
   return {
     paths,
@@ -26,16 +29,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const menu = await getMenu();
-  let page = await client
+  const page = await client
     .query({
       query: FETCH_PAGE,
-      variables: { pathname: params.pageSlag },
+      variables: { id: `o-nas/${params.pageSlug}`, type: "URI" },
       fetchPolicy: "network-only",
     })
     .then(({ data }) => transformBlocks(data.page));
-
-  // const page = { ...data.page };
-  // page.blocks = await transformBlocks(page.blocks);
 
   return {
     props: {

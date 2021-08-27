@@ -1,5 +1,5 @@
 .icon {
-  display: inline-block;
+  display: var(--icon-display, inline-block);
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: contain;

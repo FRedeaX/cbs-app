@@ -3,7 +3,6 @@ import Link from "next/link";
 import { memo } from "react";
 import Title from "~/components/Title/Title";
 import Button from "~/components/UI/Button/Button";
-import { Icon } from "~/components/UI/Icon/Icon";
 import classes from "./Section-header.module.css";
 
 const SectionHeader = ({ children, url, cls }) => (

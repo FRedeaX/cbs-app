@@ -42,7 +42,7 @@
   /* color: hsla(0, 3%, 33%, 1); */
 
   margin: 0 0 12px;
-  color: rgb(60 60 60 / 0.9);
+  color: rgba(60, 60, 60, 0.9);
   font-size: 20px;
 
   /* border-bottom: 1px solid #dbdbdb; */

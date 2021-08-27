@@ -3,6 +3,7 @@ import { memo } from "react";
 import classes from "./Layout.module.css";
 import Header from "~/components/Header/Header";
 import Loader from "~/components/UI/Loader/Loader";
+import Footer from "~/components/Footer/Footer";
 
 const Layout = ({ menu, loading, size = "l", paddingSides, children }) => (
   <>
@@ -14,7 +15,7 @@ const Layout = ({ menu, loading, size = "l", paddingSides, children }) => (
     >
       {children}
     </main>
-    <footer></footer>
+    <Footer />
   </>
 );
 

@@ -11,7 +11,7 @@ const Biblioteki = ({ menu }) => (
 );
 
 export async function getStaticProps() {
-  const menu = await getMenu(false);
+  const menu = await getMenu();
   return { props: { menu, lib: "" } };
 }
 

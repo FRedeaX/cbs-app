@@ -1,6 +1,6 @@
 import classes from "./Social.module.css";
 
-const Social = ({ type, url, cls, clsLink, clsSVG }) => {
+const Social = ({ type, url, cls, clsLink, clsSVG, ariaLabel }) => {
   const style = [cls, clsLink, classes.link];
   const styleSVG = [clsSVG, classes.svg];
 
@@ -10,6 +10,7 @@ const Social = ({ type, url, cls, clsLink, clsSVG }) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={ariaLabel}
     >
       {type !== "youtube" && (
         <svg className={styleSVG.join(" ")} viewBox="0 0 28 28">

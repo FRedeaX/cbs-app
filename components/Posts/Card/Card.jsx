@@ -18,6 +18,7 @@ const Card = ({
   data: { isSticky, featuredImage, uri, title, excerpt, categories },
   horizontal,
   isBig,
+  index,
   cls,
 }) => {
   return (
@@ -45,6 +46,7 @@ const Card = ({
               [classes["img--horizontal"]]: horizontal,
               [classes["img_big"]]: isBig,
             })}
+            index={index}
           />
         </div>
       )}

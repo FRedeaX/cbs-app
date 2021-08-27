@@ -2,10 +2,9 @@ import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
 import { memo, useEffect, useState, useRef } from "react";
-import { isMobile as isMobileDevice } from "react-device-detect";
+// import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "~/components/Logo/Logo";
 import Button from "~/components/UI/Button/Button";
-import { scrollbarWidth } from "~/helpers";
 import { IS_HEADER_POS_RESET_FRAGMENT } from "~/store/variables/header";
 import { GET_OVERLAY_FRAGMENT, overlayVar } from "~/store/variables/overlay";
 import { GET_WIDTH_FRAGMENT } from "~/store/variables/windowWidth";
@@ -40,13 +39,7 @@ const Header = ({ menus }) => {
     }
   `);
 
-  const [isMobile, setMobile] = useState(
-    isMobileDevice || state?.windowWidth <= 950
-  );
-  useEffect(() => {
-    if (state.windowWidth <= 950) setMobile(true);
-    else if (state.windowWidth > 950) setMobile(false);
-  }, [state?.windowWidth]);
+  const [isMobile, setMobile] = useState(false);
 
   const [isOpen, setOpen] = useState(false);
   useEffect(() => {
@@ -75,7 +68,7 @@ const Header = ({ menus }) => {
   // console.log(isHeaderHidden);
   return (
     <header
-      style={{ right: state?.isHeaderPosReset ? `${scrollbarWidth}px` : "0" }}
+      style={{ right: state?.isHeaderPosReset ? `var(--scrollbarWidth)` : "0" }}
       className={classNames(classes.block, classes.position, {
         [classes["position--hidden"]]: isHeaderHidden,
       })}
@@ -92,42 +85,30 @@ const Header = ({ menus }) => {
         >
           <nav className={classes.primary}>
             {menus && menus[0]?.menuItems && (
-              <NavList
-                data={menus[0].menuItems}
-                isRow={!isMobile}
-                isMobile={isMobile}
-              />
+              <NavList data={menus[0].menuItems} />
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
-            {!isMobile && <HeaderSocial />}
+            <HeaderSocial className={classes["Social_desktope"]} />
             {menus && menus[1]?.menuItems && (
-              <NavList
-                data={menus[1].menuItems}
-                // className={classes.ul}
-                isRow={!isMobile}
-                isMobile={isMobile}
-                isRight={!isMobile}
-              />
+              <NavList data={menus[1].menuItems} isRight={true} />
             )}
           </div>
         </div>
-        {isMobile && (
-          <div className={classes.controls}>
-            <HeaderSocial />
-            <Button
-              className={classNames(classes.controls_button, {
-                [classes["controls_button--active"]]: isOpen,
-              })}
-              onClick={() => {
-                overlayVar({ isOpen: !isOpen, zIndex: 2 });
-                setOpen(!isOpen);
-              }}
-            >
-              <span className={classes.inner} />
-            </Button>
-          </div>
-        )}
+        <div className={classes.mobile}>
+          <HeaderSocial />
+          <Button
+            className={classNames(classes.controls_button, {
+              [classes["controls_button--active"]]: isOpen,
+            })}
+            onClick={() => {
+              overlayVar({ isOpen: !isOpen, zIndex: 2, isOverflow: true });
+              setOpen(!isOpen);
+            }}
+          >
+            <span className={classes.inner} />
+          </Button>
+        </div>
       </div>
     </header>
   );

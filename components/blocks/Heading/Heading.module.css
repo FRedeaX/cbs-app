@@ -9,6 +9,8 @@
 .block {
   color: var(--black);
   font-weight: 500;
+  font-family: var(--font-R-S);
+  line-height: 28px;
   white-space: pre-line;
 }
 

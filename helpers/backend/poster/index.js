@@ -9,8 +9,8 @@ export const postersFilter = async (posters) => {
 
   const lastPoster = posters[posters.length - 1]?.posterDate.date;
   if (!lastPoster) return null;
-  const lastPosterDay = lastPoster.split("/")[0] * 1;
-  const lastPosterMonth = lastPoster.split("/")[1] * 1;
+  const lastPosterDay = parseInt(lastPoster.split("/")[0], 10); // * 1;
+  const lastPosterMonth = parseInt(lastPoster.split("/")[1], 10); // * 1;
   if (
     (lastPosterDay < date.day ||
       (lastPosterDay === date.day && date.hours > 18)) &&
@@ -19,15 +19,15 @@ export const postersFilter = async (posters) => {
     return null;
 
   const _posters = [];
-  let posterByTwo = [];
+  // let posterByTwo = [];
   for (let index = 0; index < posters.length; index++) {
     const element = isPush(posters[index], date);
-    if (element !== null) posterByTwo.push(element);
+    if (element !== null) _posters.push(element); //posterByTwo
 
-    if (posterByTwo.length === 2 || posters[index + 1] === undefined) {
-      _posters.push(posterByTwo);
-      posterByTwo = [];
-    }
+    // if (posterByTwo.length === 2 || posters[index + 1] === undefined) {
+    //   _posters.push(posterByTwo);
+    //   posterByTwo = [];
+    // }
   }
   return _posters;
 };

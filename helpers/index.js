@@ -28,26 +28,28 @@ export const verticalAlignToFlext = (align) => {
   else return align;
 };
 
-export const scrollbarWidth = () => {
-  // outer.style.msOverflowStyle = "scrollbar";
-  const outer = document.createElement("div");
-  outer.style.visibility = "hidden";
-  outer.style.overflow = "scroll";
-  document.body.appendChild(outer);
-  const inner = document.createElement("div");
-  outer.appendChild(inner);
-  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-  outer.parentNode.removeChild(outer);
-  return scrollbarWidth;
-};
+// export const scrollbarWidth = () => {
+//   if (typeof window === "undefined") return;
+//   // outer.style.msOverflowStyle = "scrollbar";
+//   const outer = document.createElement("div");
+//   outer.style.visibility = "hidden";
+//   outer.style.overflow = "scroll";
+//   document.body.appendChild(outer);
+//   const inner = document.createElement("div");
+//   outer.appendChild(inner);
+//   const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+//   outer.parentNode.removeChild(outer);
+//   return scrollbarWidth;
+//   // document.body.style.setProperty("--scrollbarWidth", `${scrollbarWidth}px`);
+// };
 
 let timeout;
-export const throttler = (func) => {
+export const throttler = (func, t = 66) => {
   if (!timeout) {
     timeout = setTimeout(function () {
       timeout = null;
       func();
-    }, 66);
+    }, t);
   }
 };
 

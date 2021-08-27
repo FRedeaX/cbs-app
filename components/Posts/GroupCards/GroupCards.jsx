@@ -28,13 +28,14 @@ const GroupCards = ({ data, title, description, length }) => {
         })}
         classNameControls={classes.controls}
       >
-        {data.nodes.map((postByTag) => (
+        {data.nodes.map((postByTag, index) => (
           <Card
             key={postByTag.id}
             data={postByTag}
             cls={classNames(classes.article, {
               [classes["article_size_l"]]: length === 2,
             })}
+            index={index}
           />
         ))}
       </Carousel>

@@ -7,14 +7,12 @@ import classes from "./Nav-list.module.css";
 const NavList = ({
   id,
   data,
-  isMobile = false,
   isRight = false,
   headerLabel = false,
   subList = false,
   subLvl = 1,
   isSubListReset,
   className,
-  // classNameItem,
 }) => {
   if (subList && subLvl === 4) subLvl = 1;
   if (subList && isSubListReset) subLvl = 2;
@@ -24,13 +22,14 @@ const NavList = ({
     {
       body: true,
       body_right: subList && isRight,
+      body_margin_right: subList === 1 && isRight,
       body_row: !subList,
 
       subMenu: subList,
-      // subMenu_padding: subList && isMobile,
 
-      "subMenu--lvl2": subLvl === 2 && !isMobile,
-      "subMenu--lvl3": subLvl === 3 && !isMobile,
+      "subMenu--lvl1": subLvl === 1 && isRight,
+      "subMenu--lvl2": subLvl === 2,
+      "subMenu--lvl3": subLvl === 3,
     },
     className
   );
@@ -65,9 +64,7 @@ const NavList = ({
         subItem={subList}
         subLvl={subLvl}
         parentIdList={id}
-        // className={classNameItem}
         isRight={isRight}
-        isMobile={isMobile}
         headerLabel={headerLabel}
         onClick={listOpenHendler}
       />

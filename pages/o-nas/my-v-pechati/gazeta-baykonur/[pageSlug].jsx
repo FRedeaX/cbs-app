@@ -5,7 +5,7 @@ import {
 } from "~/components/Pages/Page";
 import { transformBlocks, preparingPaths, getMenu } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
-import Layout from "../../../components/UI/Layout/Layout";
+import Layout from "~/components/UI/Layout/Layout";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size={"m"}>
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const paths = await client
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
-      variables: { pathname: "svedeniya-ob-organizaczii/dokumentatsiya" },
+      variables: { pathname: "o-nas/my-v-pechati/gazeta-baykonur" },
     })
     .then(({ data }) => preparingPaths(data.page.children.edges));
 
@@ -33,7 +33,8 @@ export async function getStaticProps({ params }) {
     .query({
       query: FETCH_PAGE,
       variables: {
-        pathname: `svedeniya-ob-organizaczii/dokumentatsiya/${params.pageSlag}`,
+        id: `o-nas/my-v-pechati/gazeta-baykonur/${params.pageSlug}`,
+        type: "URI",
       },
       fetchPolicy: "network-only",
     })

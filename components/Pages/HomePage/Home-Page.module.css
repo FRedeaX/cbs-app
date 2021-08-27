@@ -54,7 +54,7 @@
   }
 
   .poster {
-    --carousel-controls-margin-top: -16px;
+    /* --carousel-controls-margin-top: -10px; */
 
     max-width: 960px;
 
@@ -94,15 +94,17 @@
     max-width: 350px;
     height: max-content;
     height: fit-content;
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 10px 0;
   }
 
-  .list {
+  /* .list {
     margin-top: -10px;
-  }
+  } */
 
   .item {
-    margin: 10px 0;
+    height: max-content;
+    margin: 10px;
+    scroll-snap-align: start;
   }
 
   .item:last-child {

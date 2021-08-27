@@ -17,32 +17,36 @@
 //   }
 // `;
 
-const LibraryInfo = ({ url }) => {
-  // const pathname = `/o-nas/${url}`;
-  // const { data, loading, error } = useQuery(FETCH_PAGE, {
-  //   variables: { pathname },
-  // });
+// const LibraryInfo = ({ url }) => {
+// const pathname = `/o-nas/${url}`;
+// const { data, loading, error } = useQuery(FETCH_PAGE, {
+//   variables: { pathname },
+// });
 
-  // useEffect(() => {
-  //   if (!loading) document.body.style.minHeight = "";
-  // }, [loading]);
+// useEffect(() => {
+//   if (!loading) document.body.style.minHeight = "";
+// }, [loading]);
 
-  // const renderLibraryInfo = (page) => {
-  //   return (
-  //   );
-  // };
+// const renderLibraryInfo = (page) => {
+//   return (
+//   );
+// };
 
-  // if (loading) return 1;
-  // if (error) return console.error(error);
+// if (loading) return 1;
+// if (error) return console.error(error);
 
-  return (
-    <>
-      {/* {console.log("LibraryInfo")} */}
-      <h3></h3>
+// return (
+//   <>
+{
+  /* {console.log("LibraryInfo")} */
+}
+{
+  /* <h3></h3>
       <div />
     </>
   );
-};
+}; */
+}
 
 // function mapStateToProps(state) {
 //   return {
@@ -57,4 +61,4 @@ const LibraryInfo = ({ url }) => {
 //   };
 // }
 
-export default LibraryInfo;
+// export default LibraryInfo;
