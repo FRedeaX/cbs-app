@@ -20,23 +20,31 @@ import { separatorBlockGQL } from "./../../blocks/Separator/Separator";
 import { spacerBlockGQL } from "./../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "./../../blocks/Table/Table";
 import { verseBlockGQL } from "./../../blocks/Verse/Verse";
+import Share from "../../Share/Share";
 
-export const Post = ({ title, categories, blocks }) => {
+export const Post = ({ title, categories, href, image, blocks }) => {
   return (
     <article className={classes.container}>
       <div className={classes.header}>
         <Heading level={"1"}>{title}</Heading>
-        {/* <h1
-          className={classes.title}
-          // dangerouslySetInnerHTML={createMarkup(title)}
-        >
-          {title}
-        </h1> */}
         <div className={classes.category}>
           <Category data={categories} cls={classes["category-link"]} />
         </div>
       </div>
-      {blocks && <Blocks blocks={blocks} />}
+      {blocks && (
+        <div className={classes.body}>
+          <div>
+            <Blocks blocks={blocks} />
+          </div>
+          <Share
+            cls={classes.Share}
+            clsLink={classes.link}
+            title={title}
+            href={href}
+            image={image}
+          />
+        </div>
+      )}
     </article>
   );
 };
@@ -59,6 +67,7 @@ export const FETCH_ARTICLE = gql`
         }
       }
       id
+      link
       title
     }
   }
@@ -98,6 +107,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         }
       }
       id
+      link
       title
     }
   }

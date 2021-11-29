@@ -40,7 +40,7 @@ export async function getStaticProps() {
       posters: _posters.posters.nodes,
       menu,
     },
-    revalidate: 1800, //process.env.POST_REVALIDATE * 1,
+    revalidate: parseInt(process.env.POST_REVALIDATE, 10),
   };
 }
 

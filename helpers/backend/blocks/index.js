@@ -1,6 +1,6 @@
 // const http = require("http");
 // const sizeOf = require("image-size");
-import http from "http";
+import https from "https";
 import sizeOf from "image-size";
 import { removeBackslash } from "~/helpers/backend";
 
@@ -90,22 +90,24 @@ const transform = async (arr) => {
 
       case "core/embed": {
         const url = new URL(block.attributes.url);
-        const id =
-          url.searchParams.get("v") ||
-          removeBackslash(url.pathname) ||
-          undefined;
-        if (id === undefined) return null;
+        const host = url.host;
 
-        // fetch(
-        //   `https://www.googleapis.com/youtube/v3/videos?part=id&id=${id}&key=${process.env.API_YouTube}`
-        // ).then((res) => {
-        //   console.log(res);
-        // });
+        let youtubeUrl;
+        if (host.includes("youtu.be")) {
+          // fetch(
+          //   `https://www.googleapis.com/youtube/v3/videos?part=id&id=${id}&key=${process.env.API_YouTube}`
+          // ).then((res) => {
+          //   console.log(res);
+          // });
+          const id = url.searchParams.get("v") || removeBackslash(url.pathname);
+          youtubeUrl = `https://www.youtube.com/embed/${id}?feature=oembed`;
+        }
+
         const cls = block.attributes.className.split(" ")[0].split("-");
         return (_blocks[index] = {
           name: block.name,
           attributes: {
-            url: `https://www.youtube.com/embed/${id}?feature=oembed`,
+            url: youtubeUrl || url.href,
             aspect: `${cls[3] || 16}-${cls[4] || 9}`,
           },
         });
@@ -148,7 +150,7 @@ const addAttributes = (block, data) => ({
 
 const getSizeOf = (url) =>
   new Promise((resolve, reject) => {
-    const req = http.get(url, (res) => {
+    const req = https.get(url, (res) => {
       if (res.statusCode < 200 || res.statusCode >= 300) {
         return reject({
           message: `getSizeOf(urlImage) statusCode= ${res.statusCode}`,

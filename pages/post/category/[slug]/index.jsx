@@ -17,7 +17,7 @@ const Home = ({ menu, posts, pages, name }) => {
   return (
     <Layout menu={menu} loading={isFallback}>
       <SEO
-        title={`Категория: ${name || ""}`}
+        title={`Категория: ${name}`}
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />
       <HomePage
@@ -63,7 +63,7 @@ export async function getStaticProps({ params: { slug } }) {
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
     endCursor: data.category.posts.pageInfo.endCursor,
     category: slug,
-  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number);
+  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1);
 
   const name = data.category.posts.nodes[0].categories.nodes.filter(
     (node) => node.slug === slug

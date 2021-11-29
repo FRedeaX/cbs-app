@@ -1,25 +1,43 @@
 .link {
   display: inline-block;
-  line-height: 0;
+  margin: var(--social-margin);
   padding: 2px;
-  margin-right: 4px;
+  line-height: 0;
   transition: background-color, transform 0.2s linear;
 }
 
 .link:last-child {
-  margin-right: 0;
+  margin: 0;
 }
 
 .link:hover {
+  border-radius: 8px;
+
   /* background-color: var(--hoverColor); */
   transform: translateY(-2px);
+
   /* transition: background-color, transform 0.2s linear; */
   transition: transform 0.2s linear;
-  border-radius: 8px;
 }
 
 .svg {
   /* fill: var(--colorGrey); */
   width: 36px;
   height: 36px;
+}
+
+.link:hover .svg--vk {
+  fill: #4a76a8;
+}
+
+.link:hover .svg--ok {
+  fill: #ee8208;
+}
+
+.link:hover .svg--youtube {
+  fill: #c00;
+}
+
+.link:hover .svg--fb {
+  fill: #4267b2;
 }

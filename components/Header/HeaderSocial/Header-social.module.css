@@ -1,4 +1,6 @@
 .wrapper {
+  --social-margin: 0 4px 0 0;
+
   display: flex;
   align-items: center;
 }
@@ -35,5 +37,5 @@
 }
 
 .svg--youtube {
-  fill: #cc0000;
+  fill: #c00;
 }

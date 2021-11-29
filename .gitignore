@@ -27,3 +27,5 @@ sentry.properties
 docker-compose.yml
 # .docker/mysql/dump.sql
 # .docker/sftp/id_rsa.pub
+
+.data

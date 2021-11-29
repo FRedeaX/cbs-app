@@ -2,7 +2,7 @@ import Head from "next/head";
 import Script from "next/script";
 // import scrollbarWidth from "~/public/scripts/scrollbarWidth";
 
-export const SEO = ({ title, description }) => (
+export const SEO = ({ title, description, image }) => (
   <>
     <Head>
       <Script
@@ -35,7 +35,18 @@ export const SEO = ({ title, description }) => (
           ? `${title} | Библиотеки города Байконур`
           : "Библиотеки города Байконур"}
       </title>
+      <meta
+        property="og:title"
+        content={
+          title
+            ? `${title} | Библиотеки города Байконур`
+            : "Библиотеки города Байконур"
+        }
+      />
       <meta name="description" content={description} />
+      <meta property="og:description" content={description} />
+      <meta property="twitter:description" content={description} />
+      {image && <meta property="og:image" content={image} />}
     </Head>
   </>
 );
@@ -45,13 +56,10 @@ export const SEO = ({ title, description }) => (
   <title>{`${title} | ${siteTitle}`}</title>
   <meta name="description" content={description} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
   <meta property="og:site_name" content={siteTitle} />
   <meta property="twitter:card" content="summary" />
   <meta property="twitter:creator" content={config.social.twitter} />
   <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content={description} />
 </Head>; */
 }
 

@@ -35,18 +35,18 @@ const Carousel = ({
 
   const itemWidthRef = useRef(itemWidth);
   const itemCountOfScreenRef = useRef(itemCountOfScreen);
-  // ширина 1 элемента
-  // кол-во элементов на экране
+  // ширина 1-го элемента
+  // кол-во видимых элементов на экране
   useEffect(() => {
     if (scrollRef.current === undefined) return;
     const scrolled = scrollRef.current;
     const scrolledOffsetW = scrolled.offsetWidth;
 
     if (itemWidth === undefined)
-      itemWidthRef.current = scrolled.children[0].children[0].offsetWidth;
+      itemWidthRef.current = scrolled.children?.[0].children?.[0]?.offsetWidth;
     // else itemWidthRef.current = itemWidth;
 
-    if (itemCountOfScreenRef === undefined)
+    if (itemCountOfScreenRef.current === undefined)
       itemCountOfScreenRef.current = Math.max(
         Math.floor(scrolledOffsetW / itemWidthRef.current),
         1
@@ -80,6 +80,7 @@ const Carousel = ({
 
   const hendleClick = (direction) => {
     if (!scrollRef.current) return;
+
     const scrolled = scrollRef.current;
     const scrollTo =
       (itemWidthRef.current + itemMargin * 2) * itemCountOfScreenRef.current;
@@ -89,7 +90,7 @@ const Carousel = ({
 
     scrolled.scroll({
       left: alreadyScrolledRefVar.current,
-      behavior: "smooth",
+      behavior: isOpen ? "auto" : "smooth",
     });
 
     if (alreadyScrolledRefVar.current < 5) {
@@ -181,7 +182,7 @@ const Carousel = ({
     //   smoothscroll.polyfill();
     // }
     alreadyScrolledRefVar.current =
-      scrollRef.current.children[0].children[0].offsetWidth *
+      scrollRef.current.children?.[0].children?.[0]?.offsetWidth *
       countRefVar.current;
 
     // console.log();

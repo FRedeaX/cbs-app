@@ -18,6 +18,9 @@
   margin: 0;
   padding-bottom: 0;
   font-weight: bold;
+
+  /* font-variant: small-caps slashed-zero; */
+  font-feature-settings: "smcp", "zero";
   letter-spacing: 0.034em;
   text-align: center;
   border: none;

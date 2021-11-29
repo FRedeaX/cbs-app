@@ -10,6 +10,7 @@ import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
 import Button from "../../UI/Button/Button";
 import { Icon } from "../../UI/Icon/Icon";
 import classes from "./Image.module.css";
+import { createMarkup } from "~/helpers";
 
 export const imageBlockGQL = {
   fragments: gql`
@@ -147,7 +148,7 @@ export const Image = ({
           // className={className}
         />
         {caption && (
-          <figcaption className={classes.caption}>{caption}</figcaption>
+          <figcaption className={classes.caption} dangerouslySetInnerHTML={createMarkup(caption)} />
         )}
         <div className={classes.controls}>
           <Button

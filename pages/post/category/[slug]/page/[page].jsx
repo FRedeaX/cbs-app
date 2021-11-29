@@ -14,10 +14,11 @@ const Home = ({ menu, posts, pages, categoryName }) => {
     isFallback,
     query: { slug, page },
   } = useRouter();
+  console.log({isFallback});
   return (
     <Layout menu={menu} loading={isFallback} paddingSides={0}>
       <SEO
-        title={`Категория: ${categoryName || ""} — cтраница ${page}`}
+        title={`Категория: ${categoryName} — cтраница ${page}`}
         description={`Мероприятия библиотек города Байконур по категории ${categoryName}, cтраница ${page}`}
       />
       <HomePage

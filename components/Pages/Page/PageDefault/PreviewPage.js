@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { FETCH_PAGE, PageRoot } from "~/components/Pages/Page";
 
-export const PreviewPage = ({ id, type }) => {
+export const PreviewPage = ({ id, type = "DATABASE_ID"  }) => {
   console.log("6", { id, type });
   const { data, loading, error } = useQuery(FETCH_PAGE, {
     variables: {

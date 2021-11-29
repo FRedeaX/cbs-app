@@ -35,6 +35,10 @@
   background-image: url("~/public/icons/download.svg");
 }
 
+.type_close {
+  background-image: url("~/public/icons/close.svg");
+}
+
 .size_xs {
   width: 14px;
   height: 14px;

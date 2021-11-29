@@ -17,15 +17,12 @@ import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
 
 const Home = ({ menu, posts, pages, posters }) => {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Загрузка...</div>;
-  }
+  const {isFallback, query: { page }} = useRouter();
   return (
-    <Layout menu={menu} paddingSides={0}>
+    <Layout menu={menu} loading={isFallback} paddingSides={0}>
       <SEO
-        title={`Страница ${router.query.page}`}
-        description={`Мероприятия библиотек города Байконур страница №${router.query.page}`}
+        title={`Страница ${page}`}
+        description={`Мероприятия библиотек города Байконур страница №${page}`}
       />
       <HomePage
         posts={posts}

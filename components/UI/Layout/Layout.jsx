@@ -8,13 +8,12 @@ import Footer from "~/components/Footer/Footer";
 const Layout = ({ menu, loading, size = "l", paddingSides, children }) => (
   <>
     <Header menus={menu} />
-    {loading && <Loader isFullscreen={true} />}
-    <main
-      style={{ paddingLeft: paddingSides, paddingRight: paddingSides }}
-      className={classNames(classes.main, classes[`main_size_${size}`])}
-    >
-      {children}
-    </main>
+      <main
+        style={{ paddingLeft: paddingSides, paddingRight: paddingSides }}
+        className={classNames(classes.main, classes[`main_size_${size}`])}
+        >
+          {loading ? <Loader isFullscreen={true} /> : children}
+      </main>
     <Footer />
   </>
 );

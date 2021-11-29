@@ -55,7 +55,7 @@ const HomePage = ({
             <SectionHeader>
               {categoryName === undefined
                 ? "Мероприятия"
-                : `Катигория: ${categoryName}`}
+                : `Категория: ${categoryName}`}
             </SectionHeader>
             <div className={classes.container}>
               <PostsRoot postNodes={posts} isGroupCards={isGroupCards} />

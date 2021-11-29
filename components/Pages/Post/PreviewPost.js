@@ -4,7 +4,7 @@ import { GET_POST_CONTENT_BY_BLOCKS } from "./Post";
 import { Post } from "~/components/Pages/Post/Post";
 import { SEO } from "~/components/SEO/SEO";
 
-export const PreviewPost = ({ id, type }) => {
+export const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
   console.log({ id, type });
   const { data, loading, error } = useQuery(GET_POST_CONTENT_BY_BLOCKS, {
     variables: {

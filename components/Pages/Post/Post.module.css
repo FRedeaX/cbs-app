@@ -6,7 +6,7 @@
 }
 
 .header {
-  margin: 1.3em 0;
+  margin: 2em 0 1.3em 0;
 }
 
 .category {
@@ -19,6 +19,26 @@
 
   /* color: rgb(154, 154, 154); */
   font-family: var(--font-R-S);
+}
+
+.body {
+  position: relative;
+}
+
+.Share {
+  --social-margin: 0 4px 0 0;
+}
+
+@media screen and (min-width: 1000px) {
+  .Share {
+    --social-margin: 0 0 4px 0;
+
+    position: absolute;
+    top: -5px;
+    left: -80px;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* .category-link::after {

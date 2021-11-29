@@ -10,6 +10,8 @@ import Button from "../../UI/Button/Button";
 import { Icon } from "../../UI/Icon/Icon";
 import classes from "./Gallery.module.css";
 import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
+import { createMarkup } from "~/helpers";
+
 
 export const galleryBlockGQL = {
   fragments: gql`
@@ -45,11 +47,11 @@ export const Gallery = ({
   // ref,
 }) => {
   const { data: state } = useQuery(gql`
-  query {
-    ${GET_OVERLAY_FRAGMENT}
-    ${SCROLLY_FRAGMENT}
-  }
-`);
+    query {
+      ${GET_OVERLAY_FRAGMENT}
+      ${SCROLLY_FRAGMENT}
+    }
+  `);
   const figureRef = useRef();
   const [zoom, setZoom] = useState(false);
   const [count, setCount] = useState(0);
@@ -76,6 +78,11 @@ export const Gallery = ({
       delay(250).then(() => (figureRef.current.style.zIndex = ""));
     }
   }, [state?.overlay.isOpen, state?.scrollY]);
+  useEffect(() => {
+    if (zoom == false) {
+      overlayVar({ isOpen: false, color: "white" });
+    }
+  }, [zoom]);
 
   return (
     <div className={classNames(classes.block, className)}>
@@ -85,7 +92,7 @@ export const Gallery = ({
           classes.wrapper,
           classes[`wrapper_isZoom_${zoom}`]
         )}
-        style={{ zIndex: zoom ? "4" : delay(0).then("") }}
+        style={{ zIndex: zoom ? "4" : delay(250).then("") }}
         onClick={hendleClick}
       >
         <div className={classes.container}>
@@ -126,7 +133,7 @@ export const Gallery = ({
                     objectFit={zoom ? "contain" : "cover"}
                     // objectPosition="center"
                   />
-                  <figcaption>{image.caption}</figcaption>
+                  <figcaption dangerouslySetInnerHTML={createMarkup(image.caption)} />
                 </figure>
                 // </div>
               );
@@ -138,25 +145,38 @@ export const Gallery = ({
             length={images.length}
           />
         </div>
-        {images[count]?.url !== undefined && (
-          <div
-            className={classNames(
-              classes.controls,
-              classes[`controls_isZoom_${zoom}`]
-            )}
-          >
+        <figcaption className={classes.caption}
+          dangerouslySetInnerHTML={createMarkup(caption)}
+        />
+      </figure>
+      <div
+        className={classNames(
+          classes.controls,
+          classes[`controls_isZoom_${zoom}`]
+        )}
+      >
+        <div className={classes.buttons}>
+          {images[count]?.url !== undefined && (
             <Button
               className={classNames(classes["button_download"], {
                 [classes["button_download_fill"]]: !zoom,
               })}
               href={images[count].url}
               view="download"
-              icon={<Icon type={"download"} isGlyph={true} side={false} />}
+              icon={
+                <Icon type={"download"} isGlyph={true} size="xl" side={false} />
+              }
             />
-          </div>
-        )}
-        <figcaption className={classes.caption}>{caption}</figcaption>
-      </figure>
+          )}
+          {zoom && (
+            <Button
+              className={classes["button_close"]}
+              icon={<Icon type={"close"} size="xxl" />}
+              onClick={() => setZoom(false)}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

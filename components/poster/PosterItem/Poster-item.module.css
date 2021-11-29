@@ -18,6 +18,7 @@
   box-shadow: rgba(30, 30, 30, 0.1) 0 2px 6px;
   cursor: default;
 }
+
 .block:first-child {
   margin-left: 10px;
 }

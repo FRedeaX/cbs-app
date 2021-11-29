@@ -10,10 +10,16 @@ const PagePost = ({ menu, post }) => {
   const { isFallback } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} size={"m"}>
-      <SEO title={post?.title} description={post?.excerpt} />
+      <SEO
+        title={post?.title}
+        description={post?.excerpt}
+        image={post?.featuredImage?.node?.sourceUrl}
+      />
       <Post
         title={post?.title}
         categories={post?.categories}
+        href={post?.link}
+        image={post?.featuredImage?.node?.sourceUrl}
         blocks={post?.blocks}
       />
     </Layout>
@@ -42,7 +48,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: "blocking",
   };
 }
 

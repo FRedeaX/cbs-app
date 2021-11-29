@@ -39,7 +39,7 @@ const Header = ({ menus }) => {
     }
   `);
 
-  const [isMobile, setMobile] = useState(false);
+  // const [isMobile, setMobile] = useState(false);
 
   const [isOpen, setOpen] = useState(false);
   useEffect(() => {

@@ -1,19 +1,20 @@
+import classNames from "classnames";
 import classes from "./Social.module.css";
 
 const Social = ({ type, url, cls, clsLink, clsSVG, ariaLabel }) => {
-  const style = [cls, clsLink, classes.link];
-  const styleSVG = [clsSVG, classes.svg];
-
   return (
     <a
-      className={style.join(" ")}
+      className={classNames(classes.link, cls, clsLink)}
       href={url}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
     >
       {type !== "youtube" && (
-        <svg className={styleSVG.join(" ")} viewBox="0 0 28 28">
+        <svg
+          className={classNames(classes.svg, classes[`svg--${type}`], clsSVG)}
+          viewBox="0 0 28 28"
+        >
           {type === "fb" && (
             <path
               fillRule="evenodd"
@@ -39,7 +40,10 @@ const Social = ({ type, url, cls, clsLink, clsSVG, ariaLabel }) => {
         </svg>
       )}
       {type === "youtube" && (
-        <svg className={styleSVG.join(" ")} viewBox="0 0 18 18">
+        <svg
+          className={classNames(clsSVG, classes[`svg--${type}`], classes.svg)}
+          viewBox="0 0 18 18"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"
