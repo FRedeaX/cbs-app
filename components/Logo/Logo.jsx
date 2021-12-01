@@ -1,18 +1,18 @@
-import classnames from "classnames";
+import classNames from "classnames";
 import Link from "next/link";
 import { memo } from "react";
 import classes from "./Logo.module.css";
+import Image from "next/image";
 
 const Logo = () => (
   <Link href="/">
     <a className={classes.logo}>
-      <img
-        width="80"
-        height="80"
-        className={classnames([classes.img, "skip"])}
+      <Image
         src={"/logos/new-emblem-cbs-3-250x250.png"}
+        className={classNames(classes.img)}
+        width={80}
+        height={80}
         alt="Эмблема ГКУ ЦБС"
-        // srcSet={`${window.location.origin}${process.env.PUBLIC_URL}/new-emblem-cbs-3-250x250.webp`}
       />
     </a>
   </Link>

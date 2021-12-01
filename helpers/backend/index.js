@@ -1,10 +1,11 @@
 import { transformBlocks } from "./blocks";
 import { preparingPaths } from "./menu";
 import { paginationLoad } from "./pagination";
-import { removeDuplicateTag } from "./post";
-import { postersFilter } from "./poster";
+import { removeDuplicateTag } from "./removeDuplicateTag";
+import { postersFilter } from "./postersFilter";
 import { loadPreview } from "./preview";
 import { getMenu } from "./menu";
+import { plaiceholder } from "./plaiceholder";
 
 export {
   postersFilter,
@@ -14,6 +15,7 @@ export {
   loadPreview,
   transformBlocks,
   getMenu,
+  plaiceholder,
 };
 
 export const removeBackslash = (str) => str.replace(/^\/|\/$/g, "");

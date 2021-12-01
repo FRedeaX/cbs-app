@@ -28,7 +28,7 @@ const GroupCards = ({ data, title, description, length }) => {
         })}
         classNameControls={classes.controls}
       >
-        {data.nodes.map((postByTag, index) => (
+        {data.map((postByTag, index) => (
           <Card
             key={postByTag.id}
             data={postByTag}

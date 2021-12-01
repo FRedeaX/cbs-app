@@ -10,6 +10,7 @@ import {
   postersFilter,
   removeDuplicateTag,
   getMenu,
+  plaiceholder,
 } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
@@ -41,8 +42,8 @@ export async function getStaticProps() {
     })
     .then(({ data }) => data);
 
-  const posts = await removeDuplicateTag(dataPosts?.posts.nodes).then(
-    (nodes) => nodes.result
+  const posts = await removeDuplicateTag(dataPosts?.posts.nodes).then((nodes) =>
+    plaiceholder(nodes.result).then((p) => p)
   );
 
   const pages = await paginationLoad({

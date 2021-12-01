@@ -5,7 +5,7 @@ import {
   POSTS_PAGINATION_BY_CATEGORY_GQL,
 } from "~/components/Posts/PostsRoot";
 import { SEO } from "~/components/SEO/SEO";
-import { paginationLoad, getMenu } from "~/helpers/backend";
+import { paginationLoad, getMenu, plaiceholder } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
 
@@ -58,6 +58,8 @@ export async function getStaticProps({ params: { slug } }) {
     fetchPolicy: "network-only",
   });
 
+  const posts = await plaiceholder(data.category.posts.nodes).then((p) => p);
+
   const pages = await paginationLoad({
     key: `posts_c_${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
@@ -73,7 +75,7 @@ export async function getStaticProps({ params: { slug } }) {
     props: {
       menu,
       pages,
-      posts: data.category.posts.nodes,
+      posts,
       name,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10),

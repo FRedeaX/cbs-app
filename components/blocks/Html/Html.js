@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { createMarkup } from "~/helpers";
-import classes from "./Html.moduele.css";
+import classes from "./Html.module.css";
 
 export const htmlBlockGQL = {
   fragments: gql`

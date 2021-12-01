@@ -7,9 +7,9 @@ const PostAndGroupCards = ({ data }) => {
   let column = 0;
 
   return data.map((post, index) => {
-    const tags = post.tags.nodes[0];
+    const tags = post.tags;
 
-    if (tags) {
+    if (tags.__typename === "Tag") {
       // const tag = arrTags.find((tagID) => tagID === tags.id);
       // if (tag) return null;
       // arrTags.push(tags.id);
@@ -19,7 +19,7 @@ const PostAndGroupCards = ({ data }) => {
         //   {tags.tagId}
         <GroupCards
           key={tags.id}
-          data={tags.posts}
+          data={tags.posts.nodes}
           title={tags.name}
           description={tags.description}
           length={tags.count}
@@ -30,7 +30,8 @@ const PostAndGroupCards = ({ data }) => {
       const isNewRow = !(column % 2);
       const nextPost = data[++index];
       const isBig =
-        isNewRow && (nextPost === undefined || !!nextPost.tags.nodes[0]);
+        isNewRow &&
+        (nextPost === undefined || nextPost.tags.__typename === "Tag");
       column++;
       if (isBig) column = 0;
       return (

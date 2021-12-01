@@ -3,8 +3,8 @@ import Link from "next/link";
 import { memo } from "react";
 import { createMarkup } from "../../../helpers";
 import Category from "../Category/Category";
-import BookImage from "./../../book/BookImage/BookImage";
 import classes from "./Card.module.css";
+import Image from "next/image";
 
 // const GET_ARTICLE_CONTENT = gql`
 //   query GetArticleContent($id: ID!) {
@@ -21,6 +21,7 @@ const Card = ({
   index,
   cls,
 }) => {
+  // console.log(title, !!featuredImage.node.src);
   return (
     <article
       className={classNames(
@@ -40,13 +41,19 @@ const Card = ({
             [classes["image_big"]]: isBig,
           })}
         >
-          <BookImage
-            src={featuredImage.node.sourceUrl}
-            cls={classNames(classes.img, {
+          <Image
+            src={featuredImage.node.src}
+            className={classNames(classes.img, {
               [classes["img--horizontal"]]: horizontal,
               [classes["img_big"]]: isBig,
             })}
-            index={index}
+            width={500}
+            height={258}
+            // alt="Picture of the author"
+            blurDataURL={featuredImage.node.blurDataURL}
+            // automatically
+            // provided
+            placeholder="blur"
           />
         </div>
       )}

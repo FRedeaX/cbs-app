@@ -12,12 +12,16 @@ import {
   postersFilter,
   removeDuplicateTag,
   getMenu,
+  plaiceholder,
 } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
 
 const Home = ({ menu, posts, pages, posters }) => {
-  const {isFallback, query: { page }} = useRouter();
+  const {
+    isFallback,
+    query: { page },
+  } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} paddingSides={0}>
       <SEO
@@ -69,7 +73,9 @@ export async function getStaticProps({ params }) {
       fetchPolicy: "network-only",
     })
     .then(({ data }) =>
-      removeDuplicateTag(data.posts.nodes).then((posts) => posts.result)
+      removeDuplicateTag(data.posts.nodes).then((posts) =>
+        plaiceholder(posts.result).then((p) => p)
+      )
     );
 
   const posters = await client

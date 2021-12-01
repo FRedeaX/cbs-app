@@ -75,7 +75,8 @@
   position: relative;
   display: flex;
   flex: 2;
-  padding-bottom: 44.795%;
+
+  /* padding-bottom: 44.795%; */
   overflow: hidden;
 }
 

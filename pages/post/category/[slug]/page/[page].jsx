@@ -5,7 +5,7 @@ import {
   POSTS_PAGINATION_BY_CATEGORY_GQL,
 } from "~/components/Posts/PostsRoot";
 import { SEO } from "~/components/SEO/SEO";
-import { paginationLoad, getMenu } from "~/helpers/backend";
+import { paginationLoad, getMenu, plaiceholder } from "~/helpers/backend";
 import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
 
@@ -14,7 +14,6 @@ const Home = ({ menu, posts, pages, categoryName }) => {
     isFallback,
     query: { slug, page },
   } = useRouter();
-  console.log({isFallback});
   return (
     <Layout menu={menu} loading={isFallback} paddingSides={0}>
       <SEO
@@ -67,12 +66,23 @@ export async function getStaticProps({ params: { slug, page } }) {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => ({
-      posts: data.category.posts.nodes,
-      categoryName: data.category.posts.nodes[0].categories.nodes.filter(
-        (node) => node.slug === slug
-      )?.[0]?.name,
-    }));
+    .then(({ data }) =>
+      plaiceholder(data.category.posts.nodes).then((posts) => ({
+        posts,
+        categoryName: data.category.posts.nodes[0].categories.nodes.filter(
+          (node) => node.slug === slug
+        )?.[0]?.name,
+      }))
+    );
+
+  // .then(({ data }) =>
+
+  // ({
+  //   posts: plaiceholder(data.category.posts.nodes).then((p) => p),
+  //   categoryName: data.category.posts.nodes[0].categories.nodes.filter(
+  //     (node) => node.slug === slug
+  //   )?.[0]?.name,
+  // }));
 
   return {
     props: {
