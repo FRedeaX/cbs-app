@@ -18,10 +18,8 @@ const Card = ({
   data: { isSticky, featuredImage, uri, title, excerpt, categories },
   horizontal,
   isBig,
-  index,
   cls,
 }) => {
-  // console.log(title, !!featuredImage.node.src);
   return (
     <article
       className={classNames(
@@ -34,29 +32,30 @@ const Card = ({
         cls
       )}
     >
-      {featuredImage && (
-        <div
-          className={classNames(classes.image, {
-            [classes["image--horizontal"]]: horizontal,
-            [classes["image_big"]]: isBig,
-          })}
-        >
-          <Image
-            src={featuredImage.node.src}
-            className={classNames(classes.img, {
-              [classes["img--horizontal"]]: horizontal,
-              [classes["img_big"]]: isBig,
+      {featuredImage.node.src !== null &&
+        featuredImage.node.blurDataURL !== null && (
+          <div
+            className={classNames(classes.image, {
+              [classes["image--horizontal"]]: horizontal,
+              [classes["image_big"]]: isBig,
             })}
-            width={500}
-            height={258}
-            // alt="Picture of the author"
-            blurDataURL={featuredImage.node.blurDataURL}
-            // automatically
-            // provided
-            placeholder="blur"
-          />
-        </div>
-      )}
+          >
+            <Image
+              src={featuredImage.node.src}
+              className={classNames(classes.img, {
+                [classes["img--horizontal"]]: horizontal,
+                [classes["img_big"]]: isBig,
+              })}
+              width={500}
+              height={258}
+              // alt="Picture of the author"
+              blurDataURL={featuredImage.node.blurDataURL}
+              // automatically
+              // provided
+              placeholder="blur"
+            />
+          </div>
+        )}
       <div
         className={classNames(classes.info, {
           [classes["info-horizontal"]]: horizontal,

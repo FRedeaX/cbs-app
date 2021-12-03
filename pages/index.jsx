@@ -72,22 +72,4 @@ export async function getStaticProps() {
   };
 }
 
-// export async function getServerSideProps({ query }) {
-//   console.log(query);
-
-//   const { data } = await client.query({
-//     query: FETCH_ARTICLES,
-//     // variables: {
-//     //   first: 10,
-//     // },
-//     fetchPolicy: "network-only",
-//   });
-
-//   return {
-//     props: {
-//       posts: data.posts.nodes,
-//     },
-//   };
-// }
-
 export default Home;
