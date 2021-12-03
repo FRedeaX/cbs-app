@@ -199,12 +199,12 @@ const Carousel = ({
           ref={scrollRef}
           onTouchEnd={(event) => throttler(() => hendleScroll(event))}
           onWheel={(event) => throttler(() => hendleScroll(event))}
-          className={classNames(classes.scrolled, className, {
+          className={classNames(classes.scrolled, {
             [classes["scrolled_scroll-snap"]]: isScrollSnap,
           })}
         >
           <div
-            className={classes.items}
+            className={classNames(classes.items, className)}
             // onDragEnter={(event) => (dragXRefVar.current = event.clientX)}
             // onDrag={hendleDrag}
             // onDragEnd={(event) => (dragXRefVar.current = 0)}
