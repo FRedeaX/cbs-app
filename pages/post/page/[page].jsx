@@ -9,11 +9,11 @@ import {
 import { SEO } from "~/components/SEO/SEO";
 import {
   paginationLoad,
-  postersFilter,
   removeDuplicateTag,
   getMenu,
   plaiceholder,
 } from "~/helpers/backend";
+import { dateConversion, sort, filter } from "~/helpers/backend/poster";
 import { client } from "~/store/apollo-client";
 import Layout from "~/components/UI/Layout/Layout";
 
@@ -82,7 +82,13 @@ export async function getStaticProps({ params }) {
     .query({
       query: FETCH_POSTER,
     })
-    .then(({ data }) => postersFilter(data.posters.nodes));
+    .then(({ data }) =>
+      dateConversion(data.posters.nodes).then((posters) =>
+        sort(posters).then((posters) =>
+          filter(posters).then((posters) => posters)
+        )
+      )
+    );
 
   return {
     props: {
