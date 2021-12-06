@@ -32,7 +32,6 @@ const PosterRoot = ({ posters, className }) => {
       // </PosterGroup>
     ));
 
-  // console.log(windowWidthVar());
   return (
     <>
       <PosterList className={className.list}>

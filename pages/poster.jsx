@@ -6,6 +6,7 @@ import { SEO } from "~/components/SEO/SEO";
 import Layout from "~/components/UI/Layout/Layout";
 import { client } from "~/store/apollo-client";
 import { getMenu } from "~/helpers/backend";
+import { dateConversion, sort } from "~/helpers/backend/poster";
 
 const Poster = ({ menu, posters }) => {
   return (
@@ -19,7 +20,7 @@ const Poster = ({ menu, posters }) => {
         <SectionHeader>Анонсы</SectionHeader>
         <PosterList>
           {posters.map((poster) => (
-            <PosterItem data={poster} />
+            <PosterItem key={poster.id} data={poster} />
           ))}
         </PosterList>
       </Layout>
@@ -29,15 +30,20 @@ const Poster = ({ menu, posters }) => {
 
 export async function getStaticProps() {
   const menu = await getMenu();
-  const { data: _posters } = await client.query({
-    query: FETCH_POSTER,
-    fetchPolicy: "network-only",
-  });
-  // const posters = postersFilter(_posters.posters.nodes);
+  const posters = await client
+    .query({
+      query: FETCH_POSTER,
+      fetchPolicy: "network-only",
+    })
+    .then(({ data }) =>
+      dateConversion(data.posters.nodes).then((posters) =>
+        sort(posters).then((posters) => posters)
+      )
+    );
 
   return {
     props: {
-      posters: _posters.posters.nodes,
+      posters,
       menu,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10),
