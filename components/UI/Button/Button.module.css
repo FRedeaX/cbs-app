@@ -107,7 +107,7 @@
   content: "";
 }
 
-.button::after {
+/* .button::after {
   position: absolute;
   top: 0;
   right: 0;
@@ -116,4 +116,4 @@
   z-index: -1;
   transform: scale(0);
   content: "";
-}
+} */

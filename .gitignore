@@ -24,6 +24,7 @@ sentry.properties
 #docker
 .env
 .docker
+.dockerignore
 docker-compose.yml
 # .docker/mysql/dump.sql
 # .docker/sftp/id_rsa.pub

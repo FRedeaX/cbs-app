@@ -1,11 +1,10 @@
 .wraper {
+  padding: 2px 5px;
+  color: var(--badge-color, var(--white-80));
   font-size: 14px;
-  color: var(--white-80);
-
-  background-color: var(--black-80);
+  background-color: var(--badge-background-color, var(--black-80));
   border-radius: 4px;
 
-  padding: 2px 5px;
   /* color: hsl(0deg 0% 100% / 62%);
   background-color: hsl(0deg 0% 12% / 65%); */
 }

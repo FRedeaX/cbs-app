@@ -5,12 +5,16 @@ import { Schedule } from "./Schedule/Schedule";
 import { Telefon } from "./Telefon/Telefon";
 
 const ContactInfo = (props) => {
-  const { schedule, scheduleSecondary, email, telefon } = props;
+  const { schedule, scheduleAUP, scheduleSecondary, email, telefon } = props;
 
   return (
     <Fragment>
       {schedule && (
-        <Schedule schedule={schedule} scheduleSecondary={scheduleSecondary} />
+        <Schedule
+          scheduleDefault={schedule}
+          scheduleAUP={scheduleAUP}
+          scheduleSecondary={scheduleSecondary}
+        />
       )}
       {email && telefon ? (
         <div>

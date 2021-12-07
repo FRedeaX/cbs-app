@@ -14,6 +14,12 @@
   font-size: 12.6px;
   text-transform: none;
 }
+.item--lunchBreak .weekday {
+  width: 32px;
+  margin: 8px 5px 0 0;
+  font-size: 13px;
+  text-transform: inherit;
+}
 
 .time {
   font-size: 15px;
@@ -47,6 +53,8 @@
 }
 
 .link {
+  --button-text-align: center;
+
   position: relative;
   padding: 4px 0 8px;
   color: var(--subtitleColor);

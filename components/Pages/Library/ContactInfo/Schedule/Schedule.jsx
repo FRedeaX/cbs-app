@@ -5,20 +5,30 @@ import Button from "~/components/UI/Button/Button";
 import { Heading } from "../../../../blocks/Heading/Heading";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Schedule.module.css";
+import Link from "next/link";
 
-export const Schedule = ({ schedule, scheduleSecondary }) => {
+export const Schedule = ({
+  scheduleDefault,
+  scheduleAUP,
+  scheduleSecondary,
+}) => {
   const { search } = useRouter();
+  const {
+    pathname,
+    query: { lib, schedule },
+  } = useRouter();
 
   const isSchedule = useMemo(() => {
     return new URLSearchParams(search).has("schedule");
   }, [search]);
 
-  const lib = useMemo(() => {
-    const s = new URLSearchParams(search);
-    return s.has("lib") ? `lib=${s.get("lib")}` : null;
-  }, [search]);
+  // const lib = useMemo(() => {
+  //   const s = new URLSearchParams(search);
+  //   return s.has("lib") ? `lib=${s.get("lib")}` : null;
+  // }, [search]);
 
   function renderScheduleItem(data) {
+    if (data === undefined) return;
     return data.map((item) => {
       return (
         <div
@@ -26,7 +36,10 @@ export const Schedule = ({ schedule, scheduleSecondary }) => {
           className={classNames([
             classesInfo.item,
             classes.item,
-            { [classes["item--cleanup-day"]]: item.cleanupDay },
+            {
+              [classes["item--cleanup-day"]]: item.cleanupDay,
+              [classes["item--lunchBreak"]]: item.lunchBreak,
+            },
           ])}
         >
           <span
@@ -51,50 +64,42 @@ export const Schedule = ({ schedule, scheduleSecondary }) => {
         >
           График работы
         </Heading>
-        {!!scheduleSecondary.length && (
-          <div className={classes.controls}>
+        <div className={classes.controls}>
+          <Link
+            href={`/biblioteki/?lib=${lib || "cgb"}&schedule=default`}
+            passHref
+            replace
+            scroll={false}
+          >
             <Button
-              to={{
-                pathname: "/biblioteki/",
-                search:
-                  isSchedule && new URLSearchParams(search).has("lib")
-                    ? `?lib=${new URLSearchParams(search).get("lib")}`
-                    : search,
-                state: {
-                  scrollToTop: false,
-                },
-              }}
-              isActive={() => !isSchedule}
-              activeClassName={classes.active}
-              className={classes.link}
-              aria-current={"step"}
+              view="link"
+              className={classNames(classes.link, {
+                [classes.active]:
+                  schedule === "default" || schedule === undefined,
+              })}
             >
-              Ежедневный
+              Для читателей
             </Button>
+          </Link>
+          <Link
+            href={`/biblioteki/?lib=${lib || "cgb"}&schedule=aup`}
+            passHref
+            replace
+            scroll={false}
+          >
             <Button
-              to={{
-                pathname: "/biblioteki/",
-                search: isSchedule
-                  ? search
-                  : !isSchedule && lib
-                  ? `?${lib}&schedule=1`
-                  : "?schedule=1",
-                state: {
-                  scrollToTop: false,
-                },
-              }}
-              isActive={() => !!isSchedule}
-              activeClassName={classes.active}
-              className={classes.link}
-              aria-current={"step"}
+              view="link"
+              className={classNames(classes.link, {
+                [classes.active]: schedule === "aup",
+              })}
             >
-              Праздничные дни
+              АУП
             </Button>
-          </div>
-        )}
+          </Link>
+        </div>
       </div>
       <div className={classesInfo.list}>
-        {renderScheduleItem(isSchedule ? scheduleSecondary : schedule)}
+        {renderScheduleItem(schedule === "aup" ? scheduleAUP : scheduleDefault)}
       </div>
     </div>
   );

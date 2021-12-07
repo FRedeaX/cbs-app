@@ -16,6 +16,12 @@
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
 }
+.item div {
+  flex: 4.8;
+}
+.item a {
+  flex: 1;
+}
 
 .subtitle {
   display: block;

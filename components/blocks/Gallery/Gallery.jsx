@@ -12,7 +12,6 @@ import classes from "./Gallery.module.css";
 import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
 import { createMarkup } from "~/helpers";
 
-
 export const galleryBlockGQL = {
   fragments: gql`
     fragment galleryBlockGQL on CoreGalleryBlock {
@@ -133,19 +132,24 @@ export const Gallery = ({
                     objectFit={zoom ? "contain" : "cover"}
                     // objectPosition="center"
                   />
-                  <figcaption dangerouslySetInnerHTML={createMarkup(image.caption)} />
+                  <figcaption
+                    dangerouslySetInnerHTML={createMarkup(image.caption)}
+                  />
                 </figure>
                 // </div>
               );
             })}
           </Carousel>
-          <Badge
-            className={classes.badge}
-            count={count + 1}
-            length={images.length}
-          />
+          {zoom === false && (
+            <Badge
+              className={classes.badge}
+              count={count + 1}
+              length={images.length}
+            />
+          )}
         </div>
-        <figcaption className={classes.caption}
+        <figcaption
+          className={classes.caption}
           dangerouslySetInnerHTML={createMarkup(caption)}
         />
       </figure>
@@ -155,6 +159,13 @@ export const Gallery = ({
           classes[`controls_isZoom_${zoom}`]
         )}
       >
+        {zoom === true && (
+          <Badge
+            className={classes.badge}
+            count={count + 1}
+            length={images.length}
+          />
+        )}
         <div className={classes.buttons}>
           {images[count]?.url !== undefined && (
             <Button
