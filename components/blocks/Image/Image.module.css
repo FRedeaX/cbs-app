@@ -4,8 +4,7 @@
   --icon-fill: #fff;
 
   display: flex;
-
-  /* width: 100%; */
+  height: 100%;
   margin: 6px 0 20px;
 }
 .block:first-child {
@@ -27,12 +26,15 @@
 
 .figure {
   position: relative;
+  width: 100%;
+  height: 100%;
   margin: 0;
 
   /* min-width: 100%;
   padding-top: 56.25%; */
-  overflow: hidden;
-  border-radius: 12px;
+
+  /* overflow: hidden;
+  border-radius: 12px; */
   cursor: pointer;
 
   /* transition: transform 0.25s linear; */
@@ -42,6 +44,14 @@
 /* .figure ~ div {
   display: block !important;
 } */
+
+.figure_zoom_true img {
+  border-radius: 12px !important;
+}
+
+.image {
+  border-radius: 12px;
+}
 
 .caption {
   position: absolute;

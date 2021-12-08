@@ -32,16 +32,27 @@ const transform = async (arr) => {
                 (_blocks[index] = { name: `error: ${block.name}`, message })
             )
         );
-
-        // promise.push(
-        //   getPlaiceholder(url).then(
-        //     ({ base64, img }) =>
-        //       (_blocks[index] = addAttributes(block, { base64, img }))
-        //   )
-        // );
-
         break;
       }
+
+      case "core/media-text": {
+        promise.push(
+          getSizeOf(block.attributes.mediaUrl)
+            .then(
+              ({ width, height }) =>
+                (_blocks[index] = addAttributes(block, {
+                  width,
+                  height,
+                }))
+            )
+            .catch(
+              ({ message }) =>
+                (_blocks[index] = { name: `error: ${block.name}`, message })
+            )
+        );
+        break;
+      }
+
       case "core/gallery": {
         const images = [];
         // const avgWidth = [];

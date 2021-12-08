@@ -11,7 +11,7 @@ import { fileBlockGQL } from "./../../blocks/File/File";
 import { galleryBlockGQL } from "./../../blocks/Gallery/Gallery";
 import { headingBlockGQL } from "./../../blocks/Heading/Heading";
 import { htmlBlockGQL } from "./../../blocks/Html/Html";
-import { imageBlockGQL } from "./../../blocks/Image/Image";
+import { imageBlockGQL } from "./../../blocks/Image/Figure";
 import { listBlockGQL } from "./../../blocks/List/List";
 // import { mediaTextBlockGQL } from "./../../blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "./../../blocks/Paragraph/Paragraph";

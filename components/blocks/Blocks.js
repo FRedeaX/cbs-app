@@ -6,8 +6,10 @@ import { File } from "./File/File";
 import { Gallery } from "./Gallery/Gallery";
 import { Heading } from "./Heading/Heading";
 import { Html } from "./Html/Html";
+import { Figure } from "./Image/Figure";
 import { Image } from "./Image/Image";
 import { List } from "./List/List";
+import { MediaText } from "./MediaText/MediaText";
 import { Paragraph } from "./Paragraph/Paragraph";
 import { Pullquote } from "./Pullquote/Pullquote";
 import { Quote } from "./Quote/Quote";
@@ -36,12 +38,17 @@ export const Blocks = ({ blocks, className }) => {
         return <Gallery key={key} {...block.attributes} />;
 
       case "core/image":
+        const { caption, align, alt, url, width, height } = block.attributes;
         return (
-          <Image
+          <Figure
             key={key}
-            {...block.attributes}
+            caption={caption}
+            align={align}
+            url={url}
             className={[block.attributes.className, className?.image]}
-          />
+          >
+            <Image alt={alt} url={url} width={width} height={height} />
+          </Figure>
         );
 
       case "core/columns":
@@ -65,8 +72,15 @@ export const Blocks = ({ blocks, className }) => {
       case "core/list":
         return <List key={key} {...block.attributes} />;
 
-      // case "core/media-text":
-      //   return <MediaText key={key} {...block.attributes} />;
+      case "core/media-text":
+        console.log(block.attributes);
+        return (
+          <MediaText
+            key={key}
+            innerBlocks={block.innerBlocks}
+            {...block.attributes}
+          />
+        );
 
       case "core/file":
         return <File key={key} {...block.attributes} />;

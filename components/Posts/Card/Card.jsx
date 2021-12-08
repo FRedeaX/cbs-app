@@ -56,11 +56,7 @@ const Card = ({
             />
           </div>
         )}
-      <div
-        className={classNames(classes.info, {
-          [classes["info-horizontal"]]: horizontal,
-        })}
-      >
+      <div className={classes.info}>
         <div className={classes.text}>
           <h3 className={classes.title}>
             <Link href={uri}>

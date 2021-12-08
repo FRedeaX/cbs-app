@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import gql from "graphql-tag";
 import { galleryBlockGQL } from "~/components/blocks/Gallery/Gallery";
-import { imageBlockGQL } from "~/components/blocks/Image/Image";
+import { imageBlockGQL } from "~/components/blocks/Image/Figure";
 import { paragraphBlockGQL } from "~/components/blocks/Paragraph/Paragraph";
 import { htmlBlockGQL } from "~/components/blocks/Html/Html";
 import { verseBlockGQL } from "~/components/blocks/Verse/Verse";

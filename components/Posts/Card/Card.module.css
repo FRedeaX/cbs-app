@@ -127,10 +127,11 @@
   padding: 10px 18px 8px 18px;
 }
 
-.info-horizontal {
-  flex: 1.9226 1;
-}
-
+/* @media screen and (min-width: 768px) {
+  .info-horizontal {
+    flex: 1.9226 1;
+  }
+} */
 .text {
   overflow: hidden;
   line-height: 1.5;

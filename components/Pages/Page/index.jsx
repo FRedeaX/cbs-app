@@ -6,8 +6,9 @@ import { fileBlockGQL } from "../../blocks/File/File";
 import { galleryBlockGQL } from "../../blocks/Gallery/Gallery";
 import { headingBlockGQL } from "../../blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../blocks/Html/Html";
-import { imageBlockGQL } from "../../blocks/Image/Image";
+import { imageBlockGQL } from "../../blocks/Image/Figure";
 import { listBlockGQL } from "../../blocks/List/List";
+import { mediaTextBlockGQL } from "../../blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../blocks/Quote/Quote";
 import { separatorBlockGQL } from "../../blocks/Separator/Separator";
@@ -82,6 +83,7 @@ export const FETCH_PAGE = gql`
         ...separatorBlockGQL
         ...quoteBlockGQL
         ...listBlockGQL
+        ...mediaTextBlockGQL
         ...fileBlockGQL
         ...spacerBlockGQL
         ...headingBlockGQL
@@ -102,6 +104,7 @@ export const FETCH_PAGE = gql`
   ${separatorBlockGQL.fragments}
   ${quoteBlockGQL.fragments}
   ${listBlockGQL.fragments}
+  ${mediaTextBlockGQL.fragments}
   ${fileBlockGQL.fragments}
   ${spacerBlockGQL.fragments}
   ${headingBlockGQL.fragments}
