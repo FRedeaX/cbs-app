@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import classnames from "classnames";
 import { memo, useEffect, useRef, useCallback } from "react";
 import { GET_OVERLAY, overlayVar } from "~/store/variables/overlay";
+import { useRouter } from "next/router";
 import classes from "./Overlay.module.css";
 
 const Overlay = ({ isTouch = false }) => {
@@ -10,6 +11,7 @@ const Overlay = ({ isTouch = false }) => {
       overlay: { isOpen, zIndex, opacity, color, isOverflow },
     },
   } = useQuery(GET_OVERLAY);
+  const { asPath } = useRouter();
 
   useEffect(() => {
     if (isOpen) addStyle();
@@ -32,6 +34,13 @@ const Overlay = ({ isTouch = false }) => {
     _overlay.current = { zIndex, color };
   }, [isOpen, zIndex, color]);
 
+  useEffect(() => {
+    overlayVar({
+      isOpen: false,
+      zIndex: _overlay.current.zIndex,
+      color: _overlay.current.color,
+    });
+  }, [asPath]);
   useEffect(() => {
     const keyEsc = (event) => {
       if (event.keyCode === 27) {
