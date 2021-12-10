@@ -174,7 +174,7 @@
   left: 50%;
   width: calc(100vw - var(--scrollbarWidth));
   height: 100vh;
-  margin-top: 10px;
+  padding-top: 44px;
   transform: translate(-50%, -50%);
 }
 .image_isZoom_true {
