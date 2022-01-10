@@ -1,4 +1,5 @@
 import classNames from "classnames";
+
 import classes from "./Poster-group.module.css";
 
 const PosterGroup = ({ children, className }) => (

@@ -1,9 +1,9 @@
-import { Preview as PreviewRender } from "~/components/Pages/Preview/Preview";
-import Layout from "~/components/UI/Layout/Layout";
-import { getMenu } from "~/helpers/backend";
+import PreviewRender from "../components/Pages/Preview/Preview";
+import Layout from "../components/UI/Layout/Layout";
+import { getMenu } from "../helpers/backend";
 
 const Preview = ({ menu, id, isPage }) => (
-  <Layout menu={menu} size={"m"}>
+  <Layout menu={menu} size="m">
     <PreviewRender id={id} isPage={isPage} />
   </Layout>
 );

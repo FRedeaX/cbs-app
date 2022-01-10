@@ -1,5 +1,8 @@
-import gql from "graphql-tag";
+/* eslint-disable import/no-cycle */
+
+/* eslint-disable react/jsx-props-no-spreading */
 import { useRouter } from "next/router";
+
 import { Columns } from "./Columns/Columns";
 import { Embed } from "./Embed/Embed";
 import { File } from "./File/File";
@@ -7,7 +10,7 @@ import { Gallery } from "./Gallery/Gallery";
 import { Heading } from "./Heading/Heading";
 import { Html } from "./Html/Html";
 import { Figure } from "./Image/Figure";
-import { Image } from "./Image/Image";
+import Image from "./Image/Image";
 import { List } from "./List/List";
 import { MediaText } from "./MediaText/MediaText";
 import { Paragraph } from "./Paragraph/Paragraph";
@@ -18,7 +21,7 @@ import { Spacer } from "./Spacer/Spacer";
 import { Table } from "./Table/Table";
 import { Verse } from "./Verse/Verse";
 
-export const Blocks = ({ blocks, className }) => {
+const Blocks = ({ blocks, className }) => {
   const router = useRouter();
   // console.log(blocks);
 
@@ -37,7 +40,7 @@ export const Blocks = ({ blocks, className }) => {
       case "core/gallery":
         return <Gallery key={key} {...block.attributes} />;
 
-      case "core/image":
+      case "core/image": {
         const { caption, align, alt, url, width, height } = block.attributes;
         return (
           <Figure
@@ -45,12 +48,11 @@ export const Blocks = ({ blocks, className }) => {
             caption={caption}
             align={align}
             url={url}
-            className={[block.attributes.className, className?.image]}
-          >
+            className={[block.attributes.className, className?.image]}>
             <Image alt={alt} url={url} width={width} height={height} />
           </Figure>
         );
-
+      }
       case "core/columns":
         return <Columns key={key} innerBlocks={block.innerBlocks} />;
 
@@ -73,7 +75,6 @@ export const Blocks = ({ blocks, className }) => {
         return <List key={key} {...block.attributes} />;
 
       case "core/media-text":
-        console.log(block.attributes);
         return (
           <MediaText
             key={key}
@@ -101,7 +102,8 @@ export const Blocks = ({ blocks, className }) => {
         return null;
 
       default: {
-        console.error({
+        // eslint-disable-next-line no-console
+        console.warn({
           message: block.message || "Блок не найден",
           path: { asPath: router.asPath, route: router.route },
           name: block.name,
@@ -111,6 +113,8 @@ export const Blocks = ({ blocks, className }) => {
     }
   });
 };
+
+export default Blocks;
 
 // export const blocksGQL = {
 //   fragments: gql`

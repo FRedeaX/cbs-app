@@ -1,4 +1,5 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
+
 import classes from "./Separator.module.css";
 
 export const separatorBlockGQL = {

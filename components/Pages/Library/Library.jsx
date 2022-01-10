@@ -2,14 +2,18 @@ import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import Button from "~/components/UI/Button/Button";
+
 import { asyncLoadScript } from "../../../helpers";
-import { Heading } from "../../blocks/Heading/Heading";
 import Title, { SUBTITLE } from "../../Title/Title";
+import Button from "../../UI/Button/Button";
+import { Heading } from "../../blocks/Heading/Heading";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
 import LibraryInfo from "./LibraryInfo/LibraryInfo";
+
 let map;
+const YMAP_API =
+  "https://api-maps.yandex.ru/2.1/?apikey=76dd679b-d43f-4800-b744-f749eb0b34aa&lang=ru_RU";
 
 const Library = ({ filials }) => {
   const router = useRouter();
@@ -21,8 +25,8 @@ const Library = ({ filials }) => {
   const [filial, setFilial] = useState(filials[lib] || filials.cgb);
 
   const selectPlacemark = useCallback(() => {
-    let geoObjects = window.ymaps.geoQuery(map.geoObjects);
-    let selected = geoObjects
+    const geoObjects = window.ymaps.geoQuery(map.geoObjects);
+    const selected = geoObjects
       .search(`properties.id = '${filial.slug}'`)
       .setOptions("preset", "islands#redIcon");
     geoObjects.remove(selected).setOptions("preset", "islands#blueIcon");
@@ -44,7 +48,7 @@ const Library = ({ filials }) => {
       });
 
       Object.values(filials).forEach((item) => {
-        let placemark = new window.ymaps.Placemark(
+        const placemark = new window.ymaps.Placemark(
           [item.pointX, item.pointY],
           {
             id: item.slug,
@@ -53,25 +57,25 @@ const Library = ({ filials }) => {
           },
           {
             preset: "twirl#greenStretchyIcon",
-          }
+          },
         );
         map.geoObjects.add(placemark);
-        placemark.events.add("click", function (e) {
+        placemark.events.add("click", (e) => {
           const id = placemark.properties.get("id");
 
           // const s = new URLSearchParams(window.location.query).has("schedule");
 
           router.replace(
-            `/biblioteki?lib=${id}&schedule=${schedule || "default"}`
+            `/biblioteki?lib=${id}&schedule=${schedule || "default"}`,
           );
 
-          let targetObject = e.get("target");
+          const targetObject = e.get("target");
           if (targetObject.geometry.getType() === "Point") {
             // map.panTo(targetObject.geometry.getCoordinates(), FOCUS_ZOOM);
             map.setCenter(targetObject.geometry.getCoordinates(), FOCUS_ZOOM);
           }
         });
-        placemark.events.add("balloonclose", function (e) {
+        placemark.events.add("balloonclose", () => {
           map.setZoom(zoom);
           map.setCenter([45.6246, 63.308]);
         });
@@ -80,39 +84,32 @@ const Library = ({ filials }) => {
     }
 
     asyncLoadScript(YMAP_API, window.ymaps).then(() =>
-      window.ymaps.ready(init)
+      window.ymaps.ready(init),
     );
-  }, []);
+  }, [filials, router, schedule]);
 
   useEffect(() => {
     setFilial(filials[lib] || filials.cgb);
     if (isMap !== false) selectPlacemark();
-  }, [filial, lib, isMap]);
+  }, [filials, lib, isMap, selectPlacemark]);
 
-  const renderControls = () => {
-    return Object.values(filials).map((item) => {
-      return (
-        <Link
-          key={item.slug}
-          href={`/biblioteki?lib=${item.slug}&schedule=${
-            schedule || "default"
-          }`}
-          passHref
-          replace
-          scroll={false}
-        >
-          <Button
-            view="link"
-            className={classNames(classes.link, {
-              [classes.active]: filial.slug === item.slug,
-            })}
-          >
-            {item.shortName}
-          </Button>
-        </Link>
-      );
-    });
-  };
+  const renderControls = () =>
+    Object.values(filials).map((item) => (
+      <Link
+        key={item.slug}
+        href={`/biblioteki?lib=${item.slug}&schedule=${schedule || "default"}`}
+        passHref
+        replace
+        scroll={false}>
+        <Button
+          view="link"
+          className={classNames(classes.link, {
+            [classes.active]: filial.slug === item.slug,
+          })}>
+          {item.shortName}
+        </Button>
+      </Link>
+    ));
 
   return (
     <div className={classes.body}>
@@ -121,12 +118,12 @@ const Library = ({ filials }) => {
           {filial.name}
         </Heading>
       </div>
-      <Title type={SUBTITLE} HtmlTeg={"h3"} cls={classes.subtitle}>
+      <Title type={SUBTITLE} HtmlTeg="h3" cls={classes.subtitle}>
         {filial.address}
       </Title>
       <div className={classes.controls}>{renderControls()}</div>
       <div className={classes.content}>
-        <div id="map" className={classes.map}></div>
+        <div id="map" className={classes.map} />
         <aside className={classes.aside}>
           <ContactInfo
             schedule={filial.schedule}
@@ -145,6 +142,3 @@ const Library = ({ filials }) => {
 };
 
 export default Library;
-
-const YMAP_API =
-  "https://api-maps.yandex.ru/2.1/?apikey=76dd679b-d43f-4800-b744-f749eb0b34aa&lang=ru_RU";

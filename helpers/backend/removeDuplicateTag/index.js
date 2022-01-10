@@ -1,4 +1,4 @@
-export const removeDuplicateTag = async (data) => {
+const removeDuplicateTag = async (data) => {
   const arrTags = [];
   const result = [];
   if (!data) return { arrTags, result };
@@ -18,3 +18,5 @@ export const removeDuplicateTag = async (data) => {
   });
   return { arrTags, result };
 };
+
+export default removeDuplicateTag;

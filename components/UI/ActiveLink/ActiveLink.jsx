@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import React, { Children } from "react";
+import { Children, cloneElement } from "react";
 
 const ActiveLink = ({ children, activeClassName, isLink = true, ...props }) => {
   const { asPath } = useRouter();
@@ -14,9 +14,10 @@ const ActiveLink = ({ children, activeClassName, isLink = true, ...props }) => {
       : childClassName;
 
   return isLink ? (
-    <Link {...props}>{React.cloneElement(child, { className })}</Link>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Link {...props}>{cloneElement(child, { className })}</Link>
   ) : (
-    React.cloneElement(child, { className })
+    cloneElement(child, { className })
   );
 };
 

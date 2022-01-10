@@ -1,6 +1,6 @@
 import { gql, makeVar } from "@apollo/client";
-import { isFront } from "~/helpers";
-import { delay } from "~/helpers/delay";
+
+import { delay, isFront } from "../../../helpers";
 
 export const windowWidthVar = isFront
   ? makeVar(window.innerWidth)
@@ -16,7 +16,7 @@ export const GET_WIDTH = gql`
 if (typeof window !== "undefined") {
   window.addEventListener(
     "resize",
-    () => delay(350).then(() => windowWidthVar(window.innerWidth))
+    () => delay(350).then(() => windowWidthVar(window.innerWidth)),
     // throttler(() => windowWidthVar(window.innerWidth), 350)
   );
 }

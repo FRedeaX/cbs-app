@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../UI/Layout/Layout";
+
 import classes from "./Footer.module.css";
-import { YMetrika } from "./YMetrika/YMetrika/YMetrika";
+import YMetrika from "./YMetrika/YMetrika";
 
 function Footer() {
   return (

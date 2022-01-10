@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
+
 import Button from "../../../UI/Button/Button";
-import { Icon } from "../../../UI/Icon/Icon";
+import Icon from "../../../UI/Icon/Icon";
 import classes from "./Pagination.module.css";
 
 const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
@@ -33,8 +35,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
             view="link"
             theme="gray"
             className={classes.link}
-            title="Перейти к первой странице"
-          >
+            title="Перейти к первой странице">
             <Icon
               type="double-arrow"
               size="xs"
@@ -45,35 +46,25 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
           </Button>
         </Link>
       )}
-      {/* <PaginationButtons
-        prevPage={prevPage}
-        nextPage={nextPage}
-        countPage={pages}
-        page={page}
-        _page={_page}
-        paginationURI={paginationURI}
-        className={classes}
-      /> */}
       {Array(pages)
         .fill()
         .map((_, index) => {
-          if (!(prevPage <= ++index && index <= nextPage)) return null;
-          const number = index++;
+          const number = index + 1;
+          const nextNumber = number + 1;
+          if (!(prevPage <= nextNumber && number <= nextPage)) return null;
           const active =
             page === number || (_page === undefined && number === 1);
           return (
             <Link
               key={`p${number}`}
               href={`${paginationURI}/page/${number}`}
-              passHref
-            >
+              passHref>
               <Button
                 view="link"
                 theme="gray"
                 checked={active}
                 disable={active}
-                className={classes.link}
-              >
+                className={classes.link}>
                 {number}
               </Button>
             </Link>
@@ -85,8 +76,7 @@ const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
             view="link"
             theme="gray"
             className={classes.link}
-            title="Перейти к последней странице"
-          >
+            title="Перейти к последней странице">
             <Icon
               type="double-arrow"
               size="xs"

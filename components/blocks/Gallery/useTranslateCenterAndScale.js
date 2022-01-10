@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
-
-export const useTranslateCenterAndScale = (image) => {
+const useTranslateCenterAndScale = (image) => {
   // useEffect(() => {
   //   if (isOpen) {
   //   } else {
@@ -10,8 +7,8 @@ export const useTranslateCenterAndScale = (image) => {
 
   // const getTranslate = () => {
   const getTranslate = () => {
-    const clientWidth = document.documentElement.clientWidth;
-    const clientHeight = document.documentElement.clientHeight;
+    const { clientWidth } = document.documentElement;
+    const { clientHeight } = document.documentElement;
     const imageX = image.x + image.clientWidth / 2;
     const imageY = image.y + image.clientHeight / 2;
     const centerX = clientWidth / 2 - imageX;
@@ -26,5 +23,7 @@ export const useTranslateCenterAndScale = (image) => {
     if (scale > 1.6) scale = 1.6;
     return `translate(${centerX}px, ${centerY}px) scale(${scale})`;
   };
-  return getTranslate;
+  return { getTranslate };
 };
+
+export default useTranslateCenterAndScale;

@@ -1,14 +1,16 @@
 import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
-import { default as ImageNext } from "next/image";
-import { useRef, useState, useEffect } from "react";
-import { delay } from "~/helpers/delay";
-import { GET_OVERLAY_FRAGMENT, overlayVar } from "~/store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
+import { useEffect, useRef, useState } from "react";
+
+import { createMarkup, delay } from "../../../helpers";
+import {
+  GET_OVERLAY_FRAGMENT,
+  overlayVar,
+} from "../../../store/variables/overlay";
+import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Button from "../../UI/Button/Button";
-import { Icon } from "../../UI/Icon/Icon";
+import Icon from "../../UI/Icon/Icon";
 import classes from "./Image.module.css";
-import { createMarkup } from "~/helpers";
 
 export const imageBlockGQL = {
   fragments: gql`
@@ -58,19 +60,22 @@ export const Figure = ({
         overlayVar({ isOpen: false, color: "var(--bgWhite)" });
 
       setZoom(false);
-      delay(250).then(() => (figureRef.current.style.zIndex = ""));
+      delay(250).then(() => {
+        figureRef.current.style.zIndex = "";
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.overlay.isOpen, state?.scrollY]);
 
   const getTransform = () => {
     const figure = figureRef.current;
     const image = figure.children[0].children[1];
 
-    const clientWidth = document.documentElement.clientWidth;
-    const clientHeight = document.documentElement.clientHeight;
+    const { clientWidth } = document.documentElement;
+    const { clientHeight } = document.documentElement;
     // const pxWidth = image.x + image.clientWidth;
     // const pxHeight = image.y + image.clientHeight;
-    const devicePixelRatio = window.devicePixelRatio;
+    const { devicePixelRatio } = window;
 
     const imageX = image.x / devicePixelRatio + image.width / 2;
     const imageY = image.y / devicePixelRatio + image.height / 2;
@@ -83,7 +88,7 @@ export const Figure = ({
     return `translate(${centerX}px, ${centerY}px) scale(${Math.min(
       scaleX,
       scaleY,
-      1.6
+      1.6,
     )
       .toString()
       .substr(0, 3)})`;
@@ -93,7 +98,9 @@ export const Figure = ({
     if (isZoom) {
       setZoom(false);
       overlayVar({ isOpen: false, color: "var(--bgWhite)" });
-      delay(250).then(() => (figureRef.current.style.zIndex = ""));
+      delay(250).then(() => {
+        figureRef.current.style.zIndex = "";
+      });
     } else {
       setZoom(true);
       overlayVar({
@@ -115,21 +122,23 @@ export const Figure = ({
         {
           [classes[`block_align_${align}`]]: align !== "",
         },
-        className
-      )}
-    >
+        className,
+      )}>
       <figure
         ref={figureRef}
         onClick={isImageZoom ? hendleZoom : null}
+        onKeyPress={isImageZoom ? hendleZoom : null}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+        role="button"
+        tabIndex="0"
         style={{
           transform: isZoom ? getTransform() : "",
           zIndex: isZoom ? "4" : delay(250).then(""),
           cursor: isZoom && "default",
         }}
         className={classNames(classes.figure, {
-          [classes["figure_zoom_true"]]: isZoom === true,
-        })}
-      >
+          [classes.figure_zoom_true]: isZoom === true,
+        })}>
         {children}
         {caption && (
           <figcaption
@@ -139,10 +148,10 @@ export const Figure = ({
         )}
         <div className={classes.controls}>
           <Button
-            className={classes["button_download"]}
+            className={classes.button_download}
             href={url}
             view="download"
-            icon={<Icon type={"download"} isGlyph={true} side={false} />}
+            icon={<Icon type="download" isGlyph side={false} />}
           />
         </div>
       </figure>

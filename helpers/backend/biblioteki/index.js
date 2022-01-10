@@ -10,7 +10,7 @@ const weekday = {
   lunchBreak: "Обед",
 };
 
-export const filials = {
+const filials = {
   cgb: {
     shortName: "ЦГБ",
     name: "Центральная городская библиотека",
@@ -589,3 +589,5 @@ export const filials = {
     pointY: 63.31899,
   },
 };
+
+export default filials;

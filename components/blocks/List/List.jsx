@@ -1,5 +1,6 @@
-import gql from "graphql-tag";
-import { createMarkup } from "~/helpers";
+import { gql } from "@apollo/client";
+
+import { createMarkup } from "../../../helpers";
 import classes from "./List.module.css";
 
 export const listBlockGQL = {
@@ -21,7 +22,6 @@ export const listBlockGQL = {
 };
 
 export const List = ({
-  anchor,
   reversed,
   start,
   textColor,
@@ -51,6 +51,7 @@ export const List = ({
       );
 
     default: {
+      // eslint-disable-next-line no-console
       console.error(listType);
       return null;
     }

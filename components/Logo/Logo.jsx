@@ -1,14 +1,15 @@
 import classNames from "classnames";
+import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
+
 import classes from "./Logo.module.css";
-import Image from "next/image";
 
 const Logo = () => (
   <Link href="/">
     <a className={classes.logo}>
       <Image
-        src={"/logos/new-emblem-cbs-3-250x250.png"}
+        src="/logos/new-emblem-cbs-3-250x250.png"
         className={classNames(classes.img)}
         width={80}
         height={80}

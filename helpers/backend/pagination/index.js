@@ -1,5 +1,6 @@
-import { client } from "~/store/apollo-client";
-import { clientRedis } from "../../../store/redis";
+/* eslint-disable no-console */
+import { client } from "../../../store/apollo-client";
+import clientRedis from "../../../store/redis";
 // import { errorHelper } from "../../errorHendler";
 import { removeDuplicateTag } from "../removeDuplicateTag";
 
@@ -15,12 +16,7 @@ import { removeDuplicateTag } from "../removeDuplicateTag";
     tags: массив, теги встречающийся в выборке на предыдущей странице
   };
  */
-export const paginationLoad = async ({
-  key,
-  query,
-  endCursor,
-  category = "",
-}) => {
+const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
   let pagination = await clientRedis
     .get(key)
     .then((response) => JSON.parse(response))
@@ -48,7 +44,8 @@ export const paginationLoad = async ({
   let isNextPage = true;
   while (isNextPage) {
     const length = pagination.length - 1;
-    let { data } = await client.query({
+    // eslint-disable-next-line no-await-in-loop
+    const { data } = await client.query({
       query,
       variables: {
         id: category,
@@ -61,20 +58,22 @@ export const paginationLoad = async ({
 
     if (data === undefined) break;
 
-    let pageInfo, tags;
+    let pageInfo;
+    let tags;
     switch (query.definitions[0].name.value) {
       case "GetPostsPaginationByCategory":
         pageInfo = data.category.posts.pageInfo;
         break;
       default:
         pageInfo = data.posts.pageInfo;
+        // eslint-disable-next-line no-await-in-loop
         tags = await removeDuplicateTag(data.posts.nodes)
           // если будут дублироваться коллекции постов,
           // то пересмотреть механизм добавления
           .then((response) =>
             response.arrTags.length
               ? [...response.arrTags, ...pagination[length]?.tags]
-              : []
+              : [],
           );
         break;
     }
@@ -102,3 +101,5 @@ export const paginationLoad = async ({
   clientRedis.set(key, JSON.stringify(pagination));
   return pagination;
 };
+
+export default paginationLoad;

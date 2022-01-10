@@ -1,11 +1,13 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
-import { galleryBlockGQL } from "~/components/blocks/Gallery/Gallery";
-import { imageBlockGQL } from "~/components/blocks/Image/Figure";
-import { paragraphBlockGQL } from "~/components/blocks/Paragraph/Paragraph";
-import { htmlBlockGQL } from "~/components/blocks/Html/Html";
-import { verseBlockGQL } from "~/components/blocks/Verse/Verse";
-import { Blocks } from "../../Blocks";
+
+// eslint-disable-next-line import/no-cycle
+import Blocks from "../../Blocks";
+import { galleryBlockGQL } from "../../Gallery/Gallery";
+import { htmlBlockGQL } from "../../Html/Html";
+import { imageBlockGQL } from "../../Image/Figure";
+import { paragraphBlockGQL } from "../../Paragraph/Paragraph";
+import { verseBlockGQL } from "../../Verse/Verse";
 import classes from "./Column.module.css";
 
 export const columnBlockGQL = {
@@ -49,8 +51,7 @@ export const Column = ({
     className={classNames(classes.wrapper, {
       [classes[`align_${verticalAlignment}`]]:
         verticalAlignment !== undefined && verticalAlignment !== "",
-    })}
-  >
+    })}>
     <Blocks
       blocks={innerBlocks}
       className={{ image: classes.Image_width_max }}

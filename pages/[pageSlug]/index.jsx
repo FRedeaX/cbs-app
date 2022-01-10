@@ -2,13 +2,17 @@ import {
   FETCH_PAGE,
   FETCH_PARENT_URI_PAGES,
   PageRoot,
-} from "~/components/Pages/Page";
-import { transformBlocks, preparingPaths, getMenu } from "~/helpers/backend";
-import { client } from "~/store/apollo-client";
-import Layout from "~/components/UI/Layout/Layout";
+} from "../../components/Pages/Page";
+import Layout from "../../components/UI/Layout/Layout";
+import {
+  getMenu,
+  preparingPaths,
+  transformBlocks,
+} from "../../helpers/backend";
+import { client } from "../../store/apollo-client";
 
 const Page = ({ menu, page }) => (
-  <Layout menu={menu} size={"m"}>
+  <Layout menu={menu} size="m">
     <PageRoot page={page} />
   </Layout>
 );
@@ -26,7 +30,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const menu = await getMenu();
-  let page = await client
+  const page = await client
     .query({
       query: FETCH_PAGE,
       variables: { id: params.pageSlug, type: "URI" },

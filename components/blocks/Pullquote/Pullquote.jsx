@@ -1,4 +1,5 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
+
 import classes from "./Pullquote.module.css";
 
 export const pullquoteBlockGQL = {
@@ -20,20 +21,11 @@ export const pullquoteBlockGQL = {
   `,
 };
 
-export const Pullquote = ({
-  anchor,
-  citation,
-  customMainColor,
-  customTextColor,
-  textColor,
-  value,
-}) => {
-  return (
-    <figure className={classes.block}>
-      <blockquote className={classes.blockquote}>
-        <p className={classes.p}>{value}</p>
-      </blockquote>
-      <figcaption className={classes.caption}>{citation}</figcaption>
-    </figure>
-  );
-};
+export const Pullquote = ({ citation, value }) => (
+  <figure className={classes.block}>
+    <blockquote className={classes.blockquote}>
+      <p className={classes.p}>{value}</p>
+    </blockquote>
+    <figcaption className={classes.caption}>{citation}</figcaption>
+  </figure>
+);

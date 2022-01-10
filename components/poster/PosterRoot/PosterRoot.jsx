@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { memo } from "react";
-import Carousel from "~/components/Carusel/Carousel";
+
+import Carousel from "../../Carusel/Carousel";
 // import PosterGroup from "../PosterGroup/PosterGroup";
 import PosterItem, { posterItemGQL } from "../PosterItem/PosterItem";
 import PosterList from "../PosterList/PosterList";
@@ -40,11 +41,10 @@ const PosterRoot = ({ posters, className }) => {
           // itemWidth={340}
           // itemWidth={isFront && window.innerWidth < 480 ? 280 : 440}
           isShadow={false}
-          isScrollSnap={true}
+          isScrollSnap
           itemMargin={10}
           controlsPosition="top"
-          classNameControl={className.control}
-        >
+          classNameControl={className.control}>
           <RenderPoster />
         </Carousel>
       </PosterList>

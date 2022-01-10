@@ -1,4 +1,6 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
+
+// eslint-disable-next-line import/no-cycle
 import { Column, columnBlockGQL } from "./Column/Column";
 import classes from "./Columns.module.css";
 
@@ -20,6 +22,7 @@ export const Columns = ({ innerBlocks }) => (
   <div className={classes.wrapper}>
     {innerBlocks.map((column, index) => (
       <Column
+        // eslint-disable-next-line react/no-array-index-key
         key={`${column.name}_${index}`}
         attributes={column.attributes}
         innerBlocks={column.innerBlocks}

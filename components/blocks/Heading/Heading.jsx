@@ -1,6 +1,7 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
-import { createMarkup } from "~/helpers";
+
+import { createMarkup } from "../../../helpers";
 import classes from "./Heading.module.css";
 
 export const headingBlockGQL = {
@@ -26,14 +27,12 @@ export const headingBlockGQL = {
 
 export const Heading = ({
   anchor,
-  backgroundColor,
   className,
   content,
   children,
   fontSize = "",
   level = 2,
   textAlign = "",
-  textColor,
 }) => {
   const Tag = `h${level}`;
   return (
@@ -46,12 +45,10 @@ export const Heading = ({
           [classes[`align_${textAlign}`]]:
             textAlign !== "" && textAlign !== "left",
         },
-        className
+        className,
       )}
       id={anchor}
       dangerouslySetInnerHTML={createMarkup(children || content)}
-    >
-      {/* {content} */}
-    </Tag>
+    />
   );
 };

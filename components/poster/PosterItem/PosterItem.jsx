@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import classNames from "classnames";
 import Link from "next/link";
+
 import { createMarkup } from "../../../helpers";
 import classes from "./Poster-item.module.css";
 
@@ -39,15 +40,13 @@ const PosterItem = ({
 }) => (
   <div
     className={classNames(classes.block, className, {
-      [classes["block_count_1"]]: count !== undefined && count === 1,
-    })}
-  >
+      [classes.block_count_1]: count !== undefined && count === 1,
+    })}>
     <div className={classes.header}>
       <span
         className={classNames(classes.date, {
-          [classes["date_size_small"]]: dateEnd.day !== null,
-        })}
-      >
+          [classes.date_size_small]: dateEnd.day !== null,
+        })}>
         {dateEnd.day !== null
           ? `${dateStart.day}-${dateEnd.day}`
           : dateStart.day}
@@ -72,8 +71,7 @@ const PosterItem = ({
       <div className={classes.footer}>
         <Link
           href={`/biblioteki/?lib=${posterDepartments.nodes[0].slug}`}
-          prefetch={false}
-        >
+          prefetch={false}>
           <a className={classes.link}>{posterDepartments.nodes[0].name}</a>
         </Link>
         <a
@@ -81,8 +79,7 @@ const PosterItem = ({
             .split("-")
             .join("")}`}
           className={classNames(classes.info, classes.link)}
-          title={"Cправки по телефону"}
-        >
+          title="Cправки по телефону">
           {posterDepartments.nodes[0].description}
         </a>
       </div>

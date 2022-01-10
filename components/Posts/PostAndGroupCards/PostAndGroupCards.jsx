@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import { memo } from "react";
+
 import Card from "../Card/Card";
 import GroupCards from "../GroupCards/GroupCards";
 
@@ -7,7 +9,7 @@ const PostAndGroupCards = ({ data }) => {
   let column = 0;
 
   return data.map((post, index) => {
-    const tags = post.tags;
+    const { tags } = post;
 
     if (tags.__typename === "Tag") {
       // const tag = arrTags.find((tagID) => tagID === tags.id);
@@ -26,24 +28,19 @@ const PostAndGroupCards = ({ data }) => {
         />
         // </>
       );
-    } else {
-      const isNewRow = !(column % 2);
-      const nextPost = data[++index];
-      const isBig =
-        isNewRow &&
-        (nextPost === undefined || nextPost.tags.__typename === "Tag");
-      column++;
-      if (isBig) column = 0;
-      return (
-        <Card
-          key={post.id}
-          data={post}
-          horizontal={true}
-          isBig={isBig}
-          index={index}
-        />
-      );
     }
+
+    const isNewRow = !(column % 2);
+    const nextIndex = index + 1;
+    const nextPost = data[nextIndex];
+    const isBig =
+      isNewRow &&
+      (nextPost === undefined || nextPost.tags.__typename === "Tag");
+    column += 1;
+    if (isBig) column = 0;
+    return (
+      <Card key={post.id} data={post} horizontal isBig={isBig} index={index} />
+    );
   });
 
   // return data.map((post) => {

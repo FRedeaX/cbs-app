@@ -1,21 +1,22 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
 import { useRouter } from "next/router";
-import HomePage from "~/components/Pages/HomePage/HomePage";
-import { FETCH_POSTER } from "~/components/poster/PosterRoot/PosterRoot";
+
+import HomePage from "../../../components/Pages/HomePage/HomePage";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
-} from "~/components/Posts/PostsRoot";
-import { SEO } from "~/components/SEO/SEO";
+} from "../../../components/Posts/PostsRoot";
+import SEO from "../../../components/SEO/SEO";
+import Layout from "../../../components/UI/Layout/Layout";
+import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
 import {
-  paginationLoad,
-  removeDuplicateTag,
   getMenu,
+  paginationLoad,
   plaiceholder,
-} from "~/helpers/backend";
-import { dateConversion, sort, filter } from "~/helpers/backend/poster";
-import { client } from "~/store/apollo-client";
-import Layout from "~/components/UI/Layout/Layout";
+  removeDuplicateTag,
+} from "../../../helpers/backend";
+import { dateConversion, filter, sort } from "../../../helpers/backend/poster";
+import { client } from "../../../store/apollo-client";
 
 const Home = ({ menu, posts, pages, posters }) => {
   const {
@@ -31,7 +32,7 @@ const Home = ({ menu, posts, pages, posters }) => {
       <HomePage
         posts={posts}
         pages={pages}
-        paginationURI={"/post"}
+        paginationURI="/post"
         posters={posters}
       />
     </Layout>
@@ -51,8 +52,8 @@ export async function getStaticPaths() {
   };
 }
 
-//getServerSideProps
-//getStaticProps
+// getServerSideProps
+// getStaticProps
 export async function getStaticProps({ params }) {
   const menu = await getMenu();
   const page = params.page - 1;
@@ -67,15 +68,15 @@ export async function getStaticProps({ params }) {
       query: FETCH_ARTICLES,
       variables: {
         first: cursor === "" ? 10 : 20,
-        cursor: cursor,
+        cursor,
         tagNotIn: tags,
       },
       fetchPolicy: "network-only",
     })
     .then(({ data }) =>
-      removeDuplicateTag(data.posts.nodes).then((posts) =>
-        plaiceholder(posts.result).then((p) => p)
-      )
+      removeDuplicateTag(data.posts.nodes).then((removeDuplicateRes) =>
+        plaiceholder(removeDuplicateRes.result).then((p) => p),
+      ),
     );
 
   const posters = await client
@@ -83,11 +84,11 @@ export async function getStaticProps({ params }) {
       query: FETCH_POSTER,
     })
     .then(({ data }) =>
-      dateConversion(data.posters.nodes).then((posters) =>
-        sort(posters).then((posters) =>
-          filter(posters).then((posters) => posters)
-        )
-      )
+      dateConversion(data.posters.nodes).then((dateRes) =>
+        sort(dateRes).then((sortRes) =>
+          filter(sortRes).then((filterRes) => filterRes),
+        ),
+      ),
     );
 
   return {
@@ -97,7 +98,7 @@ export async function getStaticProps({ params }) {
       pages: pagesInfo[pagesInfo.length - 1].number - 1,
       posts,
     },
-    revalidate: parseInt(process.env.POST_REVALIDATE, 10), //process.env.POST_REVALIDATE * 1,
+    revalidate: parseInt(process.env.POST_REVALIDATE, 10),
   };
 }
 

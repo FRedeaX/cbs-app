@@ -1,6 +1,7 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
-import { Row } from "./Row/Row";
+
+import Row from "./Row/Row";
 import classes from "./Table.module.css";
 
 export const tableBlockGQL = {
@@ -55,22 +56,22 @@ export const Table = ({
       })}
       style={{
         backgroundColor: backgroundColor ? `var(--${backgroundColor})` : "",
-      }}
-    >
+      }}>
       {head[0] && (
         <thead>
           <tr>
             <Row
               array={head[0].cells}
-              Tag={"th"}
-              className={classNames(classes.cells, classes["cells_th"])}
+              Tag="th"
+              className={classNames(classes.cells, classes.cells_th)}
             />
           </tr>
         </thead>
       )}
       <tbody>
         {body.map((row, index) => (
-          <tr key={index} className={classes["row_tr"]}>
+          // eslint-disable-next-line react/no-array-index-key
+          <tr key={`tr${index}`} className={classes.row_tr}>
             <Row array={row.cells} className={classes.cells} />
           </tr>
         ))}
@@ -80,7 +81,7 @@ export const Table = ({
           <tr>
             <Row
               array={foot[0].cells}
-              className={classNames(classes.cells, classes["cells_tf"])}
+              className={classNames(classes.cells, classes.cells_tf)}
             />
           </tr>
         </tfoot>

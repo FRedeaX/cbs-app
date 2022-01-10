@@ -1,33 +1,31 @@
-import HomePage from "~/components/Pages/HomePage/HomePage";
-import { FETCH_POSTER } from "~/components/poster/PosterRoot/PosterRoot";
+import HomePage from "../components/Pages/HomePage/HomePage";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
-} from "~/components/Posts/PostsRoot";
-import { SEO } from "~/components/SEO/SEO";
+} from "../components/Posts/PostsRoot";
+import SEO from "../components/SEO/SEO";
+import Layout from "../components/UI/Layout/Layout";
+import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import {
-  paginationLoad,
-  removeDuplicateTag,
   getMenu,
+  paginationLoad,
   plaiceholder,
-} from "~/helpers/backend";
-import { dateConversion, sort, filter } from "~/helpers/backend/poster";
-import { client } from "~/store/apollo-client";
-import Layout from "~/components/UI/Layout/Layout";
+  removeDuplicateTag,
+} from "../helpers/backend";
+import { dateConversion, filter, sort } from "../helpers/backend/poster";
+import { client } from "../store/apollo-client";
 
-const Home = ({ menu, posters, posts, pages }) => {
-  return (
-    <Layout menu={menu} paddingSides={0}>
-      <SEO description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
-      <HomePage
-        posters={posters}
-        posts={posts}
-        pages={pages}
-        paginationURI={"/post"}
-      />
-    </Layout>
-  );
-};
+const Home = ({ menu, posters, posts, pages }) => (
+  <Layout menu={menu} paddingSides={0}>
+    <SEO description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
+    <HomePage
+      posters={posters}
+      posts={posts}
+      pages={pages}
+      paginationURI="/post"
+    />
+  </Layout>
+);
 
 export async function getStaticProps() {
   const menu = await getMenu(false);
@@ -43,7 +41,7 @@ export async function getStaticProps() {
     .then(({ data }) => data);
 
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes).then((nodes) =>
-    plaiceholder(nodes.result).then((p) => p)
+    plaiceholder(nodes.result).then((p) => p),
   );
 
   const pages = await paginationLoad({
@@ -58,11 +56,11 @@ export async function getStaticProps() {
       fetchPolicy: "network-only",
     })
     .then(({ data }) =>
-      dateConversion(data.posters.nodes).then((posters) =>
-        sort(posters).then((posters) =>
-          filter(posters).then((posters) => posters)
-        )
-      )
+      dateConversion(data.posters.nodes).then((dateRes) =>
+        sort(dateRes).then((sortRes) =>
+          filter(sortRes).then((filterRes) => filterRes),
+        ),
+      ),
     );
 
   return {

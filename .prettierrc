@@ -1,5 +1,19 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+
+  "printWidth": 80,
+  "trailingComma": "all",
+  "singleQuote": false,
+  "jsxBracketSameLine": true,
+  "semi": true,
+  "importOrder": [
+    "^components/(.*)$",
+    "^helpers/(.*)$",
+    "^store/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

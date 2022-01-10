@@ -1,12 +1,13 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
-import { Blocks } from "../Blocks";
-import { Figure } from "../Image/Figure";
-import { Paragraph, paragraphBlockGQL } from "../Paragraph/Paragraph";
-import { columnBlockGQL } from "./../Columns/Column/Column";
-import classes from "./Media-text.module.css";
 import Image from "next/image";
 import { useMemo } from "react";
+
+// eslint-disable-next-line import/no-cycle
+import Blocks from "../Blocks";
+import { Figure } from "../Image/Figure";
+import { paragraphBlockGQL } from "../Paragraph/Paragraph";
+import classes from "./Media-text.module.css";
 
 export const mediaTextBlockGQL = {
   fragments: gql`
@@ -38,7 +39,6 @@ export const mediaTextBlockGQL = {
 };
 
 export const MediaText = ({
-  anchor,
   backgroundColor,
   gradient,
   imageFill,
@@ -55,7 +55,7 @@ export const MediaText = ({
 }) => {
   const background = useMemo(() => {
     if (backgroundColor !== "") return `var(--${backgroundColor})`;
-    else if (gradient !== "") {
+    if (gradient !== "") {
       const color = gradient.split("-to-");
       if (color.length > 1)
         return `linear-gradient(135deg, var(--${color[0]}), var(--${color[1]}))`;
@@ -63,26 +63,26 @@ export const MediaText = ({
       const color = JSON.parse(style)?.color;
       if (color) return color.background || color.gradient;
     }
+    return "";
   }, [backgroundColor, gradient, style]);
 
   const color = useMemo(() => {
     if (textColor !== "") return `var(--${textColor}) !impotent`;
-    else if (style !== null) return JSON.parse(style)?.color?.text;
+    if (style !== null) return JSON.parse(style)?.color?.text;
+    return "";
   }, [textColor, style]);
 
   return (
     <div
       style={{ background, color }}
       className={classNames(classes.block, {
-        [classes["block_background_true"]]: background,
-      })}
-    >
+        [classes.block_background_true]: background,
+      })}>
       <div
         className={classNames(
           classes.container,
-          classes[`container_mediaPosition_${mediaPosition}`]
-        )}
-      >
+          classes[`container_mediaPosition_${mediaPosition}`],
+        )}>
         <div style={{ flex: mediaWidth / 10 }} className={classes.media}>
           <Figure>
             <Image
@@ -105,10 +105,9 @@ export const MediaText = ({
           className={classNames(
             classes.text,
             classes[`text_padding_${mediaPosition}`],
-            classes[`text_aline_${verticalAlignment}`]
-          )}
-        >
-          {<Blocks blocks={innerBlocks} textColor={color} />}
+            classes[`text_aline_${verticalAlignment}`],
+          )}>
+          <Blocks blocks={innerBlocks} textColor={color} />
         </div>
       </div>
     </div>

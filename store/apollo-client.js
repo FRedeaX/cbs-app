@@ -1,8 +1,9 @@
 import { ApolloClient, createHttpLink } from "@apollo/client";
+import fetch from "node-fetch";
+
 // import { onError } from "@apollo/client/link/error";
 // import { setContext } from "@apollo/client/link/context";
-import { cache } from "~/store/cache";
-import fetch from "node-fetch";
+import cache from "./cache";
 
 const link = createHttpLink({
   uri: "https://cbsbaikonur.ru/graphql",
@@ -23,15 +24,14 @@ const link = createHttpLink({
 //   return authLink;
 // };
 
-export const authClient = (token) => {
+export const authClient = () =>
   // const _link = getAuthLink(token).concat(link);
-  return new ApolloClient({
+  new ApolloClient({
     cache,
     ssrMode: true,
-    link, //: _link,
+    link,
     fetch,
   });
-};
 
 // const errorLink = onError((e) => {
 //   // if (graphQLErrors) {

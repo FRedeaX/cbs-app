@@ -1,7 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { gql } from "@apollo/client";
 import classNamesBind from "classnames/bind";
 import { memo } from "react";
-import { default as NavItems, menuItemsGQL } from "../NavItems/NavItems";
+
+// eslint-disable-next-line import/no-cycle
+import NavItems, { menuItemsGQL } from "../NavItems/NavItems";
 import classes from "./Nav-list.module.css";
 
 const NavList = ({
@@ -31,7 +34,7 @@ const NavList = ({
       "subMenu--lvl2": subLvl === 2,
       "subMenu--lvl3": subLvl === 3,
     },
-    className
+    className,
   );
 
   const listOpenHendler = (event, isBack = false) => {
@@ -39,7 +42,7 @@ const NavList = ({
     const { target } = event;
     if (isBack) {
       target.parentNode.parentNode.classList.remove(
-        `${classes["subMenu-mobile--active"]}`
+        `${classes["subMenu-mobile--active"]}`,
       );
     } else {
       target.nextSibling.classList.add(`${classes["subMenu-mobile--active"]}`);
@@ -50,15 +53,19 @@ const NavList = ({
     event.stopPropagation();
     if (event.target.nodeName === "UL")
       document
-        .querySelectorAll(`.${classes["subMenu"]}`)
+        .querySelectorAll(`.${classes.subMenu}`)
         .forEach((node) =>
-          node.classList.remove(`${classes["subMenu-mobile--active"]}`)
+          node.classList.remove(`${classes["subMenu-mobile--active"]}`),
         );
   };
 
   // console.log("L_Render");
   return (
-    <ul className={classNameList} onClick={closeAllHendler}>
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    <ul
+      className={classNameList}
+      onClick={closeAllHendler}
+      onKeyPress={closeAllHendler}>
       <NavItems
         data={data.nodes}
         subItem={subList}

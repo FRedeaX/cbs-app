@@ -1,15 +1,18 @@
 import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
-import { memo, useEffect, useState, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+
+import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
+import {
+  GET_OVERLAY_FRAGMENT,
+  overlayVar,
+} from "../../store/variables/overlay";
+import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
+import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
-import Logo from "~/components/Logo/Logo";
-import Button from "~/components/UI/Button/Button";
-import { IS_HEADER_POS_RESET_FRAGMENT } from "~/store/variables/header";
-import { GET_OVERLAY_FRAGMENT, overlayVar } from "~/store/variables/overlay";
-import { GET_WIDTH_FRAGMENT } from "~/store/variables/windowWidth";
-import { SCROLLY_FRAGMENT } from "~/store/variables/scrollY";
-// import { delay } from "helpers/delay";
+import Logo from "../Logo/Logo";
+import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";
 import HeaderSocial from "./HeaderSocial/HeaderSocial";
@@ -63,7 +66,7 @@ const Header = ({ menus }) => {
       setHeaderHidden(false);
     }
     prevScrollYRef.current = state.scrollY;
-  }, [state?.scrollY, state?.isHeaderHidden]);
+  }, [state?.scrollY, state?.isHeaderHidden, isHeaderHidden]);
 
   // console.log(isHeaderHidden);
   return (
@@ -71,8 +74,7 @@ const Header = ({ menus }) => {
       style={{ right: state?.isHeaderPosReset ? `var(--scrollbarWidth)` : "0" }}
       className={classNames(classes.block, classes.position, {
         [classes["position--hidden"]]: isHeaderHidden,
-      })}
-    >
+      })}>
       {/* {console.log("H_Render")} */}
       <div className={classes.wrapper}>
         <div className={classes.logo}>
@@ -80,18 +82,17 @@ const Header = ({ menus }) => {
         </div>
         <div
           className={classNames(classes.menu, {
-            [classes["menu_mobile_active"]]: isOpen,
-          })}
-        >
+            [classes.menu_mobile_active]: isOpen,
+          })}>
           <nav className={classes.primary}>
             {menus && menus[0]?.menuItems && (
               <NavList data={menus[0].menuItems} />
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
-            <HeaderSocial className={classes["Social_desktope"]} />
+            <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
-              <NavList data={menus[1].menuItems} isRight={true} />
+              <NavList data={menus[1].menuItems} isRight />
             )}
           </div>
         </div>
@@ -104,8 +105,7 @@ const Header = ({ menus }) => {
             onClick={() => {
               overlayVar({ isOpen: !isOpen, zIndex: 2, isOverflow: true });
               setOpen(!isOpen);
-            }}
-          >
+            }}>
             <span className={classes.inner} />
           </Button>
         </div>

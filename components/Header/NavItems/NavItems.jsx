@@ -1,12 +1,17 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { gql } from "@apollo/client";
-import classNamesBind from "classnames/bind";
 import classNames from "classnames";
+import classNamesBind from "classnames/bind";
 import { memo } from "react";
-import ActiveLink from "~/components/UI/ActiveLink/ActiveLink";
-import Button from "~/components/UI/Button/Button";
-import { Icon } from "~/components/UI/Icon/Icon";
-import { createMarkup } from "~/helpers";
-import { overlayVar } from "~/store/variables/overlay";
+
+import { createMarkup } from "../../../helpers";
+import { overlayVar } from "../../../store/variables/overlay";
+import ActiveLink from "../../UI/ActiveLink/ActiveLink";
+import Button from "../../UI/Button/Button";
+import Icon from "../../UI/Icon/Icon";
+// eslint-disable-next-line import/no-cycle
 import NavList from "../NavList/NavList";
 import classes from "./Nav-item.module.css";
 
@@ -26,10 +31,10 @@ const NavItems = ({
   return (
     <>
       {headerLabel && (
-        <li className={classes["li_header"]}>
+        <li className={classes.li_header}>
           <Button
             width="max"
-            isTextCenter={true}
+            isTextCenter
             iconLeft={
               <Icon
                 type="arrow"
@@ -41,8 +46,7 @@ const NavItems = ({
               />
             }
             // className={classes.button}
-            onClick={(event) => onClick(event, true)}
-          >
+            onClick={(event) => onClick(event, true)}>
             <span
               style={{ width: "100%" }}
               className={classes.text}
@@ -52,13 +56,14 @@ const NavItems = ({
         </li>
       )}
       {data.map(({ id, parentId, label, path, childItems }) => {
-        if (!!childItems?.nodes.length && subItem) subLvl++;
+        // eslint-disable-next-line no-param-reassign
+        if (!!childItems?.nodes.length && subItem) subLvl += 1;
 
         return (
           <li
             key={id}
             className={classNames(classes.li, {
-              [classes["li_right"]]: isRight,
+              [classes.li_right]: isRight,
               [classes.li_overlay]:
                 !!childItems?.nodes.length && parentId === parentIdList,
 
@@ -71,14 +76,12 @@ const NavItems = ({
               [classes[`li-right_lvl_${liLvl}`]]: subItem && isRight,
               [classes["li-right_lvl_0"]]:
                 !!childItems?.nodes.length && !subItem && isRight,
-            })}
-          >
-            {!!childItems?.nodes.length ? (
+            })}>
+            {childItems?.nodes.length > 0 ? (
               <ActiveLink
                 activeClassName={classes.link_active}
                 href={path}
-                isLink={false}
-              >
+                isLink={false}>
                 <Button
                   width="max"
                   iconRight={
@@ -91,8 +94,7 @@ const NavItems = ({
                     />
                   }
                   className={classes.button}
-                  onClick={onClick}
-                >
+                  onClick={onClick}>
                   <span
                     className={classes.text}
                     dangerouslySetInnerHTML={createMarkup(label)}
@@ -102,22 +104,24 @@ const NavItems = ({
             ) : (
               <>
                 {path === "/elcatalog/" ? (
-                  <a href={path} className={classes.link} target="_blank">
+                  <a
+                    href={path}
+                    className={classes.link}
+                    target="_blank"
+                    rel="noreferrer noopener">
                     <span className={classes.text}>{label}</span>
                   </a>
                 ) : (
                   <ActiveLink
                     activeClassName={classes.link_active}
                     href={path}
-                    prefetch={false}
-                  >
+                    prefetch={false}>
                     <a
                       className={cx({
                         link: true,
                         "link--cursor": !!childItems?.nodes.length,
                       })}
-                      onClick={() => overlayVar({ isOpen: false })}
-                    >
+                      onClick={() => overlayVar({ isOpen: false })}>
                       <span
                         className={cx({ text: true, text_mb: subItem })}
                         dangerouslySetInnerHTML={createMarkup(label)}
@@ -132,7 +136,7 @@ const NavItems = ({
                 id={!parentIdList && id}
                 data={childItems}
                 direction="column"
-                subList={true}
+                subList
                 subLvl={subItem ? subLvl : 1}
                 isSubListReset={parentIdList && parentIdList === parentId}
                 isRight={isRight}

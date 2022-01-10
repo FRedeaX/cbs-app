@@ -1,13 +1,18 @@
 import { useRouter } from "next/router";
-import HomePage from "~/components/Pages/HomePage/HomePage";
+
+import HomePage from "../../../../../components/Pages/HomePage/HomePage";
 import {
-  fetchArticlesByCategory,
   POSTS_PAGINATION_BY_CATEGORY_GQL,
-} from "~/components/Posts/PostsRoot";
-import { SEO } from "~/components/SEO/SEO";
-import { paginationLoad, getMenu, plaiceholder } from "~/helpers/backend";
-import { client } from "~/store/apollo-client";
-import Layout from "~/components/UI/Layout/Layout";
+  fetchArticlesByCategory,
+} from "../../../../../components/Posts/PostsRoot";
+import SEO from "../../../../../components/SEO/SEO";
+import Layout from "../../../../../components/UI/Layout/Layout";
+import {
+  getMenu,
+  paginationLoad,
+  plaiceholder,
+} from "../../../../../helpers/backend";
+import { client } from "../../../../../store/apollo-client";
 
 const Home = ({ menu, posts, pages, categoryName }) => {
   const {
@@ -45,8 +50,6 @@ export async function getStaticPaths() {
   };
 }
 
-//getServerSideProps
-//getStaticProps
 export async function getStaticProps({ params: { slug, page } }) {
   const menu = await getMenu();
   const pagesInfo = await paginationLoad({
@@ -67,12 +70,12 @@ export async function getStaticProps({ params: { slug, page } }) {
       fetchPolicy: "network-only",
     })
     .then(({ data }) =>
-      plaiceholder(data.category.posts.nodes).then((posts) => ({
-        posts,
+      plaiceholder(data.category.posts.nodes).then((plaiceholderRes) => ({
+        plaiceholderRes,
         categoryName: data.category.posts.nodes[0].categories.nodes.filter(
-          (node) => node.slug === slug
+          (node) => node.slug === slug,
         )?.[0]?.name,
-      }))
+      })),
     );
 
   // .then(({ data }) =>

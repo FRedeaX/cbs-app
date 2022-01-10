@@ -1,7 +1,8 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
+
+import { createMarkup } from "../../../helpers";
 import classes from "./Verse.module.css";
-import { createMarkup } from "~/helpers";
 
 export const verseBlockGQL = {
   fragments: gql`

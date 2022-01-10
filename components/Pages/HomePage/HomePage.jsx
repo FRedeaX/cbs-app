@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client";
 import classnames from "classnames";
 import { memo, useEffect, useState } from "react";
-import PosterRoot from "~/components/poster/PosterRoot/PosterRoot";
-import { PostsRoot } from "~/components/Posts/PostsRoot";
-import SectionHeader from "~/components/SectionHeader/SectionHeader";
-import { GET_WIDTH } from "~/store/variables/windowWidth";
+
+import { GET_WIDTH } from "../../../store/variables/windowWidth";
+import { PostsRoot } from "../../Posts/PostsRoot";
+import SectionHeader from "../../SectionHeader/SectionHeader";
+import PosterRoot from "../../poster/PosterRoot/PosterRoot";
 import classes from "./Home-Page.module.css";
 import Pagination from "./Pagination/Pagination";
 
@@ -30,12 +31,10 @@ const HomePage = ({
 
   // console.log({ posters, posts, pages });
 
-  {
-    /* <Today className={classes.today} /> */
-  }
+  /* <Today className={classes.today} /> */
   return (
     <div className={classes.wrapper}>
-      {posters && (
+      {posters && posters[0] && (
         <aside className={classnames(classes.section, classes.poster)}>
           <SectionHeader url="/poster">Анонсы</SectionHeader>
           <PosterRoot

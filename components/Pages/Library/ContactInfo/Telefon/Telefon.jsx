@@ -1,31 +1,30 @@
 import classNames from "classnames";
 import React, { useState } from "react";
+
 import { Heading } from "../../../../blocks/Heading/Heading";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Telefon.module.css";
 
-export const Telefon = ({ telefon, cls }) => {
+const Telefon = ({ telefon, cls }) => {
   const [countTel, setCountTel] = useState(3);
 
   function renderTelefonItem(data) {
     return data
       .filter((_, index) => index < countTel)
-      .map((item, index) => {
-        return (
-          <div
-            key={index}
-            className={classNames(classesInfo.item, classes.item)}
-          >
-            <div className={classesInfo["left-column"]}>
-              <span className={classes.subtitle}>{item.position}</span>
-              <span className={classes.description}>{item.name}</span>
-            </div>
-            <a className={cls} href={`tel:833622${item.tel}`}>
-              {item.tel}
-            </a>
+      .map((item, index) => (
+        <div
+          // eslint-disable-next-line react/no-array-index-key
+          key={`tlf${index}`}
+          className={classNames(classesInfo.item, classes.item)}>
+          <div className={classesInfo["left-column"]}>
+            <span className={classes.subtitle}>{item.position}</span>
+            <span className={classes.description}>{item.name}</span>
           </div>
-        );
-      });
+          <a className={cls} href={`tel:833622${item.tel}`}>
+            {item.tel}
+          </a>
+        </div>
+      ));
   }
 
   function hendleClick(e) {
@@ -42,14 +41,16 @@ export const Telefon = ({ telefon, cls }) => {
       {/* {console.log("Telefon")} */}
       <Heading
         level={4}
-        className={classNames(classesInfo.title, classes.title)}
-      >
+        className={classNames(classesInfo.title, classes.title)}>
         Телефон
       </Heading>
       <div className={classNames(classesInfo.list, classes.list)}>
         {renderTelefonItem(telefon)}
         {telefon.length > 1 && (
-          <button className={classes.button} onClick={(e) => hendleClick(e)}>
+          <button
+            className={classes.button}
+            type="button"
+            onClick={(e) => hendleClick(e)}>
             Показать ещё
           </button>
         )}
@@ -57,3 +58,5 @@ export const Telefon = ({ telefon, cls }) => {
     </div>
   );
 };
+
+export default Telefon;

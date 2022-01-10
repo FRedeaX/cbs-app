@@ -1,15 +1,16 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { memo } from "react";
-import Title from "~/components/Title/Title";
-import Button from "~/components/UI/Button/Button";
+
+import Title from "../Title/Title";
+import Button from "../UI/Button/Button";
 import classes from "./Section-header.module.css";
 
 const SectionHeader = ({ children, url, cls }) => (
   <div className={classNames(classes.block, cls)}>
     {url ? (
       <Title HtmlTeg="h2">
-        <Link href={url} prefetch={false}>
+        <Link href={url} prefetch={false} passHref>
           <Button
             view="link"
             className={classes.link}

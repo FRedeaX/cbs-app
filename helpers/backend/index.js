@@ -1,10 +1,9 @@
-import { transformBlocks } from "./blocks";
-import { preparingPaths } from "./menu";
-import { paginationLoad } from "./pagination";
-import { removeDuplicateTag } from "./removeDuplicateTag";
-import { loadPreview } from "./preview";
-import { getMenu } from "./menu";
-import { plaiceholder } from "./plaiceholder";
+import transformBlocks from "./blocks";
+import { getMenu, preparingPaths } from "./menu";
+import paginationLoad from "./pagination";
+import plaiceholder from "./plaiceholder";
+import loadPreview from "./preview";
+import removeDuplicateTag from "./removeDuplicateTag";
 
 export {
   paginationLoad,
@@ -15,5 +14,3 @@ export {
   getMenu,
   plaiceholder,
 };
-
-export const removeBackslash = (str) => str.replace(/^\/|\/$/g, "");

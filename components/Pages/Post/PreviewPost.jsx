@@ -1,10 +1,11 @@
+/* eslint-disable no-console */
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { GET_POST_CONTENT_BY_BLOCKS } from "./Post";
-import { Post } from "~/components/Pages/Post/Post";
-import { SEO } from "~/components/SEO/SEO";
 
-export const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
+import SEO from "../../SEO/SEO";
+import { GET_POST_CONTENT_BY_BLOCKS, Post } from "./Post";
+
+const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
   console.log({ id, type });
   const { data, loading, error } = useQuery(GET_POST_CONTENT_BY_BLOCKS, {
     variables: {
@@ -28,7 +29,7 @@ export const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
           if (JSON.parse(json.data)) setPost(JSON.parse(json.data));
           else console.error(json);
         })
-        .catch((error) => console.error(error));
+        .catch((err) => console.error(err));
     }
   }, [data]);
   console.log(post);
@@ -51,3 +52,5 @@ export const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
     </>
   );
 };
+
+export default PreviewPost;

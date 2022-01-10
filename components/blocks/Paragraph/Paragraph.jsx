@@ -1,6 +1,7 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
-import gql from "graphql-tag";
-import { createMarkup } from "~/helpers";
+
+import { createMarkup } from "../../../helpers";
 import classes from "./Paragraph.module.css";
 
 export const paragraphBlockGQL = {
@@ -22,28 +23,17 @@ export const paragraphBlockGQL = {
   `,
 };
 
-export const Paragraph = ({
-  align,
-  anchor,
-  className,
-  children,
-  content,
-  textColor,
-}) => {
-  return (
-    <p
-      className={classNames(
-        classes.block,
-        {
-          [classes[`align_${align}`]]:
-            align !== undefined && align !== "" && align !== "left",
-        },
-        className
-      )}
-      id={anchor}
-      dangerouslySetInnerHTML={createMarkup(children || content)}
-    >
-      {/* {content} */}
-    </p>
-  );
-};
+export const Paragraph = ({ align, anchor, className, children, content }) => (
+  <p
+    className={classNames(
+      classes.block,
+      {
+        [classes[`align_${align}`]]:
+          align !== undefined && align !== "" && align !== "left",
+      },
+      className,
+    )}
+    id={anchor}
+    dangerouslySetInnerHTML={createMarkup(children || content)}
+  />
+);

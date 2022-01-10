@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { FETCH_PAGE, PageRoot } from "~/components/Pages/Page";
 
-export const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
+import { FETCH_PAGE, PageRoot } from "..";
+
+const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
   const { data, loading, error } = useQuery(FETCH_PAGE, {
     variables: {
       id,
@@ -24,7 +26,7 @@ export const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
           if (JSON.parse(json.data)) setPage(JSON.parse(json.data));
           else console.error(json);
         })
-        .catch((error) => console.error(error));
+        .catch((err) => console.error(err));
     }
   }, [data]);
 
@@ -37,3 +39,5 @@ export const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
 
   return <PageRoot page={page} />;
 };
+
+export default PreviewPage;

@@ -1,4 +1,5 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
+
 import PostAndGroupCards from "./PostAndGroupCards/PostAndGroupCards";
 import PostNotGroupCards from "./PostNotGroupCards/PostNotGroupCards";
 

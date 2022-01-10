@@ -1,5 +1,7 @@
+/* eslint-disable react/display-name */
 import classNames from "classnames";
 import { forwardRef, memo } from "react";
+
 import classes from "./Button.module.css";
 
 const Button = forwardRef(
@@ -8,13 +10,12 @@ const Button = forwardRef(
       className,
       href,
       onClick,
-      type = "button",
+      // type = "button",
       view = "default",
       target = "",
       isDisabled = false,
       isHidden = false,
       checked = false,
-      isTextCenter = false,
       theme,
       width,
       iconLeft,
@@ -24,7 +25,7 @@ const Button = forwardRef(
       ariaLabel,
       title,
     },
-    ref
+    ref,
   ) => {
     switch (view) {
       case "link":
@@ -36,23 +37,22 @@ const Button = forwardRef(
               {
                 [classes[`theme_${theme}`]]:
                   theme !== undefined || theme !== null,
-                [classes["theme_gray_active"]]: checked,
+                [classes.theme_gray_active]: checked,
 
-                [classes["width_max"]]: width === "max",
-                [classes["padding"]]: children,
+                [classes.width_max]: width === "max",
+                [classes.padding]: children,
 
                 // [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
                 // [classes["padding_icon_right"]]: iconRight && !isTextCenter,
               },
-              className
+              className,
             )}
             href={href}
             target={target}
             aria-label={ariaLabel}
             title={title}
             onClick={onClick}
-            ref={ref}
-          >
+            ref={ref}>
             {iconLeft && iconLeft}
             {children}
             {iconRight && iconRight}
@@ -66,16 +66,16 @@ const Button = forwardRef(
               classes.button,
               classes.link,
               {
-                [classes["padding"]]: children,
-                [classes["icon"]]: icon,
+                [classes.padding]: children,
+                [classes.icon]: icon,
               },
-              className
+              className,
             )}
             href={href}
             aria-label={ariaLabel}
             download
             target="_blank"
-          >
+            rel="noreferrer">
             {iconLeft && iconLeft}
             {icon && icon}
             {children}
@@ -91,23 +91,22 @@ const Button = forwardRef(
               {
                 [classes[`theme_${theme}`]]:
                   theme !== undefined || theme !== null,
-                [classes["width_max"]]: width === "max",
-                [classes["padding"]]: children,
+                [classes.width_max]: width === "max",
+                [classes.padding]: children,
                 // [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
                 // [classes["padding_icon_right"]]: iconRight && !isTextCenter,
-                [classes["hidden"]]: isHidden,
-                [classes["icon"]]: icon,
+                [classes.hidden]: isHidden,
+                [classes.icon]: icon,
               },
-              className
+              className,
             )}
-            type={type}
+            type="button"
             onClick={onClick}
             disabled={isDisabled}
             aria-label={ariaLabel}
             data-href={href}
             title={title}
-            ref={ref}
-          >
+            ref={ref}>
             {iconLeft && iconLeft}
             {icon && icon}
             {children}
@@ -115,7 +114,7 @@ const Button = forwardRef(
           </button>
         );
     }
-  }
+  },
 );
 
 export default memo(Button);

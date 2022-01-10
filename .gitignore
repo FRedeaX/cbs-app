@@ -14,19 +14,10 @@ sentry.properties
 
 # next.js
 /.next/
+.data
 
 # misc
 .DS_Store
 
 # local env files
 .env.local
-
-#docker
-.env
-.docker
-.dockerignore
-docker-compose.yml
-# .docker/mysql/dump.sql
-# .docker/sftp/id_rsa.pub
-
-.data

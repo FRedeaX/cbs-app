@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
-import { SEO } from "~/components/SEO/SEO";
+
+import SEO from "../../SEO/SEO";
 import { columnsBlockGQL } from "../../blocks/Columns/Columns";
 import { embedBlockGQL } from "../../blocks/Embed/Embed";
 import { fileBlockGQL } from "../../blocks/File/File";
@@ -15,7 +16,7 @@ import { separatorBlockGQL } from "../../blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../blocks/Table/Table";
 import { verseBlockGQL } from "../../blocks/Verse/Verse";
-import { Page as PageDefault } from "./PageDefault/Page";
+import PageDefault from "./PageDefault/Page";
 
 export const PageRoot = ({ page }) => (
   <>
@@ -51,7 +52,6 @@ export const FETCH_PARENT_URI_PAGES = gql`
   }
 `;
 
-//slug | uri
 export const FETCH_CHILDREN_URI_PAGES = gql`
   query FetchChildrenUriPages($pathname: ID!) {
     page(id: $pathname, idType: URI) {

@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import Script from "next/script";
 
-export const YMetrika = () =>
+const YMetrika = () =>
   process.env.NODE_ENV === "production" ? (
     <>
-      <Script>
+      <Script id="ym">
         {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
             (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
@@ -20,8 +21,7 @@ export const YMetrika = () =>
         href="https://metrika.yandex.ru/stat/?id=33186213&amp;from=informer"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ fontSize: "10px", color: "initial" }}
-      >
+        style={{ fontSize: "10px", color: "initial" }}>
         <img
           src="https://informer.yandex.ru/informer/33186213/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
           style={{
@@ -39,3 +39,5 @@ export const YMetrika = () =>
       </a>
     </>
   ) : null;
+
+export default YMetrika;

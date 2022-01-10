@@ -1,4 +1,5 @@
 import React from "react";
+
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import classes from "./Poster-container.module.css";
 

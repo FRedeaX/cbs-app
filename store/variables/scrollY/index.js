@@ -1,6 +1,6 @@
 import { gql, makeVar } from "@apollo/client";
-import { isFront } from "~/helpers";
-import { delay } from "~/helpers/delay";
+
+import { delay, isFront } from "../../../helpers";
 
 export const scrollYVar = isFront && makeVar(window.scrollY);
 
@@ -17,10 +17,10 @@ if (isFront) {
   let prevScrollY = 0;
   window.addEventListener("scroll", () => {
     delay(200).then(() => {
-      const _scrollY = window.scrollY;
-      if (prevScrollY !== _scrollY) {
-        prevScrollY = _scrollY;
-        scrollYVar(_scrollY);
+      const { scrollY } = window;
+      if (prevScrollY !== scrollY) {
+        prevScrollY = scrollY;
+        scrollYVar(scrollY);
       }
     });
   });

@@ -1,10 +1,7 @@
-import classNames from "classnames/bind";
 import { memo } from "react";
-import classes from "./Book-image.module.css";
 
-const BookImage = ({ cls, width, height, src, srcSet, alt, cover, index }) => {
-  const cx = classNames.bind(classes);
-
+// eslint-disable-next-line no-unused-vars
+const BookImage = ({ cls, width, height, src, srcSet, alt, cover, index }) =>
   // const img = useRef(new Image());
   // img.current.loading = "lazy";
   // if(srcSet) img.current.srcSet = srcSet;
@@ -21,21 +18,18 @@ const BookImage = ({ cls, width, height, src, srcSet, alt, cover, index }) => {
   //   }
   // })
 
-  return (
-    <img
-      // onLoad={hendleLoad}
-      loading={index > 3 ? "lazy" : ""}
-      className={cx({ img: true, "img--cover": cover }, cls)}
-      // className={cx({ img: true, loaded: isLoaded, "img--cover": cover }, cls)}
-      width={width && width}
-      height={height && height}
-      srcSet={srcSet && srcSet}
-      src={src && src}
-      alt={alt && alt}
-    />
-  );
-};
-
+  // <img
+  //   // onLoad={hendleLoad}
+  //   loading={index > 3 ? "lazy" : ""}
+  //   className={cx({ img: true, "img--cover": cover }, cls)}
+  //   // className={cx({ img: true, loaded: isLoaded, "img--cover": cover }, cls)}
+  //   width={width && width}
+  //   height={height && height}
+  //   srcSet={srcSet && srcSet}
+  //   src={src && src}
+  //   alt={alt && alt}
+  // />
+  null;
 // function areEqual(prevProps, nextProps) {
 //   console.log('prevProps', prevProps);
 //   console.log('nextProps', nextProps);

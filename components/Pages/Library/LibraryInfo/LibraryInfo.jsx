@@ -37,16 +37,12 @@
 
 // return (
 //   <>
-{
-  /* {console.log("LibraryInfo")} */
-}
-{
-  /* <h3></h3>
+/* {console.log("LibraryInfo")} */
+/* <h3></h3>
       <div />
     </>
   );
 }; */
-}
 
 // function mapStateToProps(state) {
 //   return {

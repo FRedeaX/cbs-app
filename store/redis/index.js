@@ -1,13 +1,15 @@
 import { Tedis } from "tedis";
+
 // import { errorHelper } from "../../helpers/errorHendler";
 
-export const clientRedis =
+const clientRedis =
   typeof window === "undefined" &&
   new Tedis({
     host: `${process.env.REDIS_HOST}`,
     port: `${process.env.REDIS_PORT}`,
   });
 
+export default clientRedis;
 // (async () => {
 //   await clientRedis
 //     .get("post")

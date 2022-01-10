@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
-import { client } from "~/store/apollo-client";
 
-export default async (req, res) => {
+import { client } from "../../store/apollo-client";
+
+const p = async (req, res) => {
   const { WORDPRESS_AUTH_REFRESH_TOKEN, GRAPHQL_JWT_AUTH_SECRET_KEY } =
     process.env;
 
@@ -22,11 +23,13 @@ export default async (req, res) => {
   });
 
   // res.json({ token: token.refreshJwtAuthToken.authToken });
-  res.json({ token: token.refreshJwtAuthToken.authToken });
+  return res.json({ token: token.refreshJwtAuthToken.authToken });
   // res.redirect(`/preview?id=${req.query.id}&preview=true`);
 
   // res.end("Preview mode enabled");
 };
+
+export default p;
 
 // const response = await fetch(
 //   `http://192.168.1.88/wp-json/wp/v2/posts/${req.query.id}?_wpnonce=${req.query.preview_nonce}&_fields=slug`,

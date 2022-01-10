@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/client";
 import classnames from "classnames";
-import { memo, useEffect, useRef, useCallback } from "react";
-import { GET_OVERLAY, overlayVar } from "~/store/variables/overlay";
 import { useRouter } from "next/router";
+import { memo, useCallback, useEffect, useRef } from "react";
+
+import { GET_OVERLAY, overlayVar } from "../../../store/variables/overlay";
 import classes from "./Overlay.module.css";
 
 const Overlay = ({ isTouch = false }) => {
@@ -12,11 +13,6 @@ const Overlay = ({ isTouch = false }) => {
     },
   } = useQuery(GET_OVERLAY);
   const { asPath } = useRouter();
-
-  useEffect(() => {
-    if (isOpen) addStyle();
-    else removeStyle();
-  }, [isOpen]);
 
   const addStyle = useCallback(() => {
     if (isOverflow) {
@@ -29,6 +25,12 @@ const Overlay = ({ isTouch = false }) => {
     document.body.style.marginRight = "";
   }, []);
 
+  useEffect(() => {
+    if (isOpen) addStyle();
+    else removeStyle();
+  }, [isOpen, addStyle, removeStyle]);
+
+  // eslint-disable-next-line no-underscore-dangle
   const _overlay = useRef();
   useEffect(() => {
     _overlay.current = { zIndex, color };
@@ -76,6 +78,7 @@ const Overlay = ({ isTouch = false }) => {
           color: _overlay.current.color,
         })
       }
+      aria-hidden
     />
   );
 };

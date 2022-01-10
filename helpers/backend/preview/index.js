@@ -1,15 +1,15 @@
-import { FETCH_ARTICLE } from "~/components/Pages/Post/Post";
-import { authClient } from "~/store/apollo-client";
+import { FETCH_ARTICLE } from "../../../components/Pages/Post/Post";
+import { authClient } from "../../../store/apollo-client";
 
-export const loadPreview = async (query) => {
+const loadPreview = async (query) => {
   const { LOCAL_URL, GRAPHQL_JWT_AUTH_SECRET_KEY } = process.env;
   const res = await fetch(
-    `${LOCAL_URL}/api/preview?secret=${GRAPHQL_JWT_AUTH_SECRET_KEY}`
+    `${LOCAL_URL}/api/preview?secret=${GRAPHQL_JWT_AUTH_SECRET_KEY}`,
   );
   const result = await res.json();
 
-  const _c = authClient(result.token);
-  const { data } = await _c.query({
+  const client = authClient(result.token);
+  const { data } = await client.query({
     query: FETCH_ARTICLE,
     variables: {
       id: query.p || query.preview_id,
@@ -19,3 +19,5 @@ export const loadPreview = async (query) => {
   });
   return data.post;
 };
+
+export default loadPreview;

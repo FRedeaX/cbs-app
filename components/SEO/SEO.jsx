@@ -1,58 +1,64 @@
+/* eslint-disable @next/next/no-script-in-head */
 import Head from "next/head";
 import Script from "next/script";
+
 // import scrollbarWidth from "~/public/scripts/scrollbarWidth";
 
-export const SEO = ({ title, description, image }) => (
-  <>
-    <Head>
-      <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: (function () {
-            if (typeof window === "undefined") return;
-            const outer = document.createElement("div");
-            outer.style.visibility = "hidden";
-            outer.style.overflow = "scroll";
-            document.body.appendChild(outer);
-            const inner = document.createElement("div");
-            outer.appendChild(inner);
-            const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-            outer.parentNode.removeChild(outer);
-            document.body.style.setProperty(
-              "--scrollbarWidth",
-              `${scrollbarWidth}px`
-            );
-          })(),
-        }}
-      />
-      {/* <Script strategy="afterInteractive" src={scrollbarWidth} /> */}
-      {/* <script type="text/javascript" src="/scripts/scrollbarWidth.js"></script> */}
-      {/* dangerouslySetInnerHTML={{
-    __html:``}} */}
+const SEO = ({ title, description, image, video, url }) => {
+  const fullTitle = title
+    ? `${title} | Библиотеки города Байконур`
+    : "Библиотеки города Байконур";
 
-      <title>
-        {title
-          ? `${title} | Библиотеки города Байконур`
-          : "Библиотеки города Байконур"}
-      </title>
-      <meta
-        property="og:title"
-        content={
-          title
-            ? `${title} | Библиотеки города Байконур`
-            : "Библиотеки города Байконур"
-        }
-      />
-      <meta name="description" content={description} />
-      <meta property="og:description" content={description} />
-      <meta property="twitter:description" content={description} />
-      {image && <meta property="og:image" content={image} />}
-    </Head>
-  </>
-);
+  return (
+    <>
+      <Head>
+        <Script
+          id="scrollbarWidth"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: (function scrollWidth() {
+              if (typeof window === "undefined") return;
+              const outer = document.createElement("div");
+              outer.style.visibility = "hidden";
+              outer.style.overflow = "scroll";
+              document.body.appendChild(outer);
+              const inner = document.createElement("div");
+              outer.appendChild(inner);
+              const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+              outer.parentNode.removeChild(outer);
+              document.body.style.setProperty(
+                "--scrollbarWidth",
+                `${scrollbarWidth}px`,
+              );
+            })(),
+          }}
+        />
 
-{
-  /* <Head>
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        {image && <meta property="og:image" content={image} />}
+        {video &&
+          video.length > 0 &&
+          video.map(({ id, href }) => (
+            <meta key={id} property="og:video" content={href} />
+          ))}
+        <meta
+          property="og:site_name"
+          content="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур"
+        />
+      </Head>
+    </>
+  );
+};
+
+export default SEO;
+
+/* <meta property="twitter:description" content={description} /> */
+/* <Head>
   <title>{`${title} | ${siteTitle}`}</title>
   <meta name="description" content={description} />
   <meta property="og:type" content="website" />
@@ -61,18 +67,3 @@ export const SEO = ({ title, description, image }) => (
   <meta property="twitter:creator" content={config.social.twitter} />
   <meta property="twitter:title" content={title} />
 </Head>; */
-}
-
-{
-  /* <link
-        rel="preload"
-        as="style"
-        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public%20Sans%3Aital%2Cwght%400%2C100..900%3B1%2C100..900&amp;subset=latin%2Clatin-ext"
-      />
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public%20Sans%3Aital%2Cwght%400%2C100..900%3B1%2C100..900&amp;subset=latin%2Clatin-ext"
-        type="text/css"
-        media="all"
-      /> */
-}

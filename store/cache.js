@@ -1,4 +1,5 @@
 import { InMemoryCache } from "@apollo/client";
+
 import { isHeaderPosResetVar } from "./variables/header";
 import { modalVar } from "./variables/modal";
 import { overlayVar } from "./variables/overlay";
@@ -6,7 +7,7 @@ import { paginationVar } from "./variables/pagination";
 import { scrollYVar } from "./variables/scrollY";
 import { windowWidthVar } from "./variables/windowWidth";
 
-export const cache = new InMemoryCache({
+const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
@@ -41,7 +42,7 @@ export const cache = new InMemoryCache({
           },
         },
 
-        //Перенаправление кэша
+        // Перенаправление кэша
         // post(_, { args, toReference }) {
         //   return toReference({
         //     __typename: "Post",
@@ -52,3 +53,4 @@ export const cache = new InMemoryCache({
     },
   },
 });
+export default cache;

@@ -1,11 +1,11 @@
 import { ApolloProvider } from "@apollo/client";
 import { useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
-import Overlay from "~/components/UI/Overlay/Overlay";
-import { ErrorBoundary } from "~/components/ErrorBoundary/ErrorBoundary";
-import { client } from "~/store/apollo-client";
+
+import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
+import Overlay from "../components/UI/Overlay/Overlay";
+import { client } from "../store/apollo-client";
 import "../styles.css";
-import Script from "next/script";
 
 /* eslint-disable react/jsx-props-no-spreading */
 function App({ Component, pageProps }) {

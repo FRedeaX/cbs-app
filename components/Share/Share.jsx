@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import Social from "./../Social/Social";
+
+import Social from "../Social/Social";
 import classes from "./Share.module.css";
 
 const Share = ({ cls, clsLink, title, href, image }) => {
@@ -13,13 +14,13 @@ const Share = ({ cls, clsLink, title, href, image }) => {
 
   if (title) {
     urlVK += `&title=${encodeURIComponent(
-      `${title} | Библиотеки города Байконур`
+      `${title} | Библиотеки города Байконур`,
     )}`;
     urlOK += `&title=${encodeURIComponent(
-      `${title} | Библиотеки города Байконур`
+      `${title} | Библиотеки города Байконур`,
     )}`;
     urlFB += `&title=${encodeURIComponent(
-      `${title} | Библиотеки города Байконур`
+      `${title} | Библиотеки города Байконур`,
     )}`;
   }
   if (image) {
@@ -31,9 +32,9 @@ const Share = ({ cls, clsLink, title, href, image }) => {
   return (
     <div className={classNames(cls, classes.container)}>
       {/* <div className={classes.hover}> */}
-      <Social type={"vk"} url={urlVK} clsLink={clsLink} clsSVG={classes.svg} />
-      <Social type={"ok"} url={urlOK} clsLink={clsLink} clsSVG={classes.svg} />
-      <Social type={"fb"} url={urlFB} clsLink={clsLink} clsSVG={classes.svg} />
+      <Social type="vk" url={urlVK} clsLink={clsLink} clsSVG={classes.svg} />
+      <Social type="ok" url={urlOK} clsLink={clsLink} clsSVG={classes.svg} />
+      <Social type="fb" url={urlFB} clsLink={clsLink} clsSVG={classes.svg} />
       {/* </div> */}
     </div>
   );
