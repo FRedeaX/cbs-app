@@ -6,7 +6,9 @@ import fetch from "node-fetch";
 import cache from "./cache";
 
 const link = createHttpLink({
-  uri: "https://cbsbaikonur.ru/graphql",
+  uri: `${process.env.API}`,
+  // uri: `${process.env.API_DEV}`,
+  // uri: "https://cbsbaikonur.ru/graphql",
   // credentials: "include",
 });
 

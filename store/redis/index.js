@@ -6,6 +6,7 @@ const clientRedis =
   typeof window === "undefined" &&
   new Tedis({
     host: `${process.env.REDIS_HOST}`,
+    // host: `${process.env.REDIS_HOST_DEV}`,
     port: `${process.env.REDIS_PORT}`,
   });
 

@@ -27,7 +27,7 @@ export const Post = ({ title, categories, href, image, blocks }) => (
     <div className={classes.header}>
       <Heading level="1">{title}</Heading>
       <div className={classes.category}>
-        <Category data={categories} cls={classes["category-link"]} />
+        <Category data={categories.nodes} cls={classes["category-link"]} />
       </div>
     </div>
     {blocks && (

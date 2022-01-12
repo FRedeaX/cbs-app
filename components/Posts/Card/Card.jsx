@@ -76,7 +76,7 @@ const Card = ({
         className={classNames(classes.footer, {
           [classes.footer_big]: isBig,
         })}>
-        <Category data={categories} />
+        <Category data={categories.nodes} />
       </div>
     </div>
   </article>

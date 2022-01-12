@@ -71,7 +71,7 @@ export async function getStaticProps({ params: { slug, page } }) {
     })
     .then(({ data }) =>
       plaiceholder(data.category.posts.nodes).then((plaiceholderRes) => ({
-        plaiceholderRes,
+        posts: plaiceholderRes,
         categoryName: data.category.posts.nodes[0].categories.nodes.filter(
           (node) => node.slug === slug,
         )?.[0]?.name,
@@ -91,8 +91,8 @@ export async function getStaticProps({ params: { slug, page } }) {
     props: {
       menu,
       pages: pagesInfo[pagesInfo.length - 1].number - 1,
-      posts,
-      categoryName,
+      posts: posts || null,
+      categoryName: categoryName || null,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10),
   };

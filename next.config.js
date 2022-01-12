@@ -12,6 +12,7 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const moduleExports = {
   images: {
     domains: [process.env.PUBLIC_IP],
+    // domains: [process.env.PUBLIC_IP_DEV],
   },
   experimental: {
     optimizeCss: true,
