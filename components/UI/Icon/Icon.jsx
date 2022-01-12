@@ -1,4 +1,5 @@
 import classNames from "classnames";
+
 import GetGlyph from "./GetGlyph";
 import classes from "./Icon.module.css";
 
@@ -20,10 +21,9 @@ const Icon = ({
           [classes[`side_${side}`]]: side !== "center",
           [classes[`direction_${direction}`]]: direction !== undefined,
         },
-        className
+        className,
       )}
-      aria-hidden
-    >
+      aria-hidden>
       <GetGlyph type={type} className={classes.glyph} />
     </span>
   ) : (
@@ -37,7 +37,7 @@ const Icon = ({
           [classes[`arrow_weight_${weight}`]]: type === "arrow",
           [classes[`direction_${direction}`]]: direction !== undefined,
         },
-        className
+        className,
       )}
       aria-hidden
     />

@@ -1,5 +1,5 @@
-const GetGlyph = ({ glyph, className }) => {
-  switch (glyph) {
+const GetGlyph = ({ type, className }) => {
+  switch (type) {
     case "download":
       return (
         <svg
