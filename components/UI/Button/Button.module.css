@@ -1,8 +1,8 @@
 .button {
   position: relative;
   display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: var(--button-align-items, center);
+  justify-content: var(--button-justify-content, space-between);
   min-width: var(--button-width, 36px);
   min-height: var(--button-height, 36px);
   margin: 0;
@@ -31,10 +31,11 @@
 .link {
   /* line-height: 2.5; */
   justify-content: var(--button-text-align, left);
-  color: var(--button-link-color, var(--blue-dark));
+  color: var(--button-link-color, var(--link-color));
   text-decoration: none;
   border: var(--button-border-width, 1px) solid
-    var(--button-view-link-border-color, var(--blue-dark));
+    var(--button-link-border-color, var(--link-color));
+  transition: background-color 0.15s linear;
 
   /* color: var(--black-70); */
 
@@ -54,6 +55,10 @@
 @media screen and (min-width: 769px) {
   .theme_gray:hover {
     background-color: #dbdbdb;
+  }
+
+  .link:hover {
+    background-color: var(--link-background-color-hover);
   }
 }
 .theme_gray_active {

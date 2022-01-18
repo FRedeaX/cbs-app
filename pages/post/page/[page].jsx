@@ -1,4 +1,5 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import HomePage from "../../../components/Pages/HomePage/HomePage";
@@ -77,7 +78,17 @@ export async function getStaticProps({ params }) {
       removeDuplicateTag(data.posts.nodes).then((removeDuplicateRes) =>
         plaiceholder(removeDuplicateRes.result).then((p) => p),
       ),
-    );
+    )
+    .catch((err) => {
+      captureException(err, "FETCH_ARTICLES");
+      return null;
+    });
+
+  if (!posts) {
+    return {
+      notFound: true,
+    };
+  }
 
   const posters = await client
     .query({
@@ -89,7 +100,11 @@ export async function getStaticProps({ params }) {
           filter(sortRes).then((filterRes) => filterRes),
         ),
       ),
-    );
+    )
+    .catch((err) => {
+      captureException(err, "FETCH_POSTER");
+      return null;
+    });
 
   return {
     props: {

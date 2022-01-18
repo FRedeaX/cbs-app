@@ -2,7 +2,7 @@
 import { client } from "../../../store/apollo-client";
 import clientRedis from "../../../store/redis";
 // import { errorHelper } from "../../errorHendler";
-import { removeDuplicateTag } from "../removeDuplicateTag";
+import removeDuplicateTag from "../removeDuplicateTag";
 
 /**
  *

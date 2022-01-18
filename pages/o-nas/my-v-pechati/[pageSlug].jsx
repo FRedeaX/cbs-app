@@ -1,3 +1,5 @@
+import { captureException } from "@sentry/nextjs";
+
 import {
   FETCH_CHILDREN_URI_PAGES,
   FETCH_PAGE,
@@ -39,7 +41,17 @@ export async function getStaticProps({ params }) {
       variables: { id: `o-nas/my-v-pechati/${params.pageSlug}`, type: "URI" },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.page));
+    .then(({ data }) => transformBlocks(data.page))
+    .catch((err) => {
+      captureException(err, "FETCH_PAGE");
+      return null;
+    });
+
+  if (!page) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

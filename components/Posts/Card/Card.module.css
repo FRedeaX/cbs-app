@@ -153,6 +153,9 @@
 }
 
 .footer {
+  --category-background: #fff;
+
+  z-index: 1;
   margin-top: 2px;
 }
 @media screen and (min-width: 653px) and (max-width: 767px) {

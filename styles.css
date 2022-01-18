@@ -14,7 +14,8 @@
   --gray: hsl(222, 13%, 60%);
   --dark-gray: hsl(0, 0%, 24%);
   --d-dark-gray: hsl(222, 13%, 28%, 1);
-  --blue-dark: #04b;
+  --blue-dark: hsl(218, 100%, 37%);
+  --blue-dark-05: hsla(218, 100%, 37%, 0.05);
 
   /* не используется
   --red: hsl(0, 98%, 60%);
@@ -65,6 +66,7 @@
 
   /* component color */
   --link-color: var(--blue-dark);
+  --link-background-color-hover: var(--blue-dark-05);
 }
 
 /* @media screen and (min-width: 769px) {

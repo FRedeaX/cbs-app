@@ -7,7 +7,7 @@ import classes from "./Logo.module.css";
 
 const Logo = () => (
   <Link href="/">
-    <a className={classes.logo}>
+    <a className={classes.logo} aria-label="Перейти на главную страницу.">
       <Image
         src="/logos/new-emblem-cbs-3-250x250.png"
         className={classNames(classes.img)}

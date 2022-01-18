@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import {
@@ -69,15 +70,17 @@ export async function getStaticProps({ params }) {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.post));
+    .then(({ data }) => transformBlocks(data.post))
+    .catch((err) => {
+      captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
+      return null;
+    });
 
   if (!post) {
     return {
       notFound: true,
     };
   }
-
-  // const post = await transformBlocks(data.post);
 
   return {
     props: {

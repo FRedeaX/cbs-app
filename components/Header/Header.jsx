@@ -69,6 +69,7 @@ const Header = ({ menus }) => {
   }, [state?.scrollY, state?.isHeaderHidden, isHeaderHidden]);
 
   // console.log(isHeaderHidden);
+  if (!menus) return null;
   return (
     <header
       style={{ right: state?.isHeaderPosReset ? `var(--scrollbarWidth)` : "0" }}

@@ -1,9 +1,7 @@
 import { InMemoryCache } from "@apollo/client";
 
 import { isHeaderPosResetVar } from "./variables/header";
-import { modalVar } from "./variables/modal";
 import { overlayVar } from "./variables/overlay";
-import { paginationVar } from "./variables/pagination";
 import { scrollYVar } from "./variables/scrollY";
 import { windowWidthVar } from "./variables/windowWidth";
 
@@ -29,16 +27,6 @@ const cache = new InMemoryCache({
         isHeaderPosReset: {
           read() {
             return isHeaderPosResetVar();
-          },
-        },
-        modal: {
-          read() {
-            return modalVar();
-          },
-        },
-        pagination: {
-          read() {
-            return paginationVar();
           },
         },
 

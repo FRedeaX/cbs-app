@@ -33,6 +33,13 @@
   .block_background_true .container_mediaPosition_right .text {
     padding: 0 6%;
   }
+
+  .text_padding_left {
+    padding-left: 6%;
+  }
+  .text_padding_right {
+    padding-right: 6%;
+  }
 }
 @media screen and (max-width: 767px) {
   .container_mediaPosition_right .text {
@@ -73,13 +80,6 @@
 
 .image {
   border-radius: 12px;
-}
-
-.text_padding_left {
-  padding-left: 6%;
-}
-.text_padding_right {
-  padding-right: 6%;
 }
 
 .text_aline_top {

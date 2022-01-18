@@ -32,7 +32,7 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
         .catch((err) => console.error(err));
     }
   }, [data]);
-  console.log(post);
+  console.log({ post });
 
   if (loading) return <div>Loading...</div>;
   if (error) {
@@ -48,6 +48,7 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
         title={post.title}
         categories={post.categories}
         blocks={post.blocks}
+        isPreview
       />
     </>
   );

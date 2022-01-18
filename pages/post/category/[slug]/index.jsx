@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import HomePage from "../../../../components/Pages/HomePage/HomePage";
@@ -61,14 +62,30 @@ export async function getStaticProps({ params: { slug } }) {
     fetchPolicy: "network-only",
   });
 
-  const posts = await plaiceholder(data.category.posts.nodes).then((p) => p);
+  const posts = await plaiceholder(data.category?.posts.nodes)
+    .then((p) => p)
+    .catch((err) => {
+      captureException(err, "fetchArticlesByCategory");
+      return null;
+    });
 
   const pages = await paginationLoad({
     key: `posts_c_${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
-    endCursor: data.category.posts.pageInfo.endCursor,
+    endCursor: data.category?.posts.pageInfo.endCursor,
     category: slug,
-  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1);
+  })
+    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
+    .catch((err) => {
+      captureException(err, "POSTS_PAGINATION_BY_CATEGORY_GQL");
+      return null;
+    });
+
+  if (!posts) {
+    return {
+      notFound: true,
+    };
+  }
 
   const name = data.category.posts.nodes[0].categories.nodes.filter(
     (node) => node.slug === slug,

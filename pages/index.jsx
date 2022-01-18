@@ -1,3 +1,5 @@
+import { captureException } from "@sentry/nextjs";
+
 import HomePage from "../components/Pages/HomePage/HomePage";
 import {
   FETCH_ARTICLES,
@@ -40,15 +42,23 @@ export async function getStaticProps() {
     })
     .then(({ data }) => data);
 
-  const posts = await removeDuplicateTag(dataPosts?.posts.nodes).then((nodes) =>
-    plaiceholder(nodes.result).then((p) => p),
-  );
+  const posts = await removeDuplicateTag(dataPosts?.posts.nodes)
+    .then((nodes) => plaiceholder(nodes.result).then((p) => p))
+    .catch((err) => {
+      captureException(err, "FETCH_ARTICLES");
+      return null;
+    });
 
   const pages = await paginationLoad({
     key: "posts",
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
-  }).then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1);
+  })
+    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
+    .catch((err) => {
+      captureException(err, "POSTS_PAGINATION_GQL");
+      return null;
+    });
 
   const posters = await client
     .query({
@@ -61,7 +71,11 @@ export async function getStaticProps() {
           filter(sortRes).then((filterRes) => filterRes),
         ),
       ),
-    );
+    )
+    .catch((err) => {
+      captureException(err, "FETCH_POSTER");
+      return null;
+    });
 
   return {
     props: {

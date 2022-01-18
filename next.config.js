@@ -1,4 +1,4 @@
-const path = require("path");
+// const path = require("path");
 // const { redirect } = require("./helpers/redirect");
 // const { redirectRoutes } = require("./Router");
 
@@ -11,8 +11,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
   images: {
-    domains: [process.env.PUBLIC_IP],
-    // domains: [process.env.PUBLIC_IP_DEV],
+    domains: [process.env.HOST],
+    // domains: [process.env.HOST_DEV],
+    formats: ["image/avif", "image/webp"],
   },
   experimental: {
     optimizeCss: true,
@@ -22,18 +23,6 @@ const moduleExports = {
     ignoreDuringBuilds: true,
   },
 
-  webpack: (config, {}) => {
-    // Alias
-    config.resolve.alias["~"] = path.resolve(__dirname + "");
-
-    // config.node = {
-    //   fs: "empty",
-    //   net: "empty",
-    //   tls: "empty",
-    // };
-
-    return config;
-  },
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },

@@ -1,5 +1,6 @@
 .icon {
   display: var(--icon-display, inline-block);
+  margin: var(--icon-margin);
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: contain;
@@ -76,10 +77,14 @@
   width: 100%;
 } */
 
-.direction_left {
-  transform: rotate(90deg);
+.direction_top {
+  transform: rotate(180deg);
 }
 
 .direction_right {
   transform: rotate(-90deg);
+}
+
+.direction_left {
+  transform: rotate(90deg);
 }

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Social from "../Social/Social";
 import classes from "./Share.module.css";
 
-const Share = ({ cls, clsLink, title, href, image }) => {
+const Share = ({ cls, clsLink, title, href, image, ref }) => {
   let urlVK = `https://vk.com/share.php?url=${href}`;
   let urlOK = `https://connect.ok.ru/offer?url=${href}`;
   let urlFB = `https://www.facebook.com/sharer/sharer.php?u=${href}`;
@@ -30,7 +30,7 @@ const Share = ({ cls, clsLink, title, href, image }) => {
   }
 
   return (
-    <div className={classNames(cls, classes.container)}>
+    <div className={classNames(cls, classes.container)} ref={ref}>
       {/* <div className={classes.hover}> */}
       <Social type="vk" url={urlVK} clsLink={clsLink} clsSVG={classes.svg} />
       <Social type="ok" url={urlOK} clsLink={clsLink} clsSVG={classes.svg} />

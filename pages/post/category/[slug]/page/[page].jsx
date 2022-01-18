@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import HomePage from "../../../../../components/Pages/HomePage/HomePage";
@@ -76,16 +77,17 @@ export async function getStaticProps({ params: { slug, page } }) {
           (node) => node.slug === slug,
         )?.[0]?.name,
       })),
-    );
+    )
+    .catch((err) => {
+      captureException(err, "fetchArticlesByCategory");
+      return null;
+    });
 
-  // .then(({ data }) =>
-
-  // ({
-  //   posts: plaiceholder(data.category.posts.nodes).then((p) => p),
-  //   categoryName: data.category.posts.nodes[0].categories.nodes.filter(
-  //     (node) => node.slug === slug
-  //   )?.[0]?.name,
-  // }));
+  if (!posts) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

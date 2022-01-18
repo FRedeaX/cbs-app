@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { captureException } from "@sentry/nextjs";
 import { Component } from "react";
 
 import Button from "../UI/Button/Button";
@@ -18,16 +19,8 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     console.error({ error, errorInfo });
     // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
+    captureException({ error, errorInfo }, "ErrorBoundary");
   }
-
-  // reloadHendler = () => {
-  //   if (isFront()) window.location.reload();
-  // };
-
-  // reloadHendler = useMemo(() => {
-  //   if (isFront()) window.location.reload();
-  // }, []);
 
   render() {
     const {

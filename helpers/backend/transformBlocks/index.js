@@ -58,9 +58,9 @@ const transform = async (arr) => {
 
   arr.forEach((block, index) => {
     switch (block.name) {
-      case "core/image": {
-        // case "core/media-text":
-        const { url } = block.attributes; // || block.attributes.mediaLink;
+      case "core/image":
+      case "core/media-text": {
+        const url = block.attributes.url || block.attributes.mediaUrl;
         promise.push(
           getSizeOf(url)
             .then(({ width, height }) => {
@@ -76,21 +76,21 @@ const transform = async (arr) => {
         break;
       }
 
-      case "core/media-text": {
-        promise.push(
-          getSizeOf(block.attributes.mediaUrl)
-            .then(({ width, height }) => {
-              blockList[index] = addAttributes(block, {
-                width,
-                height,
-              });
-            })
-            .catch(({ message }) => {
-              blockList[index] = { name: `error: ${block.name}`, message };
-            }),
-        );
-        break;
-      }
+      // case "core/media-text": {
+      //   promise.push(
+      //     getSizeOf(block.attributes.mediaUrl)
+      //       .then(({ width, height }) => {
+      //         blockList[index] = addAttributes(block, {
+      //           width,
+      //           height,
+      //         });
+      //       })
+      //       .catch(({ message }) => {
+      //         blockList[index] = { name: `error: ${block.name}`, message };
+      //       }),
+      //   );
+      //   break;
+      // }
 
       case "core/gallery": {
         const images = [];
@@ -199,6 +199,7 @@ const transform = async (arr) => {
 };
 
 const transformBlocks = async (obj) => {
+  if (!(obj && obj.blocks)) throw new Error("obj or obj.blocks of null");
   const { blockList: blocks, video } = await transform(obj.blocks);
   return {
     ...obj,
