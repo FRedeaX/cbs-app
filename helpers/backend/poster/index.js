@@ -1,22 +1,22 @@
 const getStringMonth = (month) => {
   switch (String(month)) {
-    case "01":
+    case "1":
       return "Января";
-    case "02":
-      return "Феваля";
-    case "03":
+    case "2":
+      return "Февраля";
+    case "3":
       return "Марта";
-    case "04":
+    case "4":
       return "Апреля";
-    case "05":
+    case "5":
       return "Мая";
-    case "06":
+    case "6":
       return "Июня";
-    case "07":
+    case "7":
       return "Июля";
-    case "08":
+    case "8":
       return "Августа";
-    case "09":
+    case "9":
       return "Сентября";
     case "10":
       return "Октября";
