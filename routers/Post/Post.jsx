@@ -1,12 +1,8 @@
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
-import { postGQL } from "../../components/Posts/PostsRoot";
+// import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
@@ -25,20 +21,18 @@ import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
 // import { useOnScreen } from "../../helpers/frontend";
+// import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
-import Offer from "./offer/Offer";
 import usePost from "./usePost";
 
 export const Post = ({
-  id,
-  href,
   title,
+  categories,
+  href,
   image,
   blocks,
-  categories,
   isPreview = false,
 }) => {
-  // const router = useRouter();
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
   const { hendleOffers, offerList } = usePost();
@@ -85,19 +79,26 @@ export const Post = ({
   );
 };
 
-export const GET_MINIMUM_DATA_FOR_OFFER = gql`
-  query GET_MINIMUM_DATA_FOR_OFFER($id: ID!) {
-    post(id: $id) {
+export const FETCH_ARTICLE = gql`
+  query fetchArticle($id: ID!, $type: PostIdType, $isPreview: Boolean) {
+    post(id: $id, idType: $type, asPreview: $isPreview) {
       categories {
         nodes {
-          termTaxonomyId
+          id
+          name
+          uri
         }
       }
-      postsFields {
-        keywords
+      content
+      excerpt
+      featuredImage {
+        node {
+          sourceUrl(size: THUMBNAIL)
+        }
       }
-      postId
-      date
+      id
+      link
+      title
     }
   }
 `;
@@ -141,5 +142,4 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
   ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
-  ${postGQL.fragments}
 `;
