@@ -7,10 +7,10 @@ const removeDuplicateTag = async (data) => {
     const tags = post.tags.nodes[0];
 
     if (tags !== undefined) {
-      const tag = arrTags.find((tagID) => tagID === tags.id);
+      const tag = arrTags.find((tagID) => tagID === tags.tagId);
       if (tag !== undefined) return;
 
-      arrTags.push(tags.id);
+      arrTags.push(tags.tagId);
       result.push({ tags });
     } else {
       result.push(post);

@@ -35,6 +35,7 @@ const YMetrika = () =>
           className="ym-advanced-informer skip"
           data-cid="33186213"
           data-lang="ru"
+          loading="lazy"
         />
       </a>
     </>

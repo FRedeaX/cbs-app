@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
+// import { errorHelper } from "../../errorHendler";
+// eslint-disable-next-line import/no-cycle
+import { removeDuplicateTag } from "..";
 import { client } from "../../../store/apollo-client";
 import clientRedis from "../../../store/redis";
-// import { errorHelper } from "../../errorHendler";
-import removeDuplicateTag from "../removeDuplicateTag";
 
 /**
  *
