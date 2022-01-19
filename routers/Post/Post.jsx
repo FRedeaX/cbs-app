@@ -1,12 +1,8 @@
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
-import { postGQL } from "../../components/Posts/PostsRoot";
+// import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
@@ -25,20 +21,18 @@ import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
 // import { useOnScreen } from "../../helpers/frontend";
+// import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
-import Offer from "./offer/Offer";
 import usePost from "./usePost";
 
 export const Post = ({
-  id,
-  href,
   title,
+  categories,
+  href,
   image,
   blocks,
-  categories,
   isPreview = false,
 }) => {
-  // const router = useRouter();
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
   const { hendleOffers, offerList } = usePost();
@@ -57,7 +51,7 @@ export const Post = ({
 
   return (
     <>
-      {/* <Button
+      <Button
         className={classNames(
           classes["button_to-top"],
           // classes[`button_to-top_${isOnScreen}`],
@@ -65,7 +59,7 @@ export const Post = ({
         iconLeft={<Icon direction="top" weight="small" />}
         onClick={hendeToTop}>
         <span className={classes["button_to-top_text"]}>Наверх</span>
-      </Button> */}
+      </Button>
 
       <Article
         title={title}
@@ -75,17 +69,6 @@ export const Post = ({
         href={href}
         image={image}
       />
-
-      {offerList.length > 0 && (
-        <div className={classes.feed}>
-          <Offer
-            postListByCategory={offerList[0].postListByCategory}
-            similarPostList={offerList[0].similarPostList}
-            categories={categories.nodes}
-            // nextPost={nextPost}
-          />
-        </div>
-      )}
     </>
   );
 };
@@ -129,5 +112,4 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
   ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
-  ${postGQL.fragments}
 `;
