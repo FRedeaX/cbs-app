@@ -36,7 +36,7 @@ export const File = ({
   previewHeight,
 }) => (
   <div
-    style={{ marginBottom: displayPreview ? "20px" : "" }}
+    style={{ marginBottom: displayPreview ? "20px" : null }}
     className={classNames(classes.block, className)}>
     <div className={classes.header}>
       <Link href={href} passHref>
