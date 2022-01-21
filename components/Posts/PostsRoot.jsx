@@ -49,12 +49,13 @@ export const postGQL = {
   fragments: gql`
     fragment postGQL on Post {
       id
+      databaseId
       isSticky
       title
       uri
       categories {
         nodes {
-          id
+          termTaxonomyId
           name
           uri
         }
