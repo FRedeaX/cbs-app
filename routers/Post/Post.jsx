@@ -1,7 +1,10 @@
 import { gql } from "@apollo/client";
 import classNames from "classnames";
+import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
+import GroupCards from "../../components/Posts/GroupCards/GroupCards";
+import { postGQL } from "../../components/Posts/PostsRoot";
 // import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
@@ -26,11 +29,12 @@ import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
-  title,
-  categories,
   href,
+  title,
   image,
   blocks,
+  offers,
+  categories,
   isPreview = false,
 }) => {
   // const ref = useRef();
@@ -69,6 +73,12 @@ export const Post = ({
         href={href}
         image={image}
       />
+
+      {offerList && offerList.length > 1 && (
+        <div className={classes.offer}>
+          <GroupCards data={offerList} length={offerList.length} isClamp />
+        </div>
+      )}
     </>
   );
 };
@@ -112,4 +122,5 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
   ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
+  ${postGQL.fragments}
 `;
