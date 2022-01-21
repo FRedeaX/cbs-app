@@ -9,6 +9,7 @@ import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
+  // console.log(post);
   const { isFallback } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} size="m">
@@ -69,6 +70,17 @@ export async function getStaticProps({ params }) {
       fetchPolicy: "network-only",
     })
     .then(({ data }) => transformBlocks(data.post))
+    .then((p) => {
+      const tPost = {
+        ...p,
+        offers: {
+          notIn: p.databaseId,
+          categoryIn: p.categories.nodes.map((value) => value.termTaxonomyId),
+          tagIn: "",
+        },
+      };
+      return tPost;
+    })
     .catch((err) => {
       captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
       return null;
