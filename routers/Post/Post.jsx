@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 
 import Article from "../../components/Article/Article";
+import GroupCards from "../../components/Posts/GroupCards/GroupCards";
+import { postGQL } from "../../components/Posts/PostsRoot";
 // import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
@@ -28,11 +30,12 @@ import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
-  title,
-  categories,
   href,
+  title,
   image,
   blocks,
+  offers,
+  categories,
   isPreview = false,
 }) => {
   // const ref = useRef();
@@ -86,30 +89,6 @@ export const Post = ({
   );
 };
 
-export const FETCH_ARTICLE = gql`
-  query fetchArticle($id: ID!, $type: PostIdType, $isPreview: Boolean) {
-    post(id: $id, idType: $type, asPreview: $isPreview) {
-      categories {
-        nodes {
-          id
-          name
-          uri
-        }
-      }
-      content
-      excerpt
-      featuredImage {
-        node {
-          sourceUrl(size: THUMBNAIL)
-        }
-      }
-      id
-      link
-      title
-    }
-  }
-`;
-
 export const GET_POST_CONTENT_BY_BLOCKS = gql`
   query fetchArticle($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {
@@ -131,22 +110,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         ...tableBlockGQL
         ...verseBlockGQL
       }
-      categories {
-        nodes {
-          id
-          name
-          uri
-        }
-      }
-      excerpt
-      featuredImage {
-        node {
-          sourceUrl(size: THUMBNAIL)
-        }
-      }
-      id
-      link
-      title
+      ...postGQL
     }
   }
   ${paragraphBlockGQL.fragments}
@@ -164,4 +128,5 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
   ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
+  ${postGQL.fragments}
 `;
