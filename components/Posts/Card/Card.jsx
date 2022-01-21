@@ -23,7 +23,6 @@ const Card = ({
   isClamp,
   isBig,
   cls,
-  imagePriority = false,
 }) => (
   <article
     className={classNames(
