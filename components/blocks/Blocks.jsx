@@ -20,6 +20,7 @@ import { Separator } from "./Separator/Separator";
 import { Spacer } from "./Spacer/Spacer";
 import { Table } from "./Table/Table";
 import { Verse } from "./Verse/Verse";
+import { Video } from "./Video/Video";
 
 const Blocks = ({ blocks, className }) => {
   const router = useRouter();
@@ -58,6 +59,9 @@ const Blocks = ({ blocks, className }) => {
 
       case "core/embed":
         return <Embed key={key} {...block.attributes} />;
+
+      case "core/video":
+        return <Video key={key} {...block.attributes} />;
 
       case "core/html":
         return <Html key={key} html={block.saveContent} />;

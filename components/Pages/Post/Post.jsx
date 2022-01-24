@@ -23,6 +23,7 @@ import { separatorBlockGQL } from "../../blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../blocks/Table/Table";
 import { verseBlockGQL } from "../../blocks/Verse/Verse";
+import { videoBlockGQL } from "../../blocks/Video/Video";
 // import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
 import usePost from "./usePost";
@@ -131,6 +132,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         ...headingBlockGQL
         ...tableBlockGQL
         ...verseBlockGQL
+        ...videoBlockGQL
       }
       categories {
         nodes {
@@ -150,6 +152,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
       title
     }
   }
+  ${videoBlockGQL.fragments}
   ${paragraphBlockGQL.fragments}
   ${galleryBlockGQL.fragments}
   ${imageBlockGQL.fragments}
