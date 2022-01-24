@@ -6,7 +6,6 @@ const InfiniteScrolling = ({ children, isLoading, hasMore, hendleLoad }) => {
     (node) => {
       if (isLoading) return;
       if (observerRef.current) observerRef.current.disconnect();
-
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           hendleLoad();
