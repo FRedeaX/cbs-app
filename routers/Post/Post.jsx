@@ -82,6 +82,23 @@ export const Post = ({
   );
 };
 
+export const GET_MINIMUM_DATA_FOR_OFFER = gql`
+  query GET_MINIMUM_DATA_FOR_OFFER($id: ID!) {
+    post(id: $id) {
+      terms {
+        nodes {
+          termTaxonomyId
+          name
+        }
+      }
+      postsFields {
+        keywords
+      }
+      postId
+    }
+  }
+`;
+
 export const GET_POST_CONTENT_BY_BLOCKS = gql`
   query fetchArticle($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {
