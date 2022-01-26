@@ -1,14 +1,11 @@
 import { gql } from "@apollo/client";
-import { captureException } from "@sentry/nextjs";
+// import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
-import {
-  GET_POST_CONTENT_BY_BLOCKS,
-  Post,
-} from "../../../components/Pages/Post/Post";
+import { FETCH_ARTICLE, Post } from "../../../components/Pages/Post/Post";
 import SEO from "../../../components/SEO/SEO";
 import Layout from "../../../components/UI/Layout/Layout";
-import { getMenu, transformBlocks } from "../../../helpers/backend";
+import { getMenu } from "../../../helpers/backend";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
@@ -24,10 +21,11 @@ const PagePost = ({ menu, post }) => {
       />
       <Post
         title={post?.title}
+        content={post?.content}
         categories={post?.categories}
         href={post?.link}
         image={post?.featuredImage?.node?.sourceUrl}
-        blocks={post?.blocks}
+        // blocks={post?.blocks}
       />
     </Layout>
   );
@@ -63,18 +61,22 @@ export async function getStaticProps({ params }) {
   const menu = await getMenu();
   const post = await client
     .query({
-      query: GET_POST_CONTENT_BY_BLOCKS,
+      query: FETCH_ARTICLE,
       variables: {
         id: params.slug, // params.slug[0],
         type: "SLUG",
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.post))
-    .catch((err) => {
-      captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
-      return null;
+    // .then(({ data }) => transformBlocks(data.post))
+    .then(({ data }) => {
+      // console.log(data.post);
+      return data.post;
     });
+  // .catch((err) => {
+  //   captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
+  //   return null;
+  // });
 
   if (!post) {
     return {

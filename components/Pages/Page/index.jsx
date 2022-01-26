@@ -21,7 +21,11 @@ import PageDefault from "./PageDefault/Page";
 export const PageRoot = ({ page }) => (
   <>
     <SEO title={page.title} description={page.excerpt} />
-    <PageDefault title={page.title} blocks={page.blocks} />
+    <PageDefault
+      title={page.title}
+      content={page.content}
+      blocks={page.blocks}
+    />
   </>
 );
 
@@ -72,42 +76,44 @@ export const FETCH_CHILDREN_URI_PAGES = gql`
 export const FETCH_PAGE = gql`
   query FetchPage($id: ID!, $type: PageIdType, $isPreview: Boolean) {
     page(id: $id, idType: $type, asPreview: $isPreview) {
-      blocks {
-        name
-        ...paragraphBlockGQL
-        ...galleryBlockGQL
-        ...imageBlockGQL
-        ...columnsBlockGQL
-        ...htmlBlockGQL
-        ...embedBlockGQL
-        ...separatorBlockGQL
-        ...quoteBlockGQL
-        ...listBlockGQL
-        ...mediaTextBlockGQL
-        ...fileBlockGQL
-        ...spacerBlockGQL
-        ...headingBlockGQL
-        ...tableBlockGQL
-        ...verseBlockGQL
-      }
       id
       title
       excerpt
+      content
     }
   }
-  ${paragraphBlockGQL.fragments}
-  ${galleryBlockGQL.fragments}
-  ${imageBlockGQL.fragments}
-  ${columnsBlockGQL.fragments}
-  ${embedBlockGQL.fragments}
-  ${htmlBlockGQL.fragments}
-  ${separatorBlockGQL.fragments}
-  ${quoteBlockGQL.fragments}
-  ${listBlockGQL.fragments}
-  ${mediaTextBlockGQL.fragments}
-  ${fileBlockGQL.fragments}
-  ${spacerBlockGQL.fragments}
-  ${headingBlockGQL.fragments}
-  ${tableBlockGQL.fragments}
-  ${verseBlockGQL.fragments}
 `;
+
+// blocks {
+//   name
+//   ...paragraphBlockGQL
+//   ...galleryBlockGQL
+//   ...imageBlockGQL
+//   ...columnsBlockGQL
+//   ...htmlBlockGQL
+//   ...embedBlockGQL
+//   ...separatorBlockGQL
+//   ...quoteBlockGQL
+//   ...listBlockGQL
+//   ...mediaTextBlockGQL
+//   ...fileBlockGQL
+//   ...spacerBlockGQL
+//   ...headingBlockGQL
+//   ...tableBlockGQL
+//   ...verseBlockGQL
+// }
+// ${paragraphBlockGQL.fragments}
+// ${galleryBlockGQL.fragments}
+// ${imageBlockGQL.fragments}
+// ${columnsBlockGQL.fragments}
+// ${embedBlockGQL.fragments}
+// ${htmlBlockGQL.fragments}
+// ${separatorBlockGQL.fragments}
+// ${quoteBlockGQL.fragments}
+// ${listBlockGQL.fragments}
+// ${mediaTextBlockGQL.fragments}
+// ${fileBlockGQL.fragments}
+// ${spacerBlockGQL.fragments}
+// ${headingBlockGQL.fragments}
+// ${tableBlockGQL.fragments}
+// ${verseBlockGQL.fragments}

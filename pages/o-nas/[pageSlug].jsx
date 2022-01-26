@@ -6,11 +6,7 @@ import {
   PageRoot,
 } from "../../components/Pages/Page";
 import Layout from "../../components/UI/Layout/Layout";
-import {
-  getMenu,
-  preparingPaths,
-  transformBlocks,
-} from "../../helpers/backend";
+import { getMenu, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
 
 const Page = ({ menu, page }) => (
@@ -41,7 +37,7 @@ export async function getStaticProps({ params }) {
       variables: { id: `o-nas/${params.pageSlug}`, type: "URI" },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.page))
+    .then(({ data }) => data.page)
     .catch((err) => {
       captureException(err, "FETCH_PAGE");
       return null;
