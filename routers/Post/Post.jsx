@@ -29,11 +29,11 @@ import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
+  id,
   href,
   title,
   image,
   blocks,
-  offers,
   categories,
   isPreview = false,
 }) => {
