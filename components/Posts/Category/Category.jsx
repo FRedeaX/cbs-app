@@ -12,7 +12,7 @@ const Category = ({ data, cls }) => {
         {data.map((term) => {
           if (term.name === "slider") return null;
           return (
-            <Link key={term.termTaxonomyId} href={term.uri} prefetch={false}>
+            <Link key={term.id} href={term.uri} prefetch={false}>
               <a className={classNames(classes.link, cls)}>{term.name}</a>
             </Link>
           );

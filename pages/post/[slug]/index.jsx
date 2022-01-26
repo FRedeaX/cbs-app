@@ -70,17 +70,6 @@ export async function getStaticProps({ params }) {
       fetchPolicy: "network-only",
     })
     .then(({ data }) => transformBlocks(data.post))
-    .then((p) => {
-      const tPost = {
-        ...p,
-        offers: {
-          notIn: p.databaseId,
-          categoryIn: p.categories.nodes.map((value) => value.termTaxonomyId),
-          tagIn: "",
-        },
-      };
-      return tPost;
-    })
     .catch((err) => {
       captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
       return null;
