@@ -263,3 +263,97 @@ p img {
 .o-h {
   overflow: hidden;
 }
+
+/* .content {
+  font-size: 18px;
+} */
+
+.content-body {
+  max-width: 910 px;
+  overflow: hidden;
+}
+
+.content-body a {
+  max-width: max-content;
+  padding: 1px 4px;
+
+  /* background-color: hsla(199, 100%, 33%, 0.08); */
+  border-radius: 4px;
+  color: #0073aa;
+  transition: background-color 0.15s linear;
+}
+
+.content-body a:not(.wp-block-file__button):hover {
+  background-color: hsla(199, 100%, 33%, 0.18);
+}
+
+/* .content-body a:last-child {
+  margin-right: 0;
+} */
+
+.content-body a:visited {
+  color: rgb(85, 26, 139);
+
+  /* background-color: rgba(85, 26, 139, 0.08); */
+}
+
+.content-body a:not(.wp-block-file__button):visited:hover {
+  background-color: rgba(85, 26, 139, 0.08);
+}
+
+.content-body figure a {
+  display: flex;
+  padding: 0;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: none;
+}
+
+.content-body figure a:hover,
+.content-body figure a:visited {
+  background-color: transparent;
+}
+
+.content-body p,
+.content-body ul,
+.content-body ol,
+.content-body td {
+  margin-bottom: 20px;
+  margin-top: 0;
+  color: rgb(30, 30, 30);
+}
+
+.content-body a,
+.content-body p,
+.content-body ul,
+.content-body ol,
+.content-body td {
+  font-size: calc(16px + 3 * (100vw / 1600));
+
+  /* letter-spacing: 0.019em; */
+  line-height: 1.34;
+}
+
+@media screen and (max-width: 767px) {
+  .content-body a,
+  .content-body p,
+  .content-body ul,
+  .content-body ol,
+  .content-body td {
+    font-size: calc(16px + (3 + 3 * 0.7) * ((100vw - 320px) / 1600));
+  }
+}
+
+.content-body p:last-child,
+.content-body ul:last-child,
+.content-body ol:last-child {
+  margin-bottom: 0;
+}
+
+.content-body h2:first-child,
+.content-body h3:first-child,
+.content-body h4:first-child,
+.content-body h5:first-child,
+.content-body h6:first-child {
+  margin-top: 0;
+}

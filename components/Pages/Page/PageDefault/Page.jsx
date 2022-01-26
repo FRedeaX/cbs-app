@@ -1,8 +1,9 @@
+import Content from "../../../Content/Content";
 import Blocks from "../../../blocks/Blocks";
 import { Heading } from "../../../blocks/Heading/Heading";
 import classes from "./Page.module.css";
 
-const Page = ({ title, blocks }) => (
+const Page = ({ title, blocks, content }) => (
   <div className={classes.container}>
     <div className={classes.header}>
       <Heading level="1">{title}</Heading>
