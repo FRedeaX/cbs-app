@@ -29,11 +29,11 @@ import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
+  id,
   href,
   title,
   image,
   blocks,
-  offers,
   categories,
   isPreview = false,
 }) => {
@@ -98,10 +98,9 @@ export const Post = ({
 export const GET_MINIMUM_DATA_FOR_OFFER = gql`
   query GET_MINIMUM_DATA_FOR_OFFER($id: ID!) {
     post(id: $id) {
-      terms {
+      categories {
         nodes {
           termTaxonomyId
-          name
         }
       }
       postsFields {
