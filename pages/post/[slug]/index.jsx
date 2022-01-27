@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-// import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import Head from "../../../components/Head/Head";
@@ -65,7 +65,7 @@ export async function getStaticProps({ params }) {
   const menu = await getMenu();
   const post = await client
     .query({
-      query: FETCH_ARTICLE,
+      query: GET_POST_CONTENT_BY_BLOCKS,
       variables: {
         id: params.slug, // params.slug[0],
         type: "SLUG",
@@ -84,10 +84,6 @@ export async function getStaticProps({ params }) {
       captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
       return null;
     });
-  // .catch((err) => {
-  //   captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
-  //   return null;
-  // });
 
   if (!post) {
     return {
