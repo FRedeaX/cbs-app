@@ -95,38 +95,19 @@ export const FETCH_PAGE = gql`
       }
     }
   }
+  ${paragraphBlockGQL.fragments}
+  ${galleryBlockGQL.fragments}
+  ${imageBlockGQL.fragments}
+  ${columnsBlockGQL.fragments}
+  ${embedBlockGQL.fragments}
+  ${htmlBlockGQL.fragments}
+  ${separatorBlockGQL.fragments}
+  ${quoteBlockGQL.fragments}
+  ${listBlockGQL.fragments}
+  ${mediaTextBlockGQL.fragments}
+  ${fileBlockGQL.fragments}
+  ${spacerBlockGQL.fragments}
+  ${headingBlockGQL.fragments}
+  ${tableBlockGQL.fragments}
+  ${verseBlockGQL.fragments}
 `;
-
-// blocks {
-//   name
-//   ...paragraphBlockGQL
-//   ...galleryBlockGQL
-//   ...imageBlockGQL
-//   ...columnsBlockGQL
-//   ...htmlBlockGQL
-//   ...embedBlockGQL
-//   ...separatorBlockGQL
-//   ...quoteBlockGQL
-//   ...listBlockGQL
-//   ...mediaTextBlockGQL
-//   ...fileBlockGQL
-//   ...spacerBlockGQL
-//   ...headingBlockGQL
-//   ...tableBlockGQL
-//   ...verseBlockGQL
-// }
-// ${paragraphBlockGQL.fragments}
-// ${galleryBlockGQL.fragments}
-// ${imageBlockGQL.fragments}
-// ${columnsBlockGQL.fragments}
-// ${embedBlockGQL.fragments}
-// ${htmlBlockGQL.fragments}
-// ${separatorBlockGQL.fragments}
-// ${quoteBlockGQL.fragments}
-// ${listBlockGQL.fragments}
-// ${mediaTextBlockGQL.fragments}
-// ${fileBlockGQL.fragments}
-// ${spacerBlockGQL.fragments}
-// ${headingBlockGQL.fragments}
-// ${tableBlockGQL.fragments}
-// ${verseBlockGQL.fragments}
