@@ -11,15 +11,17 @@ export const fileBlockGQL = {
     fragment fileBlockGQL on CoreFileBlock {
       ... on CoreFileBlock {
         attributes {
-          align
-          anchor
-          className
-          displayPreview
-          fileName
-          href
-          previewHeight
-          showDownloadButton
-          textLinkTarget
+          ... on CoreFileBlockAttributes {
+            align
+            anchor
+            className
+            displayPreview
+            fileName
+            href
+            previewHeight
+            showDownloadButton
+            textLinkTarget
+          }
         }
       }
     }

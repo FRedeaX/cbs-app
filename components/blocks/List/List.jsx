@@ -8,12 +8,14 @@ export const listBlockGQL = {
     fragment listBlockGQL on CoreListBlock {
       ... on CoreListBlock {
         attributes {
-          anchor
-          className
-          reversed
-          start
-          textColor
-          values
+          ... on CoreListBlockAttributes {
+            anchor
+            className
+            reversed
+            start
+            textColor
+            values
+          }
         }
         originalContent
       }

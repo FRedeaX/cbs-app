@@ -1,9 +1,8 @@
-import Content from "../../../Content/Content";
 import Blocks from "../../../blocks/Blocks";
 import { Heading } from "../../../blocks/Heading/Heading";
 import classes from "./Page.module.css";
 
-const Page = ({ title, blocks, content }) => (
+const Page = ({ title, blocks }) => (
   <div className={classes.container}>
     <div className={classes.header}>
       <Heading level="1">{title}</Heading>
@@ -12,7 +11,6 @@ const Page = ({ title, blocks, content }) => (
     <div className={classes.content}>
       {/* <Share cls={classes.share} /> */}
 
-      <Content content={content} />
       {blocks && <Blocks blocks={blocks} />}
     </div>
   </div>

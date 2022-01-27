@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { useRef } from "react";
 
 import { useOnScreen } from "../../../helpers/frontend";
-import Content from "../../Content/Content";
 import Category from "../../Posts/Category/Category";
 import Share from "../../Share/Share";
 import Button from "../../UI/Button/Button";
@@ -25,13 +24,11 @@ import { spacerBlockGQL } from "../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../blocks/Table/Table";
 import { verseBlockGQL } from "../../blocks/Verse/Verse";
 import { videoBlockGQL } from "../../blocks/Video/Video";
-// import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
   title,
-  content,
   categories,
   href,
   image,
@@ -39,8 +36,8 @@ export const Post = ({
   isPreview = false,
 }) => {
   const ref = useRef();
-  // const { isOnScreen } = useOnScreen(ref, "0px", 0.5);
-  // const { hendeToTop } = usePost();
+  const { isOnScreen } = useOnScreen(ref, "0px", 0.5);
+  const { hendeToTop } = usePost();
 
   return (
     <>
@@ -50,7 +47,7 @@ export const Post = ({
         onClick={hendeForward}>
         Назад
       </Button> */}
-      {/* <Button
+      <Button
         className={classNames(
           classes["button_to-top"],
           classes[`button_to-top_${isOnScreen}`],
@@ -58,7 +55,7 @@ export const Post = ({
         iconLeft={<Icon direction="top" weight="small" />}
         onClick={hendeToTop}>
         <span className={classes["button_to-top_text"]}>Наверх</span>
-      </Button> */}
+      </Button>
 
       <article className={classes.container}>
         <div className={classes.header}>
@@ -67,11 +64,10 @@ export const Post = ({
             <Category data={categories.nodes} cls={classes["category-link"]} />
           </div>
         </div>
-        {content && (
+        {blocks && (
           <div className={classes.body}>
             <div>
-              {/* <Blocks blocks={blocks} /> */}
-              <Content content={content} />
+              <Blocks blocks={blocks} />
             </div>
             {!isPreview && (
               <div ref={ref}>
@@ -121,11 +117,12 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
       blocks {
         name
         ...paragraphBlockGQL
+        ...videoBlockGQL
         ...galleryBlockGQL
         ...imageBlockGQL
         ...columnsBlockGQL
-        ...htmlBlockGQL
         ...embedBlockGQL
+        ...htmlBlockGQL
         ...separatorBlockGQL
         ...quoteBlockGQL
         ...listBlockGQL
@@ -135,7 +132,6 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         ...headingBlockGQL
         ...tableBlockGQL
         ...verseBlockGQL
-        ...videoBlockGQL
       }
       categories {
         nodes {
@@ -155,8 +151,8 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
       title
     }
   }
-  ${videoBlockGQL.fragments}
   ${paragraphBlockGQL.fragments}
+  ${videoBlockGQL.fragments}
   ${galleryBlockGQL.fragments}
   ${imageBlockGQL.fragments}
   ${columnsBlockGQL.fragments}

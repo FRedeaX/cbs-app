@@ -1,12 +1,9 @@
-import { captureException } from "@sentry/nextjs";
-
 import {
   FETCH_CHILDREN_URI_PAGES,
-  FETCH_PAGE,
   PageRoot,
 } from "../../components/Pages/Page";
 import Layout from "../../components/UI/Layout/Layout";
-import { getMenu, preparingPaths } from "../../helpers/backend";
+import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
 
 const Page = ({ menu, page }) => (
@@ -31,20 +28,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const menu = await getMenu();
-  const page = await client
-    .query({
-      query: FETCH_PAGE,
-      variables: {
-        id: `nashi-izdaniya/${params.pageSlug}`,
-        type: "URI",
-      },
-      fetchPolicy: "network-only",
-    })
-    .then(({ data }) => data.page)
-    .catch((err) => {
-      captureException(err, "FETCH_PAGE");
-      return null;
-    });
+  const page = await getPage(`nashi-izdaniya/${params.pageSlug}`);
 
   if (!page) {
     return {
