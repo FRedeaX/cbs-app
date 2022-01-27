@@ -1,9 +1,14 @@
 import { captureException } from "@sentry/nextjs";
 
 import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
-import { plaiceholder } from "../../../helpers/backend";
-import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routers/Post/Post";
+import { plaiceholder, transformBlocks } from "../../../helpers/backend";
+import { getFeed } from "../../../helpers/backend/post/feed";
+import {
+  GET_MINIMUM_DATA_FOR_OFFER,
+  GET_POST_CONTENT_BY_BLOCKS,
+} from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
+import { RKEY_POSTS } from "../../../store/redis/redisKeys";
 
 export default async function offers(req, res) {
   const { id } = req.query || null;
