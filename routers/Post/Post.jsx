@@ -133,6 +133,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         ...verseBlockGQL
       }
       ...postGQL
+      postId
     }
   }
   ${paragraphBlockGQL.fragments}
