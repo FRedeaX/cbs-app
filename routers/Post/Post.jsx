@@ -20,7 +20,10 @@ import { listBlockGQL } from "../../components/blocks/List/List";
 import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
-import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
+import {
+  Separator,
+  separatorBlockGQL,
+} from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
@@ -42,7 +45,11 @@ export const Post = ({
   // const router = useRouter();
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
-  const { hendeToTop, hendleOffers, offerList } = usePost();
+  const {
+    hendeToTop,
+    hendleOffers,
+    offerList: { nextPost, PostListByCategory },
+  } = usePost();
 
   useEffect(() => {
     hendleOffers(id);
