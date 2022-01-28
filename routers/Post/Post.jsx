@@ -19,7 +19,10 @@ import { listBlockGQL } from "../../components/blocks/List/List";
 import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
-import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
+import {
+  Separator,
+  separatorBlockGQL,
+} from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
@@ -58,7 +61,7 @@ export const Post = ({
   // }, []);
 
   // eslint-disable-next-line no-console
-  console.log(offerList);
+  console.log({ nextPost, PostListByCategory });
   // const feed = [{post:{}, readMore: []}, {post:{}, readMore: []}]
   return (
     <>
