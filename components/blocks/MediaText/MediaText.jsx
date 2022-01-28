@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import Blocks from "../Blocks";
 import { Figure } from "../Image/Figure";
 import { paragraphBlockGQL } from "../Paragraph/Paragraph";
+import { verseBlockGQL } from "../Verse/Verse";
 import classes from "./Media-text.module.css";
 
 export const mediaTextBlockGQL = {
@@ -31,10 +32,12 @@ export const mediaTextBlockGQL = {
         name
         innerBlocks {
           ...paragraphBlockGQL
+          ...verseBlockGQL
         }
       }
     }
     ${paragraphBlockGQL.fragments},
+    ${verseBlockGQL.fragments}
   `,
 };
 

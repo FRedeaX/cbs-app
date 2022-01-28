@@ -16,6 +16,10 @@
   display: flex;
 }
 
+.text {
+  align-self: center;
+}
+
 @media screen and (min-width: 768px) {
   .block_background_true .container_mediaPosition_left .image {
     border-radius: 12px 0 0 12px;
