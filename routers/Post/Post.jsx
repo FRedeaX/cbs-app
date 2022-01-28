@@ -19,7 +19,10 @@ import { listBlockGQL } from "../../components/blocks/List/List";
 import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
-import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
+import {
+  Separator,
+  separatorBlockGQL,
+} from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
@@ -39,7 +42,11 @@ export const Post = ({
 }) => {
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
-  const { hendeToTop, hendleOffers, offerList } = usePost();
+  const {
+    hendeToTop,
+    hendleOffers,
+    offerList: { nextPost, PostListByCategory },
+  } = usePost();
 
   useEffect(() => {
     hendleOffers(id);
@@ -50,7 +57,7 @@ export const Post = ({
   // }, []);
 
   // eslint-disable-next-line no-console
-  console.log(offerList);
+  console.log({ nextPost, PostListByCategory });
   // const feed = [{post:{}, readMore: []}, {post:{}, readMore: []}]
   return (
     <>
@@ -73,9 +80,23 @@ export const Post = ({
         image={image}
       />
 
-      {offerList && offerList.length > 1 && (
+      {(nextPost !== null || PostListByCategory !== null) && (
         <div className={classes.offer}>
-          <GroupCards data={offerList} length={offerList.length} isClamp />
+          <Separator className="is-style-dots" />
+          <GroupCards
+            data={PostListByCategory}
+            length={PostListByCategory.length}
+            isClamp
+          />
+          <Separator className="is-style-dots" />
+          <Article
+            title={nextPost.title}
+            categories={nextPost.categories.nodes}
+            blocks={nextPost.blocks}
+            isPreview={nextPost.isPreview}
+            href={nextPost.href}
+            image={nextPost.image}
+          />
         </div>
       )}
     </>
