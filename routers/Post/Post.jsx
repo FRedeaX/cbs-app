@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
 
 import Article from "../../components/Article/Article";
-import GroupCards from "../../components/Posts/GroupCards/GroupCards";
+import InfiniteScrolling from "../../components/InfiniteScrolling/InfiniteScrolling";
 import { postGQL } from "../../components/Posts/PostsRoot";
-// import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
@@ -19,16 +22,14 @@ import { listBlockGQL } from "../../components/blocks/List/List";
 import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
-import {
-  Separator,
-  separatorBlockGQL,
-} from "../../components/blocks/Separator/Separator";
+import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
+import { useIntersectionObserver } from "../../helpers/frontend/hooks";
 // import { useOnScreen } from "../../helpers/frontend";
-// import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
+import Offer from "./offer/Offer";
 import usePost from "./usePost";
 
 export const Post = ({
@@ -57,12 +58,17 @@ export const Post = ({
   // }, [hendleOffers, offerList, isVisible]);
 
   // useEffect(() => {
-  //   console.log("2");
-  // }, []);
+  //   if (offerList.length > 0 && isVisible) {
+  //     router.push(
+  //       offerList[offerList.length - 1].nextPost.uri,
+  //       offerList[offerList.length - 1].nextPost.uri,
+  //       { scroll: false, shallow: true },
+  //     );
+  //   }
 
-  // eslint-disable-next-line no-console
-  console.log({ nextPost, PostListByCategory });
-  // const feed = [{post:{}, readMore: []}, {post:{}, readMore: []}]
+  //   console.log(`The component is ${isVisible ? "visible" : "not visible"}.`);
+  // }, [isVisible]);
+
   return (
     <>
       {/* <Button
