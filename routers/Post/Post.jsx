@@ -3,7 +3,8 @@
 /* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
@@ -24,6 +25,7 @@ import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
+import { useIntersectionObserver } from "../../helpers/frontend/hooks";
 // import { useOnScreen } from "../../helpers/frontend";
 import classes from "./Post.module.css";
 import Offer from "./offer/Offer";
