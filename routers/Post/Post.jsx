@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
 
 import Article from "../../components/Article/Article";
-import GroupCards from "../../components/Posts/GroupCards/GroupCards";
+import InfiniteScrolling from "../../components/InfiniteScrolling/InfiniteScrolling";
 import { postGQL } from "../../components/Posts/PostsRoot";
-// import { useRef } from "react";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
@@ -19,16 +22,14 @@ import { listBlockGQL } from "../../components/blocks/List/List";
 import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
-import {
-  Separator,
-  separatorBlockGQL,
-} from "../../components/blocks/Separator/Separator";
+import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
+import { useIntersectionObserver } from "../../helpers/frontend/hooks";
 // import { useOnScreen } from "../../helpers/frontend";
-// import { createMarkup } from "~/helpers";
 import classes from "./Post.module.css";
+import Offer from "./offer/Offer";
 import usePost from "./usePost";
 
 export const Post = ({
@@ -42,23 +43,47 @@ export const Post = ({
 }) => {
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
-  const {
-    hendeToTop,
-    hendleOffers,
-    offerList: { nextPost, PostListByCategory },
-  } = usePost();
+  const { hendeToTop, hendleOffers, offerList } = usePost();
 
   useEffect(() => {
     hendleOffers(id);
   }, [hendleOffers, id]);
 
-  // useEffect(() => {
-  //   console.log("2");
-  // }, []);
+  console.log(offerList);
 
-  // eslint-disable-next-line no-console
-  console.log({ nextPost, PostListByCategory });
-  // const feed = [{post:{}, readMore: []}, {post:{}, readMore: []}]
+  const router = useRouter();
+
+  const onChange = useCallback(
+    (entry) => {
+      if (entry.isIntersecting) {
+        const { id: _id, uri } = offerList[offerList.length - 1].nextPost;
+        hendleOffers(_id);
+        router.push(uri, uri, { scroll: false, shallow: true });
+
+        console.log(
+          `The component is ${
+            entry.isIntersecting ? "visible" : "not visible"
+          }.`,
+        );
+      }
+    },
+    [offerList, hendleOffers, router],
+  );
+  const [ref] = useIntersectionObserver(onChange, { threshold: 0.5 });
+  // const isVisible = entry && entry.isIntersecting;
+
+  // useEffect(() => {
+  //   if (offerList.length > 0 && isVisible) {
+  //     router.push(
+  //       offerList[offerList.length - 1].nextPost.uri,
+  //       offerList[offerList.length - 1].nextPost.uri,
+  //       { scroll: false, shallow: true },
+  //     );
+  //   }
+
+  //   console.log(`The component is ${isVisible ? "visible" : "not visible"}.`);
+  // }, [isVisible]);
+
   return (
     <>
       <Button
@@ -80,25 +105,31 @@ export const Post = ({
         image={image}
       />
 
-      {(nextPost !== null || PostListByCategory !== null) && (
-        <div className={classes.offer}>
-          <Separator className="is-style-dots" />
-          <GroupCards
-            data={PostListByCategory}
-            length={PostListByCategory.length}
-            isClamp
-          />
-          <Separator className="is-style-dots" />
-          <Article
-            title={nextPost.title}
-            categories={nextPost.categories.nodes}
-            blocks={nextPost.blocks}
-            isPreview={nextPost.isPreview}
-            href={nextPost.href}
-            image={nextPost.image}
-          />
-        </div>
-      )}
+      <div className={classes.feed}>
+        {offerList.map(({ postListByCategory, nextPost }, index) => {
+          if (offerList.length === index + 1) {
+            return (
+              //     <InfiniteScrolling
+              //       hasMore
+              //       hendleLoad={() => hendleOffers(nextPost.id)}>
+              <Offer
+                key={nextPost.id}
+                postListByCategory={postListByCategory}
+                nextPost={nextPost}
+                ref={ref}
+              />
+              //     </InfiniteScrolling>
+            );
+          }
+          return (
+            <Offer
+              key={nextPost.id}
+              postListByCategory={postListByCategory}
+              nextPost={nextPost}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };
