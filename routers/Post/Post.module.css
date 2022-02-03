@@ -125,6 +125,6 @@
   }
 }
 
-.offer {
-  padding: 40px 0 20px;
+.feed {
+  content-visibility: auto;
 }
