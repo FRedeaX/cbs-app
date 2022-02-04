@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-import { createMarkup } from "../../../helpers";
 import classes from "./Html.module.css";
 
 export const htmlBlockGQL = {
@@ -14,5 +13,5 @@ export const htmlBlockGQL = {
 };
 
 export const Html = ({ html }) => (
-  <div className={classes.block} dangerouslySetInnerHTML={createMarkup(html)} />
+  <div className={classes.block} dangerouslySetInnerHTML={{ __html: html }} />
 );
