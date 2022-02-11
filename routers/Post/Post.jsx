@@ -3,11 +3,9 @@
 /* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
-import InfiniteScrolling from "../../components/InfiniteScrolling/InfiniteScrolling";
 import { postGQL } from "../../components/Posts/PostsRoot";
 import Button from "../../components/UI/Button/Button";
 import Icon from "../../components/UI/Icon/Icon";
@@ -26,7 +24,6 @@ import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
-import { useIntersectionObserver } from "../../helpers/frontend/hooks";
 // import { useOnScreen } from "../../helpers/frontend";
 import classes from "./Post.module.css";
 import Offer from "./offer/Offer";
@@ -41,6 +38,7 @@ export const Post = ({
   categories,
   isPreview = false,
 }) => {
+  // const router = useRouter();
   // const ref = useRef();
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
   const { hendeToTop, hendleOffers, offerList } = usePost();
@@ -49,40 +47,13 @@ export const Post = ({
     hendleOffers(id);
   }, [hendleOffers, id]);
 
-  console.log(offerList);
-
-  const router = useRouter();
-
-  const onChange = useCallback(
-    (entry) => {
-      if (entry.isIntersecting) {
-        const { id: _id, uri } = offerList[offerList.length - 1].nextPost;
-        hendleOffers(_id);
-        router.push(uri, uri, { scroll: false, shallow: true });
-
-        console.log(
-          `The component is ${
-            entry.isIntersecting ? "visible" : "not visible"
-          }.`,
-        );
-      }
-    },
-    [offerList, hendleOffers, router],
-  );
-  const [ref] = useIntersectionObserver(onChange, { threshold: 0.5 });
-  // const isVisible = entry && entry.isIntersecting;
-
+  // const [ref, { isVisible }] = useIntersectionObserver({ threshold: 0.5 });
   // useEffect(() => {
-  //   if (offerList.length > 0 && isVisible) {
-  //     router.push(
-  //       offerList[offerList.length - 1].nextPost.uri,
-  //       offerList[offerList.length - 1].nextPost.uri,
-  //       { scroll: false, shallow: true },
-  //     );
+  //   if (isVisible) {
+  //     const { nextPost } = offerList[offerList.length - 1];
+  //     hendleOffers(nextPost.id);
   //   }
-
-  //   console.log(`The component is ${isVisible ? "visible" : "not visible"}.`);
-  // }, [isVisible]);
+  // }, [hendleOffers, offerList, isVisible]);
 
   return (
     <>
@@ -105,31 +76,15 @@ export const Post = ({
         image={image}
       />
 
-      <div className={classes.feed}>
-        {offerList.map(({ postListByCategory, nextPost }, index) => {
-          if (offerList.length === index + 1) {
-            return (
-              //     <InfiniteScrolling
-              //       hasMore
-              //       hendleLoad={() => hendleOffers(nextPost.id)}>
-              <Offer
-                key={nextPost.id}
-                postListByCategory={postListByCategory}
-                nextPost={nextPost}
-                ref={ref}
-              />
-              //     </InfiniteScrolling>
-            );
-          }
-          return (
-            <Offer
-              key={nextPost.id}
-              postListByCategory={postListByCategory}
-              nextPost={nextPost}
-            />
-          );
-        })}
-      </div>
+      {offerList.length > 0 && (
+        <div className={classes.feed}>
+          <Offer
+            postListByCategory={offerList[0].postListByCategory}
+            similarPostList={offerList[0].similarPostList}
+            // nextPost={nextPost}
+          />
+        </div>
+      )}
     </>
   );
 };
@@ -146,6 +101,7 @@ export const GET_MINIMUM_DATA_FOR_OFFER = gql`
         keywords
       }
       postId
+      date
     }
   }
 `;
