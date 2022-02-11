@@ -7,7 +7,6 @@ import { client } from "../../../store/apollo-client";
 
 export default async function offers(req, res) {
   const { id } = req.query || null;
-  console.log(id);
 
   if (id !== null) {
     try {
