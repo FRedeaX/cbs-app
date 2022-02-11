@@ -13,7 +13,6 @@ import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
-  // console.log(post);
   const { isFallback } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} size="m">
