@@ -119,6 +119,24 @@
   .button_to-top_false {
     transform: translateX(62px);
   }
+  .button_to-top {
+    --button-justify-content: flex-end;
+    --icon-margin: 0 5px 0 0;
+
+    right: 0;
+  }
+
+  .button_forward:hover,
+  .button_to-top:hover {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+}
+
+/* @media screen and (max-width: 999px) {
+  .button_to-top_false {
+    transform: translateX(62px);
+  }
   .button_to-top_true {
     transform: translateX(0);
   }
@@ -144,8 +162,4 @@
   .feed {
     border-radius: 20px;
   }
-}
-
-.feed {
-  content-visibility: auto;
 }
