@@ -24,6 +24,7 @@ import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
+import { videoBlockGQL } from "../../components/blocks/Video/Video";
 // import { useOnScreen } from "../../helpers/frontend";
 import classes from "./Post.module.css";
 import Offer from "./offer/Offer";
@@ -112,6 +113,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
       blocks {
         name
         ...paragraphBlockGQL
+        ...videoBlockGQL
         ...galleryBlockGQL
         ...imageBlockGQL
         ...columnsBlockGQL
@@ -132,6 +134,7 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
     }
   }
   ${paragraphBlockGQL.fragments}
+  ${videoBlockGQL.fragments}
   ${galleryBlockGQL.fragments}
   ${imageBlockGQL.fragments}
   ${columnsBlockGQL.fragments}
