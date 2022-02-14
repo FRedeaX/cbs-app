@@ -17,8 +17,10 @@ import classes from "./Card.module.css";
 // `;
 
 const Card = ({
-  data: { isSticky, featuredImage, uri, title, excerpt, categories },
+  data: { isSticky, title, uri, categories, excerpt, featuredImage },
+  imagePriority = false,
   horizontal,
+  isClamp,
   isBig,
   cls,
 }) => (
@@ -47,10 +49,10 @@ const Card = ({
             })}
             width={500}
             height={258}
-            // alt="Picture of the author"
             blurDataURL={featuredImage.node.blurDataURL}
             // automatically
             // provided
+            priority={imagePriority}
             placeholder="blur"
             alt=""
             aria-hidden
@@ -68,7 +70,9 @@ const Card = ({
           </Link>
         </h3>
         <div
-          className={classes.subtitle}
+          className={classNames(classes.subtitle, {
+            [classes.subtitle_clamp]: isClamp,
+          })}
           dangerouslySetInnerHTML={createMarkup(excerpt)}
         />
       </div>

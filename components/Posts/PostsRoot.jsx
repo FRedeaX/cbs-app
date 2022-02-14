@@ -45,7 +45,7 @@ export const POSTS_PAGINATION_BY_CATEGORY_GQL = gql`
   }
 `;
 
-const postGQL = {
+export const postGQL = {
   fragments: gql`
     fragment postGQL on Post {
       id
@@ -56,7 +56,6 @@ const postGQL = {
         nodes {
           id
           name
-          slug
           uri
         }
       }
@@ -71,8 +70,28 @@ const postGQL = {
 };
 
 export const FETCH_ARTICLES = gql`
-  query FetchArticles($cursor: String, $first: Int, $tagNotIn: [ID]) {
-    posts(after: $cursor, first: $first, where: { tagNotIn: $tagNotIn }) {
+  query FetchArticles(
+    $cursor: String
+    $first: Int
+    $categoryIn: [ID]
+    $notIn: [ID]
+    $tagIn: [ID]
+    $tagNotIn: [ID]
+    $dateQuery: DateQueryInput
+    $search: String
+  ) {
+    posts(
+      after: $cursor
+      first: $first
+      where: {
+        categoryIn: $categoryIn
+        notIn: $notIn
+        tagIn: $tagIn
+        tagNotIn: $tagNotIn
+        dateQuery: $dateQuery
+        search: $search
+      }
+    ) {
       nodes {
         ...postGQL
         tags {
@@ -134,6 +153,11 @@ export const fetchArticlesByCategory = gql`
       posts(after: $cursor, first: $first) {
         nodes {
           ...postGQL
+          categories {
+            nodes {
+              slug
+            }
+          }
         }
         pageInfo {
           endCursor

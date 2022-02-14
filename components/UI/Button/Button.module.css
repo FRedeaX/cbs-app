@@ -7,6 +7,7 @@
   min-height: var(--button-height, 36px);
   margin: 0;
   padding: 0;
+  padding: var(--button-padding);
   font-size: inherit;
   white-space: nowrap;
   text-align: var(--button-text-align, center);
@@ -73,17 +74,17 @@
 }
 
 .icon {
-  /* align-items: center; */
-  justify-content: center;
+  justify-content: var(--button-icon-justify-content, center);
 }
 
 /* .padding_icon_left {
-  padding-left: 14px;
+padding-left: 14px;
 }
 
 .padding_icon_right {
   padding-right: 14px;
-} */
+}
+*/
 
 .hidden {
   opacity: var(--button-hidden-opacity, 0);
@@ -113,12 +114,12 @@
 }
 
 /* .button::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  transform: scale(0);
-  content: "";
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: -1;
+transform: scale(0);
+content: "";
 } */

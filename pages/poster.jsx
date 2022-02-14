@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/nextjs";
 
-import SEO from "../components/SEO/SEO";
+import Head from "../components/Head/Head";
 import SectionHeader from "../components/SectionHeader/SectionHeader";
 import Layout from "../components/UI/Layout/Layout";
 import PosterItem from "../components/poster/PosterItem/PosterItem";
@@ -12,7 +12,7 @@ import { client } from "../store/apollo-client";
 
 const Poster = ({ menu, posters }) => (
   <>
-    <SEO
+    <Head
       title="Анонс"
       description="Анонс мероприятий библиотек города Байконур"
     />

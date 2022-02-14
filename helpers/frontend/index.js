@@ -1,3 +1,4 @@
-import useOnScreen from "./hooks/useOnScreen";
+import isIntersection from "./isIntersection";
 
-export { useOnScreen };
+// eslint-disable-next-line import/prefer-default-export
+export { isIntersection };

@@ -1,6 +1,4 @@
-import React from "react";
-
-import SEO from "../../SEO/SEO";
+import Head from "../../Head/Head";
 import Layout from "../../UI/Layout/Layout";
 import BookDeteils from "../BookDeteils/BookDeteils";
 import BookImage from "../BookImage/BookImage";
@@ -27,7 +25,7 @@ const BookPage = ({
   // console.log('book:', data.book);
 
   <Layout>
-    {title && <SEO title={title} excerpt={excerpt && excerpt} />}
+    {title && <Head title={title} excerpt={excerpt && excerpt} />}
     {/* {console.log('---------------', !!bookAuthors.nodes) } */}
     <div className={classes.body}>
       <div className={classes.aside}>

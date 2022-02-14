@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import PreviewPost from "../../../routers/Post/PreviewPost";
 import PreviewPage from "../Page/PageDefault/PreviewPage";
-import PreviewPost from "../Post/PreviewPost";
 
 const Preview = ({ isPage, ...props }) => {
   if (isPage) {

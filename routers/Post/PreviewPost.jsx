@@ -2,7 +2,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 
-import SEO from "../../SEO/SEO";
+import Head from "../../components/Head/Head";
 import { GET_POST_CONTENT_BY_BLOCKS, Post } from "./Post";
 
 const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
@@ -43,7 +43,7 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
 
   return (
     <>
-      <SEO title={post.title} description={post.excerpt} />
+      <Head title={post.title} description={post.excerpt} />
       <Post
         title={post.title}
         categories={post.categories}

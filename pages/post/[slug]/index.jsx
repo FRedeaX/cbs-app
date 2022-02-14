@@ -2,32 +2,30 @@ import { gql } from "@apollo/client";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
-import {
-  GET_POST_CONTENT_BY_BLOCKS,
-  Post,
-} from "../../../components/Pages/Post/Post";
-import SEO from "../../../components/SEO/SEO";
+import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
 import { getMenu, transformBlocks } from "../../../helpers/backend";
+import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
   const { isFallback } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} size="m">
-      <SEO
+      <Head
         title={post?.title}
         description={post?.excerpt}
         image={post?.featuredImage?.node?.sourceUrl}
         video={post?.video}
-        url={post?.link}
+        url={post?.uri}
       />
       <Post
-        title={post?.title}
-        categories={post?.categories}
+        id={post?.id}
         href={post?.link}
-        image={post?.featuredImage?.node?.sourceUrl}
+        title={post?.title}
         blocks={post?.blocks}
+        categories={post?.categories}
+        image={post?.featuredImage?.node?.sourceUrl}
       />
     </Layout>
   );

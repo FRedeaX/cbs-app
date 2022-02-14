@@ -4,6 +4,7 @@
 import { removeDuplicateTag } from "..";
 import { client } from "../../../store/apollo-client";
 import clientRedis from "../../../store/redis";
+import { pullIDs, setFeed } from "../post/feed";
 
 /**
  *
@@ -23,9 +24,6 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
     .then((response) => JSON.parse(response))
     .catch((e) => console.error(e));
 
-  // при частом фетче пересмотреть механизм обновления пагинации
-  // вынести фетч на этап сборки и отдовать имеющиеся устаревшие данные
-  // предусмотреть вариант однократного прифетча данных при обновления
   if (
     (pagination !== null && endCursor === pagination[1]?.cursor) ||
     (pagination !== null && endCursor === undefined)
@@ -43,6 +41,7 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
   // };
 
   let isNextPage = true;
+  const postsIDs = [];
   while (isNextPage) {
     const length = pagination.length - 1;
     // eslint-disable-next-line no-await-in-loop
@@ -68,14 +67,13 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
       default:
         pageInfo = data.posts.pageInfo;
         // eslint-disable-next-line no-await-in-loop
-        tags = await removeDuplicateTag(data.posts.nodes)
-          // если будут дублироваться коллекции постов,
-          // то пересмотреть механизм добавления
-          .then((response) =>
-            response.arrTags.length
-              ? [...response.arrTags, ...pagination[length]?.tags]
-              : [],
-          );
+        tags = await removeDuplicateTag(data.posts.nodes).then((response) =>
+          response.arrTags.length
+            ? [...response.arrTags, ...pagination[length]?.tags]
+            : [],
+        );
+        // console.log();
+        postsIDs.push(...pullIDs(data.posts.nodes));
         break;
     }
 
@@ -85,21 +83,13 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
       cursor: pageInfo.endCursor,
       tags,
     });
-    // if (isNextPage) {
-    // if (tags !== undefined) pagination[length] = { ...pagination[length], tags };
-    // pagination.pages++;
-    // pagination.cursors.push(pageInfo.endCursor)
-    // pagination.push({
-    //   number: pagination.length + 1,
-    //   cursor: pageInfo.endCursor,
-    // });
-    // }
     // if (process.env.NODE_ENV === "development" && length === 15)
     //   isNextPage = false;
   }
 
   console.warn(`fetch pagination: ${key}`);
   clientRedis.set(key, JSON.stringify(pagination));
+  setFeed(key, postsIDs);
   return pagination;
 };
 

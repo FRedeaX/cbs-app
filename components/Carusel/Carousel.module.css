@@ -73,8 +73,8 @@
 
 .shadow-left {
   position: absolute;
-  top: 8px;
-  bottom: 26px;
+  top: 15px;
+  bottom: 12px;
   left: -20px;
   display: none;
   width: 20px;
@@ -83,9 +83,9 @@
 
 .shadow-right {
   position: absolute;
-  top: 6px;
+  top: 15px;
   right: -20px;
-  bottom: 26px;
+  bottom: 12px;
   display: none;
   width: 20px;
   box-shadow: rgba(0, 0, 0, 0.2) -10px 0 12px -6px;
@@ -100,36 +100,66 @@
 * чтобы срабатывало событие скрола отключаем pointer-events
 */
 .controls {
-  --button-width: var(--carousel-button-width, 44px);
-  --button-height: var(--carousel-button-height, 44px);
-  --button-box-shadow: 0 0 20px -15px;
-
   position: absolute;
-  top: 0;
   display: flex;
-  width: 100%;
+  width: var(--carousel-controls-width, 100%);
 }
 
 .controls-top {
   --button-hidden-opacity: 0.3;
 
+  top: 0;
   justify-content: flex-end;
-  margin-top: var(--carousel-controls-margin-top, 0);
+  margin: var(--carousel-controls-margin, 0);
 }
 .controls-center {
-  --button-background-color: white;
-  --button-border-radius: 50%;
+  --button-width: var(--carousel-button-width, 56px);
+  --button-height: var(--carousel-button-height, 44px);
 
-  align-items: center;
+  top: 30px;
+  bottom: 20px;
   justify-content: space-between;
-  height: 94%;
-  margin-top: 7px;
-  padding: 0 10px;
+  margin: var(--carousel-controls-margin);
   pointer-events: none;
 }
 
 .button_events {
+  z-index: 1;
   pointer-events: initial;
+}
+
+@media screen and (min-width: 768px) {
+  .button_events:hover .button_icon {
+    transform: scale(1.1);
+  }
+}
+
+.button_left_full-screen {
+  --button-icon-justify-content: flex-start;
+
+  width: 30%;
+  padding-left: 10px;
+}
+.button_right_full-screen {
+  --button-icon-justify-content: flex-end;
+
+  width: 70%;
+  padding-right: 10px;
+}
+
+.button_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s cubic-bezier(0.18, 0.24, 0.18, 0.71);
+}
+
+.controls-center .button_icon {
+  width: 44px;
+  height: 44px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: hsl(222deg 13% 28% / 20%) 0 1px 12px 0;
 }
 
 /* .button-left {
@@ -140,13 +170,13 @@
   right: -22px;
 } */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .button--inActive {
     display: none;
   }
-}
+} */
 
-@media screen and (max-width: 990px) {
+/* @media screen and (max-width: 990px) {
   .button-left {
     left: 8px;
   }
@@ -154,7 +184,7 @@
   .button-right {
     right: 8px;
   }
-}
+} */
 
 .controls-buttons_full-screen {
   --button-box-shadow: none;
@@ -173,12 +203,4 @@
   bottom: 0;
   cursor: default;
   pointer-events: initial;
-}
-.button_full-screen_left {
-  left: 0;
-  width: 30%;
-}
-.button_full-screen_right {
-  left: 30%;
-  width: 70%;
 }

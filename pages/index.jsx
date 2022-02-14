@@ -1,11 +1,11 @@
 import { captureException } from "@sentry/nextjs";
 
+import Head from "../components/Head/Head";
 import HomePage from "../components/Pages/HomePage/HomePage";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
-import SEO from "../components/SEO/SEO";
 import Layout from "../components/UI/Layout/Layout";
 import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import {
@@ -16,10 +16,11 @@ import {
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
 import { client } from "../store/apollo-client";
+import { RKEY_POSTS } from "../store/redis/redisKeys";
 
 const Home = ({ menu, posters, posts, pages }) => (
   <Layout menu={menu} paddingSides={0}>
-    <SEO description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
+    <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
     <HomePage
       posters={posters}
       posts={posts}
@@ -50,7 +51,7 @@ export async function getStaticProps() {
     });
 
   const pages = await paginationLoad({
-    key: "posts",
+    key: RKEY_POSTS,
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
   })

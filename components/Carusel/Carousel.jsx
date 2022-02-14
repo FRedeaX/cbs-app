@@ -24,7 +24,6 @@ const Carousel = ({
   controlsPosition = "center",
   className,
   classNameControl,
-  classNameControls,
 }) => {
   const { data } = useQuery(GET_WIDTH);
 
@@ -33,18 +32,17 @@ const Carousel = ({
   const countRefVar = useRef(0);
   // const dragXRefVar = useRef(0);
 
-  const itemWidthRef = useRef(itemWidth);
-  const itemCountOfScreenRef = useRef(itemCountOfScreen);
   // ширина 1-го элемента
+  const itemWidthRef = useRef(itemWidth);
   // кол-во видимых элементов на экране
+  const itemCountOfScreenRef = useRef(itemCountOfScreen);
   useEffect(() => {
     if (scrollRef.current === undefined) return;
     const scrolled = scrollRef.current;
     const scrolledOffsetW = scrolled.offsetWidth;
 
     if (itemWidth === undefined)
-      itemWidthRef.current = scrolled.children?.[0].children?.[0]?.offsetWidth;
-    // else itemWidthRef.current = itemWidth;
+      itemWidthRef.current = scrolled.children?.[0].children?.[1]?.offsetWidth;
 
     if (itemCountOfScreenRef.current === undefined)
       itemCountOfScreenRef.current = Math.max(
@@ -63,10 +61,13 @@ const Carousel = ({
     const l = length || children.length;
 
     if (
-      wrapperWidth < (itemWidthRef.current + itemMargin) * l ||
+      wrapperWidth < (itemWidthRef.current + itemMargin * 2) * l ||
       l > itemCountOfScreenRef.current
     ) {
       setRight(true);
+    } else {
+      setLeft(false);
+      setRight(false);
     }
   }, [scrollRef, children.length, length, itemMargin, setRight]);
 
@@ -208,104 +209,76 @@ const Carousel = ({
             // onDrag={hendleDrag}
             // onDragEnd={(event) => (dragXRefVar.current = 0)}
           >
+            {itemMargin !== 0 && <div style={{ width: `${itemMargin}px` }} />}
             {children}
+            {itemMargin !== 0 && <div style={{ width: `${itemMargin}px` }} />}
           </div>
         </div>
-      </div>
+        {(isLeft || isRight) && isShadow && isBrowser && (
+          <>
+            <div
+              className={classNames(classes["shadow-left"], {
+                [classes["shadow-left--active"]]: isLeft && isShadow,
+              })}
+            />
+            <div
+              className={classNames(classes["shadow-right"], {
+                [classes["shadow-right--active"]]: isRight && isShadow,
+              })}
+            />
+          </>
+        )}
 
-      {(isLeft || isRight) && isShadow && isBrowser && (
-        <>
-          <div
-            className={classNames(classes["shadow-left"], {
-              [classes["shadow-left--active"]]: isLeft && isShadow,
-            })}
-          />
-          <div
-            className={classNames(classes["shadow-right"], {
-              [classes["shadow-right--active"]]: isRight && isShadow,
-            })}
-          />
-        </>
-      )}
-      {(isLeft || isRight) && isBrowser && (
-        <>
-          <div
-            className={classNames(
-              classes.controls,
-              classNameControls,
-              classes[`controls-${controlsPosition}`],
-            )}>
-            {isOpen && (
-              <div className={classes["controls-buttons_full-screen"]}>
-                <Button
-                  className={classNames(
-                    classes["button--inActive"],
-                    classes["button-left"],
-                    classes["button_full-screen_left"],
-                    classNameControl,
-                  )}
-                  isHidden={!isLeft}
-                  isDisabled={!isLeft}
-                  onClick={() => hendleClick("left")}
-                />
-                <Button
-                  ref={buttonNextRef}
-                  className={classNames(
-                    classes["button--inActive"],
-                    classes["button-right"],
-                    classes["button_full-screen_right"],
-                    classNameControl,
-                  )}
-                  isHidden={!isRight}
-                  isDisabled={!isRight}
-                  onClick={() => hendleClick("right")}
-                />
-              </div>
-            )}
-
-            <Button
+        {(isLeft || isRight) && isBrowser && (
+          <>
+            <div
               className={classNames(
-                classes["button-left"],
-                classes["button-background_color"],
-                classNameControl,
-                {
+                classes.controls,
+                classes[`controls-${controlsPosition}`],
+              )}>
+              <Button
+                className={classNames(classNameControl, {
                   [classes.button_events]: isLeft,
-                  // [classes["button--inActive"]]: !isBrowser,
-                },
-              )}
-              isHidden={!isLeft}
-              isDisabled={!isLeft}
-              icon={
-                <Icon
-                  weight={controlsPosition === "center" ? "medium" : "small"}
-                  direction="left"
-                />
-              }
-              onClick={() => hendleClick("left")}
-            />
-            <Button
-              className={classNames(
-                classes["button-right"],
-                classes["button-background_color"],
-                classNameControl,
-                {
+                  [classes["button_left_full-screen"]]: isOpen,
+                })}
+                isHidden={!isLeft}
+                isDisabled={!isLeft}
+                icon={
+                  <span className={classes.button_icon}>
+                    <Icon
+                      weight={
+                        controlsPosition === "center" ? "medium" : "small"
+                      }
+                      direction="left"
+                    />
+                  </span>
+                }
+                onClick={() => hendleClick("left")}
+              />
+              <Button
+                ref={buttonNextRef}
+                className={classNames(classNameControl, {
                   [classes.button_events]: isRight,
-                  // [classes["button--inActive"]]: !isBrowser,
-                },
-              )}
-              isHidden={!isRight}
-              isDisabled={!isRight}
-              icon={
-                <Icon
-                  weight={controlsPosition === "center" ? "medium" : "small"}
-                  direction="right"
-                />
-              }
-              onClick={() => hendleClick("right")}
-            />
-          </div>
-        </>
-      )}
+                  [classes["button_right_full-screen"]]: isOpen,
+                })}
+                isHidden={!isRight}
+                isDisabled={!isRight}
+                icon={
+                  <span className={classes.button_icon}>
+                    <Icon
+                      weight={
+                        controlsPosition === "center" ? "medium" : "small"
+                      }
+                      direction="right"
+                    />
+                  </span>
+                }
+                onClick={() => hendleClick("right")}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

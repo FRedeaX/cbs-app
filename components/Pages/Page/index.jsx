@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 
-import SEO from "../../SEO/SEO";
+import Article from "../../Article/Article";
+import Head from "../../Head/Head";
 import { columnsBlockGQL } from "../../blocks/Columns/Columns";
 import { embedBlockGQL } from "../../blocks/Embed/Embed";
 import { fileBlockGQL } from "../../blocks/File/File";
@@ -16,12 +17,11 @@ import { separatorBlockGQL } from "../../blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../blocks/Table/Table";
 import { verseBlockGQL } from "../../blocks/Verse/Verse";
-import PageDefault from "./PageDefault/Page";
 
 export const PageRoot = ({ page }) => (
   <>
-    <SEO title={page.title} description={page.excerpt} />
-    <PageDefault title={page.title} blocks={page.blocks} />
+    <Head title={page.title} description={page.excerpt} />
+    <Article title={page.title} blocks={page.blocks} />
   </>
 );
 

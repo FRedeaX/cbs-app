@@ -1,7 +1,7 @@
 /*
- * width <= 1329
+ * width <= 1339
  */
-@media screen and (max-width: 1329px) {
+@media screen and (max-width: 1339px) {
   .block {
     display: flex;
     flex: 1;
@@ -9,9 +9,9 @@
 }
 
 /*
- * width > 1330
+ * width > 1340
  */
-@media screen and (min-width: 1330px) {
+@media screen and (min-width: 1340px) {
   .block {
     scroll-snap-align: start;
     margin-right: 10px;

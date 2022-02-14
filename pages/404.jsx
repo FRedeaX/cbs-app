@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import Error from "../components/Error/Error";
-import SEO from "../components/SEO/SEO";
+import Head from "../components/Head/Head";
 import Layout from "../components/UI/Layout/Layout";
 import { getMenu } from "../helpers/backend";
 
@@ -20,7 +20,7 @@ const ErrorPage = ({ menu }) => {
   const route = useRouter();
   return (
     <Layout menu={menu} paddingSides={0}>
-      <SEO title="Страница не найдена" />
+      <Head title="Страница не найдена" />
       <Error route={route} />
     </Layout>
   );

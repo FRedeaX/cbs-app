@@ -1,12 +1,12 @@
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
+import Head from "../../../../components/Head/Head";
 import HomePage from "../../../../components/Pages/HomePage/HomePage";
 import {
   POSTS_PAGINATION_BY_CATEGORY_GQL,
   fetchArticlesByCategory,
 } from "../../../../components/Posts/PostsRoot";
-import SEO from "../../../../components/SEO/SEO";
 import Layout from "../../../../components/UI/Layout/Layout";
 import {
   getMenu,
@@ -14,6 +14,7 @@ import {
   plaiceholder,
 } from "../../../../helpers/backend";
 import { client } from "../../../../store/apollo-client";
+import { RKEY_POSTS_BY_CATEGORY } from "../../../../store/redis/redisKeys";
 
 const Home = ({ menu, posts, pages, name }) => {
   const {
@@ -22,7 +23,7 @@ const Home = ({ menu, posts, pages, name }) => {
   } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback}>
-      <SEO
+      <Head
         title={`Категория: ${name}`}
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />
@@ -62,15 +63,13 @@ export async function getStaticProps({ params: { slug } }) {
     fetchPolicy: "network-only",
   });
 
-  const posts = await plaiceholder(data.category?.posts.nodes)
-    .then((p) => p)
-    .catch((err) => {
-      captureException(err, "fetchArticlesByCategory");
-      return null;
-    });
+  const posts = await plaiceholder(data.category?.posts.nodes).catch((err) => {
+    captureException(err, "fetchArticlesByCategory");
+    return null;
+  });
 
   const pages = await paginationLoad({
-    key: `posts_c_${slug}`,
+    key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
     endCursor: data.category?.posts.pageInfo.endCursor,
     category: slug,

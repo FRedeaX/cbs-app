@@ -1,13 +1,8 @@
+/* eslint-disable import/no-cycle */
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 
-import { isFront } from "../..";
-
-const isIntersection =
-  isFront &&
-  "IntersectionObserver" in window &&
-  "IntersectionObserverEntry" in window &&
-  "intersectionRatio" in window.IntersectionObserverEntry.prototype;
+import { isIntersection } from "..";
 
 export default function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
   const [isOnScreen, setIsOnScreen] = useState(false);
@@ -26,13 +21,13 @@ export default function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
   }, [rootMargin, threshold]);
 
   useEffect(() => {
-    if (isIntersection) {
+    if (isIntersection && ref && ref.current) {
       observerRef.current.observe(ref.current);
     }
 
     return () => {
       if (isIntersection) {
-        observerRef.current.disconnect();
+        observerRef.current.disconnect(); // unobserve
       }
     };
   }, [ref]);
