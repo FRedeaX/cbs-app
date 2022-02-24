@@ -57,7 +57,7 @@ export const Post = ({
 
   return (
     <>
-      <Button
+      {/* <Button
         className={classNames(
           classes["button_to-top"],
           // classes[`button_to-top_${isOnScreen}`],
@@ -65,7 +65,7 @@ export const Post = ({
         iconLeft={<Icon direction="top" weight="small" />}
         onClick={hendeToTop}>
         <span className={classes["button_to-top_text"]}>Наверх</span>
-      </Button>
+      </Button> */}
 
       <Article
         title={title}
@@ -81,6 +81,7 @@ export const Post = ({
           <Offer
             postListByCategory={offerList[0].postListByCategory}
             similarPostList={offerList[0].similarPostList}
+            categories={categories.nodes}
             // nextPost={nextPost}
           />
         </div>
