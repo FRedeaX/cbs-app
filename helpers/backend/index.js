@@ -13,7 +13,7 @@ export {
   getPage,
   paginationLoad,
   plaiceholder,
-  loadPreview,
+  sortingCategories,
   removeDuplicateTag,
   transformBlocks,
 };
