@@ -2,6 +2,7 @@ import asyncLoadScript from "./asyncLoadScript";
 import createMarkup from "./createMarkup";
 import delay from "./delay";
 import isFront from "./isFront";
+import lineClamp from "./lineClamp";
 import throttler from "./throttler";
 import verticalAlignToFlext from "./verticalAlignToFlext";
 
@@ -10,6 +11,7 @@ export {
   createMarkup,
   delay,
   isFront,
+  lineClamp,
   throttler,
   verticalAlignToFlext,
 };

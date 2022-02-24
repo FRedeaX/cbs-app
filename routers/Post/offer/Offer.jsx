@@ -2,7 +2,7 @@ import { TabContext } from "@mui/lab";
 import TabList from "@mui/lab/TabList";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
-import { forwardRef, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 
 import GroupCards from "../../../components/Posts/GroupCards/GroupCards";
 import classes from "./Offer.module.css";
@@ -18,6 +18,20 @@ const Offer = forwardRef((props, ref) => {
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
+
+  const categoriesNameList = useMemo(() => {
+    const categories = props.categories.map((c) => c.name);
+
+    if (categories.length === 3) {
+      const last = categories.pop();
+      const cat = categories.join(", ");
+
+      if (cat.length < last.length) {
+        return `${cat}, ${"\n"}${last}`;
+      }
+    }
+    return categories.join(", ");
+  }, [props.categories]);
 
   return (
     <div className={classes.block} ref={ref}>
@@ -37,7 +51,11 @@ const Offer = forwardRef((props, ref) => {
                   value={TAB_SIMILAR}
                   disabled={!(props[TAB_SIMILAR]?.length > 0)}
                 />
-                <Tab label="По категории" value={TAB_CATEGORY} />
+                <Tab
+                  sx={{ whiteSpace: "pre-line" }}
+                  label={categoriesNameList}
+                  value={TAB_CATEGORY}
+                />
               </TabList>
             </Box>
           </TabContext>

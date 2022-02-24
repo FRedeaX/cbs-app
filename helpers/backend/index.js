@@ -3,7 +3,7 @@ import { getMenu, preparingPaths } from "./menu";
 import getPage from "./page";
 import paginationLoad from "./pagination";
 import plaiceholder from "./plaiceholder";
-import loadPreview from "./preview";
+import sortingCategories from "./post/sortingCategories";
 import removeDuplicateTag from "./removeDuplicateTag";
 import transformBlocks from "./transformBlocks";
 

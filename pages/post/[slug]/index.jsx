@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 
 import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
-import { getMenu, transformBlocks } from "../../../helpers/backend";
+import {
+  getMenu,
+  sortingCategories,
+  transformBlocks,
+} from "../../../helpers/backend";
 import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
@@ -68,7 +72,14 @@ export async function getStaticProps({ params }) {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.post))
+    // .then(({ data }) => transformBlocks(data.post))
+    .then(async ({ data }) => ({
+      ...data.post,
+      ...(await transformBlocks(data.post.blocks)),
+      categories: {
+        nodes: await sortingCategories([...data.post.categories.nodes]),
+      },
+    }))
     .catch((err) => {
       captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
       return null;

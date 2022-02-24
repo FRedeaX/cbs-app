@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
-import { createMarkup } from "../../../helpers";
+import { createMarkup, lineClamp } from "../../../helpers";
 import Category from "../Category/Category";
 import classes from "./Card.module.css";
 
@@ -70,6 +70,9 @@ const Card = ({
           </Link>
         </h3>
         <div
+          style={{
+            WebkitLineClamp: isClamp ? `${lineClamp(title, 30, 3)}` : null,
+          }}
           className={classNames(classes.subtitle, {
             [classes.subtitle_clamp]: isClamp,
           })}

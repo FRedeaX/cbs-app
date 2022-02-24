@@ -74,7 +74,7 @@
 .image {
   position: relative;
   display: flex;
-  flex: 2;
+  flex: 3;
 
   /* padding-bottom: 44.795%; */
   overflow: hidden;
@@ -157,7 +157,6 @@
 }
 .subtitle_clamp {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   hyphens: auto;
 }

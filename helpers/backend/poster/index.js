@@ -70,8 +70,8 @@ export const dateConversion = async (posterList) => {
     monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
 
     if (poster.posterDate.dataend !== null) {
-      dayEnd = parseInt(poster.posterDate.dataend?.split("/")[0], 10);
-      monthEnd = parseInt(poster.posterDate.dataend?.split("/")[1], 10);
+      dayEnd = parseInt(poster.posterDate.dataend.split("/")[0], 10);
+      monthEnd = parseInt(poster.posterDate.dataend.split("/")[1], 10);
     }
 
     result.push({

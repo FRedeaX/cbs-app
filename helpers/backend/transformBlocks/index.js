@@ -51,12 +51,13 @@ const getSizeOf = (url) =>
     // });
   });
 
-const transform = async (arr) => {
+const transformBlocks = async (blocks) => {
+  if (!blocks) throw new Error("blocks of null");
   const blockList = [];
   const video = [];
   const promise = [];
 
-  arr.forEach((block, index) => {
+  blocks.forEach((block, index) => {
     switch (block.name) {
       case "core/image":
       case "core/media-text": {
@@ -125,8 +126,8 @@ const transform = async (arr) => {
       case "core/columns":
       case "core/column": {
         promise.push(
-          transform(block.innerBlocks).then((res) => {
-            blockList[index] = { ...block, innerBlocks: [...res.blockList] };
+          transformBlocks(block.innerBlocks).then((res) => {
+            blockList[index] = { ...block, innerBlocks: [...res.blocks] };
           }),
         );
         break;
@@ -141,7 +142,7 @@ const transform = async (arr) => {
 
       case "core/embed": {
         const url = new URL(block.attributes.url);
-        const { href, host } = url;
+        const { href, host, searchParams } = url;
         video.push({ id: href.slice(-4), href });
 
         let youtubeUrl;
@@ -153,6 +154,10 @@ const transform = async (arr) => {
           // });
           const id = url.searchParams.get("v") || removeBackslash(url.pathname);
           youtubeUrl = `https://www.youtube.com/embed/${id}?feature=oembed`;
+        } else if (searchParams.has("list")) {
+          youtubeUrl = `https://www.youtube.com/embed/videoseries?list=${searchParams.get(
+            "list",
+          )}`;
         }
 
         const cls = block.attributes.className.split(" ")[0].split("-");
@@ -195,17 +200,17 @@ const transform = async (arr) => {
   });
 
   await Promise.all(promise);
-  return { blockList, video };
+  return { blocks: blockList, video };
 };
 
-const transformBlocks = async (obj) => {
-  if (!(obj && obj.blocks)) throw new Error("obj or obj.blocks of null");
-  const { blockList: blocks, video } = await transform(obj.blocks);
-  return {
-    ...obj,
-    blocks,
-    video,
-  };
-};
+// const transformBlocks = async (obj) => {
+//   if (!(obj && obj.blocks)) throw new Error("obj or obj.blocks of null");
+//   const { blockList: blocks, video } = await transform(obj.blocks);
+//   return {
+//     // ...obj,
+//     blocks,
+//     video,
+//   };
+// };
 
 export default transformBlocks;

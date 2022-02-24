@@ -36,7 +36,7 @@ const Button = forwardRef(
               classes.link,
               {
                 [classes[`theme_${theme}`]]:
-                  theme !== undefined || theme !== null,
+                  theme !== undefined && theme !== null,
                 [classes.theme_gray_active]: checked,
 
                 [classes.width_max]: width === "max",
@@ -89,7 +89,8 @@ const Button = forwardRef(
             className={classNames(
               classes.button,
               {
-                [classes[`theme_${theme}`]]: theme,
+                [classes[`theme_${theme}`]]:
+                  theme !== undefined && theme !== null,
                 [classes.width_max]: width === "max",
                 [classes.padding]: children,
                 // [classes["padding_icon_left"]]: iconLeft && !isTextCenter,
