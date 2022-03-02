@@ -9,6 +9,14 @@
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
+const alias = {
+  "@mui/base": "@mui/base/legacy",
+  "@mui/lab": "@mui/lab/legacy",
+  "@mui/material": "@mui/material/legacy",
+  "@mui/styled-engine": "@mui/styled-engine/legacy",
+  "@mui/system": "@mui/system/legacy",
+};
+
 const moduleExports = {
   images: {
     domains: [process.env.HOST],
@@ -21,6 +29,16 @@ const moduleExports = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+
+  webpack: (config, { isServer }) => {
+    const newConfig = config;
+
+    if (isServer === false) {
+      newConfig.resolve.alias = { ...config.resolve.alias, ...alias };
+    }
+
+    return newConfig;
   },
 
   // async redirects() {
