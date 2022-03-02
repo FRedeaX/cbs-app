@@ -55,13 +55,6 @@ export const Post = ({
   //   }
   // }, [hendleOffers, offerList, isVisible]);
 
-  // useEffect(() => {
-  //   if (isVisible) {
-  //     const { nextPost } = offerList[offerList.length - 1];
-  //     hendleOffers(nextPost.id);
-  //   }
-  // }, [hendleOffers, offerList, isVisible]);
-
   return (
     <>
       {/* <Button
@@ -136,7 +129,6 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
         ...verseBlockGQL
       }
       ...postGQL
-      postId
     }
   }
   ${paragraphBlockGQL.fragments}
