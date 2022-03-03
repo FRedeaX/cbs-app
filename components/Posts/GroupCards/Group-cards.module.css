@@ -6,7 +6,13 @@
 }
 @media screen and (min-width: 961px) {
   .container {
-    width: calc(100% - calc(var(--group-cards-container-margin, 10px) * 2));
+    /*
+      GoogleChrome 49 не поддерживает вложение calc
+      width: calc(100% - calc(var(--group-cards-container-margin, 10px) * 2))
+    */
+
+    /* stylelint-disable-next-line prettier/prettier */
+    width: calc(100% - var(--group-cards-container-margin, 10px) - var(--group-cards-container-margin, 10px));
     margin: var(--group-cards-container-margin, 10px);
   }
 }
