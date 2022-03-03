@@ -1,5 +1,6 @@
 import { captureException } from "@sentry/nextjs";
 
+// eslint-disable-next-line import/no-cycle
 import { transformBlocks } from "..";
 import { FETCH_PAGE } from "../../../components/Pages/Page";
 import { client } from "../../../store/apollo-client";
@@ -14,7 +15,10 @@ const getPage = async (id) => {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformBlocks(data.page))
+    .then(async ({ data }) => ({
+      ...data.page,
+      ...(await transformBlocks(data.page.blocks)),
+    }))
     .catch((err) => {
       captureException(err, "FETCH_PAGE");
       return null;
