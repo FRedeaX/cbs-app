@@ -8,8 +8,18 @@ import SectionHeader from "../../SectionHeader/SectionHeader";
 import PosterRoot from "../../poster/PosterRoot/PosterRoot";
 import classes from "./Home-Page.module.css";
 import Pagination from "./Pagination/Pagination";
+import type { NextPage } from "next";
 
-const HomePage = ({
+interface IHomePageProps {
+  posters: Array<Object>;
+  posts: Array<Object>;
+  pages: number;
+  paginationURI: string;
+  categoryName?: string;
+  isGroupCards?: boolean;
+}
+
+const HomePage: NextPage<IHomePageProps> = ({
   posters,
   posts,
   pages,

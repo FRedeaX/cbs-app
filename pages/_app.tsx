@@ -1,4 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
+import { AppProps } from "next/app";
 import { useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
 
@@ -8,7 +9,7 @@ import { client } from "../store/apollo-client";
 import "../styles.css";
 
 /* eslint-disable react/jsx-props-no-spreading */
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }): AppProps {
   useEffect(() => {
     smoothscroll.polyfill();
   }, []);

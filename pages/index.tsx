@@ -1,3 +1,4 @@
+import type { GetStaticProps, NextPage } from "next";
 import { captureException } from "@sentry/nextjs";
 
 import Head from "../components/Head/Head";
@@ -18,7 +19,14 @@ import { dateConversion, filter, sort } from "../helpers/backend/poster";
 import { client } from "../store/apollo-client";
 import { RKEY_POSTS } from "../store/redis/redisKeys";
 
-const Home = ({ menu, posters, posts, pages }) => (
+interface IProps {
+  menu: Array<Object>;
+  posters: Array<Object>;
+  posts: Array<Object>;
+  pages: number;
+}
+
+const Home: NextPage<IProps> = ({ menu, posters, posts, pages }) => (
   <Layout menu={menu} paddingSides={0}>
     <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
     <HomePage
@@ -30,7 +38,7 @@ const Home = ({ menu, posters, posts, pages }) => (
   </Layout>
 );
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps<IProps> = async () => {
   const menu = await getMenu(false);
   const dataPosts = await client
     .query({
@@ -46,7 +54,7 @@ export async function getStaticProps() {
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes)
     .then((nodes) => plaiceholder(nodes.result).then((p) => p))
     .catch((err) => {
-      captureException(err, "FETCH_ARTICLES");
+      captureException(err);
       return null;
     });
 
@@ -55,9 +63,9 @@ export async function getStaticProps() {
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
   })
-    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
-    .catch((err) => {
-      captureException(err, "POSTS_PAGINATION_GQL");
+    .then((pagesInfo: any) => pagesInfo[pagesInfo.length - 1].number - 1)
+    .catch((err: any) => {
+      captureException(err);
       return null;
     });
 
@@ -69,12 +77,12 @@ export async function getStaticProps() {
     .then(({ data }) =>
       dateConversion(data.posters.nodes).then((dateRes) =>
         sort(dateRes).then((sortRes) =>
-          filter(sortRes).then((filterRes) => filterRes),
-        ),
-      ),
+          filter(sortRes).then((filterRes) => filterRes)
+        )
+      )
     )
     .catch((err) => {
-      captureException(err, "FETCH_POSTER");
+      captureException(err);
       return null;
     });
 
@@ -85,8 +93,8 @@ export async function getStaticProps() {
       posts,
       pages,
     },
-    revalidate: parseInt(process.env.POST_REVALIDATE, 10),
+    revalidate: parseInt(process.env.POST_REVALIDATE || "60", 10),
   };
-}
+};
 
 export default Home;

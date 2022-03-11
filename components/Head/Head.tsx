@@ -1,17 +1,26 @@
 /* eslint-disable @next/next/no-script-in-head */
+import type { NextPage } from "next";
+
 import NHead from "next/head";
 import Script from "next/script";
-
 import SEO from "../SEO/SEO";
 
-const Head = ({ title, description, image, video, url }) => (
+interface IProps {
+  title?: string;
+  description: string;
+  image?: string;
+  video?: string;
+  url?: string;
+}
+
+const Head: NextPage<IProps> = ({ title, description, image, video, url }) => (
   <>
     <NHead>
       <Script
         id="scrollbarWidth"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: (function scrollWidth() {
+          __html: `(function scrollWidth() {
             if (typeof window === "undefined") return;
             const outer = document.createElement("div");
             outer.style.visibility = "hidden";
@@ -20,12 +29,12 @@ const Head = ({ title, description, image, video, url }) => (
             const inner = document.createElement("div");
             outer.appendChild(inner);
             const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-            outer.parentNode.removeChild(outer);
+            outer.parentNode?.removeChild(outer);
             document.body.style.setProperty(
               "--scrollbarWidth",
-              `${scrollbarWidth}px`,
+              scrollbarWidth + "px"
             );
-          })(),
+          })()`,
         }}
       />
     </NHead>
