@@ -13,7 +13,9 @@ import Badge from "../../Badge/Badge";
 import Carousel from "../../Carusel/Carousel";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
+import Loader2 from "../../UI/Loader2/Loader2";
 import classes from "./Gallery.module.css";
+import useExtractColors from "./useExtractColors";
 
 export const galleryBlockGQL = {
   fragments: gql`
@@ -45,6 +47,16 @@ export const Gallery = ({
   images,
   // ref,
 }) => {
+  const { getColors, extractColors } = useExtractColors();
+  useEffect(() => {
+    const ids = images.map((img) => img.id);
+    getColors(ids);
+  }, [getColors, images]);
+
+  // useEffect(() => {
+  //   console.log(extractColors);
+  // }, [extractColors]);
+
   const { data: state } = useQuery(gql`
     query {
       ${GET_OVERLAY_FRAGMENT}
@@ -100,7 +112,17 @@ export const Gallery = ({
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
         role="button"
         tabIndex="0">
-        <div className={classes.container}>
+        <div
+          style={{
+            backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
+          }}
+          className={classNames(
+            classes.container,
+            classes[`container_isZoom_${zoom}`],
+          )}>
+          {/* <div className={classes.loader} aria-hidden="true">
+            <Loader2 isLoading />
+          </div> */}
           <Carousel
             isScrollSnap
             isShadow={false}
@@ -112,12 +134,12 @@ export const Gallery = ({
               // <div>
               <figure
                 key={image.id}
-                style={{
-                  minWidth: "100%",
-                  margin: "auto",
-                  maxHeight: "94vh",
-                  scrollSnapAlign: "start",
-                }}
+                // style={{
+                //   minWidth: "100%",
+                //   margin: "auto",
+                //   maxHeight: "94vh",
+                //   scrollSnapAlign: "start",
+                // }}
                 className={classNames(
                   classes.image,
                   classes[`image_isZoom_${zoom}`],
@@ -125,15 +147,10 @@ export const Gallery = ({
                 <Image
                   alt={image.alt}
                   src={image.url}
-                  // layout="intrinsic"
-                  priority={zoom}
-                  layout="responsive"
-                  // placeholder="blur"
-                  // sizes={2400}
                   width={image.width}
                   height={image.height}
-                  objectFit={zoom ? "contain" : "cover"}
-                  // objectPosition="center"
+                  priority={zoom}
+                  objectFit="contain"
                 />
                 <figcaption
                   dangerouslySetInnerHTML={createMarkup(image.caption)}
@@ -156,6 +173,9 @@ export const Gallery = ({
         />
       </figure>
       <div
+        style={{
+          backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.2)`,
+        }}
         className={classNames(
           classes.controls,
           classes[`controls_isZoom_${zoom}`],

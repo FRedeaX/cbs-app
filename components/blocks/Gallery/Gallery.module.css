@@ -15,7 +15,7 @@
   top: 0;
   width: 100%;
   height: auto;
-  margin: 0 0 0 0;
+  margin: 0;
 }
 
 /* .wrapper:first-child {
@@ -40,7 +40,9 @@
 .container {
   overflow: hidden;
   border-radius: 16px;
+  transition: background-color 0.3s ease-out;
 }
+
 .container .badge {
   position: absolute;
   top: 10px;
@@ -61,7 +63,11 @@
 .image {
   position: relative;
   display: flex;
-  margin: 0;
+  justify-content: center;
+  min-width: 100%;
+  max-height: 94vh;
+  margin: auto;
+  scroll-snap-align: start;
 
   /* overflow: hidden;
   scroll-snap-align: start; */
@@ -96,20 +102,23 @@
   border-radius: 0 12px 0 12px;
   opacity: 0.75; */
 }
+
 .controls .badge {
   --badge-color: black;
-  --badge-background-color: white;
+  --badge-background-color: transparent;
 }
+
 .controls_isZoom_true {
   position: fixed;
   top: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 100%;
   background-color: white;
   opacity: 0.7;
 }
+
 .controls_isZoom_false {
   width: 44px;
 }
@@ -143,9 +152,11 @@
 .controls_isZoom_true .button_download {
   opacity: 0.5;
 }
+
 .block:hover .button_download {
   opacity: 0.5;
 }
+
 .controls_isZoom_true .button_download:hover {
   opacity: 1;
 }
@@ -160,7 +171,8 @@
   min-width: 100%;
   padding-top: 56.25%;
 }
-.image_isZoom_false > div {
+
+.image_isZoom_false > span {
   position: absolute !important;
   top: 0;
   bottom: 0;
@@ -177,18 +189,37 @@
   padding-top: 44px;
   transform: translate(-50%, -50%);
 }
+
+.container_isZoom_true {
+  border-radius: 0;
+}
+
 .image_isZoom_true {
   height: 100vh;
 
   /* margin: auto; */
 }
-.image_isZoom_true > div {
+
+.image_isZoom_true > span {
   /* position: absolute !important;
   top: 0;
   bottom: 0; */
-  width: 100%;
+  /* width: 100%; */
   max-height: 100vh;
-  border-radius: 16px;
+  border-radius: 0;
 }
 
 /* image-rendering: -webkit-optimize-contrast; */
+
+/*
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+} */

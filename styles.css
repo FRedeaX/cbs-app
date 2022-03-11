@@ -1,21 +1,21 @@
 :root {
   /* color */
-  --white: hsl(0, 0%, 97%);
+  --white: hsl(0deg 0% 97%);
 
   /* hsl(0, 0%, 96%) */
-  --white-80: hsla(0, 0%, 100%, 0.8);
-  --black: rgb(31, 31, 31);
-  --black-80: hsla(0, 0%, 12%, 0.8);
-  --black-70: hsla(0, 0%, 0%, 0.7);
-  --black-50: hsla(0, 0%, 0%, 0.5);
-  --black-20: hsla(0, 0%, 0%, 0.2);
-  --black-14: hsla(0, 0%, 12%, 0.14);
-  --black-10: hsla(0, 0%, 12%, 0.1);
-  --gray: hsl(222, 13%, 60%);
-  --dark-gray: hsl(0, 0%, 24%);
-  --d-dark-gray: hsl(222, 13%, 28%, 1);
-  --blue-dark: hsl(218, 100%, 37%);
-  --blue-dark-05: hsla(218, 100%, 37%, 0.05);
+  --white-80: hsl(0deg 0% 100% / 80%);
+  --black: rgb(31 31 31);
+  --black-80: hsl(0deg 0% 12% / 80%);
+  --black-70: hsl(0deg 0% 0% / 70%);
+  --black-50: hsl(0deg 0% 0% / 50%);
+  --black-20: hsl(0deg 0% 0% / 20%);
+  --black-14: hsl(0deg 0% 12% / 14%);
+  --black-10: hsl(0deg 0% 12% / 10%);
+  --gray: hsl(222deg 13% 60%);
+  --dark-gray: hsl(0deg 0% 24%);
+  --d-dark-gray: hsl(222deg 13% 28% / 100%);
+  --blue-dark: hsl(218deg 100% 37%);
+  --blue-dark-05: hsl(218deg 100% 37% / 5%);
 
   /* не используется
   --red: hsl(0, 98%, 60%);
@@ -27,15 +27,15 @@
   /* #293448 */
 
   /* --secondaryWhite: hsl(0, 0%, 96%); */
-  --accentColor: hsla(0, 98%, 60%, 0.685);
+  --accentColor: hsl(0deg 98% 60% / 68.5%);
 
   /* --menuLink: hsla(0, 0%, 8%, 0.85); */
 
-  --overlay-color: hsl(0, 0%, 19%);
+  --overlay-color: hsl(0deg 0% 19%);
 
   /* Title SubTitle */
-  --subtitleColor: hsl(0, 0%, 45%);
-  --hoverColor: hsl(0, 0%, 91%);
+  --subtitleColor: hsl(0deg 0% 45%);
+  --hoverColor: hsl(0deg 0% 91%);
   --colorGrey: #929daf;
   --light-green-cyan: #7bdcb5;
   --cyan-bluish-gray: #abb8c3;
@@ -57,7 +57,7 @@
   --font-R-S: "Roboto-Slab", serif;
   --bgWhite: #f2f2f2 /*var(--white); */;
   --scrollbarWidth: 17px;
-  --background-color-white: rgb(247, 247, 247);
+  --background-color-white: rgb(247 247 247);
   --bg-controls: var(--white);
   --menuLink: var(--black);
   --titleColor: var(--dark-gray);
@@ -84,6 +84,7 @@
   font-size: 16px;
 } */
 
+/* stylelint-disable-next-line selector-id-pattern */
 #__next {
   display: flex;
   flex-direction: column;
@@ -120,7 +121,7 @@
 body {
   margin: 0;
   overflow-y: scroll;
-  font-family: Roboto, "Arial", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
   word-break: break-word;
   background-color: var(--bgWhite);
 
@@ -152,7 +153,7 @@ figcaption {
 
 .wp-block-embed {
   width: 100%;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
 }
 
 .wp-block-quote {

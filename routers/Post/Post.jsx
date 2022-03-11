@@ -107,6 +107,16 @@ export const GET_MINIMUM_DATA_FOR_OFFER = gql`
   }
 `;
 
+export const GET_SOURCE_THUMBNAIL_URL = gql`
+  query GET_SOURCE_THUMBNAIL_URL($in: [ID]) {
+    mediaItems(where: { in: $in }) {
+      nodes {
+        sourceUrl(size: THUMBNAIL)
+      }
+    }
+  }
+`;
+
 export const GET_POST_CONTENT_BY_BLOCKS = gql`
   query fetchArticle($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {

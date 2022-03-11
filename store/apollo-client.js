@@ -1,5 +1,5 @@
 import { ApolloClient, createHttpLink } from "@apollo/client";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 
 // import { onError } from "@apollo/client/link/error";
 // import { setContext } from "@apollo/client/link/context";
@@ -32,7 +32,7 @@ export const authClient = () =>
     cache,
     ssrMode: true,
     link,
-    fetch,
+    // fetch,
   });
 
 // const errorLink = onError((e) => {
@@ -50,6 +50,6 @@ export const authClient = () =>
 export const client = new ApolloClient({
   cache,
   link,
-  fetch,
+  // fetch,
   // link: ApolloLink.from([errorLink, link]),
 });
