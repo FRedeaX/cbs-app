@@ -53,6 +53,7 @@ export const postGQL = {
       isSticky
       title
       uri
+      link
       categories {
         nodes {
           termTaxonomyId

@@ -23,7 +23,7 @@ const Article = forwardRef(
           <div>
             <Blocks blocks={blocks} />
           </div>
-          {!isPreview && href && image && (
+          {!isPreview && href && (
             <Share
               cls={classes.Share}
               clsLink={classes.link}

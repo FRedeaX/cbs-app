@@ -23,7 +23,8 @@ const nextConfig = {
   images: {
     domains: [process.env.HOST],
     // domains: [process.env.HOST_DEV],
-    formats: ["image/avif", "image/webp"],
+    // formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
   },
   experimental: {
     optimizeCss: true,

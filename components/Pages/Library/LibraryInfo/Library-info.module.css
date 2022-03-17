@@ -5,7 +5,7 @@
 .title {
   margin: 1.3em 0 90px;
   padding-bottom: 90px;
-  color: var(--subtitleColor);
+  color: var(--subtitle-сolor);
   font-weight: 500;
   font-size: 20px;
   border-bottom: 1px solid #dbdbdb;
@@ -23,6 +23,7 @@
   padding-bottom: 40px;
   border-bottom: 1px solid #dbdbdb;
 }
+
 .item:last-child {
   width: 100%;
   border: none;

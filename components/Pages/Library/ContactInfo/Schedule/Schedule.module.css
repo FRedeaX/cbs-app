@@ -1,38 +1,3 @@
-.item {
-  width: max-content;
-  padding-right: 5px;
-}
-
-.weekday {
-  width: 18px;
-  font-weight: 500;
-  font-size: 11.6px;
-  text-transform: uppercase;
-}
-.item--cleanup-day .weekday {
-  width: max-content;
-  font-size: 12.6px;
-  text-transform: none;
-}
-.item--lunchBreak .weekday {
-  width: 32px;
-  margin: 8px 5px 0 0;
-  font-size: 13px;
-  text-transform: inherit;
-}
-
-.time {
-  font-size: 15px;
-}
-.item--cleanup-day .time {
-  font-size: 14.6px;
-}
-
-.day {
-  font-weight: 300;
-  font-size: 14px;
-}
-
 .header {
   display: flex;
   flex-wrap: wrap;
@@ -47,39 +12,39 @@
 }
 
 .controls {
-  /* gap: 8px; */
+  --button-text-padding: 0;
+  --button-text-align: center;
+
   display: flex;
   margin-bottom: -8px;
 }
 
-.link {
+/* .link {
   --button-text-align: center;
 
   position: relative;
   padding: 4px 0 8px;
-  color: var(--subtitleColor);
+  color: var(--subtitle-сolor);
   font-size: 14px;
   text-decoration: none;
   transition: color 0.15ms;
-}
+} */
 
-.link:hover {
-  color: var(--accentColor);
-}
+/* .link:hover {
+  color: var(--accent-сolor);
+} */
 
-.link:first-child {
+.link {
   margin-right: 8px;
 }
 
+/*
 .active::after {
   position: absolute;
   right: 0;
   bottom: 6px;
   left: 1px;
   height: 1px;
-  background-color: var(--borderLink);
+  background-color: var(--accent-сolor);
   content: "";
-
-  /* transform: scaleX(0);
-  transition: transform 0.35s linear; */
-}
+} */

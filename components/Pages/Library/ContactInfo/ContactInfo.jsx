@@ -4,17 +4,18 @@ import Schedule from "./Schedule/Schedule";
 import Telefon from "./Telefon/Telefon";
 
 const ContactInfo = ({
-  schedule,
-  scheduleAUP,
+  scheduleDefault,
   scheduleSecondary,
   email,
   telefon,
 }) => (
   <>
-    {schedule && (
+    {(scheduleDefault?.schedule ||
+      scheduleDefault?.scheduleAup ||
+      scheduleSecondary?.schedule ||
+      scheduleSecondary?.scheduleAup) && (
       <Schedule
-        scheduleDefault={schedule}
-        scheduleAUP={scheduleAUP}
+        scheduleDefault={scheduleDefault}
         scheduleSecondary={scheduleSecondary}
       />
     )}

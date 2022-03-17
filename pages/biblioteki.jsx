@@ -1,19 +1,35 @@
 import Head from "../components/Head/Head";
-import Library from "../components/Pages/Library/Library";
+import { FETCH_LIBRARY, Library } from "../components/Pages/Library/Library";
 import Layout from "../components/UI/Layout/Layout";
 import { getMenu } from "../helpers/backend";
-import filialList from "../helpers/backend/biblioteki";
+import transformObject from "../helpers/backend/biblioteki";
+import { client } from "../store/apollo-client";
 
-const Biblioteki = ({ menu, filials }) => (
+const Biblioteki = ({ menu, page }) => (
   <Layout menu={menu}>
-    <Head title="Библиотеки" description="График работы библиотек" />
-    <Library filials={filials} />
+    <Head title={page.title} description={page.excerpt} />
+    <Library filialList={page.children.nodes} />
   </Layout>
 );
 
 export async function getServerSideProps() {
   const menu = await getMenu();
-  return { props: { menu, filials: filialList } };
+
+  const page = await client
+    .query({
+      query: FETCH_LIBRARY,
+      variables: {
+        id: "grafik-raboty-bibliotek",
+      },
+      fetchPolicy: "network-only",
+    })
+    .then(({ data }) => transformObject(data.page));
+
+  console.log(page);
+  return {
+    props: { menu, page },
+    // revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
+  };
 }
 
 export default Biblioteki;

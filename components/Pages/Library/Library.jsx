@@ -5,34 +5,41 @@ import { useCallback, useEffect, useState } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
 import Title, { SUBTITLE } from "../../Title/Title";
-import Button from "../../UI/Button/Button";
+import ButtonList from "./ButtonList/ButtonList";
 import { Heading } from "../../blocks/Heading/Heading";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
 import LibraryInfo from "./LibraryInfo/LibraryInfo";
+import { gql } from "@apollo/client";
 
 let map;
 const YMAP_API =
   "https://api-maps.yandex.ru/2.1/?apikey=76dd679b-d43f-4800-b744-f749eb0b34aa&lang=ru_RU";
 
-const Library = ({ filials }) => {
+export const Library = ({ filialList }) => {
   const router = useRouter();
   const {
-    query: { lib, schedule },
+    query: { lib, schedule, holiday },
   } = router;
 
   const [isMap, setIsMap] = useState(false);
-  const [filial, setFilial] = useState(filials[lib] || filials.cgb);
+  const [filial, setFilial] = useState(
+    filialList[filialList.findIndex((f) => f.id === lib)] || filialList,
+  );
 
   const selectPlacemark = useCallback(() => {
-    const geoObjects = window.ymaps.geoQuery(map.geoObjects);
+    if (isMap === false) return;
+
+    const geoObjects = window.ymaps.geoQuery(map?.geoObjects);
     const selected = geoObjects
-      .search(`properties.id = '${filial.slug}'`)
+      .search(`properties.id = '${filial.id}'`)
       .setOptions("preset", "islands#redIcon");
     geoObjects.remove(selected).setOptions("preset", "islands#blueIcon");
-  }, [filial.slug]);
+  }, [filial.id, isMap]);
 
   useEffect(() => {
+    if (isMap === true) return;
+
     function init() {
       let zoom = 14;
       let center = [45.6246, 63.308];
@@ -47,11 +54,11 @@ const Library = ({ filials }) => {
         controls: ["zoomControl"],
       });
 
-      Object.values(filials).forEach((item) => {
+      Object.values(filialList).forEach((item) => {
         const placemark = new window.ymaps.Placemark(
-          [item.pointX, item.pointY],
+          item.point,
           {
-            id: item.slug,
+            id: item.id,
             balloonContentHeader: item.name,
             balloonContentBody: item.address,
           },
@@ -65,8 +72,11 @@ const Library = ({ filials }) => {
 
           // const s = new URLSearchParams(window.location.query).has("schedule");
 
+          // TODO: При выборе филиала на карте график сбрасывается на дефолтный
           router.replace(
-            `/biblioteki?lib=${id}&schedule=${schedule || "default"}`,
+            `/biblioteki?lib=${id}&schedule=${schedule || "default"}&holiday=${
+              holiday || "false"
+            }`,
           );
 
           const targetObject = e.get("target");
@@ -86,30 +96,14 @@ const Library = ({ filials }) => {
     asyncLoadScript(YMAP_API, window.ymaps).then(() =>
       window.ymaps.ready(init),
     );
-  }, [filials, router, schedule]);
+  }, [filialList, router, schedule, isMap]);
 
   useEffect(() => {
-    setFilial(filials[lib] || filials.cgb);
+    setFilial(
+      filialList[filialList.findIndex((f) => f.id === lib)] || filialList[0],
+    );
     if (isMap !== false) selectPlacemark();
-  }, [filials, lib, isMap, selectPlacemark]);
-
-  const renderControls = () =>
-    Object.values(filials).map((item) => (
-      <Link
-        key={item.slug}
-        href={`/biblioteki?lib=${item.slug}&schedule=${schedule || "default"}`}
-        passHref
-        replace
-        scroll={false}>
-        <Button
-          view="link"
-          className={classNames(classes.link, {
-            [classes.active]: filial.slug === item.slug,
-          })}>
-          {item.shortName}
-        </Button>
-      </Link>
-    ));
+  }, [filialList, lib, isMap, selectPlacemark]);
 
   return (
     <div className={classes.body}>
@@ -121,13 +115,21 @@ const Library = ({ filials }) => {
       <Title type={SUBTITLE} HtmlTeg="h3" cls={classes.subtitle}>
         {filial.address}
       </Title>
-      <div className={classes.controls}>{renderControls()}</div>
+      {filialList.length > 1 && (
+        <div className={classes.controls}>
+          <ButtonList
+            data={filialList}
+            schedule={schedule}
+            holiday={holiday}
+            currentFilial={filial.id}
+          />
+        </div>
+      )}
       <div className={classes.content}>
         <div id="map" className={classes.map} />
         <aside className={classes.aside}>
           <ContactInfo
-            schedule={filial.schedule}
-            scheduleAUP={filial.scheduleAUP}
+            scheduleDefault={filial.scheduleDefault}
             scheduleSecondary={filial.scheduleSecondary}
             email={filial.email}
             telefon={filial.telefon}
@@ -141,4 +143,53 @@ const Library = ({ filials }) => {
   );
 };
 
-export default Library;
+export const FETCH_LIBRARY = gql`
+  query FETCH_LIBRARY($id: ID!) {
+    page(id: $id, idType: URI) {
+      title
+      excerpt
+      children {
+        nodes {
+          ... on Page {
+            menuOrder
+            bibliotekiBase {
+              address
+              email
+              name
+              point
+              shortname
+              id
+              telefon
+            }
+            bibliotekiSchedule {
+              cleanupday
+              friday
+              holiday
+              isholiday
+              lunchbreak
+              monday
+              saturday
+              sunday
+              thursday
+              tuesday
+              wednesday
+            }
+            bibliotekiScheduleAup {
+              cleanupdayaup
+              fridayaup
+              holidayaup
+              isholidayaup
+              lunchbreakaup
+              mondayaup
+              saturdayaup
+              sundayaup
+              thursdayaup
+              tuesdayaup
+              wednesdayaup
+            }
+          }
+        }
+      }
+    }
+  }
+`;

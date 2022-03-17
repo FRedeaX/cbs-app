@@ -17,10 +17,12 @@ const Telefon = ({ telefon, cls }) => {
           key={`tlf${index}`}
           className={classNames(classesInfo.item, classes.item)}>
           <div className={classesInfo["left-column"]}>
-            <span className={classes.subtitle}>{item.position}</span>
+            <span className={classes.subtitle} title={item.positionDesc}>
+              {item.position}
+            </span>
             <span className={classes.description}>{item.name}</span>
           </div>
-          <a className={cls} href={`tel:833622${item.tel}`}>
+          <a className={cls} href={`tel:833622${item.tel.split("-").join("")}`}>
             {item.tel}
           </a>
         </div>

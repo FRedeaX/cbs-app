@@ -1,0 +1,31 @@
+.link {
+  color: var(--subtitle-сolor);
+  font-size: 14px;
+  transition: color 0.15s linear;
+}
+
+.link::after {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: var(--accent-сolor);
+  transform: scaleX(0);
+  transition: transform 0.15s linear;
+  content: "";
+}
+
+.active::after {
+  transform: scaleX(1) !important;
+}
+
+@media screen and (width > 768px) {
+  .link:hover {
+    color: var(--accent-сolor);
+  }
+
+  .active:hover {
+    color: var(--subtitle-сolor);
+  }
+}

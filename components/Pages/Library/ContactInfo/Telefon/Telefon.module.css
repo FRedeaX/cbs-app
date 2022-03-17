@@ -12,13 +12,15 @@
 
 .item {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
+  align-items: flex-end;
   border-bottom: 1px solid #dbdbdb;
 }
+
 .item div {
-  flex: 4.8;
+  flex: 4.2;
 }
+
 .item a {
   flex: 1;
 }
@@ -26,7 +28,7 @@
 .subtitle {
   display: block;
   margin: 0 0 9px;
-  color: var(--subtitleColor);
+  color: var(--subtitle-сolor);
   font-weight: 400;
   font-size: 13px;
 }
@@ -35,7 +37,7 @@
   width: 100%;
   min-height: 40px;
   padding: 0;
-  color: var(--subtitleColor);
+  color: var(--subtitle-сolor);
   font-weight: 400;
   font-size: 15px;
   background-color: transparent;

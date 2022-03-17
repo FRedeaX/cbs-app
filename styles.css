@@ -27,14 +27,14 @@
   /* #293448 */
 
   /* --secondaryWhite: hsl(0, 0%, 96%); */
-  --accentColor: hsl(0deg 98% 60% / 68.5%);
+  --accent-сolor: hsl(0deg 98% 60% / 68.5%);
 
   /* --menuLink: hsla(0, 0%, 8%, 0.85); */
 
   --overlay-color: hsl(0deg 0% 19%);
 
   /* Title SubTitle */
-  --subtitleColor: hsl(0deg 0% 45%);
+  --subtitle-сolor: hsl(0deg 0% 45%);
   --hoverColor: hsl(0deg 0% 91%);
   --colorGrey: #929daf;
   --light-green-cyan: #7bdcb5;

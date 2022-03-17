@@ -7,88 +7,99 @@ import Button from "../../../../UI/Button/Button";
 import { Heading } from "../../../../blocks/Heading/Heading";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Schedule.module.css";
+import ScheduleList from "./ScheduleList/ScheduleList";
+import LibraryButton from "../../LibraryButton/LibraryButton";
+
+const FILIAL_DEFAULT = "cgb";
+const SCHEDULE_DEFAULT = "default";
+const SCHEDULE_AUP = "aup";
 
 // eslint-disable-next-line no-unused-vars
-const Schedule = ({ scheduleDefault, scheduleAUP, scheduleSecondary }) => {
-  const { search } = useRouter();
+const Schedule = (props) => {
   const {
-    query: { lib, schedule },
+    query: { lib, schedule, holiday },
   } = useRouter();
 
-  const isSchedule = useMemo(
-    () => new URLSearchParams(search).has("schedule"),
-    [search],
-  );
-
-  // const lib = useMemo(() => {
-  //   const s = new URLSearchParams(search);
-  //   return s.has("lib") ? `lib=${s.get("lib")}` : null;
-  // }, [search]);
-
-  function renderScheduleItem(data) {
-    if (data === undefined) return null;
-    return data.map((item) => (
-      <div
-        key={item.weekday}
-        className={classNames([
-          classesInfo.item,
-          classes.item,
-          {
-            [classes["item--cleanup-day"]]: item.cleanupDay,
-            [classes["item--lunchBreak"]]: item.lunchBreak,
-          },
-        ])}>
-        <span
-          className={classNames(classesInfo["left-column"], {
-            [classes.day]: isSchedule,
-            [classes.weekday]: !isSchedule,
-          })}>
-          {item.weekday}
-        </span>
-        <span className={classes.time}>{item.time}</span>
-      </div>
-    ));
-  }
   return (
     <div className={classesInfo.info}>
       <div className={classes.header}>
-        <Heading
-          level={4}
-          className={classNames(classesInfo.title, classes.title)}>
-          График работы
-        </Heading>
+        <div style={{ display: "flex" }}>
+          <Heading
+            level={4}
+            className={classNames(classesInfo.title, classes.title)}>
+            График работы
+          </Heading>
+          {(props.scheduleSecondary.schedule ||
+            props.scheduleSecondary.scheduleAup) && (
+            <div className={classes.controls}>
+              <LibraryButton
+                href={{
+                  pathname: "/biblioteki",
+                  query: {
+                    lib: lib || FILIAL_DEFAULT,
+                    schedule: schedule || SCHEDULE_DEFAULT,
+                    holiday: false,
+                  },
+                }}
+                isActive={holiday === "false" || holiday === undefined}
+                className={classes.link}>
+                Обычный
+              </LibraryButton>
+              <LibraryButton
+                href={{
+                  pathname: "/biblioteki",
+                  query: {
+                    lib: lib || FILIAL_DEFAULT,
+                    schedule: schedule || SCHEDULE_DEFAULT,
+                    holiday: true,
+                  },
+                }}
+                isActive={holiday === "true"}>
+                Праздничный
+              </LibraryButton>
+            </div>
+          )}
+        </div>
+
         <div className={classes.controls}>
-          <Link
-            href={`/biblioteki/?lib=${lib || "cgb"}&schedule=default`}
-            passHref
-            replace
-            scroll={false}>
-            <Button
-              view="link"
-              className={classNames(classes.link, {
-                [classes.active]:
-                  schedule === "default" || schedule === undefined,
-              })}>
-              Для читателей
-            </Button>
-          </Link>
-          <Link
-            href={`/biblioteki/?lib=${lib || "cgb"}&schedule=aup`}
-            passHref
-            replace
-            scroll={false}>
-            <Button
-              view="link"
-              className={classNames(classes.link, {
-                [classes.active]: schedule === "aup",
-              })}>
-              АУП
-            </Button>
-          </Link>
+          <LibraryButton
+            href={{
+              pathname: "/biblioteki",
+              query: {
+                lib: lib || FILIAL_DEFAULT,
+                schedule: SCHEDULE_DEFAULT,
+                holiday: holiday || false,
+              },
+            }}
+            isActive={schedule === SCHEDULE_DEFAULT || schedule === undefined}
+            className={classes.link}>
+            Для читателей
+          </LibraryButton>
+          <LibraryButton
+            href={{
+              pathname: "/biblioteki",
+              query: {
+                lib: lib || FILIAL_DEFAULT,
+                schedule: SCHEDULE_AUP,
+                holiday: holiday || false,
+              },
+            }}
+            isActive={schedule === SCHEDULE_AUP}>
+            АУП
+          </LibraryButton>
         </div>
       </div>
       <div className={classesInfo.list}>
-        {renderScheduleItem(schedule === "aup" ? scheduleAUP : scheduleDefault)}
+        <ScheduleList
+          data={
+            props[
+              `schedule${
+                holiday === "true" || holiday === "1" ? "Secondary" : "Default"
+              }`
+            ][`schedule${schedule === SCHEDULE_AUP ? "Aup" : ""}`]
+          }
+          isHoliday={holiday === "true" || holiday === "1"}
+        />
       </div>
     </div>
   );

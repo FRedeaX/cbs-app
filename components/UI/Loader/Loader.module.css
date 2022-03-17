@@ -12,11 +12,11 @@
 }
 
 .background {
-  background-color: hsla(0, 0%, 100%, 0.6);
+  background-color: hsl(0deg 0% 100% / 60%);
 }
 
 .background-1 {
-  background-color: hsla(0, 0%, 100%, 1);
+  background-color: hsl(0deg 0% 100% / 100%);
 }
 
 .container {
@@ -34,7 +34,7 @@
   /* top: 40%; */
   width: 13px;
   height: 13px;
-  background: var(--accentColor);
+  background: var(--accent-сolor);
   border-radius: 50%;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }

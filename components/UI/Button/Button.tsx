@@ -1,12 +1,32 @@
 /* eslint-disable react/display-name */
 import classNames from "classnames";
-import { forwardRef, memo } from "react";
+import { forwardRef, memo, ReactNode } from "react";
 
 import classes from "./Button.module.css";
 
-const Button = forwardRef(
+interface IButton {
+  children: ReactNode;
+  className?: string;
+  href?: string;
+  onClick?: () => void;
+  view?: string;
+  target?: string;
+  isDisabled?: boolean;
+  isHidden?: boolean;
+  checked?: boolean;
+  theme?: string;
+  width?: string;
+  iconLeft?: JSX.Element;
+  icon?: JSX.Element;
+  iconRight?: JSX.Element;
+  ariaLabel?: string;
+  title?: string;
+}
+
+const Button = forwardRef<HTMLButtonElement | any, IButton>(
   (
     {
+      children,
       className,
       href,
       onClick,
@@ -21,7 +41,6 @@ const Button = forwardRef(
       iconLeft,
       icon,
       iconRight,
-      children,
       ariaLabel,
       title,
     },
