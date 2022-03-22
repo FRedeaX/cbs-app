@@ -8,6 +8,8 @@
 @media screen and (max-width: 950px) {
   .main {
     padding: 81px 10px 20px;
+
+    /* padding: 81px var(--layout-padding-sides) 20px; */
   }
 }
 

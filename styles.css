@@ -55,8 +55,9 @@
 
   /* customs */
   --font-R-S: "Roboto-Slab", serif;
-  --bgWhite: #f2f2f2 /*var(--white); */;
+  --bg-white: #f2f2f2 /*var(--white); */;
   --scrollbarWidth: 17px;
+  --layout-padding-sides: 10px;
   --background-color-white: rgb(247 247 247);
   --bg-controls: var(--white);
   --menuLink: var(--black);
@@ -123,7 +124,7 @@ body {
   overflow-y: scroll;
   font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
   word-break: break-word;
-  background-color: var(--bgWhite);
+  background-color: var(--bg-white);
 
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

@@ -64,7 +64,7 @@ class _Document extends Document {
         </Head>
         <body
           style={{
-            backgroundColor: "var(--bgWhite)",
+            backgroundColor: "var(--bg-white)",
           }}>
           <Main />
           <NextScript />
