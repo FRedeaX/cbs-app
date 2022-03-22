@@ -25,7 +25,6 @@ export async function getServerSideProps() {
     })
     .then(({ data }) => transformObject(data.page));
 
-  console.log(page);
   return {
     props: { menu, page },
     // revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
