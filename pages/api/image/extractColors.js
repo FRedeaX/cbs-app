@@ -28,7 +28,9 @@ export default async function extractColors(req, res) {
             result.push(
               Vibrant.from(img.sourceUrl)
                 .getPalette()
-                .then((palette) => (colors[index] = palette)),
+                .then((palette) => {
+                  colors[index] = palette;
+                }),
             );
           });
 

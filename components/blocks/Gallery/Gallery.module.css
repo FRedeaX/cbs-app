@@ -38,6 +38,7 @@
 } */
 
 .container {
+  /* height: 100%; */
   overflow: hidden;
   border-radius: 16px;
   transition: background-color 0.3s ease-out;
@@ -95,7 +96,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  z-index: 4;
+  z-index: 5;
   height: 44px;
 
   /* background-color: white;
@@ -111,9 +112,7 @@
 .controls_isZoom_true {
   position: fixed;
   top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  right: 0;
   width: 100%;
   background-color: white;
   opacity: 0.7;
@@ -121,6 +120,14 @@
 
 .controls_isZoom_false {
   width: 44px;
+}
+
+.controls_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .buttons {
@@ -191,6 +198,7 @@
 }
 
 .container_isZoom_true {
+  background-color: var(--bg-white);
   border-radius: 0;
 }
 
@@ -204,6 +212,7 @@
   /* position: absolute !important;
   top: 0;
   bottom: 0; */
+
   /* width: 100%; */
   max-height: 100vh;
   border-radius: 0;

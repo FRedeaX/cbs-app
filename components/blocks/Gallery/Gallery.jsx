@@ -84,14 +84,14 @@ export const Gallery = ({
       zoom
     ) {
       if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bgWhite)" });
+        overlayVar({ isOpen: false, color: "var(--bg-white)" });
       setZoom(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.overlay.isOpen, state?.scrollY]);
   useEffect(() => {
     if (zoom === false) {
-      overlayVar({ isOpen: false, color: "var(--bgWhite)" });
+      overlayVar({ isOpen: false, color: "var(--bg-white)" });
       delay(250).then(() => {
         figureRef.current.style.zIndex = "";
       });
@@ -173,38 +173,43 @@ export const Gallery = ({
         />
       </figure>
       <div
-        style={{
-          backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.2)`,
-        }}
         className={classNames(
           classes.controls,
           classes[`controls_isZoom_${zoom}`],
         )}>
-        {zoom === true && (
-          <Badge
-            className={classes.badge}
-            count={count + 1}
-            length={images.length}
-          />
-        )}
-        <div className={classes.buttons}>
-          {images[count]?.url !== undefined && (
-            <Button
-              className={classNames(classes.button_download, {
-                [classes.button_download_fill]: !zoom,
-              })}
-              href={images[count].url}
-              view="download"
-              icon={<Icon type="download" isGlyph size="xl" side={false} />}
+        <div
+          style={{
+            backgroundColor: zoom
+              ? `rgba(${extractColors[count]?.LightMuted.rgb}, 0.2)`
+              : "",
+          }}
+          className={classes.controls_wrapper}>
+          {zoom === true && (
+            <Badge
+              className={classes.badge}
+              count={count + 1}
+              length={images.length}
             />
           )}
-          {zoom && (
-            <Button
-              className={classes.button_close}
-              icon={<Icon type="close" size="xxl" />}
-              onClick={() => setZoom(false)}
-            />
-          )}
+          <div className={classes.buttons}>
+            {images[count]?.url !== undefined && (
+              <Button
+                className={classNames(classes.button_download, {
+                  [classes.button_download_fill]: !zoom,
+                })}
+                href={images[count].url}
+                view="download"
+                icon={<Icon type="download" isGlyph size="xl" side={false} />}
+              />
+            )}
+            {zoom && (
+              <Button
+                className={classes.button_close}
+                icon={<Icon type="close" size="xxl" />}
+                onClick={() => setZoom(false)}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
