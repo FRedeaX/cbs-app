@@ -5,8 +5,12 @@ import { useMemo } from "react";
 
 // eslint-disable-next-line import/no-cycle
 import Blocks from "../Blocks";
+import { columnsBlockGQL } from "../Columns/Columns";
+import { headingBlockGQL } from "../Heading/Heading";
 import { Figure } from "../Image/Figure";
+import { listBlockGQL } from "../List/List";
 import { paragraphBlockGQL } from "../Paragraph/Paragraph";
+import { quoteBlockGQL } from "../Quote/Quote";
 import { verseBlockGQL } from "../Verse/Verse";
 import classes from "./Media-text.module.css";
 
@@ -32,12 +36,20 @@ export const mediaTextBlockGQL = {
         name
         innerBlocks {
           ...paragraphBlockGQL
+          ...headingBlockGQL
+          ...listBlockGQL
           ...verseBlockGQL
+          ...columnsBlockGQL
+          ...quoteBlockGQL
         }
       }
     }
-    ${paragraphBlockGQL.fragments},
+    ${paragraphBlockGQL.fragments}
+    ${headingBlockGQL.fragments}
+    ${listBlockGQL.fragments}
     ${verseBlockGQL.fragments}
+    ${columnsBlockGQL.fragments}
+    ${quoteBlockGQL.fragments}
   `,
 };
 
