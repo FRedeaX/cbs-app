@@ -20,8 +20,8 @@ const Head: NextPage<IProps> = ({ title, description, image, video, url }) => (
         id="scrollbarWidth"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `(function scrollWidth() {
-            if (typeof window === "undefined") return;
+          __html: (function scrollWidth(): string {
+            if (typeof window === "undefined") return "";
             const outer = document.createElement("div");
             outer.style.visibility = "hidden";
             outer.style.overflow = "scroll";
@@ -32,9 +32,10 @@ const Head: NextPage<IProps> = ({ title, description, image, video, url }) => (
             outer.parentNode?.removeChild(outer);
             document.body.style.setProperty(
               "--scrollbarWidth",
-              scrollbarWidth + "px"
+              `${scrollbarWidth}px`,
             );
-          })()`,
+            return "";
+          })(),
         }}
       />
     </NHead>
