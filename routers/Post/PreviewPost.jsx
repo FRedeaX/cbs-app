@@ -22,11 +22,13 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
       console.log(data);
       fetch(`${window.location.origin}/api/transformBlocks`, {
         method: "POST",
-        body: JSON.stringify(data.post),
+        body: JSON.stringify(data.post.blocks),
       })
         .then((res) => res.json())
         .then((json) => {
-          if (JSON.parse(json.data)) setPost(JSON.parse(json.data));
+          const { blocks } = JSON.parse(json.data);
+          console.log(blocks);
+          if (blocks.length > 0) setPost({ ...data.post, blocks });
           else console.error(json);
         })
         .catch((err) => console.error(err));

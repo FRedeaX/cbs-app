@@ -19,11 +19,12 @@ const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
     if (data?.page?.blocks) {
       fetch(`${window.location.origin}/api/transformBlocks`, {
         method: "POST",
-        body: JSON.stringify(data.page),
+        body: JSON.stringify(data.page.blocks),
       })
         .then((res) => res.json())
         .then((json) => {
-          if (JSON.parse(json.data)) setPage(JSON.parse(json.data));
+          const { blocks } = JSON.parse(json.data);
+          if (blocks.length > 0) setPage({ ...data.page, blocks });
           else console.error(json);
         })
         .catch((err) => console.error(err));

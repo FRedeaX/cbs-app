@@ -15,10 +15,16 @@ const getPage = async (id) => {
       },
       fetchPolicy: "network-only",
     })
-    .then(async ({ data }) => ({
-      ...data.page,
-      ...(await transformBlocks(data.page.blocks)),
-    }))
+    .then(async ({ data }) => {
+      if (data.page === null) {
+        return null;
+      }
+
+      return {
+        ...data.page,
+        ...(await transformBlocks(data.page.blocks)),
+      };
+    })
     .catch((err) => {
       captureException(err, "FETCH_PAGE");
       return null;

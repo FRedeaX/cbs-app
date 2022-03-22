@@ -74,13 +74,19 @@ export async function getStaticProps({ params }) {
       fetchPolicy: "network-only",
     })
     // .then(({ data }) => transformBlocks(data.post))
-    .then(async ({ data }) => ({
-      ...data.post,
-      ...(await transformBlocks(data.post.blocks)),
-      categories: {
-        nodes: await sortingCategories([...data.post.categories.nodes]),
-      },
-    }))
+    .then(async ({ data }) => {
+      if (data.post === null) {
+        return null;
+      }
+
+      return {
+        ...data.post,
+        ...(await transformBlocks(data.post.blocks)),
+        categories: {
+          nodes: await sortingCategories([...data.post.categories.nodes]),
+        },
+      };
+    })
     .catch((err) => {
       captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
       return null;

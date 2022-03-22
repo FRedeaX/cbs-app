@@ -44,7 +44,7 @@ export const Post = ({
   const { hendleOffers, offerList } = usePost();
 
   useEffect(() => {
-    hendleOffers(id);
+    if (id) hendleOffers(id);
   }, [hendleOffers, id]);
 
   // const [ref, { isVisible }] = useIntersectionObserver({ threshold: 0.5 });
