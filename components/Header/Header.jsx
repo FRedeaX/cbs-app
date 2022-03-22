@@ -12,6 +12,7 @@ import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
+import Search from "../Search/Search";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";
@@ -91,6 +92,7 @@ const Header = ({ menus }) => {
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
+            <Search />
             <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
               <NavList data={menus[1].menuItems} isRight />

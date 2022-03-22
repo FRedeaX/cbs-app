@@ -1,4 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
+import { CacheProvider } from "@emotion/react";
 import { AppProps } from "next/app";
 import { useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -6,16 +7,23 @@ import smoothscroll from "smoothscroll-polyfill";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
 import { client } from "../store/apollo-client";
+import createEmotionCache from "../store/mui/createEmotionCache";
 import "../styles.css";
 
+const clientSideEmotionCache = createEmotionCache();
+
 /* eslint-disable react/jsx-props-no-spreading */
-function App({ Component, pageProps }): AppProps {
+const App = ({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}) => {
   useEffect(() => {
     smoothscroll.polyfill();
   }, []);
 
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       {/* <Script>{smoothscroll.polyfill()}</Script> */}
       <ApolloProvider client={client}>
         <ErrorBoundary>
@@ -24,9 +32,9 @@ function App({ Component, pageProps }): AppProps {
         </ErrorBoundary>
         <Overlay />
       </ApolloProvider>
-    </>
+    </CacheProvider>
   );
-}
+};
 
 // App.getInitialProps = async ({ Component, ctx }) => {
 //   let pageProps = {};

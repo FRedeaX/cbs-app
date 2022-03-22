@@ -2,11 +2,34 @@
   "root": true,
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "airbnb",
     "next/core-web-vitals",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "import/extensions": [
+      1,
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".tsx", ".jsx"]
+      }
+    ],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+
     "react/no-danger": "off",
     "react/no-underscore-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",
@@ -24,11 +47,5 @@
     "ecmaFeatures": {
       "jsx": true
     }
-  },
-  "react/function-component-definition": [
-    2,
-    {
-      "namedComponents": "function-declaration"
-    }
-  ]
+  }
 }

@@ -1,0 +1,50 @@
+.form {
+  position: relative;
+  width: 100%;
+  margin-right: 30px;
+  padding: 4px 0 0 6px;
+  transition: width 0.25s;
+}
+
+.form input:focus .form {
+  width: 100%;
+}
+
+.input {
+  display: flex;
+}
+
+/* .input > div > div {
+  height: 36px;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: transparent;
+} */
+
+/* .input > div > div::before,
+.input > div > div:hover::before {
+  border-bottom: none !important;
+} */
+
+.suggestion {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: 6px;
+  margin-top: 4px;
+  padding: 15px;
+  background-color: rgb(255 255 255 / 80%);
+  border-radius: 16px;
+  transform: translateY(16px);
+  visibility: hidden;
+  opacity: 0;
+  backdrop-filter: blur(16px);
+  transition: all 0.2s ease;
+}
+
+.suggestion_isActive {
+  transform: translateY(0);
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}

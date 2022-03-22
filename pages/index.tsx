@@ -77,9 +77,9 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
     .then(({ data }) =>
       dateConversion(data.posters.nodes).then((dateRes) =>
         sort(dateRes).then((sortRes) =>
-          filter(sortRes).then((filterRes) => filterRes)
-        )
-      )
+          filter(sortRes).then((filterRes) => filterRes),
+        ),
+      ),
     )
     .catch((err) => {
       captureException(err);
