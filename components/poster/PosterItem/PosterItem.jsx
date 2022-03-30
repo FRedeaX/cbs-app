@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 import classNames from "classnames";
 import Link from "next/link";
 
+import PosterDate from "./PosterHeader/PosterDate";
 import { createMarkup } from "../../../helpers";
 import classes from "./Poster-item.module.css";
 
@@ -28,13 +29,7 @@ export const posterItemGQL = {
 };
 
 const PosterItem = ({
-  data: {
-    posterDate: { dateStart, dateEnd },
-    title,
-    content,
-    excerpt,
-    posterDepartments,
-  },
+  data: { posterDate, title, content, excerpt, posterDepartments },
   count,
   className,
 }) => (
@@ -43,21 +38,10 @@ const PosterItem = ({
       [classes.block_count_1]: count !== undefined && count === 1,
     })}>
     <div className={classes.header}>
-      <span
-        className={classNames(classes.date, {
-          [classes.date_size_small]: dateEnd.day !== null,
-        })}>
-        {dateEnd.day !== null
-          ? `${dateStart.day}-${dateEnd.day}`
-          : dateStart.day}
-      </span>
-      <span className={classes.month}>{dateStart.monthText}</span>
-      {/* <span
-          className={classes.type}
-          title={"Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС"}
-        >
-          онлайн
-        </span> */}
+      <PosterDate
+        dateStart={posterDate.dateStart}
+        dateEnd={posterDate.dateEnd}
+      />
     </div>
     <div className={classes.body}>
       <h3 className={classes.title}>{title}</h3>
@@ -88,3 +72,10 @@ const PosterItem = ({
 );
 
 export default PosterItem;
+
+/* <span
+  className={classes.type}
+  title={"Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС"}
+>
+  онлайн
+</span> */

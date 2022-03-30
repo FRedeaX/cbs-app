@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const getStringMonth = (month) => {
   switch (String(month)) {
     case "1":
@@ -66,11 +67,11 @@ export const dateConversion = async (posterList) => {
   let monthEnd = null;
 
   posterList.forEach((poster) => {
-    dayStart = parseInt(poster.posterDate.date.split("/")[0], 10);
+    dayStart = poster.posterDate.date.split("/")[0];
     monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
 
     if (poster.posterDate.dataend !== null) {
-      dayEnd = parseInt(poster.posterDate.dataend.split("/")[0], 10);
+      dayEnd = poster.posterDate.dataend.split("/")[0];
       monthEnd = parseInt(poster.posterDate.dataend.split("/")[1], 10);
     }
 

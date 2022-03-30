@@ -34,21 +34,19 @@ const PosterRoot = ({ posters, className }) => {
     ));
 
   return (
-    <>
-      <PosterList className={className.list}>
-        <Carousel
-          length={posters.length}
-          // itemWidth={340}
-          // itemWidth={isFront && window.innerWidth < 480 ? 280 : 440}
-          isShadow={false}
-          isScrollSnap
-          itemMargin={10}
-          controlsPosition="top"
-          classNameControl={className.control}>
-          <RenderPoster />
-        </Carousel>
-      </PosterList>
-    </>
+    <PosterList className={className.list}>
+      <Carousel
+        length={posters.length}
+        // itemWidth={340}
+        // itemWidth={isFront && window.innerWidth < 480 ? 280 : 440}
+        isShadow={false}
+        isScrollSnap
+        itemMargin={10}
+        controlsPosition="top"
+        classNameControl={className.control}>
+        <RenderPoster />
+      </Carousel>
+    </PosterList>
   );
 };
 

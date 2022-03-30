@@ -1,0 +1,47 @@
+.block {
+  font-weight: 300;
+}
+
+.date {
+  margin-right: 4px;
+  font-weight: 100;
+
+  /* font-family: var(--font-R-S); */
+  font-size: 1.6em;
+
+  /* color: var(--dark-gray); */
+}
+
+.date_size_small {
+  font-size: 1.71em;
+}
+
+.month {
+  font-weight: 300;
+}
+
+.month_padding {
+  padding-left: 5px;
+}
+
+@media screen and (width < 480px) {
+  .month_padding {
+    padding-right: 5px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .block_one_month {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date {
+    margin-right: 0;
+    margin-bottom: 6px;
+  }
+
+  /* .body {
+    padding: 8px 0 2px;
+  } */
+}
