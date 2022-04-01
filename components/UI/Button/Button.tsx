@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import classNames from "classnames";
-import { forwardRef, memo, ReactNode } from "react";
+import { forwardRef, LegacyRef, memo, ReactNode } from "react";
 
 import classes from "./Button.module.css";
 
@@ -9,11 +9,11 @@ interface IButton {
   className?: string;
   href?: string;
   onClick?: () => void;
-  view?: string;
-  target?: string;
-  isDisabled?: boolean;
-  isHidden?: boolean;
-  checked?: boolean;
+  view: string;
+  target: string;
+  isDisabled: boolean;
+  isHidden: boolean;
+  checked: boolean;
   theme?: string;
   width?: string;
   iconLeft?: JSX.Element;
@@ -22,6 +22,10 @@ interface IButton {
   ariaLabel?: string;
   title?: string;
 }
+
+// interface ReactLinkElement extends HTMLLinkElement {
+//   ref: LegacyRef<HTMLButtonElement> | undefined;
+// }
 
 const Button = forwardRef<HTMLButtonElement | any, IButton>(
   (

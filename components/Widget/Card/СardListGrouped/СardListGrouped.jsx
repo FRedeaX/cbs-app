@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { memo } from "react";
 
-import Card from "../Card/Card";
+import { Card } from "../Card";
 import GroupCards from "../GroupCards/GroupCards";
 
-const PostAndGroupCards = ({ data }) => {
+const СardListGrouped = ({ data }) => {
   let column = 0;
 
   return data.map((post, index) => {
@@ -32,9 +32,15 @@ const PostAndGroupCards = ({ data }) => {
     column += 1;
     if (isBig) column = 0;
     return (
-      <Card key={post.id} data={post} horizontal isBig={isBig} index={index} />
+      <Card
+        key={post.id}
+        data={post}
+        isHorizontal
+        isBig={isBig}
+        index={index}
+      />
     );
   });
 };
 
-export default memo(PostAndGroupCards);
+export default memo(СardListGrouped);

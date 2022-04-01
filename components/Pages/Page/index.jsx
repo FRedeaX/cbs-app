@@ -75,6 +75,21 @@ export const FETCH_PAGE = gql`
       id
       title
       excerpt
+      children(first: 100) {
+        nodes {
+          ... on Page {
+            id
+            title
+            uri
+            excerpt
+            featuredImage {
+              node {
+                sourceUrl(size: THUMBNAIL)
+              }
+            }
+          }
+        }
+      }
       blocks {
         name
         ...paragraphBlockGQL

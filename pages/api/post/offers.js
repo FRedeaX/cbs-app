@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/nextjs";
 
-import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
+import { FETCH_ARTICLES } from "../../../components/Posts/CardList";
 import { plaiceholder } from "../../../helpers/backend";
 import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";

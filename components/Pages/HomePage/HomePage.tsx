@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { memo } from "react";
 
 // import { GET_WIDTH } from "../../../store/variables/windowWidth";
-import { PostsRoot } from "../../Posts/PostsRoot";
+import CardList from "../../Widget/Card/CardList";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import PosterRoot from "../../poster/PosterRoot/PosterRoot";
 import classes from "./Home-Page.module.css";
@@ -11,8 +11,8 @@ import Pagination from "./Pagination/Pagination";
 import type { NextPage } from "next";
 
 interface IHomePageProps {
-  posters: Array<Object>;
-  posts: Array<Object>;
+  posters: Array<object>;
+  posts: Array<object>;
   pages: number;
   paginationURI: string;
   categoryName?: string;
@@ -66,7 +66,11 @@ const HomePage: NextPage<IHomePageProps> = ({
               : `Категория: ${categoryName}`}
           </SectionHeader>
           <div className={classes.container}>
-            <PostsRoot postNodes={posts} isGroupCards={isGroupCards} />
+            <CardList
+              nodes={posts}
+              isGroupCards={isGroupCards}
+              isHorizontal={categoryName !== undefined}
+            />
           </div>
         </>
       )}
