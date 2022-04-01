@@ -38,8 +38,9 @@ const useSearch = () => {
   const fetchData = useCallback(async (query: string): Promise<void> => {
     const body = JSON.stringify({
       query: {
-        match: {
-          post_content: query,
+        multi_match: {
+          query,
+          fields: ["post_title", "post_excerpt", "post_content"],
         },
       },
       _source: ["post_title", "post_excerpt", "permalink", "thumbnail.src"],

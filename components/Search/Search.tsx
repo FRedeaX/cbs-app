@@ -1,18 +1,20 @@
-/* eslint-disable no-underscore-dangle */
 import {
   IconButton,
   InputAdornment,
   InputBase,
-  TextField,
+  InputBaseProps,
 } from "@mui/material";
-import { FC, ChangeEvent } from "react";
+import { ChangeEvent, ReactElement, useRef, useState } from "react";
 import classNames from "classnames";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 import classes from "./Seatch.module.css";
 import debounce from "../../helpers/debounce";
 import useSearch from "./useSearch";
+import useForm from "./useForm";
+import Suggestion from "./Suggestion/Suggestion";
 
-const Search: FC = () => {
+const Search = (): ReactElement => {
   const { fetchData, data } = useSearch();
 
   const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,62 +25,87 @@ const Search: FC = () => {
     event.preventDefault();
   };
 
+  const inputRef = useRef<InputBaseProps>();
+  const { isForm, hendleOpenForm } = useForm(inputRef);
+
   return (
-    <form
-      className={classes.form}
-      action="/search/"
-      style={{ textAlign: "initial" }}
-      onSubmit={handleSubmit}>
-      <div className={classes.input}>
-        <InputBase
-          // label={}
-          // sx={{ width: "calc(100% - 36px)" }}
-          name="query"
-          autoComplete="off"
-          placeholder="Поиск..."
-          id="search-input"
-          // variant="standard"
-          // size="small"
-          fullWidth
-          sx={{
-            borderRadius: "12px",
-            padding: "0 12px",
-            backgroundColor: "#fff",
-            boxShadow: "inset rgb(30 30 30 / 10%) 0 -2px 6px 2px",
-          }}
-          inputProps={{
-            sx: {
-              width: "100%",
-              height: "36px",
-              padding: 0,
-              border: "none",
-              backgroundColor: "transparent",
-            },
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon fontSize="small" />
-            </InputAdornment>
-          }
-          onChange={onChangeHendler}
-        />
-        {/* <IconButton
+    <div className={classes.block}>
+      <form
+        className={classNames(
+          classes.form,
+          classes[`form_isVisible_${isForm}`],
+        )}
+        action="/search/"
+        style={{ textAlign: "initial" }}
+        onSubmit={handleSubmit}>
+        <div className={classes.input}>
+          <InputBase
+            // label={}
+            // sx={{ width: "calc(100% - 36px)" }}
+            name="query"
+            autoComplete="off"
+            placeholder="Поиск..."
+            id="search-input"
+            // variant="standard"
+            // size="small"
+            fullWidth
+            sx={{
+              borderRadius: "12px",
+              padding: "0 12px",
+              backgroundColor: "#fff",
+              boxShadow: "inset rgba(30, 30, 30, 10%) 0 -2px 6px 2px",
+            }}
+            inputProps={{
+              sx: {
+                width: "100%",
+                height: "36px",
+                padding: 0,
+                border: "none",
+                backgroundColor: "transparent",
+              },
+            }}
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
+              </InputAdornment>
+            }
+            ref={inputRef}
+            onChange={onChangeHendler}
+            onFocus={(e) => console.log("focus", e.currentTarget === e.target)}
+          />
+          {/* <IconButton
           type="button"
           sx={{ width: "36px", marginLeft: "8px", padding: "8px" }}
           aria-label="Поиск">
           <SearchIcon />
         </IconButton> */}
-      </div>
-      <div
-        className={classNames(classes.suggestion, {
-          [classes.suggestion_isActive]: data && data.hits.total.value > 0,
-        })}>
-        {data &&
-          data.hits.hits.map((item) => (
-            <div key={item?._id}>{item?._source.post_title}</div>
-          ))}
-      </div>
-    </form>
+        </div>
+
+        <div
+          className={classNames(classes.suggestion, {
+            [classes.suggestion_isActive]: isForm,
+          })}>
+          {data && <Suggestion nodes={data.hits.hits} />}
+        </div>
+      </form>
+
+      <IconButton
+        type="button"
+        sx={{
+          width: "36px",
+          height: "36px",
+          marginLeft: "8px",
+          padding: "8px",
+        }}
+        aria-label="Поиск"
+        onClick={hendleOpenForm}>
+        {isForm ? (
+          <CloseIcon fontSize="small" />
+        ) : (
+          <SearchIcon fontSize="small" />
+        )}
+      </IconButton>
+    </div>
   );
 };
 
