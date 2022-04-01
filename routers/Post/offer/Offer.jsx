@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { forwardRef, useMemo, useState } from "react";
 
-import GroupCards from "../../../components/Posts/GroupCards/GroupCards";
+import GroupCards from "../../../components/Widget/Card/GroupCards/GroupCards";
 import classes from "./Offer.module.css";
 
 const TAB_SIMILAR = "similarPostList";

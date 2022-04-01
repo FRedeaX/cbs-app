@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import PropTypes from "prop-types";
 import { Children, cloneElement } from "react";
 
 const ActiveLink = ({ children, activeClassName, isLink = true, ...props }) => {
@@ -20,9 +19,5 @@ const ActiveLink = ({ children, activeClassName, isLink = true, ...props }) => {
     cloneElement(child, { className })
   );
 };
-
-// ActiveLink.propTypes = {
-//   activeClassName: PropTypes.string.isRequired,
-// };
 
 export default ActiveLink;

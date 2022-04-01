@@ -18,7 +18,7 @@
   --blue-dark-05: hsl(218deg 100% 37% / 5%);
 
   /* не используется
-  --red: hsl(0, 98%, 60%);
+  --red: hsl(0deg 98% 60%);
   --red-80: hsla(0, 98%, 60%, 0.8);
   --blue: #0070f3; */
 
@@ -62,7 +62,7 @@
   --bg-controls: var(--white);
   --menuLink: var(--black);
   --titleColor: var(--dark-gray);
-  --borderLink: var(--red);
+  --borderLink: var(--accent-сolor);
   --secondary-color: var(--gray);
 
   /* component color */

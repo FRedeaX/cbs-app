@@ -2,7 +2,7 @@ import { getPlaiceholder } from "plaiceholder";
 
 const setProps = (blurDataURL, { src, width, height }) => ({
   node: {
-    src,
+    sourceUrl: src,
     width,
     height,
     blurDataURL,
@@ -11,7 +11,7 @@ const setProps = (blurDataURL, { src, width, height }) => ({
 
 const setErrorProps = (src, message) => ({
   node: {
-    src,
+    sourceUrl: src,
     blurDataURL: null,
     message,
   },

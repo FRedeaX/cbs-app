@@ -20,9 +20,9 @@ import { client } from "../store/apollo-client";
 import { RKEY_POSTS } from "../store/redis/redisKeys";
 
 interface IProps {
-  menu: Array<Object>;
-  posters: Array<Object>;
-  posts: Array<Object>;
+  menu: Array<object>;
+  posters: Array<object>;
+  posts: Array<object>;
   pages: number;
 }
 

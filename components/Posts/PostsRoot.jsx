@@ -1,15 +1,5 @@
 import { gql } from "@apollo/client";
 
-import PostAndGroupCards from "./PostAndGroupCards/PostAndGroupCards";
-import PostNotGroupCards from "./PostNotGroupCards/PostNotGroupCards";
-
-export const PostsRoot = ({ postNodes, isGroupCards = true }) =>
-  isGroupCards ? (
-    <PostAndGroupCards data={postNodes} />
-  ) : (
-    <PostNotGroupCards data={postNodes} />
-  );
-
 export const POSTS_PAGINATION_GQL = gql`
   query GetPostsPagination($cursor: String, $first: Int!, $tagNotIn: [ID]) {
     posts(after: $cursor, first: $first, where: { tagNotIn: $tagNotIn }) {

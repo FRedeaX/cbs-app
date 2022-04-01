@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { memo } from "react";
 
-import Carousel from "../../Carusel/Carousel";
-import { Heading } from "../../blocks/Heading/Heading";
-import Card from "../Card/Card";
+import Carousel from "../../../Carusel/Carousel";
+import { Heading } from "../../../blocks/Heading/Heading";
+import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
 
 const GroupCards = ({ data, title, description, length, isClamp = false }) => (
@@ -35,10 +35,10 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
           key={post.id}
           data={post}
           isClamp={isClamp}
-          cls={classNames(classes.article, {
+          className={classNames(classes.article, {
             [classes.article_size_l]: length === 2,
           })}
-          index={index}
+          imagePriority={index < 3}
         />
       ))}
     </Carousel>
