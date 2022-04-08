@@ -17,18 +17,20 @@ interface IData {
       relation: string;
     };
     max_score: number;
-    hits: Array<{
-      _index: string;
-      _type: string;
-      _id: number;
-      _score: number;
-      _source: {
-        post_title: string;
-        post_excerpt: string;
-        permalink: string;
-        thumbnail: { src: string };
-      };
-    } | null>;
+    hits:
+      | Array<{
+          _index: string;
+          _type: string;
+          _id: number;
+          _score: number;
+          _source: {
+            post_title: string;
+            post_excerpt: string;
+            permalink: string;
+            thumbnail: { src: string };
+          };
+        }>
+      | [];
   };
 }
 
@@ -41,6 +43,14 @@ const useSearch = () => {
         multi_match: {
           query,
           fields: ["post_title", "post_excerpt", "post_content"],
+        },
+      },
+      highlight: {
+        pre_tags: ["<mark>"],
+        post_tags: ["</mark>"],
+        // order: "score",
+        fields: {
+          post_excerpt: {},
         },
       },
       _source: ["post_title", "post_excerpt", "permalink", "thumbnail.src"],

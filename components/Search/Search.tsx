@@ -4,7 +4,7 @@ import {
   InputBase,
   InputBaseProps,
 } from "@mui/material";
-import { ChangeEvent, ReactElement, useRef, useState } from "react";
+import { ChangeEvent, ReactElement, useRef } from "react";
 import classNames from "classnames";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
@@ -14,7 +14,7 @@ import useSearch from "./useSearch";
 import useForm from "./useForm";
 import Suggestion from "./Suggestion/Suggestion";
 
-const Search = (): ReactElement => {
+const Search = (): JSX.Element => {
   const { fetchData, data } = useSearch();
 
   const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -80,12 +80,14 @@ const Search = (): ReactElement => {
           <SearchIcon />
         </IconButton> */}
         </div>
-
+        {console.log(data)}
         <div
           className={classNames(classes.suggestion, {
             [classes.suggestion_isActive]: isForm,
           })}>
-          {data && <Suggestion nodes={data.hits.hits} />}
+          {data && data.hits.hits.length > 0 && (
+            <Suggestion nodes={data.hits.hits} />
+          )}
         </div>
       </form>
 

@@ -11,14 +11,17 @@ interface СardListUngroupedProps {
 const СardListUngrouped = ({
   nodes,
   isHorizontal,
-}: СardListUngroupedProps): JSX.Element[] =>
-  nodes.map((node, index) => (
-    <Card
-      key={node.id}
-      data={node}
-      isHorizontal={isHorizontal}
-      imagePriority={index < 3}
-    />
-  ));
+}: СardListUngroupedProps): JSX.Element => (
+  <>
+    {nodes.map((node, index) => (
+      <Card
+        key={node.id}
+        data={node}
+        isHorizontal={isHorizontal}
+        imagePriority={index < 3}
+      />
+    ))}
+  </>
+);
 
 export default memo(СardListUngrouped);
