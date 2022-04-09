@@ -15,7 +15,7 @@
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 4px 12px; */
 
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 2px 12px -2px; */
-  box-shadow: rgb(30 30 30 / 10%) 0 2px 6px;
+  box-shadow: rgba(30, 30, 30, 0.1) 0 2px 6px;
   cursor: default;
 }
 
@@ -72,7 +72,7 @@
 .title {
   margin-top: 0;
   margin-bottom: 6px;
-  color: rgb(30 30 30 / 92%);
+  color: rgba(30, 30, 30, 0.92);
   font-weight: 500;
   font-size: 0.9375em;
 }

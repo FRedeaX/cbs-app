@@ -10,7 +10,7 @@ import {
 } from "../../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Badge from "../../Badge/Badge";
-import Carousel from "../../Carusel/Carousel";
+import Carousel2 from "../../Carusel2/Carusel2";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import Loader2 from "../../UI/Loader2/Loader2";
@@ -84,14 +84,14 @@ export const Gallery = ({
       zoom
     ) {
       if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bg-white)" });
+        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
       setZoom(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.overlay.isOpen, state?.scrollY]);
   useEffect(() => {
     if (zoom === false) {
-      overlayVar({ isOpen: false, color: "var(--bg-white)" });
+      overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
       delay(250).then(() => {
         figureRef.current.style.zIndex = "";
       });
@@ -123,7 +123,7 @@ export const Gallery = ({
           {/* <div className={classes.loader} aria-hidden="true">
             <Loader2 isLoading />
           </div> */}
-          <Carousel
+          <Carousel2
             isScrollSnap
             isShadow={false}
             isOpen={zoom}
@@ -158,7 +158,7 @@ export const Gallery = ({
               </figure>
               // </div>
             ))}
-          </Carousel>
+          </Carousel2>
           {zoom === false && (
             <Badge
               className={classes.badge}

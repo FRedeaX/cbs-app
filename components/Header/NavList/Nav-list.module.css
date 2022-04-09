@@ -80,7 +80,7 @@
     left: 0;
     z-index: 4;
     padding: 20px;
-    background-color: var(--bg-white);
+    background-color: var(--bg-white-95);
   }
 
   .subMenu-mobile--active {
