@@ -12,11 +12,11 @@
 }
 
 .background {
-  background-color: hsl(0deg 0% 100% / 60%);
+  background-color: hsl(0deg, 0%, 100%, 60%);
 }
 
 .background-1 {
-  background-color: hsl(0deg 0% 100% / 100%);
+  background-color: hsl(0deg, 0%, 100%, 100%);
 }
 
 .container {

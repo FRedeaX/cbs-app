@@ -106,7 +106,7 @@ export const Card = ({
         </h3>
         <div
           style={{
-            WebkitLineClamp: isClamp ? `${lineClamp(title, 30, 3)}` : null,
+            WebkitLineClamp: isClamp ? `${lineClamp(title, 32, 3)}` : null,
           }}
           className={classNames(classes.subtitle, {
             [classes.subtitle_clamp]: isClamp,

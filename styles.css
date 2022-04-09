@@ -1,24 +1,24 @@
 :root {
   /* color */
-  --white: hsl(0deg 0% 97%);
+  --white: hsl(0deg, 0%, 97%);
 
   /* hsl(0, 0%, 96%) */
-  --white-80: hsl(0deg 0% 100% / 80%);
-  --black: rgb(31 31 31);
-  --black-80: hsl(0deg 0% 12% / 80%);
-  --black-70: hsl(0deg 0% 0% / 70%);
-  --black-50: hsl(0deg 0% 0% / 50%);
-  --black-20: hsl(0deg 0% 0% / 20%);
-  --black-14: hsl(0deg 0% 12% / 14%);
-  --black-10: hsl(0deg 0% 12% / 10%);
-  --gray: hsl(222deg 13% 60%);
-  --dark-gray: hsl(0deg 0% 24%);
-  --d-dark-gray: hsl(222deg 13% 28% / 100%);
-  --blue-dark: hsl(218deg 100% 37%);
-  --blue-dark-05: hsl(218deg 100% 37% / 5%);
+  --white-80: hsl(0deg, 0%, 100%, 80%);
+  --black: rgb(31, 31, 31);
+  --black-80: hsl(0deg, 0%, 12%, 80%);
+  --black-70: hsl(0deg, 0%, 0%, 70%);
+  --black-50: hsl(0deg, 0%, 0%, 50%);
+  --black-20: hsl(0deg, 0%, 0%, 20%);
+  --black-14: hsl(0deg, 0%, 12%, 14%);
+  --black-10: hsl(0deg, 0%, 12%, 10%);
+  --gray: hsl(222deg, 13%, 60%);
+  --dark-gray: hsl(0deg, 0%, 24%);
+  --d-dark-gray: hsl(222deg, 13%, 28%, 100%);
+  --blue-dark: hsl(218deg, 100%, 37%);
+  --blue-dark-05: hsl(218deg, 100%, 37%, 5%);
 
   /* не используется
-  --red: hsl(0deg 98% 60%);
+  --red: hsl(0deg, 98%, 60%);
   --red-80: hsla(0, 98%, 60%, 0.8);
   --blue: #0070f3; */
 
@@ -27,15 +27,15 @@
   /* #293448 */
 
   /* --secondaryWhite: hsl(0, 0%, 96%); */
-  --accent-сolor: hsl(0deg 98% 60% / 68.5%);
+  --accent-сolor: hsl(0deg, 98%, 60%, 68.5%);
 
   /* --menuLink: hsla(0, 0%, 8%, 0.85); */
 
-  --overlay-color: hsl(0deg 0% 19%);
+  --overlay-color: hsl(0deg, 0%, 19%);
 
   /* Title SubTitle */
-  --subtitle-сolor: hsl(0deg 0% 45%);
-  --hoverColor: hsl(0deg 0% 91%);
+  --subtitle-сolor: hsl(0deg, 0%, 45%);
+  --hoverColor: hsl(0deg, 0%, 91%);
   --colorGrey: #929daf;
   --light-green-cyan: #7bdcb5;
   --cyan-bluish-gray: #abb8c3;
@@ -55,10 +55,10 @@
 
   /* customs */
   --font-R-S: "Roboto-Slab", serif;
-  --bg-white: #f2f2f2 /*var(--white); */;
+  --bg-white-95: #f2f2f2 /*var(--white); */;
   --scrollbarWidth: 17px;
   --layout-padding-sides: 10px;
-  --background-color-white: rgb(247 247 247);
+  --background-color-white: rgb(247, 247, 247);
   --bg-controls: var(--white);
   --menuLink: var(--black);
   --titleColor: var(--dark-gray);
@@ -89,7 +89,6 @@
 #__next {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 
 @media screen and (max-width: 950px) {
@@ -124,7 +123,7 @@ body {
   overflow-y: scroll;
   font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
   word-break: break-word;
-  background-color: var(--bg-white);
+  background-color: var(--bg-white-95);
 
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

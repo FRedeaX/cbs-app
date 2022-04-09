@@ -84,14 +84,14 @@ export const Gallery = ({
       zoom
     ) {
       if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bg-white)" });
+        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
       setZoom(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.overlay.isOpen, state?.scrollY]);
   useEffect(() => {
     if (zoom === false) {
-      overlayVar({ isOpen: false, color: "var(--bg-white)" });
+      overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
       delay(250).then(() => {
         figureRef.current.style.zIndex = "";
       });
