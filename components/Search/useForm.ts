@@ -4,23 +4,55 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const useForm = (inputRef: any) => {
-  const [isForm, setForm] = useState<boolean>(false);
+  // const [isSearch, setSearch] = useState<{ input: boolean; suggest: boolean }>({
+  //   input: false,
+  //   suggest: false,
+  // });
+  const [isSearch, setSearch] = useState<boolean>(false);
+  const [isSuggest, setSuggest] = useState<boolean>(false);
 
   const { asPath } = useRouter();
+  // const suggestClose = useCallback(() => {
+  //   setSearch((prev) => ({
+  //     ...prev,
+  //     suggest: false,
+  //   }));
+  // }, [setSearch]);
+
+  // const suggestOpen = useCallback(() => {
+  //   setSearch((prev) => ({
+  //     ...prev,
+  //     suggest: true,
+  //   }));
+  // }, [setSearch]);
+
   useEffect(() => {
-    setForm(false);
-  }, [asPath]);
+    setSuggest(false);
+  }, [asPath, setSuggest]);
 
   const hendleOpenForm = () => {
-    if (isForm === false) {
+    if (!isSearch) {
       setTimeout(() => {
         inputRef?.current?.children[1]?.focus();
       }, 0);
     }
-    setForm((prev) => !prev);
+    setSearch((prev) => {
+      if (prev) {
+        setSuggest(false);
+        return !prev;
+      }
+      setSuggest(true);
+      return !prev;
+    });
   };
 
-  return { isForm, hendleOpenForm };
+  return {
+    isSearch,
+    setSearch,
+    isSuggest,
+    setSuggest,
+    hendleOpenForm,
+  };
 };
 
 export default useForm;

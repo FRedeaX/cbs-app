@@ -50,10 +50,11 @@ const useSearch = () => {
         post_tags: ["</mark>"],
         // order: "score",
         fields: {
+          post_title: {},
           post_excerpt: {},
         },
       },
-      _source: ["post_title", "post_excerpt", "permalink", "thumbnail.src"],
+      // _source: ["post_title", "post_excerpt", "permalink", "thumbnail.src"],
     });
 
     await fetch(API_ES_URL, {

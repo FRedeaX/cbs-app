@@ -4,6 +4,7 @@ import { Card } from "../../Widget/Card/Card";
 interface INode {
   _id: number | string;
   highlight: {
+    post_title: Array<string>;
     post_excerpt: Array<string>;
   };
   _source: {
@@ -19,15 +20,13 @@ interface ISuggestion {
 }
 
 const Suggestion = ({ nodes }: ISuggestion): JSX.Element => {
-  console.log(nodes);
-
   return (
     <>
       {nodes.map((node: INode) => (
         <Card
           key={node?._id}
           data={{
-            title: node._source.post_title,
+            title: node.highlight?.post_title?.[0] || node._source.post_title,
             excerpt:
               node.highlight?.post_excerpt[0] || node._source.post_excerpt,
             uri: new URL(node._source.permalink).pathname,

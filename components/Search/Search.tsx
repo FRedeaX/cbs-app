@@ -1,18 +1,25 @@
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   IconButton,
   InputAdornment,
   InputBase,
   InputBaseProps,
 } from "@mui/material";
-import { ChangeEvent, ReactElement, useRef } from "react";
 import classNames from "classnames";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
-import classes from "./Seatch.module.css";
+import {
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import debounce from "../../helpers/debounce";
-import useSearch from "./useSearch";
-import useForm from "./useForm";
+import classes from "./Seatch.module.css";
 import Suggestion from "./Suggestion/Suggestion";
+import useForm from "./useForm";
+import useSearch from "./useSearch";
 
 const Search = (): JSX.Element => {
   const { fetchData, data } = useSearch();
@@ -26,17 +33,53 @@ const Search = (): JSX.Element => {
   };
 
   const inputRef = useRef<InputBaseProps>();
-  const { isForm, hendleOpenForm } = useForm(inputRef);
+  const { isSearch, setSearch, isSuggest, setSuggest, hendleOpenForm } =
+    useForm(inputRef);
+
+  const onKeyDownHendler = useCallback(
+    (event: KeyboardEvent<HTMLFormElement>) => {
+      if (event.key === "Escape") {
+        if (isSuggest) setSuggest(false);
+        else if (isSearch) setSearch(false);
+      }
+    },
+    [isSuggest, setSuggest, isSearch, setSearch],
+  );
+
+  const onFocusHendler = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      if (event.currentTarget === event.target) {
+        setSuggest(true);
+      }
+    },
+    [setSuggest],
+  );
+
+  const onBlurHendler = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      if (event.currentTarget === event.target) {
+        setSuggest(false);
+      }
+    },
+    [setSuggest],
+  );
+
+  useEffect(() => {
+    if (data && data.hits.hits.length > 0 && !isSuggest) {
+      setSuggest(true);
+    }
+  }, [data, setSuggest]);
 
   return (
     <div className={classes.block}>
       <form
         className={classNames(
           classes.form,
-          classes[`form_isVisible_${isForm}`],
+          classes[`form_isVisible_${isSearch}`],
         )}
         action="/search/"
         style={{ textAlign: "initial" }}
+        onKeyDown={onKeyDownHendler}
         onSubmit={handleSubmit}>
         <div className={classes.input}>
           <InputBase
@@ -70,8 +113,9 @@ const Search = (): JSX.Element => {
               </InputAdornment>
             }
             ref={inputRef}
+            onFocus={onFocusHendler}
             onChange={onChangeHendler}
-            onFocus={(e) => console.log("focus", e.currentTarget === e.target)}
+            onBlur={onBlurHendler}
           />
           {/* <IconButton
           type="button"
@@ -83,7 +127,7 @@ const Search = (): JSX.Element => {
         {console.log(data)}
         <div
           className={classNames(classes.suggestion, {
-            [classes.suggestion_isActive]: isForm,
+            [classes.suggestion_isActive]: isSuggest,
           })}>
           {data && data.hits.hits.length > 0 && (
             <Suggestion nodes={data.hits.hits} />
@@ -99,9 +143,9 @@ const Search = (): JSX.Element => {
           marginLeft: "8px",
           padding: "8px",
         }}
-        aria-label="Поиск"
+        aria-label={isSearch ? "Закрыть поиск" : "Поиск"}
         onClick={hendleOpenForm}>
-        {isForm ? (
+        {isSearch ? (
           <CloseIcon fontSize="small" />
         ) : (
           <SearchIcon fontSize="small" />
