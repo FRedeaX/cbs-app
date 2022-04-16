@@ -10,10 +10,17 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "import/extensions": [
+      1,
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ],
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".tsx", ".jsx", ".ts", ".js"]
+        "extensions": [".tsx", ".jsx"]
       }
     ],
     "react/function-component-definition": [
