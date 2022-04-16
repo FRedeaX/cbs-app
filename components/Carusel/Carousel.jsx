@@ -230,53 +230,47 @@ const Carousel = ({
         )}
 
         {(isLeft || isRight) && isBrowser && (
-          <>
-            <div
-              className={classNames(
-                classes.controls,
-                classes[`controls-${controlsPosition}`],
-              )}>
-              <Button
-                className={classNames(classNameControl, {
-                  [classes.button_events]: isLeft,
-                  [classes["button_left_full-screen"]]: isOpen,
-                })}
-                isHidden={!isLeft}
-                isDisabled={!isLeft}
-                icon={
-                  <span className={classes.button_icon}>
-                    <Icon
-                      weight={
-                        controlsPosition === "center" ? "medium" : "small"
-                      }
-                      direction="left"
-                    />
-                  </span>
-                }
-                onClick={() => hendleClick("left")}
-              />
-              <Button
-                ref={buttonNextRef}
-                className={classNames(classNameControl, {
-                  [classes.button_events]: isRight,
-                  [classes["button_right_full-screen"]]: isOpen,
-                })}
-                isHidden={!isRight}
-                isDisabled={!isRight}
-                icon={
-                  <span className={classes.button_icon}>
-                    <Icon
-                      weight={
-                        controlsPosition === "center" ? "medium" : "small"
-                      }
-                      direction="right"
-                    />
-                  </span>
-                }
-                onClick={() => hendleClick("right")}
-              />
-            </div>
-          </>
+          <div
+            className={classNames(
+              classes.controls,
+              classes[`controls-${controlsPosition}`],
+            )}>
+            <Button
+              className={classNames(classNameControl, {
+                [classes.button_events]: isLeft,
+                [classes["button_left_full-screen"]]: isOpen,
+              })}
+              isHidden={!isLeft}
+              isDisabled={!isLeft}
+              icon={
+                <span className={classes.button_icon}>
+                  <Icon
+                    weight={controlsPosition === "center" ? "medium" : "small"}
+                    direction="left"
+                  />
+                </span>
+              }
+              onClick={() => hendleClick("left")}
+            />
+            <Button
+              ref={buttonNextRef}
+              className={classNames(classNameControl, {
+                [classes.button_events]: isRight,
+                [classes["button_right_full-screen"]]: isOpen,
+              })}
+              isHidden={!isRight}
+              isDisabled={!isRight}
+              icon={
+                <span className={classes.button_icon}>
+                  <Icon
+                    weight={controlsPosition === "center" ? "medium" : "small"}
+                    direction="right"
+                  />
+                </span>
+              }
+              onClick={() => hendleClick("right")}
+            />
+          </div>
         )}
       </div>
     </div>

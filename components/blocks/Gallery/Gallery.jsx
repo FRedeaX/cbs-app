@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-
 import { createMarkup, delay } from "../../../helpers";
 import {
   GET_OVERLAY_FRAGMENT,
@@ -13,7 +12,6 @@ import Badge from "../../Badge/Badge";
 import Carousel2 from "../../Carusel2/Carusel2";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
-import Loader2 from "../../UI/Loader2/Loader2";
 import classes from "./Gallery.module.css";
 import useExtractColors from "./useExtractColors";
 
