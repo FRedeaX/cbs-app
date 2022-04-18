@@ -1,14 +1,16 @@
-import type { GetStaticProps, NextPage } from "next";
 import { captureException } from "@sentry/nextjs";
-
+import type { GetStaticProps, NextPage } from "next";
 import Head from "../components/Head/Head";
 import HomePage from "../components/Pages/HomePage/HomePage";
+import {
+  FETCH_POSTER,
+  IPosters,
+} from "../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
 import Layout from "../components/UI/Layout/Layout";
-import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import {
   getMenu,
   paginationLoad,
@@ -21,7 +23,7 @@ import { RKEY_POSTS } from "../store/redis/redisKeys";
 
 interface IProps {
   menu: Array<object>;
-  posters: Array<object>;
+  posters: IPosters;
   posts: Array<object>;
   pages: number;
 }
@@ -29,6 +31,7 @@ interface IProps {
 const Home: NextPage<IProps> = ({ menu, posters, posts, pages }) => (
   <Layout menu={menu} paddingSides={0}>
     <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
+    {/* {console.log(posters)} */}
     <HomePage
       posters={posters}
       posts={posts}

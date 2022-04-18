@@ -5,9 +5,9 @@ import {
   PageRoot,
 } from "../../components/Pages/Page";
 import Layout from "../../components/UI/Layout/Layout";
+import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
-import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">

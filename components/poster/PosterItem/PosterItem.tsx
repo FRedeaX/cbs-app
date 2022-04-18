@@ -1,10 +1,9 @@
 import { gql } from "@apollo/client";
 import classNames from "classnames";
 import Link from "next/link";
-
-import PosterDate from "./PosterHeader/PosterDate";
 import { createMarkup } from "../../../helpers";
 import classes from "./Poster-item.module.css";
+import PosterDate from "./PosterHeader/PosterDate";
 
 export const posterItemGQL = {
   fragments: gql`
@@ -28,11 +27,41 @@ export const posterItemGQL = {
   `,
 };
 
+interface IDate {
+  day: string;
+  month: number;
+  monthText: string;
+}
+
+export interface IPoster {
+  content: string;
+  excerpt: string;
+  posterDepartments: {
+    nodes: Array<{
+      name: string;
+      description: string;
+      slug: string;
+    }>;
+  };
+  posterDate: {
+    dateStart: IDate;
+    dateEnd: IDate;
+  };
+  title: string;
+  id: string;
+}
+
+interface PosterItemProps {
+  data: IPoster;
+  count: number;
+  className?: string;
+}
+
 const PosterItem = ({
   data: { posterDate, title, content, excerpt, posterDepartments },
   count,
   className,
-}) => (
+}: PosterItemProps): JSX.Element => (
   <div
     className={classNames(classes.block, className, {
       [classes.block_count_1]: count !== undefined && count === 1,

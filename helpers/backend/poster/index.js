@@ -30,28 +30,35 @@ const getStringMonth = (month) => {
   }
 };
 
-const isPush = (poster, { month, day, hours }) => {
-  const { posterDate } = poster;
-  const posterDay = posterDate.dateStart.day;
-  const posterMonth = posterDate.dateStart.month;
-  const posterDayEnd = posterDate.dateEnd.day;
+// const isPush = (currentPoster, { month, day, hours }, skip) => {
+//   const poster = currentPoster;
+//   const { posterDate } = poster;
+//   const posterDay = posterDate.dateStart.day;
+//   const posterMonth = posterDate.dateStart.month;
+//   const posterDayEnd = posterDate.dateEnd.day;
 
-  // пропускаем анонс если (месяц равен текущему и
-  // ((мероприятие длится 1 день и
-  // (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
-  // мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
-  // (дата окончания равна текущей и[но] текущее время больше 18ч))
-  if (
-    posterMonth === month &&
-    ((!posterDayEnd &&
-      (posterDay < day || (posterDay === day && hours > 18))) ||
-      (posterDayEnd !== null && posterDayEnd < day) ||
-      (posterDayEnd === day && hours > 18))
-  )
-    return null;
+//   // пропускаем анонс если (месяц равен текущему и
+//   // ((мероприятие длится 1 день и
+//   // (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
+//   // мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
+//   // (дата окончания равна текущей и[но] текущее время больше 18ч))
+//   if (
+//     posterMonth === month &&
+//     ((!posterDayEnd &&
+//       (posterDay < day || (posterDay === day && hours > 18))) ||
+//       (posterDayEnd !== null && posterDayEnd < day) ||
+//       (posterDayEnd === day && hours > 18))
+//   )
+//     console.log("+");
 
-  return poster;
-};
+//   if (posterMonth === month) {
+//     if (posterDay < day || (posterDay === day && hours >= 18)) {
+//       poster.isSkip = true;
+//     }
+//   }
+
+//   return poster;
+// };
 
 /**
  * преобразует объект posterDate
@@ -95,24 +102,39 @@ export const dateConversion = async (posterList) => {
   return result;
 };
 
-export const sort = async (posterList) =>
-  posterList.sort(
+export const sort = async (posterList) => {
+  if (!posterList) return null;
+  return posterList.sort(
     (a, b) => a.posterDate.dateStart.day - b.posterDate.dateStart.day,
   );
+};
 
 export const filter = async (posterList) => {
-  if (!posterList && posterList.length < 2) return null;
-  const currentDate = new Date();
-  const date = {
-    month: currentDate.getMonth() + 1,
-    day: currentDate.getDate(),
-    hours: currentDate.getHours(),
+  if (!posterList) return null;
+  let skip = 0;
+  const date = new Date();
+  const currentDate = {
+    month: date.getMonth() + 1,
+    day: date.getDate() - 3,
+    hours: date.getHours(),
   };
+  // console.log("day", currentDate.day);
 
-  const result = [];
-  posterList.forEach((poster) => {
-    const element = isPush(poster, date);
-    if (element !== null) result.push(element);
+  posterList.forEach((poster, index) => {
+    const { posterDate } = poster;
+    const posterDay = posterDate.dateStart.day;
+    const posterMonth = posterDate.dateStart.month;
+    const posterDayEnd = posterDate.dateEnd.day;
+
+    if (posterMonth === currentDate.month) {
+      if (
+        posterDay < currentDate.day ||
+        (posterDay === currentDate.day && currentDate.hours >= 18)
+      ) {
+        skip = index + 1;
+      }
+    }
   });
-  return result;
+
+  return { posterList, skip };
 };
