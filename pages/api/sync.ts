@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { esClient } from "../../core/elastic-client";
 import { client } from "../../store/apollo-client";
 
 const GET_POSTS = gql`
@@ -52,23 +53,41 @@ export default async function offers(req, res) {
 
     // elastic:es-2575-s4128@192.168.1.2:9200
 
-    const es = await fetch(
-      "http://elastic:es-2575-s4128@192.168.1.2:9200/cbs/_bulk",
-      {
-        method: "POST",
-        body: JSON.stringify(esBulkBody),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    )
-      .then((response: Response) => response.json())
-      .catch((error: Error) => console.error(error));
+    // const es = await fetch(
+    //   "http://elastic:es-2575-s4128@192.168.1.2:9200/cbs/_bulk",
+    //   {
+    //     method: "POST",
+    //     body: [
+    //       { index: { _id: "cG9zdDoyNzg0Mg==" } },
+    //       { link: "https://cbsbaikonur.ru/post/ne-shuti-s-ognyom/", title: "«Не шути с огнём»" },
+    //       { index: { _id: "cG9zdDoyNzgyOA==" } },
+    //       { link: "https://cbsbaikonur.ru/post/marshaly-pobedy-2/", title: "«Маршалы Победы»" }
+    //     ],
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   },
+    // )
+    //   .then((response: Response) => response.json())
+    //   .catch((error: Error) => console.error(error));
 
-    console.log(esBulkBody);
+    // console.log(es);
+
+    const es = esClient.ping(
+      {
+        requestTimeout: 30000,
+      },
+      function (error) {
+        if (error) {
+          console.error("elasticsearch cluster is down!");
+        } else {
+          console.log("Everything is ok");
+        }
+      },
+    );
 
     res.status(200).json({
-      data: JSON.stringify(esBulkBody),
+      data: JSON.stringify(es),
     });
   } catch (error) {
     res.status(500).json({ message: "ERR_SYNC", error });
