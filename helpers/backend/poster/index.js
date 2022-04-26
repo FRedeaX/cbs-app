@@ -105,7 +105,9 @@ export const dateConversion = async (posterList) => {
 export const sort = async (posterList) => {
   if (!posterList) return null;
   return posterList.sort(
-    (a, b) => a.posterDate.dateStart.day - b.posterDate.dateStart.day,
+    (a, b) =>
+      a.posterDate.dateStart.month - b.posterDate.dateStart.month ||
+      a.posterDate.dateStart.day - b.posterDate.dateStart.day,
   );
 };
 
