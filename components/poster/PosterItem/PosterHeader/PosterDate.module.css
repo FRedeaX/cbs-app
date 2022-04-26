@@ -30,8 +30,12 @@
   }
 }
 
+.block_one_day .month {
+  margin-left: 5px;
+}
+
 @media screen and (min-width: 480px) {
-  .block_one_month {
+  .block_range_day {
     display: flex;
     flex-direction: column;
   }
