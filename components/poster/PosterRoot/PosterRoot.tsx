@@ -16,13 +16,13 @@ export const FETCH_POSTER = gql`
   ${posterItemGQL.fragments}
 `;
 
-export interface IPosters {
-  posterList: Array<IPoster>;
-  skip: number;
-}
+// export interface IPosters {
+//   posterList: Array<IPoster>;
+//   skip: number;
+// }
 
 interface PosterRootProps {
-  posters: IPosters;
+  posters: Array<IPoster>;
   className?: {
     item?: string;
     list?: string;
@@ -33,20 +33,18 @@ interface PosterRootProps {
 const PosterRoot = ({ posters, className }: PosterRootProps): JSX.Element => (
   <PosterList className={className?.list}>
     <Carousel
-      length={posters.posterList.length}
-      skipTo={posters.skip}
-      // itemWidth={340}
-      // itemWidth={isFront && window.innerWidth < 480 ? 280 : 440}
+      length={posters.length}
+      // skipTo={posters.skip}
       isShadow={false}
       isScrollSnap
       itemMargin={10}
       controlsPosition="top">
-      {posters.posterList.map((poster) => (
+      {posters.map((poster) => (
         <PosterItem
           key={poster.id}
           data={poster}
           className={className?.item}
-          count={posters.posterList.length}
+          count={posters.length}
         />
       ))}
     </Carousel>

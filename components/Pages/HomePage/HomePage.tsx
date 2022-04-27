@@ -42,7 +42,7 @@ const HomePage: NextPage<IHomePageProps> = ({
 
   /* <Today className={classes.today} /> */
   <div className={classes.wrapper}>
-    {posters && posters.posterList.length > 0 && (
+    {posters && posters.length > 0 && (
       <aside className={classnames(classes.section, classes.poster)}>
         <SectionHeader url="/poster">Анонсы</SectionHeader>
         <PosterRoot

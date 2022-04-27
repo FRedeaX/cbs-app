@@ -15,7 +15,7 @@
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 4px 12px; */
 
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 2px 12px -2px; */
-  box-shadow: rgba(30, 30, 30, 0.1) 0 2px 6px;
+  box-shadow: rgb(30 30 30 / 10%) 0 2px 6px;
   cursor: default;
 }
 
@@ -31,25 +31,24 @@
 
 .header {
   padding: 0 24px 10px;
+  font-weight: 300;
   border-bottom: 1px solid var(--black-10);
 }
 
-.date {
-  margin-right: 4px;
+.time {
   font-weight: 100;
-
-  /* font-family: var(--font-R-S); */
-  font-size: 2em;
-
-  /* color: var(--dark-gray); */
+  font-size: 1.4em;
 }
-
-.date_size_small {
-  font-size: 1.71em;
+@media screen and (width < 480px) {
+  .time {
+    margin-top: 2px;
+    margin-left: 5px;
+  }
 }
-
-.month {
-  font-weight: 300;
+@media screen and (width >= 480px) {
+  .time {
+    margin-top: 5px;
+  }
 }
 
 .type {
@@ -65,14 +64,17 @@
 
 .body {
   flex: 1;
-
-  /* padding: 8px 0 12px; */
+}
+@media screen and (width < 480px) {
+  .body {
+    padding: 8px 0 12px;
+  }
 }
 
 .title {
   margin-top: 0;
   margin-bottom: 6px;
-  color: rgba(30, 30, 30, 0.92);
+  color: rgb(30 30 30 / 92%);
   font-weight: 500;
   font-size: 0.9375em;
 }

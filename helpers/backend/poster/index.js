@@ -30,35 +30,31 @@ const getStringMonth = (month) => {
   }
 };
 
-// const isPush = (currentPoster, { month, day, hours }, skip) => {
-//   const poster = currentPoster;
-//   const { posterDate } = poster;
-//   const posterDay = posterDate.dateStart.day;
-//   const posterMonth = posterDate.dateStart.month;
-//   const posterDayEnd = posterDate.dateEnd.day;
+const isPush = ({ posterDate }, { month, day, hours }) => {
+  const posterDay = parseInt(posterDate.dateStart.day, 10);
+  const posterMonth = parseInt(posterDate.dateStart.month, 10);
 
-//   // пропускаем анонс если (месяц равен текущему и
-//   // ((мероприятие длится 1 день и
-//   // (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
-//   // мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
-//   // (дата окончания равна текущей и[но] текущее время больше 18ч))
-//   if (
-//     posterMonth === month &&
-//     ((!posterDayEnd &&
-//       (posterDay < day || (posterDay === day && hours > 18))) ||
-//       (posterDayEnd !== null && posterDayEnd < day) ||
-//       (posterDayEnd === day && hours > 18))
-//   )
-//     console.log("+");
+  const posterDayEnd = parseInt(posterDate.dateEnd.day, 10);
+  const posterMonthEnd = parseInt(posterDate.dateEnd.month, 10);
 
-//   if (posterMonth === month) {
-//     if (posterDay < day || (posterDay === day && hours >= 18)) {
-//       poster.isSkip = true;
-//     }
-//   }
+  if (posterMonthEnd !== null) {
+    if (posterMonthEnd < month) return false;
+    if (posterMonthEnd === month) {
+      if (posterDayEnd < day || (posterDayEnd === day && hours > 18)) {
+        return false;
+      }
+    }
+  } else {
+    if (posterMonth < month) return false;
+    if (posterMonth === month) {
+      if (posterDay < day || (posterDay === day && hours > 18)) {
+        return false;
+      }
+    }
+  }
 
-//   return poster;
-// };
+  return true;
+};
 
 /**
  * преобразует объект posterDate
@@ -95,6 +91,7 @@ export const dateConversion = async (posterList) => {
           month: monthEnd,
           monthText: getStringMonth(monthEnd),
         },
+        time: poster.posterDate.time,
       },
     });
   });
@@ -113,30 +110,43 @@ export const sort = async (posterList) => {
 
 export const filter = async (posterList) => {
   if (!posterList) return null;
-  let skip = 0;
+  // let skip = 0;
   const date = new Date();
   const currentDate = {
     month: date.getMonth() + 1,
-    day: date.getDate() - 3,
+    day: date.getDate(),
     hours: date.getHours(),
   };
-  // console.log("day", currentDate.day);
 
-  posterList.forEach((poster, index) => {
-    const { posterDate } = poster;
-    const posterDay = posterDate.dateStart.day;
-    const posterMonth = posterDate.dateStart.month;
-    const posterDayEnd = posterDate.dateEnd.day;
+  return posterList.filter((poster) => isPush(poster, currentDate));
+  // posterList.forEach((poster, index) => {
+  //   const { posterDate } = poster;
+  //   const posterDay = posterDate.dateStart.day;
+  //   const posterMonth = posterDate.dateStart.month;
+  //   const posterDayEnd = posterDate.dateEnd.day;
 
-    if (posterMonth === currentDate.month) {
-      if (
-        posterDay < currentDate.day ||
-        (posterDay === currentDate.day && currentDate.hours >= 18)
-      ) {
-        skip = index + 1;
-      }
-    }
-  });
+  //   if (posterMonth === currentDate.month) {
+  //     if (
+  //       posterDay < currentDate.day ||
+  //       (posterDay === currentDate.day && currentDate.hours >= 18)
+  //     ) {
+  //       skip = index + 1;
+  //     }
+  //   }
+  // });
 
-  return { posterList, skip };
+  // return { posterList, skip };
 };
+
+// пропускаем анонс если (месяц равен текущему и
+// ((мероприятие длится 1 день и
+// (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
+// мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
+// (дата окончания равна текущей и[но] текущее время больше 18ч))
+// if (
+//   posterMonth === month &&
+//   ((!posterDayEnd &&
+//     (posterDay < day || (posterDay === day && hours > 18))) ||
+//     (posterDayEnd !== null && posterDayEnd < day) ||
+//     (posterDayEnd === day && hours > 18))
+// );

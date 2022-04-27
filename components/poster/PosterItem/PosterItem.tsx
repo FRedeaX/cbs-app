@@ -20,6 +20,7 @@ export const posterItemGQL = {
       posterDate {
         date
         dataend
+        time
       }
       title
       id
@@ -28,9 +29,9 @@ export const posterItemGQL = {
 };
 
 interface IDate {
-  day: string;
-  month: number;
-  monthText: string;
+  day: string | null;
+  month: number | null;
+  monthText: string | null;
 }
 
 export interface IPoster {
@@ -46,6 +47,7 @@ export interface IPoster {
   posterDate: {
     dateStart: IDate;
     dateEnd: IDate;
+    time: string | null;
   };
   title: string;
   id: string;
@@ -71,6 +73,9 @@ const PosterItem = ({
         dateStart={posterDate.dateStart}
         dateEnd={posterDate.dateEnd}
       />
+      {posterDate.time !== null && (
+        <div className={classes.time}>{posterDate.time}</div>
+      )}
     </div>
     <div className={classes.body}>
       <h3 className={classes.title}>{title}</h3>
