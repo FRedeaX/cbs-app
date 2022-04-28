@@ -2,7 +2,6 @@
 // const sizeOf = require("image-size");
 import https from "https";
 import sizeOf from "image-size";
-
 import removeBackslash from "../removeBackslash";
 
 const addAttributes = (block, data) => ({
