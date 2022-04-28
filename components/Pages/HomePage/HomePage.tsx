@@ -1,11 +1,13 @@
 // import { useQuery } from "@apollo/client";
 import classnames from "classnames";
 import type { NextPage } from "next";
+import Link from "next/link";
 import { memo } from "react";
 import PosterRoot, { IPosters } from "../../poster/PosterRoot/PosterRoot";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 // import { GET_WIDTH } from "../../../store/variables/windowWidth";
 import CardList from "../../Widget/Card/CardList";
+import Alert from "./../../Alert/Alert";
 import classes from "./Home-Page.module.css";
 import Pagination from "./Pagination/Pagination";
 
@@ -74,14 +76,13 @@ const HomePage: NextPage<IHomePageProps> = ({
       )}
       {pages && <Pagination pages={pages} paginationURI={paginationURI} />}
     </section>
-  </div>
-  /* <Alert>
-      <Link
-        to={"/biblioteki/?lib=cgb&schedule=1"}
-        className={classes["alert-link"]}
-      >
-        Изменение графика работ в период новогодних праздничных дней.
+    <Alert>
+      <Link href="/biblioteki?schedule=default&holiday=true">
+        <a className={classes["alert-link"]}>
+          Изменение графика работ с 1 по 10 мая.
+        </a>
       </Link>
-    </Alert> */
+    </Alert>
+  </div>
 );
 export default memo(HomePage);
