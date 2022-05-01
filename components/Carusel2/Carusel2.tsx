@@ -2,12 +2,20 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { Box, IconButton } from "@mui/material";
 import classNames from "classnames";
-import { Children, cloneElement, FC, memo, useCallback, useRef } from "react";
+import {
+  Children,
+  cloneElement,
+  FC,
+  memo,
+  ReactNode,
+  useCallback,
+  useRef,
+} from "react";
 import classes from "./Carusel2.module.css";
 import useCarusel2 from "./useCarusel2";
 
 interface Carusel2Props {
-  // children?: ReactNode;
+  children: ReactNode;
   itemWidth?: number;
   itemCountOfScreen?: number;
   isScrollSnap?: boolean;
@@ -21,7 +29,7 @@ const Carusel2: FC<Carusel2Props> = ({
   isScrollSnap,
   isButtonsOnSides,
 }) => {
-  const childrenListRef = useRef<any>([]);
+  const childrenListRef = useRef<Array<ReactNode>>([]);
   // const [isSetChildrenRef, setChildrenRef] = useState<boolean>(false);
   const [scrolledRef, childrenRef, { onClickHendler, onWellHendler }] =
     useCarusel2({
@@ -30,7 +38,7 @@ const Carusel2: FC<Carusel2Props> = ({
     });
 
   const setRefs = useCallback(
-    (node, index): void => {
+    (node: ReactNode, index: number): void => {
       if (node === null) return;
 
       childrenListRef.current[index] = node;

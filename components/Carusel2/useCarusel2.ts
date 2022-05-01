@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 import useIntersectionObserver from "../../helpers/frontend/hooks/useIntersectionObserver";
 
 interface IArgs {
@@ -7,49 +7,45 @@ interface IArgs {
 }
 
 /* eslint-disable no-console */
-export default function useCarusel2(args: IArgs): any {
+export default function useCarusel2(args: IArgs) {
   const [nodeListRef, { rootRef: scrolledRef }] = useIntersectionObserver({});
 
   // const scrolledRef = useRef<HTMLDivElement | null>(null);
   const [alreadyScrolled, setAlreadyScrolled] = useState<number>(0);
 
-  const itemWidth = useRef<number | undefined>(args?.itemWidth);
-  const itemCountOfScreen = useRef<number | undefined>(args?.itemCountOfScreen);
+  const itemWidth = useMemo<number | null>(() => {
+    if (args?.itemWidth) return args.itemWidth;
 
-  const initVariable = useCallback((): void => {
-    if (scrolledRef.current === null) return;
-
-    // вычисление itemWidth
-    if (itemWidth.current === undefined) {
-      const figure = scrolledRef.current?.childNodes?.[0].childNodes?.[1];
-
-      if (figure instanceof HTMLElement) {
-        itemWidth.current = figure.offsetWidth;
-      }
+    if (scrolledRef.current === null) return null;
+    const node = scrolledRef.current?.childNodes?.[0].childNodes?.[1];
+    if (node instanceof HTMLElement) {
+      return node.offsetWidth;
     }
 
-    // вычисление itemCountOfScreen
-    if (
-      itemCountOfScreen.current === undefined &&
-      itemWidth.current !== undefined
-    ) {
-      console.log(scrolledRef.current.offsetWidth, itemWidth.current);
+    return null;
+  }, [args.itemWidth, scrolledRef]);
 
-      itemCountOfScreen.current = Math.max(
-        Math.floor(scrolledRef.current.offsetWidth / itemWidth.current),
+  const itemCountOfScreen = useMemo<number | null>(() => {
+    if (args?.itemCountOfScreen) return args.itemCountOfScreen;
+
+    if (scrolledRef.current === null) return null;
+    if (itemWidth !== null) {
+      return Math.max(
+        Math.floor(scrolledRef.current.offsetWidth / itemWidth),
         1,
       );
     }
-  }, [scrolledRef]);
+
+    return null;
+  }, [args.itemCountOfScreen, itemWidth, scrolledRef]);
 
   const rootRefCallback = useCallback(
-    (node) => {
-      console.log("!", node);
+    (node: ReactNode) => {
+      // console.log("!", node);
 
       scrolledRef.current = node;
-      initVariable();
     },
-    [initVariable, scrolledRef],
+    [scrolledRef],
   );
 
   // useEffect(() => {
@@ -60,13 +56,13 @@ export default function useCarusel2(args: IArgs): any {
     (direction: "next" | "prev"): void => {
       if (
         scrolledRef.current === null ||
-        itemWidth.current === undefined ||
-        itemCountOfScreen.current === undefined
+        itemWidth === null ||
+        itemCountOfScreen === null
       )
         return;
 
       let nextScrollPos = alreadyScrolled;
-      const scrollTo = itemWidth.current * itemCountOfScreen.current;
+      const scrollTo = itemWidth * itemCountOfScreen;
 
       if (direction === "next") {
         nextScrollPos += scrollTo;
@@ -81,7 +77,7 @@ export default function useCarusel2(args: IArgs): any {
         behavior: "smooth",
       });
     },
-    [alreadyScrolled, scrolledRef],
+    [alreadyScrolled, itemCountOfScreen, itemWidth, scrolledRef],
   );
 
   const onKeyDownHendler = ({ key }: any) => {
