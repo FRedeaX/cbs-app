@@ -87,7 +87,7 @@ function flatBlock(blockList: Array<IBlock>): string {
     })
     .join(" ");
 }
-let i = 0;
+
 async function indexesNextParties(after: string): Promise<void> {
   const {
     data: { posts: postList },
