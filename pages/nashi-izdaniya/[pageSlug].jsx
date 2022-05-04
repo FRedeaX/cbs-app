@@ -33,6 +33,7 @@ export async function getStaticPaths() {
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
       variables: { pathname: "nashi-izdaniya" },
+      fetchPolicy: "network-only",
     })
     .then(({ data }) => preparingPaths(data.page.children.edges));
 

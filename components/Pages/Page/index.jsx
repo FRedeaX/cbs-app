@@ -1,7 +1,5 @@
 import { gql } from "@apollo/client";
-
 import Article from "../../Article/Article";
-import Head from "../../Head/Head";
 import { columnsBlockGQL } from "../../blocks/Columns/Columns";
 import { embedBlockGQL } from "../../blocks/Embed/Embed";
 import { fileBlockGQL } from "../../blocks/File/File";
@@ -17,6 +15,7 @@ import { separatorBlockGQL } from "../../blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../blocks/Table/Table";
 import { verseBlockGQL } from "../../blocks/Verse/Verse";
+import Head from "../../Head/Head";
 
 export const PageRoot = ({ page }) => (
   <>
@@ -55,7 +54,7 @@ export const FETCH_PARENT_URI_PAGES = gql`
 export const FETCH_CHILDREN_URI_PAGES = gql`
   query FetchChildrenUriPages($pathname: ID!) {
     page(id: $pathname, idType: URI) {
-      children {
+      children(first: 100) {
         edges {
           node {
             slug
