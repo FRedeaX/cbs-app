@@ -1,5 +1,4 @@
 import { captureException } from "@sentry/nextjs";
-
 // eslint-disable-next-line import/no-cycle
 import { transformBlocks } from "..";
 import { FETCH_PAGE } from "../../../components/Pages/Page";
@@ -15,10 +14,9 @@ const getPage = async (id) => {
       },
       fetchPolicy: "network-only",
     })
-    .then(async ({ data }) => {
-      if (data.page === null) {
-        return null;
-      }
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.page === null) throw new Error("data.page of null");
 
       return {
         ...data.page,
@@ -26,7 +24,7 @@ const getPage = async (id) => {
       };
     })
     .catch((err) => {
-      captureException(err, "FETCH_PAGE");
+      captureException({ ...err, cstMessage: "FETCH_PAGE" });
       return null;
     });
   return page;

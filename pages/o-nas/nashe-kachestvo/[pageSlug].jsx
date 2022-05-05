@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const paths = await client
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
-      variables: { pathname: "o-nas/my-v-pechati" },
+      variables: { pathname: "o-nas/nashe-kachestvo" },
       fetchPolicy: "network-only",
     })
     .then(({ data, error }) => {
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const menu = await getMenu();
-  const page = await getPage(`o-nas/my-v-pechati/${params.pageSlug}`);
+  const page = await getPage(`o-nas/nashe-kachestvo/${params.pageSlug}`);
 
   if (!page) {
     return {

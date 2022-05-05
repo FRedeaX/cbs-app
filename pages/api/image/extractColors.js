@@ -1,6 +1,5 @@
 import { captureException } from "@sentry/nextjs";
 import * as Vibrant from "node-vibrant";
-
 import { GET_SOURCE_THUMBNAIL_URL } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
@@ -21,7 +20,11 @@ export default async function extractColors(req, res) {
           query: GET_SOURCE_THUMBNAIL_URL,
           variables: { in: ids.split(",") },
         })
-        .then(({ data: { mediaItems } }) => {
+        .then(({ data: { mediaItems }, error }) => {
+          if (error !== undefined) throw new Error(error.message);
+          if (mediaItems.nodes.length === 0)
+            throw new Error("mediaItems of null");
+
           const result = [];
 
           mediaItems.nodes.forEach((img, index) => {
@@ -37,7 +40,10 @@ export default async function extractColors(req, res) {
           return result;
         })
         .catch((err) => {
-          captureException(err, "API_EXTRACT_COLORS_GET_SOURCE_THUMBNAIL_URL");
+          captureException({
+            ...err,
+            cstMessage: "API_EXTRACT_COLORS_GET_SOURCE_THUMBNAIL_URL",
+          });
           return [];
         });
 
@@ -46,7 +52,8 @@ export default async function extractColors(req, res) {
         data: JSON.stringify(colors),
       });
     } catch (error) {
-      res.status(500).json({ message: "ERR_IDs", error });
+      captureException({ ...error, cstMessage: "ERR_IDs" });
+      res.status(500).json({ cstMessage: "ERR_IDs", error });
     }
   } else res.status(500).end("query not found");
 }

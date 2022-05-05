@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
-
 import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
 import {
@@ -37,24 +36,35 @@ const PagePost = ({ menu, post }) => {
 };
 
 export async function getStaticPaths() {
-  const { data } = await client.query({
-    query: gql`
-      query articlesQuery {
-        posts {
-          nodes {
-            slug
+  const paths = await client
+    .query({
+      query: gql`
+        query articlesQuery {
+          posts {
+            nodes {
+              slug
+            }
           }
         }
-      }
-    `,
-  });
+      `,
+      fetchPolicy: "network-only",
+    })
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posts.nodes.length === 0)
+        throw new Error("data.posts.nodes of null");
 
-  const paths = data.posts.nodes.map((post) => ({
-    params: {
-      slug: post.slug,
-      // slug: [post.slug],
-    },
-  }));
+      return data.posts.nodes.map((post) => ({
+        params: {
+          slug: post.slug,
+          // slug: [post.slug],
+        },
+      }));
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+      return [];
+    });
 
   return {
     paths,
@@ -74,10 +84,9 @@ export async function getStaticProps({ params }) {
       fetchPolicy: "network-only",
     })
     // .then(({ data }) => transformBlocks(data.post))
-    .then(async ({ data }) => {
-      if (data.post === null) {
-        return null;
-      }
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.post === null) throw new Error("data.posts of null");
 
       return {
         ...data.post,
@@ -88,7 +97,7 @@ export async function getStaticProps({ params }) {
       };
     })
     .catch((err) => {
-      captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
+      captureException({ ...err, cstMessage: "GET_POST_CONTENT_BY_BLOCKS" });
       return null;
     });
 
