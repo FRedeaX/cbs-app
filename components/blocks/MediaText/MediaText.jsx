@@ -2,7 +2,6 @@ import { gql } from "@apollo/client";
 import classNames from "classnames";
 import Image from "next/image";
 import { useMemo } from "react";
-
 // eslint-disable-next-line import/no-cycle
 import Blocks from "../Blocks";
 import { columnsBlockGQL } from "../Columns/Columns";
