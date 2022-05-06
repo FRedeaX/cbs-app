@@ -183,8 +183,9 @@
 }
 
 .subtitle_clamp {
+  /* display: box; */
   /* stylelint-disable-next-line value-no-vendor-prefix */
-  display: -webkit-inline-box;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   hyphens: auto;
 }

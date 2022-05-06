@@ -1,11 +1,10 @@
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
-
 import Head from "../../../../../components/Head/Head";
 import HomePage from "../../../../../components/Pages/HomePage/HomePage";
 import {
-  POSTS_PAGINATION_BY_CATEGORY_GQL,
   fetchArticlesByCategory,
+  POSTS_PAGINATION_BY_CATEGORY_GQL,
 } from "../../../../../components/Posts/PostsRoot";
 import Layout from "../../../../../components/UI/Layout/Layout";
 import {
@@ -71,20 +70,26 @@ export async function getStaticProps({ params: { slug, page } }) {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) =>
-      plaiceholder(data.category.posts.nodes).then((plaiceholderRes) => ({
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.category?.posts.nodes.length === 0)
+        throw new Error("data.category.posts.nodes of null");
+
+      const plaiceholderRes = await plaiceholder(data.category.posts.nodes);
+      return {
         posts: plaiceholderRes,
-        categoryName: data.category.posts.nodes[0].categories.nodes.filter(
-          (node) => node.slug === slug,
-        )?.[0]?.name,
-      })),
-    )
+        categoryName:
+          data.category.posts.nodes[0].categories.nodes.filter(
+            (node) => node.slug === slug,
+          )?.[0]?.name || null,
+      };
+    })
     .catch((err) => {
-      captureException(err, "fetchArticlesByCategory");
-      return null;
+      captureException({ ...err, cstMessage: "fetchArticlesByCategory" });
+      return { posts: null, categoryName: null };
     });
 
-  if (!posts) {
+  if (posts === null) {
     return {
       notFound: true,
     };
@@ -94,8 +99,8 @@ export async function getStaticProps({ params: { slug, page } }) {
     props: {
       menu,
       pages: pagesInfo[pagesInfo.length - 1].number - 1,
-      posts: posts || null,
-      categoryName: categoryName || null,
+      posts,
+      categoryName,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10),
   };

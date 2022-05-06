@@ -57,7 +57,7 @@ export const Figure = ({
       isZoom
     ) {
       if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bg-white)" });
+        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
 
       setZoom(false);
       delay(250).then(() => {
@@ -97,7 +97,7 @@ export const Figure = ({
     event.stopPropagation();
     if (isZoom) {
       setZoom(false);
-      overlayVar({ isOpen: false, color: "var(--bg-white)" });
+      overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
       delay(250).then(() => {
         figureRef.current.style.zIndex = "";
       });

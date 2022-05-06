@@ -2,7 +2,6 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
 import classes from "./Card.module.css";

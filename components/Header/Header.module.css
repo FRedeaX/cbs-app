@@ -5,7 +5,7 @@
 
   z-index: 3;
   font-size: 15px;
-  background-color: var(--bg-white);
+  background-color: var(--bg-white-95);
   border-bottom: 1px solid #dbdbdb;
 }
 
@@ -107,7 +107,7 @@
     width: 300px;
     padding: 20px;
     overflow-y: scroll;
-    background-color: var(--bg-white);
+    background-color: var(--bg-white-95);
     transform: translateX(300px);
     transition: transform 0.25s ease-in;
   }

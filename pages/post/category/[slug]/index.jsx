@@ -1,11 +1,10 @@
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
-
 import Head from "../../../../components/Head/Head";
 import HomePage from "../../../../components/Pages/HomePage/HomePage";
 import {
-  POSTS_PAGINATION_BY_CATEGORY_GQL,
   fetchArticlesByCategory,
+  POSTS_PAGINATION_BY_CATEGORY_GQL,
 } from "../../../../components/Posts/PostsRoot";
 import Layout from "../../../../components/UI/Layout/Layout";
 import {
@@ -53,40 +52,54 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   const menu = await getMenu();
-  const { data } = await client.query({
-    query: fetchArticlesByCategory,
-    variables: {
-      id: slug,
-      first: 10,
-      cursor: "",
-    },
-    fetchPolicy: "network-only",
-  });
+  const postsByCategory = await client
+    .query({
+      query: fetchArticlesByCategory,
+      variables: {
+        id: slug,
+        first: 10,
+        cursor: "",
+      },
+      fetchPolicy: "network-only",
+    })
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.category?.posts.nodes.length === 0)
+        throw new Error("data.category.posts.nodes of null");
 
-  const posts = await plaiceholder(data.category?.posts.nodes).catch((err) => {
-    captureException(err, "fetchArticlesByCategory");
-    return null;
-  });
-
-  const pages = await paginationLoad({
-    key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
-    query: POSTS_PAGINATION_BY_CATEGORY_GQL,
-    endCursor: data.category?.posts.pageInfo.endCursor,
-    category: slug,
-  })
-    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
+      return data;
+    })
     .catch((err) => {
-      captureException(err, "POSTS_PAGINATION_BY_CATEGORY_GQL");
+      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
       return null;
     });
 
-  if (!posts) {
+  if (postsByCategory === null) {
     return {
       notFound: true,
     };
   }
 
-  const name = data.category.posts.nodes[0].categories.nodes.filter(
+  const posts = await plaiceholder(postsByCategory.category.posts.nodes).catch(
+    (err) => {
+      captureException({ ...err, cstMessage: "fetchArticlesByCategory" });
+      return null;
+    },
+  );
+
+  const pages = await paginationLoad({
+    key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
+    query: POSTS_PAGINATION_BY_CATEGORY_GQL,
+    endCursor: postsByCategory.category?.posts.pageInfo.endCursor,
+    category: slug,
+  })
+    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "POSTS_PAGINATION_BY_CATEGORY_GQL" });
+      return null;
+    });
+
+  const name = postsByCategory.category.posts.nodes[0].categories.nodes.filter(
     (node) => node.slug === slug,
   )?.[0]?.name;
 

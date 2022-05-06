@@ -2,7 +2,7 @@ import classNames from "classnames";
 import classes from "./PosterDate.module.css";
 
 const PosterDate = ({ dateStart, dateEnd }) => {
-  if (dateStart.month !== dateEnd.month) {
+  if (dateEnd.month !== null && dateStart.month !== dateEnd.month) {
     return (
       <>
         <div className={classes.block}>
@@ -22,7 +22,12 @@ const PosterDate = ({ dateStart, dateEnd }) => {
   }
 
   return (
-    <div className={classNames(classes.block, classes.block_one_month)}>
+    <div
+      className={classNames(classes.block, {
+        [classes.block_one_day]: dateEnd.day === null,
+        [classes.block_range_day]:
+          dateEnd.day !== null && dateStart.month === dateEnd.month,
+      })}>
       <span
         className={classNames(classes.date, {
           [classes.date_size_small]: dateEnd.day !== null,

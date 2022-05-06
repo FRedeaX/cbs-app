@@ -183,7 +183,7 @@
   position: absolute !important;
   top: 0;
   bottom: 0;
-  width: 100%;
+  right: 0;
 }
 
 /* Gallery open */
@@ -198,7 +198,7 @@
 }
 
 .container_isZoom_true {
-  background-color: var(--bg-white);
+  background-color: var(--bg-white-95);
   border-radius: 0;
 }
 

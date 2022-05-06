@@ -1,19 +1,22 @@
 import { ApolloProvider } from "@apollo/client";
-import { CacheProvider } from "@emotion/react";
-import { AppProps } from "next/app";
-import { useEffect } from "react";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import type { NextAppProps } from "next/app";
+import { FunctionComponent, useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
-
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
 import { client } from "../store/apollo-client";
 import createEmotionCache from "../store/mui/createEmotionCache";
 import "../styles.css";
 
+interface AppProps extends NextAppProps {
+  emotionCache: EmotionCache;
+}
+
 const clientSideEmotionCache = createEmotionCache();
 
 /* eslint-disable react/jsx-props-no-spreading */
-const App = ({
+const App: FunctionComponent<AppProps> = ({
   Component,
   emotionCache = clientSideEmotionCache,
   pageProps,
