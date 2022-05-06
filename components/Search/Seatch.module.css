@@ -1,0 +1,65 @@
+.block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-right: 20px;
+  padding: 4px 0 0 6px;
+}
+
+.form {
+  position: relative;
+  width: 100%;
+  transition: opacity 0.25s;
+}
+
+.form_isVisible_false {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.form_isVisible_true {
+  visibility: visible;
+  opacity: 1;
+}
+
+.input {
+  display: flex;
+}
+
+/* .input > div > div {
+  height: 36px;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: transparent;
+} */
+
+/* .input > div > div::before,
+.input > div > div:hover::before {
+  border-bottom: none !important;
+} */
+
+.suggestion {
+  position: absolute;
+  top: 37px;
+  right: 0;
+  left: 1px;
+  max-height: 60vh;
+  margin-top: 4px;
+  padding: 10px 5px;
+  overflow-y: auto;
+  background-color: rgb(204 204 204 / 50%);
+  border-radius: 16px;
+  transform: translateY(16px);
+  visibility: hidden;
+  opacity: 0;
+  backdrop-filter: blur(16px);
+  transition: all 0.2s ease;
+}
+
+/* .suggestion input:focus, */
+.suggestion_isActive {
+  transform: translateY(0);
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}

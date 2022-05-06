@@ -12,5 +12,6 @@ module.exports = {
       // 	"disableFix": true
       // }
     ],
+    "color-function-notation": "legacy",
   },
 };
