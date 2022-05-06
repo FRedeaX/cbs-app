@@ -21,7 +21,7 @@ import Suggestion from "./Suggestion/Suggestion";
 import useForm from "./useForm";
 import useSearch from "./useSearch";
 
-const Search = (): JSX.Element => {
+const Search = ({ className = "" }): JSX.Element => {
   const { fetchData, data } = useSearch();
 
   const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,13 +65,13 @@ const Search = (): JSX.Element => {
   );
 
   useEffect(() => {
-    if (data && data.hits.hits.length > 0 && !isSuggest) {
+    if (data && data.hits && data.hits.hits.length > 0 && !isSuggest) {
       setSuggest(true);
     }
   }, [data, setSuggest]);
 
   return (
-    <div className={classes.block}>
+    <div className={classNames(classes.block, className)}>
       <form
         className={classNames(
           classes.form,
@@ -124,12 +124,11 @@ const Search = (): JSX.Element => {
           <SearchIcon />
         </IconButton> */}
         </div>
-        {console.log(data)}
         <div
           className={classNames(classes.suggestion, {
             [classes.suggestion_isActive]: isSuggest,
           })}>
-          {data && data.hits.hits.length > 0 && (
+          {data && data.hits && data.hits.hits.length > 0 && (
             <Suggestion nodes={data.hits.hits} />
           )}
         </div>

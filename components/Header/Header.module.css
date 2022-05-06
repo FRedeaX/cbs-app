@@ -126,6 +126,7 @@
     width: 55%;
   }
 
+  .Search_desktope,
   .Social_desktope {
     display: none !important;
   }

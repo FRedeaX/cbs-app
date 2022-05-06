@@ -4,14 +4,14 @@ import { Card } from "../../Widget/Card/Card";
 interface INode {
   _id: number | string;
   highlight: {
-    post_title: Array<string>;
-    post_excerpt: Array<string>;
+    content: Array<string>;
+    title: Array<string>;
   };
   _source: {
-    post_title: string;
-    post_excerpt?: string;
-    permalink: string;
-    thumbnail: { src: string };
+    title: string;
+    excerpt?: string;
+    link: string;
+    thumbnail: { url: string };
   };
 }
 
@@ -26,13 +26,12 @@ const Suggestion = ({ nodes }: ISuggestion): JSX.Element => {
         <Card
           key={node?._id}
           data={{
-            title: node.highlight?.post_title?.[0] || node._source.post_title,
-            excerpt:
-              node.highlight?.post_excerpt[0] || node._source.post_excerpt,
-            uri: new URL(node._source.permalink).pathname,
+            title: node.highlight?.title?.[0] || node._source.title,
+            excerpt: node.highlight?.content?.[0] || node._source.excerpt,
+            uri: new URL(node._source.link).pathname,
             featuredImage: {
               node: {
-                sourceUrl: node._source.thumbnail?.src,
+                sourceUrl: node._source.thumbnail.url,
               },
             },
           }}

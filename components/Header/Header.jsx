@@ -92,7 +92,7 @@ const Header = ({ menus }) => {
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
-            <Search />
+            <Search className={ classes.Search_desktope}/>
             <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
               <NavList data={menus[1].menuItems} isRight />
