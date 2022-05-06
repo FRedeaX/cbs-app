@@ -6,7 +6,7 @@
 }
 
 .header {
-  margin: 2em 0 1.3em 0;
+  margin: 2em 0 1.3em;
 }
 
 .category {
@@ -18,8 +18,6 @@
 .category-link {
   font-weight: 400;
   font-size: 14px;
-
-  /* color: rgb(154, 154, 154); */
   font-family: var(--font-R-S);
 }
 

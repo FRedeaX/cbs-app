@@ -19,10 +19,15 @@ import { pullIDs, setFeed } from "../post/feed";
   };
  */
 const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
-  let pagination = await clientRedis
-    .get(key)
-    .then((response) => JSON.parse(response))
-    .catch((e) => console.error(e));
+  let pagination;
+
+  try {
+    const response = await clientRedis.get(key);
+    pagination = await JSON.parse(response);
+  } catch (error) {
+    console.error(error);
+    pagination = null;
+  }
 
   if (
     (pagination !== null && endCursor === pagination[1]?.cursor) ||
@@ -88,8 +93,14 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
   }
 
   console.warn(`fetch pagination: ${key}`);
-  clientRedis.set(key, JSON.stringify(pagination));
-  setFeed(key, postsIDs);
+
+  try {
+    clientRedis.set(key, JSON.stringify(pagination));
+    setFeed(key, postsIDs);
+  } catch (error) {
+    console.error(error);
+  }
+
   return pagination;
 };
 

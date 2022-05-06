@@ -80,7 +80,8 @@ export async function getStaticProps({ params }) {
         throw new Error("data.posts.nodes of null");
 
       const removeDuplicateRes = await removeDuplicateTag(data.posts.nodes);
-      return await plaiceholder(removeDuplicateRes.result);
+      const plaiceholderRes = await plaiceholder(removeDuplicateRes.result);
+      return plaiceholderRes;
     })
     .catch((err) => {
       captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
@@ -104,7 +105,8 @@ export async function getStaticProps({ params }) {
 
       const dateRes = await dateConversion(data.posters.nodes);
       const sortRes = await sort(dateRes);
-      return await filter(sortRes);
+      const filterRes = await filter(sortRes);
+      return filterRes;
     })
     .catch((err) => {
       captureException({ ...err, cstMessage: "FETCH_POSTER" });

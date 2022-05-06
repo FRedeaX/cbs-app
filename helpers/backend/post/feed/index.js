@@ -3,7 +3,11 @@ import clientRedis from "../../../../store/redis";
 export const pullIDs = (nodeList) => nodeList.map((node) => node.id);
 
 export const setFeed = async (key, postsIDs) => {
-  clientRedis.set(`${key}_IDs`, JSON.stringify(postsIDs));
+  try {
+    clientRedis.set(`${key}_IDs`, JSON.stringify(postsIDs));
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 export const getFeed = async (key, id) => {
