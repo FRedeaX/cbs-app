@@ -185,13 +185,11 @@ const transformBlocks = async (blocks) => {
 
       case "core/quote":
       case "core/pullquote": {
-        console.log(block.attributes.value);
         blockList[index] = addAttributes(block, {
           value: block.attributes.value
             .replace(/<p>/g, "")
             .replace(/<\/p>/g, ""),
         });
-        console.log(blockList[index].attributes.value);
         break;
       }
 
@@ -214,8 +212,6 @@ const transformBlocks = async (blocks) => {
   });
 
   await Promise.all(promise);
-
-  console.log(blockList[1]);
   return { blocks: blockList, video };
 };
 

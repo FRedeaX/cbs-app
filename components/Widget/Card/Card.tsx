@@ -76,7 +76,8 @@ export const Card = ({
         <div
           className={classNames(classes.image, {
             [classes["image--horizontal"]]: isHorizontal,
-            [classes.image_big]: isBig,
+            [classes.image_big]: isBig === true,
+            [classes.image_small]: isSmall === true,
           })}>
           <div
             className={classNames(
@@ -102,10 +103,7 @@ export const Card = ({
           </div>
         </div>
       )}
-      <div
-        className={classNames(classes.info, {
-          [classes.info_small]: isSmall === true,
-        })}>
+      <div className={classes.info}>
         <div className={classes.text}>
           <h3 className={classes.title}>
             <Link href={uri}>

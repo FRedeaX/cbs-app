@@ -109,6 +109,10 @@
   }
 }
 
+.image_small {
+  max-width: 160px;
+}
+
 @media screen and (width >= 653px) and (width <= 768px) {
   .image_big {
     flex: 1.4292 1;
@@ -151,10 +155,6 @@
   border-bottom: var(--card-info-border-bottom, 0);
   border-left: var(--card-info-border-left, 0);
   border-radius: 0 0 16px 16px;
-}
-
-.info_small {
-  flex: 7;
 }
 
 /* @media screen and (min-width: 768px) {
