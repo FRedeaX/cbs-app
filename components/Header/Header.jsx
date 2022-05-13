@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
 import { memo, useEffect, useRef, useState } from "react";
-
 import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
 import {
   GET_OVERLAY_FRAGMENT,
@@ -92,7 +91,7 @@ const Header = ({ menus }) => {
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
-            <Search className={ classes.Search_desktope}/>
+            <Search className={classes.Search_desktope} />
             <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
               <NavList data={menus[1].menuItems} isRight />

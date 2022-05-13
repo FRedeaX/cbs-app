@@ -10,6 +10,7 @@
 .form {
   position: relative;
   width: 100%;
+  text-align: initial;
   transition: opacity 0.25s;
 }
 
@@ -55,6 +56,7 @@
   opacity: 0;
   backdrop-filter: blur(16px);
   transition: all 0.2s ease;
+  overscroll-behavior-y: contain;
 }
 
 /* .suggestion input:focus, */

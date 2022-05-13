@@ -9,6 +9,7 @@ import {
 import classNames from "classnames";
 import {
   ChangeEvent,
+  FC,
   FocusEvent,
   KeyboardEvent,
   useCallback,
@@ -21,7 +22,12 @@ import Suggestion from "./Suggestion/Suggestion";
 import useForm from "./useForm";
 import useSearch from "./useSearch";
 
-const Search = ({ className = "" }): JSX.Element => {
+interface SearchProps {
+  className?: string;
+  // headerSetOpen: () => void;
+}
+
+const Search: FC<SearchProps> = ({ className }) => {
   const { fetchData, data } = useSearch();
 
   const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,10 +71,14 @@ const Search = ({ className = "" }): JSX.Element => {
   );
 
   useEffect(() => {
-    if (data && data.hits && data.hits.hits.length > 0 && !isSuggest) {
+    if (data && data.hits && data.hits.hits.length > 0) {
       setSuggest(true);
     }
   }, [data, setSuggest]);
+
+  // useEffect(() => {
+  //   headerSetOpen(isSearch);
+  // }, [headerSetOpen, isSearch]);
 
   return (
     <div className={classNames(classes.block, className)}>
@@ -78,7 +88,6 @@ const Search = ({ className = "" }): JSX.Element => {
           classes[`form_isVisible_${isSearch}`],
         )}
         action="/search/"
-        style={{ textAlign: "initial" }}
         onKeyDown={onKeyDownHendler}
         onSubmit={handleSubmit}>
         <div className={classes.input}>
