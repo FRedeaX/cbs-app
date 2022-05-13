@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { NextApiRequest, NextApiResponse } from "next";
 import { esClient } from "../../../core/elastic-client";
 
@@ -15,7 +16,7 @@ export default async function _search(
 
   if (query !== null) {
     try {
-      const body = `{
+      const body = {
         query: {
           multi_match: {
             query,
@@ -25,41 +26,27 @@ export default async function _search(
         highlight: {
           pre_tags: ["<mark>"],
           post_tags: ["</mark>"],
+          number_of_fragments: 1,
+          fragment_size: 200,
           fields: {
-            post_title: {},
+            title: {},
             content: {},
           },
         },
-      }`;
+      };
 
       const result = await esClient
         .search({
           index: process.env.ES_INDEX_NAME,
-          body: {
-            query: {
-              multi_match: {
-                query,
-                fields: ["title", "content"],
-              },
-            },
-            highlight: {
-              pre_tags: ["<mark>"],
-              post_tags: ["</mark>"],
-              number_of_fragments: 1,
-              // fragment_size: 200,
-              fields: {
-                title: {},
-                content: {},
-              },
-            },
-          },
+          body,
         })
-        .then((response) => {
-          // if (response.status !== 200)
-          //   throw new Error(`status: ${response.status}`);
+        .then(
+          (response) =>
+            // if (response.status !== 200)
+            //   throw new Error(`status: ${response.status}`);
 
-          return response;
-        });
+            response,
+        );
 
       // const result = await fetch("http://192.168.1.2:9200/cbs/_search", {
       //   method: "POST",

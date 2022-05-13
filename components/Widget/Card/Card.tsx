@@ -24,6 +24,7 @@ export interface Idata {
 interface CardProps {
   data: Idata;
   imagePriority?: boolean;
+  prefetch?: boolean;
   isHorizontal: boolean;
   className?: string;
   isClamp?: boolean;
@@ -50,6 +51,7 @@ interface CardProps {
 export const Card = ({
   data: { isSticky, title, uri, categories, excerpt, featuredImage },
   imagePriority = false,
+  prefetch = undefined,
   isHorizontal = false,
   className,
   isClamp,
@@ -106,7 +108,7 @@ export const Card = ({
       <div className={classes.info}>
         <div className={classes.text}>
           <h3 className={classes.title}>
-            <Link href={uri}>
+            <Link href={uri} prefetch={prefetch}>
               <a
                 className={classes.link}
                 dangerouslySetInnerHTML={createMarkup(title)}

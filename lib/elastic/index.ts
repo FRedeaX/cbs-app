@@ -1,3 +1,20 @@
+export interface ISearchHitsNode {
+  _index: string;
+  _type: string;
+  _id: string;
+  _score: number;
+  highlight: {
+    content: Array<string>;
+    title: Array<string>;
+  };
+  _source: {
+    title: string;
+    excerpt?: string;
+    link: string;
+    thumbnail: { url: string };
+  };
+}
+
 export interface ISearchResponse {
   took: number;
   timed_out: boolean;
@@ -13,19 +30,6 @@ export interface ISearchResponse {
       relation: string;
     };
     max_score: number;
-    hits:
-      | Array<{
-          _index: string;
-          _type: string;
-          _id: number;
-          _score: number;
-          _source: {
-            title: string;
-            excerpt: string;
-            link: string;
-            thumbnail: { url: string };
-          };
-        }>
-      | [];
+    hits: Array<ISearchHitsNode> | [];
   };
 }
