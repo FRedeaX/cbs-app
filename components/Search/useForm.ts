@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 // import { InputBaseProps } from "@mui/material";
+import { InputBaseProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const useForm = (inputRef: any) => {
+const useForm = (inputRef: InputBaseProps) => {
   // const [isSearch, setSearch] = useState<{ input: boolean; suggest: boolean }>({
   //   input: false,
   //   suggest: false,
@@ -33,12 +34,14 @@ const useForm = (inputRef: any) => {
   const hendleOpenForm = () => {
     if (!isSearch) {
       setTimeout(() => {
-        inputRef?.current?.children[1]?.focus();
+        inputRef.focus();
       }, 0);
     }
     setSearch((prev) => {
       if (prev) {
         setSuggest(false);
+        inputRef.value = "";
+
         return !prev;
       }
       setSuggest(true);

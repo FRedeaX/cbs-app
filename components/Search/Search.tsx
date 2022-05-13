@@ -40,7 +40,7 @@ const Search: FC<SearchProps> = ({ className }) => {
 
   const inputRef = useRef<InputBaseProps>();
   const { isSearch, setSearch, isSuggest, setSuggest, hendleOpenForm } =
-    useForm(inputRef);
+    useForm(inputRef?.current?.children[1]);
 
   const onKeyDownHendler = useCallback(
     (event: KeyboardEvent<HTMLFormElement>) => {
