@@ -1,24 +1,22 @@
 import { ApolloProvider } from "@apollo/client";
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import type { NextAppProps } from "next/app";
+import { AppProps as NextAppProps } from "next/app";
 import { FunctionComponent, useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
 import { client } from "../store/apollo-client";
-import createEmotionCache from "../store/mui/createEmotionCache";
 import "../styles.css";
 
 interface AppProps extends NextAppProps {
-  emotionCache: EmotionCache;
+  // emotionCache: EmotionCache;
 }
 
-const clientSideEmotionCache = createEmotionCache();
+// const clientSideEmotionCache = createEmotionCache();
 
 /* eslint-disable react/jsx-props-no-spreading */
 const App: FunctionComponent<AppProps> = ({
   Component,
-  emotionCache = clientSideEmotionCache,
+  // emotionCache = clientSideEmotionCache,
   pageProps,
 }) => {
   useEffect(() => {
@@ -26,16 +24,15 @@ const App: FunctionComponent<AppProps> = ({
   }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
-      {/* <Script>{smoothscroll.polyfill()}</Script> */}
-      <ApolloProvider client={client}>
-        <ErrorBoundary>
-          {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-          <Component {...pageProps} />
-        </ErrorBoundary>
-        <Overlay />
-      </ApolloProvider>
-    </CacheProvider>
+    <ApolloProvider client={client}>
+      {/* <CacheProvider value={emotionCache}> */}
+      <ErrorBoundary>
+        {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+        <Component {...pageProps} />
+      </ErrorBoundary>
+      <Overlay />
+      {/* </CacheProvider> */}
+    </ApolloProvider>
   );
 };
 
