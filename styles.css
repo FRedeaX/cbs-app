@@ -121,7 +121,8 @@
 body {
   margin: 0;
   overflow-y: scroll;
-  font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Roboto, Helvetica, Arial, -apple-system, BlinkMacSystemFont,
+    sans-serif;
   word-break: break-word;
   background-color: var(--bg-white-95);
 
