@@ -9,6 +9,8 @@
 
 .form {
   position: relative;
+
+  /* max-width: 100%;  desktope vs mobile */
   width: 100%;
   text-align: initial;
   transition: opacity 0.25s;
@@ -45,7 +47,7 @@
   top: 37px;
   right: 0;
   left: 1px;
-  max-height: 60vh;
+  max-height: var(--search-suggestion-max-height, 60vh);
   margin-top: 4px;
   padding: 10px 5px;
   overflow-y: auto;

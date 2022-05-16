@@ -18,6 +18,12 @@ const GET_POSTS = gql`
             sourceUrl(size: THUMBNAIL)
           }
         }
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
       }
       pageInfo {
         hasNextPage
@@ -59,6 +65,12 @@ interface IPost {
       sourceUrl: string;
     };
   };
+  categories: {
+    nodes: {
+      name: string;
+      slug: string;
+    }[];
+  };
   // blocks: Array<IBlock>;
 }
 
@@ -99,18 +111,13 @@ async function indexesNextParties(after: string): Promise<void> {
   try {
     const {
       data: { posts: postList },
-    } = await client
-      .query({
-        query: GET_POSTS,
-        variables: {
-          first: 20,
-          after,
-        },
-      })
-      // .then(({ data }) => data.posts.nodes)
-      .catch((err) => {
-        throw new Error(err);
-      });
+    } = await client.query({
+      query: GET_POSTS,
+      variables: {
+        first: 20,
+        after,
+      },
+    });
 
     // postList.nodes.map((post: IPost) => {
     //   console.log({
@@ -128,19 +135,23 @@ async function indexesNextParties(after: string): Promise<void> {
         excerpt: post.excerpt,
         content: post.content.replaceAll(/<[^>]*>?/gm, ""),
         thumbnail: { url: post.featuredImage?.node.sourceUrl || "" },
+        category: post.categories.nodes.flatMap((cat) => [
+          { name: cat.name, slug: cat.slug },
+        ]),
       },
     ]);
 
     await esClient.bulk({ refresh: true, body: operations });
 
     count += postList.nodes.length;
-    console.log(count, postList.nodes[postList.nodes.length - 1].title);
+    // console.log(count, postList.nodes[postList.nodes.length - 1].title);
     if (postList.pageInfo.hasNextPage) {
       await delay(1000).then(async () => {
         await indexesNextParties(postList.pageInfo.endCursor);
       });
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 }

@@ -75,7 +75,7 @@
 
 .image {
   position: relative;
-  display: flex;
+  display: var(--card-image-display, flex);
   flex: 3;
   padding-bottom: 56.25%;
   overflow: hidden;

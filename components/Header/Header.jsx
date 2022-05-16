@@ -99,6 +99,7 @@ const Header = ({ menus }) => {
           </div>
         </div>
         <div className={classes.mobile}>
+          <Search className={classes.Search_mobile} />
           <HeaderSocial />
           <Button
             className={classNames(classes.controls_button, {

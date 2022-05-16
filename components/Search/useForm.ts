@@ -1,45 +1,31 @@
 /* eslint-disable no-console */
 // import { InputBaseProps } from "@mui/material";
-import { InputBaseProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const useForm = (inputRef: InputBaseProps) => {
-  // const [isSearch, setSearch] = useState<{ input: boolean; suggest: boolean }>({
-  //   input: false,
-  //   suggest: false,
-  // });
+const useForm = (inputRef?: HTMLInputElement) => {
   const [isSearch, setSearch] = useState<boolean>(false);
   const [isSuggest, setSuggest] = useState<boolean>(false);
 
   const { asPath } = useRouter();
-  // const suggestClose = useCallback(() => {
-  //   setSearch((prev) => ({
-  //     ...prev,
-  //     suggest: false,
-  //   }));
-  // }, [setSearch]);
-
-  // const suggestOpen = useCallback(() => {
-  //   setSearch((prev) => ({
-  //     ...prev,
-  //     suggest: true,
-  //   }));
-  // }, [setSearch]);
 
   useEffect(() => {
     setSuggest(false);
   }, [asPath, setSuggest]);
 
-  const hendleOpenForm = () => {
+  const hendleOpenForm = (): void => {
+    if (inputRef === undefined) return;
+
     if (!isSearch) {
       setTimeout(() => {
         inputRef.focus();
       }, 0);
     }
+
     setSearch((prev) => {
       if (prev) {
         setSuggest(false);
+        // eslint-disable-next-line no-param-reassign
         inputRef.value = "";
 
         return !prev;

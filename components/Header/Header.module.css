@@ -81,6 +81,10 @@
     text-align: end;
   }
 
+  .Search_desktope {
+    text-align: left;
+  }
+
   .mobile {
     display: none;
   }
@@ -133,6 +137,11 @@
 
   .mobile {
     display: flex;
+  }
+
+  .Search_mobile {
+    --search-suggestion-max-height: 100%;
+    --card-image-display: none;
   }
 
   .controls_button {

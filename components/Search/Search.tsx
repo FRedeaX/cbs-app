@@ -1,11 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  IconButton,
-  InputAdornment,
-  InputBase,
-  InputBaseProps,
-} from "@mui/material";
+import { IconButton, InputAdornment, InputBase } from "@mui/material";
 import classNames from "classnames";
 import {
   ChangeEvent,
@@ -17,7 +12,7 @@ import {
   useRef,
 } from "react";
 import debounce from "../../helpers/debounce";
-import classes from "./Seatch.module.css";
+import classes from "./Search.module.css";
 import Suggestion from "./Suggestion/Suggestion";
 import useForm from "./useForm";
 import useSearch from "./useSearch";
@@ -38,12 +33,12 @@ const Search: FC<SearchProps> = ({ className }) => {
     event.preventDefault();
   };
 
-  const inputRef = useRef<InputBaseProps>();
+  const inputRef = useRef<any>();
   const { isSearch, setSearch, isSuggest, setSuggest, hendleOpenForm } =
     useForm(inputRef?.current?.children[1]);
 
   const onKeyDownHendler = useCallback(
-    (event: KeyboardEvent<HTMLFormElement>) => {
+    (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "Escape") {
         if (isSuggest) setSuggest(false);
         else if (isSearch) setSearch(false);
@@ -63,7 +58,10 @@ const Search: FC<SearchProps> = ({ className }) => {
 
   const onBlurHendler = useCallback(
     (event: FocusEvent<HTMLInputElement>) => {
-      if (event.currentTarget === event.target) {
+      if (
+        event.currentTarget === event.target &&
+        event.currentTarget.contains(event.relatedTarget)
+      ) {
         setSuggest(false);
       }
     },
@@ -81,14 +79,16 @@ const Search: FC<SearchProps> = ({ className }) => {
   // }, [headerSetOpen, isSearch]);
 
   return (
-    <div className={classNames(classes.block, className)}>
+    <div
+      className={classNames(classes.block, className)}
+      onKeyDown={onKeyDownHendler}
+      role="presentation">
       <form
         className={classNames(
           classes.form,
           classes[`form_isVisible_${isSearch}`],
         )}
         action="/search/"
-        onKeyDown={onKeyDownHendler}
         onSubmit={handleSubmit}>
         <div className={classes.input}>
           <InputBase
