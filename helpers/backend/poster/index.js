@@ -32,10 +32,10 @@ const getStringMonth = (month) => {
 
 const isPush = ({ posterDate }, { month, day, hours }) => {
   const posterDay = parseInt(posterDate.dateStart.day, 10);
-  const posterMonth = parseInt(posterDate.dateStart.month, 10);
+  const posterMonth = posterDate.dateStart.month;
 
-  const posterDayEnd = parseInt(posterDate.dateEnd.day, 10);
-  const posterMonthEnd = parseInt(posterDate.dateEnd.month, 10);
+  const posterDayEnd = parseInt(posterDate.dateEnd.day, 10) || null;
+  const posterMonthEnd = posterDate.dateEnd.month;
 
   if (posterMonthEnd !== null) {
     if (posterMonthEnd < month) return false;
@@ -66,13 +66,15 @@ export const dateConversion = async (posterList) => {
   const result = [];
   let dayStart;
   let monthStart;
-  let dayEnd = null;
-  let monthEnd = null;
+  let dayEnd;
+  let monthEnd;
 
   posterList.forEach((poster) => {
     dayStart = poster.posterDate.date.split("/")[0];
     monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
 
+    dayEnd = null;
+    monthEnd = null;
     if (poster.posterDate.dataend !== null) {
       dayEnd = poster.posterDate.dataend.split("/")[0];
       monthEnd = parseInt(poster.posterDate.dataend.split("/")[1], 10);
