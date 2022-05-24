@@ -1,19 +1,14 @@
+/* eslint-disable react/require-default-props */
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { IconButton, InputAdornment, InputBase } from "@mui/material";
+import { InputAdornment, InputBase } from "@mui/material";
 import classNames from "classnames";
-import {
-  ChangeEvent,
-  FC,
-  FocusEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { ChangeEvent, FC, useCallback, useRef } from "react";
 import debounce from "../../helpers/debounce";
 import classes from "./Search.module.css";
+import SearchToggleFrom from "./Search.ToggleFrom";
 import Suggestion from "./Suggestion/Suggestion";
+import SuggestionList from "./Suggestion/SuggestionList";
 import useForm from "./useForm";
 import useSearch from "./useSearch";
 
@@ -23,60 +18,44 @@ interface SearchProps {
 }
 
 const Search: FC<SearchProps> = ({ className }) => {
-  const { fetchData, data } = useSearch();
+  // +
+  const { fetchData, resetData, data } = useSearch();
 
+  // +
   const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     debounce(fetchData(value), 150);
   };
-  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+
+  // +
+  const handleSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-  };
+  }, []);
 
-  const inputRef = useRef<any>();
-  const { isSearch, setSearch, isSuggest, setSuggest, hendleOpenForm } =
-    useForm(inputRef?.current?.children[1]);
-
-  const onKeyDownHendler = useCallback(
-    (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Escape") {
-        if (isSuggest) setSuggest(false);
-        else if (isSearch) setSearch(false);
-      }
-    },
-    [isSuggest, setSuggest, isSearch, setSearch],
-  );
-
-  const onFocusHendler = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      if (event.currentTarget === event.target) {
-        setSuggest(true);
-      }
-    },
-    [setSuggest],
-  );
-
-  const onBlurHendler = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      if (
-        event.currentTarget === event.target &&
-        event.currentTarget.contains(event.relatedTarget)
-      ) {
-        setSuggest(false);
-      }
-    },
-    [setSuggest],
-  );
-
-  useEffect(() => {
-    if (data && data.hits && data.hits.hits.length > 0) {
-      setSuggest(true);
-    }
-  }, [data, setSuggest]);
+  // +
+  const inputRef = useRef();
+  const {
+    isSearch,
+    isSuggest,
+    resetInput,
+    toggleForm,
+    onKeyDownHendler,
+    onFocusHendler,
+    onBlurHendler,
+  } = useForm(inputRef?.current?.children[1]);
 
   // useEffect(() => {
-  //   headerSetOpen(isSearch);
-  // }, [headerSetOpen, isSearch]);
+  //   if (data && data.hits && data.hits.hits.length > 0) {
+  //     setSuggest(true);
+  //   }
+  // }, [data, setSuggest]);
+
+  // +
+  const hendleToggleForm = useCallback(() => {
+    resetData();
+    resetInput();
+    toggleForm();
+  }, [resetData, resetInput, toggleForm]);
 
   return (
     <div
@@ -92,14 +71,10 @@ const Search: FC<SearchProps> = ({ className }) => {
         onSubmit={handleSubmit}>
         <div className={classes.input}>
           <InputBase
-            // label={}
-            // sx={{ width: "calc(100% - 36px)" }}
             name="query"
             autoComplete="off"
             placeholder="Поиск..."
             id="search-input"
-            // variant="standard"
-            // size="small"
             fullWidth
             sx={{
               borderRadius: "12px",
@@ -126,39 +101,18 @@ const Search: FC<SearchProps> = ({ className }) => {
             onChange={onChangeHendler}
             onBlur={onBlurHendler}
           />
-          {/* <IconButton
-          type="button"
-          sx={{ width: "36px", marginLeft: "8px", padding: "8px" }}
-          aria-label="Поиск">
-          <SearchIcon />
-        </IconButton> */}
         </div>
-        <div
-          className={classNames(classes.suggestion, {
-            [classes.suggestion_isActive]: isSuggest,
-          })}>
-          {data && data.hits && data.hits.hits.length > 0 && (
-            <Suggestion nodes={data.hits.hits} />
-          )}
-        </div>
+        <Suggestion isSuggest={isSuggest}>
+          <SuggestionList nodes={data?.hits?.hits} />
+        </Suggestion>
       </form>
-
-      <IconButton
-        type="button"
-        sx={{
-          width: "36px",
-          height: "36px",
-          marginLeft: "8px",
-          padding: "8px",
-        }}
-        aria-label={isSearch ? "Закрыть поиск" : "Поиск"}
-        onClick={hendleOpenForm}>
+      <SearchToggleFrom isSearch={isSearch} onClick={hendleToggleForm}>
         {isSearch ? (
           <CloseIcon fontSize="small" />
         ) : (
           <SearchIcon fontSize="small" />
         )}
-      </IconButton>
+      </SearchToggleFrom>
     </div>
   );
 };

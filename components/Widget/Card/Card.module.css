@@ -32,7 +32,7 @@
 
   .item--horizontal {
     flex-direction: row;
-    width: initial;
+    width: calc(100% - 20px);
 
     /* min-height: 160px; */
   }

@@ -1,18 +1,17 @@
 .block {
+  --search-suggestion-top: 37px;
+  --search-suggestion-left: 1px;
+  --search-suggestion-max-height: 60vh;
+  --search-suggestion-margin-top: 4px;
+  --search-suggestion-border-radius: 16px;
+
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 700px;
-  margin-right: 20px;
-  padding: 4px 0 0 6px;
 }
 
 .form {
   position: relative;
-
-  /* max-width: 100%;  desktope vs mobile */
   width: 100%;
-  text-align: initial;
   transition: opacity 0.25s;
 }
 
@@ -41,30 +40,3 @@
 .input > div > div:hover::before {
   border-bottom: none !important;
 } */
-
-.suggestion {
-  position: absolute;
-  top: 37px;
-  right: 0;
-  left: 1px;
-  max-height: var(--search-suggestion-max-height, 60vh);
-  margin-top: 4px;
-  padding: 10px 5px;
-  overflow-y: auto;
-  background-color: rgb(204 204 204 / 50%);
-  border-radius: 16px;
-  transform: translateY(16px);
-  visibility: hidden;
-  opacity: 0;
-  backdrop-filter: blur(16px);
-  transition: all 0.2s ease;
-  overscroll-behavior-y: contain;
-}
-
-/* .suggestion input:focus, */
-.suggestion_isActive {
-  transform: translateY(0);
-  transform: translateY(0);
-  visibility: visible;
-  opacity: 1;
-}
