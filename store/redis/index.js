@@ -1,7 +1,7 @@
 import { Tedis } from "tedis";
 
 // import { errorHelper } from "../../helpers/errorHendler";
-let client = null;
+let client;
 
 try {
   if (typeof window === "undefined") {
@@ -12,7 +12,8 @@ try {
     });
   }
 } catch (error) {
-  console.error(error);
+  // eslint-disable-next-line no-console
+  console.error("@", error);
 }
 const clientRedis = client;
 export default clientRedis;

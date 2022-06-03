@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 // import { InputBaseProps } from "@mui/material";
+import { InputBaseComponentProps } from "@mui/material";
 import { useRouter } from "next/router";
 import {
   FocusEvent,
@@ -20,7 +21,7 @@ import { delay } from "../../helpers";
 //   onBlurHendler(): void;
 // }
 
-const useForm = (inputRef?: HTMLInputElement) => {
+const useForm = (inputRef?: InputBaseComponentProps) => {
   const [isSearch, setSearch] = useState<boolean>(false);
   const [isSuggest, setSuggest] = useState<boolean>(false);
 

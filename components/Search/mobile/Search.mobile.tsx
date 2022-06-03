@@ -1,10 +1,14 @@
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import SearchIcon from "@mui/icons-material/Search";
-import { IconButton, InputAdornment, InputBase } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  InputBase,
+  InputBaseComponentProps,
+} from "@mui/material";
 import classNames from "classnames";
 import { ChangeEvent, FC, useCallback, useEffect, useRef } from "react";
-import { delay } from "../../../helpers";
 import debounce from "../../../helpers/debounce";
 import SearchToggleFrom from "../Search.ToggleFrom";
 import Suggestion from "../Suggestion/Suggestion";
@@ -28,9 +32,9 @@ const SearchMobile: FC = () => {
     event.preventDefault();
   }, []);
 
-  const inputRef = useRef();
+  const inputRef = useRef<InputBaseComponentProps>();
   const { isSearch, isSuggest, resetInput, toggleForm, onFocusHendler } =
-    useForm(inputRef?.current?.children[1]);
+    useForm(inputRef?.current);
 
   const hendleReset = useCallback(() => {
     resetData();
