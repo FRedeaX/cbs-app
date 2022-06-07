@@ -68,6 +68,12 @@
   /* component color */
   --link-color: var(--blue-dark);
   --link-background-color-hover: var(--blue-dark-05);
+
+  /*
+   * Header
+   */
+  --header-desktop-height: 100px;
+  --header-mobile-height: 80px;
 }
 
 /* @media screen and (min-width: 769px) {
