@@ -20,7 +20,7 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  transition: opacity 0.25s;
+  transition: all 0.25s;
 }
 
 .form_isVisible_false {
@@ -31,4 +31,13 @@
 .form_isVisible_true {
   visibility: visible;
   opacity: 1;
+}
+
+.clear {
+  transition: opacity 0.15s;
+}
+
+.clear_visibility_hidden {
+  opacity: 0;
+  pointer-events: none;
 }

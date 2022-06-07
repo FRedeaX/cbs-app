@@ -8,38 +8,65 @@ import {
   InputBaseComponentProps,
 } from "@mui/material";
 import classNames from "classnames";
-import { ChangeEvent, FC, useCallback, useEffect, useRef } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import debounce from "../../../helpers/debounce";
 import SearchToggleFrom from "../Search.ToggleFrom";
 import Suggestion from "../Suggestion/Suggestion";
 import SuggestionList from "../Suggestion/SuggestionList";
 import useForm from "../useForm";
 import useSearch from "../useSearch";
-import classes from "./Search.mobile.module.css";
+import classes from "./Search.Mobile.module.css";
 
 const SearchMobile: FC = () => {
-  const { fetchData, resetData, data } = useSearch();
+  const [isClearButton, setClearButton] = useState<boolean>(false);
+  const { suggestData, resetData, data } = useSearch();
+
+  const inputRef = useRef<InputBaseComponentProps>();
+  const {
+    isSearch,
+    isSuggest,
+    setFocus,
+    resetInput,
+    toggleForm,
+    onFocusHendler,
+  } = useForm(inputRef?.current);
 
   const onChangeHendler = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
-      debounce(fetchData(value), 150);
+      if (value.length === 0) {
+        setClearButton(false);
+        resetData();
+        return;
+      }
+
+      debounce(suggestData(value), 150);
+      setClearButton(true);
     },
-    [fetchData],
+    [suggestData, resetData],
   );
 
   const handleSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
   }, []);
 
-  const inputRef = useRef<InputBaseComponentProps>();
-  const { isSearch, isSuggest, resetInput, toggleForm, onFocusHendler } =
-    useForm(inputRef?.current);
-
   const hendleReset = useCallback(() => {
     resetData();
     resetInput();
+    setClearButton(false);
   }, [resetData, resetInput]);
+
+  const hendleOpenForm = useCallback(() => {
+    toggleForm();
+    setFocus();
+  }, [toggleForm, setFocus]);
 
   useEffect(() => {
     if (isSearch) document.body.style.overflow = "hidden";
@@ -80,12 +107,17 @@ const SearchMobile: FC = () => {
           }
           endAdornment={
             <InputAdornment position="end">
-              <IconButton onClick={hendleReset}>
+              <IconButton
+                className={classNames(classes.clear, {
+                  [classes.clear_visibility_hidden]: !isClearButton,
+                })}
+                aria-label="Очистить поле ввода"
+                onClick={hendleReset}>
                 <CloseRoundedIcon fontSize="small" />
               </IconButton>
             </InputAdornment>
           }
-          ref={inputRef}
+          inputRef={inputRef}
           onFocus={onFocusHendler}
           onChange={onChangeHendler}
         />
@@ -93,7 +125,7 @@ const SearchMobile: FC = () => {
           <SuggestionList nodes={data?.hits?.hits} />
         </Suggestion>
       </form>
-      <SearchToggleFrom isSearch={isSearch} onClick={toggleForm}>
+      <SearchToggleFrom isSearch={isSearch} onClick={hendleOpenForm}>
         <SearchIcon fontSize="small" />
       </SearchToggleFrom>
     </div>

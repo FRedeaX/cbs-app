@@ -5,8 +5,11 @@ import { ISearchResponse } from "../../lib/elastic";
 const useSearch = () => {
   const [data, setData] = useState<ISearchResponse | null>();
 
-  const fetchData = useCallback(async (query: string): Promise<void> => {
-    await fetch(`${window.location.origin}/api/suggest/_search?query=${query}`)
+  const suggestData = useCallback(async (query: string): Promise<void> => {
+    const q = query.trim();
+    if (q.length === 0) return;
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_ES_URL}?query=${q}`)
       .then((response: Response) => response.json())
       .then((result) => {
         setData(result);
@@ -18,7 +21,7 @@ const useSearch = () => {
     setData(null);
   }, [setData]);
 
-  return { fetchData, resetData, data };
+  return { suggestData, resetData, data };
 };
 
 export default useSearch;

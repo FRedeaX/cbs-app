@@ -11,7 +11,7 @@ import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
-import SearchMobile from "../Search/mobile/Search.mobile";
+import SearchMobile from "../Search/mobile/Search.Mobile";
 import Search from "../Search/Search";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';

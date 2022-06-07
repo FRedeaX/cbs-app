@@ -21,6 +21,11 @@ import { delay } from "../../helpers";
 //   onBlurHendler(): void;
 // }
 
+/*
+ * 1. При (меньшем || 0) значении из-за анимации visibility фокус не будет установлен.
+ */
+const DELAY_CSS_TRANSITION_50_PERCENT = 250 / 2;
+
 const useForm = (inputRef?: InputBaseComponentProps) => {
   const [isSearch, setSearch] = useState<boolean>(false);
   const [isSuggest, setSuggest] = useState<boolean>(false);
@@ -34,7 +39,8 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
   const setFocus = useCallback(() => {
     if (inputRef === undefined) return;
 
-    delay(0).then(() => {
+    /* 1. */
+    delay(DELAY_CSS_TRANSITION_50_PERCENT).then(() => {
       inputRef.focus();
     });
   }, [inputRef]);
@@ -55,15 +61,13 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
 
     setSearch((prev) => {
       if (prev) {
-        setSuggest(false);
+        setSuggest(!prev);
         return !prev;
       }
-
-      setFocus();
-      setSuggest(true);
+      setSuggest(!prev);
       return !prev;
     });
-  }, [inputRef, setFocus]);
+  }, [inputRef]);
 
   const onKeyDownHendler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
@@ -99,6 +103,7 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
   return {
     isSearch,
     isSuggest,
+    setFocus,
     resetInput,
     toggleForm,
     onKeyDownHendler,

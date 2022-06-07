@@ -107,7 +107,7 @@ interface IPost {
 // }
 
 let count = 0;
-async function indexesNextParties(after: string): Promise<void> {
+async function indexesParties(after: string): Promise<void> {
   try {
     const {
       data: { posts: postList },
@@ -147,7 +147,7 @@ async function indexesNextParties(after: string): Promise<void> {
     // console.log(count, postList.nodes[postList.nodes.length - 1].title);
     if (postList.pageInfo.hasNextPage) {
       await delay(1000).then(async () => {
-        await indexesNextParties(postList.pageInfo.endCursor);
+        await indexesParties(postList.pageInfo.endCursor);
       });
     }
   } catch (error) {
@@ -162,7 +162,7 @@ export default async function offers(req, res) {
 
   // try {
   count = 0;
-  await indexesNextParties("");
+  await indexesParties("");
 
   // const count = await esClient.count({ index: process.env.ES_INDEX_NAME });
   res.status(200).json(`document sync: ${count}`);

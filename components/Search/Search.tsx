@@ -23,13 +23,21 @@ interface SearchProps {
 
 const Search: FC<SearchProps> = ({ className }) => {
   // +
-  const { fetchData, resetData, data } = useSearch();
+  const { suggestData, resetData, data } = useSearch();
 
   // +
-  const onChangeHendler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    debounce(fetchData(value), 150);
-  };
+  const onChangeHendler = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      if (value.length === 0) {
+        resetData();
+        return;
+      }
+
+      debounce(suggestData(value), 150);
+    },
+    [resetData, suggestData],
+  );
 
   // +
   const handleSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
@@ -56,10 +64,14 @@ const Search: FC<SearchProps> = ({ className }) => {
 
   // +
   const hendleToggleForm = useCallback(() => {
-    resetData();
-    resetInput();
-    toggleForm();
-  }, [resetData, resetInput, toggleForm]);
+    if (isSearch) {
+      toggleForm();
+    } else {
+      resetData();
+      resetInput();
+      toggleForm();
+    }
+  }, [isSearch, resetData, resetInput, toggleForm]);
 
   return (
     <div
