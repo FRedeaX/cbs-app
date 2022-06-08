@@ -6,6 +6,7 @@ export interface ISearchHitsNode {
   highlight: {
     content: Array<string>;
     title: Array<string>;
+    "title.text": Array<string>;
   };
   _source: {
     title: string;

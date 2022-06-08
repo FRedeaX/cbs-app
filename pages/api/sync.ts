@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import { esClient } from "../../core/elastic-client";
 import { delay } from "../../helpers";
 import { client } from "../../store/apollo-client";
@@ -119,14 +120,6 @@ async function indexesParties(after: string): Promise<void> {
       },
     });
 
-    // postList.nodes.map((post: IPost) => {
-    //   console.log({
-    //     title: post.title,
-    //     post: post.featuredImage?.node.sourceUrl,
-    //     result: post.featuredImage?.node.sourceUrl || "",
-    //   });
-    // });
-
     const operations = postList.nodes.flatMap((post: IPost) => [
       { index: { _index: process.env.ES_INDEX_NAME, _id: post.id } },
       {
@@ -156,7 +149,7 @@ async function indexesParties(after: string): Promise<void> {
   }
 }
 
-export default async function offers(req, res) {
+export default async function sync(req: NextApiRequest, res: NextApiResponse) {
   // const { id } = req.query || null;
   // if (id === null) res.status(500).end("query not found");
 
