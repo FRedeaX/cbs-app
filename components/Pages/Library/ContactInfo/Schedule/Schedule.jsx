@@ -1,14 +1,10 @@
 import classNames from "classnames";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
-
-import Button from "../../../../UI/Button/Button";
 import { Heading } from "../../../../blocks/Heading/Heading";
+import LibraryButton from "../../LibraryButton/LibraryButton";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Schedule.module.css";
 import ScheduleList from "./ScheduleList/ScheduleList";
-import LibraryButton from "../../LibraryButton/LibraryButton";
 
 const FILIAL_DEFAULT = "cgb";
 const SCHEDULE_DEFAULT = "default";
@@ -29,36 +25,33 @@ const Schedule = (props) => {
             className={classNames(classesInfo.title, classes.title)}>
             График работы
           </Heading>
-          {(props.scheduleSecondary.schedule ||
-            props.scheduleSecondary.scheduleAup) && (
-            <div className={classes.controls}>
-              <LibraryButton
-                href={{
-                  pathname: "/biblioteki",
-                  query: {
-                    lib: lib || FILIAL_DEFAULT,
-                    schedule: schedule || SCHEDULE_DEFAULT,
-                    holiday: false,
-                  },
-                }}
-                isActive={holiday === "false" || holiday === undefined}
-                className={classes.link}>
-                Обычный
-              </LibraryButton>
-              <LibraryButton
-                href={{
-                  pathname: "/biblioteki",
-                  query: {
-                    lib: lib || FILIAL_DEFAULT,
-                    schedule: schedule || SCHEDULE_DEFAULT,
-                    holiday: true,
-                  },
-                }}
-                isActive={holiday === "true"}>
-                Праздничный
-              </LibraryButton>
-            </div>
-          )}
+          <div className={classes.controls}>
+            <LibraryButton
+              href={{
+                pathname: "/biblioteki",
+                query: {
+                  lib: lib || FILIAL_DEFAULT,
+                  schedule: schedule || SCHEDULE_DEFAULT,
+                  holiday: false,
+                },
+              }}
+              isActive={holiday === "false" || holiday === undefined}
+              className={classes.link}>
+              Обычный
+            </LibraryButton>
+            <LibraryButton
+              href={{
+                pathname: "/biblioteki",
+                query: {
+                  lib: lib || FILIAL_DEFAULT,
+                  schedule: schedule || SCHEDULE_DEFAULT,
+                  holiday: true,
+                },
+              }}
+              isActive={holiday === "true"}>
+              Праздничный
+            </LibraryButton>
+          </div>
         </div>
 
         <div className={classes.controls}>

@@ -17,7 +17,7 @@ const LibraryButton = ({
   isActive,
   className,
 }: ILibraryButton): JSX.Element => (
-  <Link href={href} passHref replace scroll={false} shallow={true}>
+  <Link href={href} passHref replace scroll={false} shallow>
     <Button
       view="link"
       className={classNames(
