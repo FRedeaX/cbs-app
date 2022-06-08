@@ -20,19 +20,37 @@ export default async function _search(
         query: {
           multi_match: {
             query,
-            fields: ["title", "content"],
+            analyzer: "rus_eng_key_analyzer",
+            fields: ["title.text", "title", "content"],
           },
         },
         highlight: {
+          // no_match_size
           pre_tags: ["<mark>"],
           post_tags: ["</mark>"],
-          number_of_fragments: 1,
-          fragment_size: 200,
           fields: {
-            title: {},
-            content: {},
+            "title.text": {
+              number_of_fragments: 0,
+            },
+            title: {
+              number_of_fragments: 0,
+              // matched_fields: ["title", "title.text"],
+            },
+            content: {
+              number_of_fragments: 1,
+              fragment_size: 200,
+            },
           },
         },
+        aggs: {
+          category: {
+            terms: {
+              field: "category.name.raw",
+              size: 50,
+            },
+          },
+        },
+        _source: ["title", "excerpt", "link", "thumbnail"],
       };
 
       const result = await esClient

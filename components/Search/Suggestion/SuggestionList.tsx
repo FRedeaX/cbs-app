@@ -10,7 +10,10 @@ const SuggestionList: FC<{ nodes?: Array<ISearchHitsNode> }> = ({ nodes }) =>
         <Card
           key={node?._id}
           data={{
-            title: node.highlight?.title?.[0] || node._source.title,
+            title:
+              node.highlight?.["title.text"]?.[0] ||
+              node.highlight?.title?.[0] ||
+              node._source.title,
             excerpt: node.highlight?.content?.[0] || node._source.excerpt,
             uri: new URL(node._source.link).pathname,
             featuredImage: {
@@ -23,7 +26,7 @@ const SuggestionList: FC<{ nodes?: Array<ISearchHitsNode> }> = ({ nodes }) =>
           isHorizontal
           isSmall
           isClamp
-          lineClamp={2}
+          lineClamp={3}
         />
       ))}
     </>

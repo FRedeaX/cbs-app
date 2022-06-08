@@ -118,7 +118,9 @@ const Search: FC<SearchProps> = ({ className }) => {
             onBlur={onBlurHendler}
           />
         </div>
-        <Suggestion isSuggest={isSuggest}>
+        <Suggestion
+          isSuggest={isSuggest}
+          aggregationNodes={data?.aggregations.category.buckets}>
           <SuggestionList nodes={data?.hits?.hits} />
         </Suggestion>
       </form>
