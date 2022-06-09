@@ -18,6 +18,8 @@ const setErrorProps = (src, message) => ({
 });
 
 const plaiceholder = async (data) => {
+  if (data && data.length === 0) throw new Error("data of null");
+
   const result = JSON.parse(JSON.stringify(data));
   const promise = [];
 

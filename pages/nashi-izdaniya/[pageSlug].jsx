@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import { Heading } from "../../components/blocks/Heading/Heading";
 import Head from "../../components/Head/Head";
 import {
@@ -5,9 +6,9 @@ import {
   PageRoot,
 } from "../../components/Pages/Page";
 import Layout from "../../components/UI/Layout/Layout";
+import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
-import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">
@@ -33,8 +34,19 @@ export async function getStaticPaths() {
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
       variables: { pathname: "nashi-izdaniya" },
+      fetchPolicy: "network-only",
     })
-    .then(({ data }) => preparingPaths(data.page.children.edges));
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.page.children.edges.length === 0)
+        throw new Error("data.page.children.edges of null");
+
+      return preparingPaths(data.page.children.edges);
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+      return [];
+    });
 
   return {
     paths,
@@ -46,7 +58,7 @@ export async function getStaticProps({ params }) {
   const menu = await getMenu();
   const page = await getPage(`nashi-izdaniya/${params.pageSlug}`);
 
-  if (!page) {
+  if (page === null) {
     return {
       notFound: true,
     };

@@ -1,6 +1,5 @@
 import { memo } from "react";
-
-import { Idata, Card } from "../Card";
+import { Card, Idata } from "../Card";
 
 interface СardListUngroupedProps {
   nodes: Array<Idata>;

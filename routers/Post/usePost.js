@@ -30,11 +30,19 @@ const usePost = () => {
   //   PostListByCategory: null,
   // }
 
-  const hendleOffers = useCallback((ID) => {
-    fetch(`${window.location.origin}/api/post/offers?id=${ID}`)
-      .then((res) => res.json())
-      .then((json) => setOfferListt((prev) => [...prev, JSON.parse(json.data)]))
-      .catch((err) => console.warn(err));
+  const hendleOffers = useCallback(async (ID) => {
+    try {
+      const response = await fetch(
+        `${window.location.origin}/api/post/offers?id=${ID}`,
+      );
+      const json = await response.json();
+      if (response.ok === false)
+        throw new Error(`status: ${response.status}, message: ${json.message}`);
+
+      setOfferListt((prev) => [...prev, JSON.parse(json.data)]);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   return { hendeForward, hendeToTop, hendleOffers, offerList };

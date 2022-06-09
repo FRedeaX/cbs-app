@@ -1,11 +1,10 @@
 import { captureException } from "@sentry/nextjs";
-
 import Head from "../components/Head/Head";
-import SectionHeader from "../components/SectionHeader/SectionHeader";
-import Layout from "../components/UI/Layout/Layout";
 import PosterItem from "../components/poster/PosterItem/PosterItem";
 import PosterList from "../components/poster/PosterList/PosterList";
 import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
+import SectionHeader from "../components/SectionHeader/SectionHeader";
+import Layout from "../components/UI/Layout/Layout";
 import { getMenu } from "../helpers/backend";
 import { dateConversion, sort } from "../helpers/backend/poster";
 import { client } from "../store/apollo-client";
@@ -35,13 +34,16 @@ export async function getStaticProps() {
       query: FETCH_POSTER,
       fetchPolicy: "network-only",
     })
-    .then(({ data }) =>
-      dateConversion(data.posters.nodes).then((dateRes) =>
-        sort(dateRes).then((sortRes) => sortRes),
-      ),
-    )
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posters.nodes.length === 0) throw new Error("data.posterts.nodes of null");;
+
+      const dateRes = await dateConversion(data.posters.nodes);
+      const sortRes = await sort(dateRes);
+      return sortRes;
+    })
     .catch((err) => {
-      captureException(err, "FETCH_POSTER");
+      captureException({ ...err, cstMessage: "FETCH_POSTER" });
       return null;
     });
 

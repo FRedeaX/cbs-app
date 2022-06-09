@@ -30,27 +30,30 @@ const getStringMonth = (month) => {
   }
 };
 
-const isPush = (poster, { month, day, hours }) => {
-  const { posterDate } = poster;
-  const posterDay = posterDate.dateStart.day;
+const isPush = ({ posterDate }, { month, day, hours }) => {
+  const posterDay = parseInt(posterDate.dateStart.day, 10);
   const posterMonth = posterDate.dateStart.month;
-  const posterDayEnd = posterDate.dateEnd.day;
 
-  // пропускаем анонс если (месяц равен текущему и
-  // ((мероприятие длится 1 день и
-  // (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
-  // мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
-  // (дата окончания равна текущей и[но] текущее время больше 18ч))
-  if (
-    posterMonth === month &&
-    ((!posterDayEnd &&
-      (posterDay < day || (posterDay === day && hours > 18))) ||
-      (posterDayEnd !== null && posterDayEnd < day) ||
-      (posterDayEnd === day && hours > 18))
-  )
-    return null;
+  const posterDayEnd = parseInt(posterDate.dateEnd.day, 10) || null;
+  const posterMonthEnd = posterDate.dateEnd.month;
 
-  return poster;
+  if (posterMonthEnd !== null) {
+    if (posterMonthEnd < month) return false;
+    if (posterMonthEnd === month) {
+      if (posterDayEnd < day || (posterDayEnd === day && hours > 18)) {
+        return false;
+      }
+    }
+  } else {
+    if (posterMonth < month) return false;
+    if (posterMonth === month) {
+      if (posterDay < day || (posterDay === day && hours > 18)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 };
 
 /**
@@ -63,13 +66,15 @@ export const dateConversion = async (posterList) => {
   const result = [];
   let dayStart;
   let monthStart;
-  let dayEnd = null;
-  let monthEnd = null;
+  let dayEnd;
+  let monthEnd;
 
   posterList.forEach((poster) => {
     dayStart = poster.posterDate.date.split("/")[0];
     monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
 
+    dayEnd = null;
+    monthEnd = null;
     if (poster.posterDate.dataend !== null) {
       dayEnd = poster.posterDate.dataend.split("/")[0];
       monthEnd = parseInt(poster.posterDate.dataend.split("/")[1], 10);
@@ -88,6 +93,7 @@ export const dateConversion = async (posterList) => {
           month: monthEnd,
           monthText: getStringMonth(monthEnd),
         },
+        time: poster.posterDate.time,
       },
     });
   });
@@ -95,24 +101,54 @@ export const dateConversion = async (posterList) => {
   return result;
 };
 
-export const sort = async (posterList) =>
-  posterList.sort(
-    (a, b) => a.posterDate.dateStart.day - b.posterDate.dateStart.day,
+export const sort = async (posterList) => {
+  if (!posterList) return null;
+  return posterList.sort(
+    (a, b) =>
+      a.posterDate.dateStart.month - b.posterDate.dateStart.month ||
+      a.posterDate.dateStart.day - b.posterDate.dateStart.day,
   );
+};
 
 export const filter = async (posterList) => {
-  if (!posterList && posterList.length < 2) return null;
-  const currentDate = new Date();
-  const date = {
-    month: currentDate.getMonth() + 1,
-    day: currentDate.getDate(),
-    hours: currentDate.getHours(),
+  if (!posterList) return null;
+  // let skip = 0;
+  const date = new Date();
+  const currentDate = {
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    hours: date.getHours(),
   };
 
-  const result = [];
-  posterList.forEach((poster) => {
-    const element = isPush(poster, date);
-    if (element !== null) result.push(element);
-  });
-  return result;
+  return posterList.filter((poster) => isPush(poster, currentDate));
+  // posterList.forEach((poster, index) => {
+  //   const { posterDate } = poster;
+  //   const posterDay = posterDate.dateStart.day;
+  //   const posterMonth = posterDate.dateStart.month;
+  //   const posterDayEnd = posterDate.dateEnd.day;
+
+  //   if (posterMonth === currentDate.month) {
+  //     if (
+  //       posterDay < currentDate.day ||
+  //       (posterDay === currentDate.day && currentDate.hours >= 18)
+  //     ) {
+  //       skip = index + 1;
+  //     }
+  //   }
+  // });
+
+  // return { posterList, skip };
 };
+
+// пропускаем анонс если (месяц равен текущему и
+// ((мероприятие длится 1 день и
+// (дата меньше текущей или (дата равна текущей и[но] текущее время больше 18ч))) или
+// мероприятие длится дольше 1 дня, но дата окончания меньше текущей даты или
+// (дата окончания равна текущей и[но] текущее время больше 18ч))
+// if (
+//   posterMonth === month &&
+//   ((!posterDayEnd &&
+//     (posterDay < day || (posterDay === day && hours > 18))) ||
+//     (posterDayEnd !== null && posterDayEnd < day) ||
+//     (posterDayEnd === day && hours > 18))
+// );

@@ -68,6 +68,12 @@
   /* component color */
   --link-color: var(--blue-dark);
   --link-background-color-hover: var(--blue-dark-05);
+
+  /*
+   * Header
+   */
+  --header-desktop-height: 100px;
+  --header-mobile-height: 80px;
 }
 
 /* @media screen and (min-width: 769px) {
@@ -121,7 +127,8 @@
 body {
   margin: 0;
   overflow-y: scroll;
-  font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Roboto, Helvetica, Arial, -apple-system, BlinkMacSystemFont,
+    sans-serif;
   word-break: break-word;
   background-color: var(--bg-white-95);
 

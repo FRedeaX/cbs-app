@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
 // This file sets a custom webpack configuration to use your Next.js app
 // with Sentry.
@@ -14,7 +15,13 @@ const alias = {
   "@mui/system": "@mui/system/legacy",
 };
 
-const nextConfig = {
+const withTM = require("next-transpile-modules")([
+  "@mui/material",
+  "@mui/lab",
+  "@mui/icons-material",
+]);
+
+const nextConfig = withTM({
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
@@ -47,7 +54,7 @@ const nextConfig = {
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },
-};
+});
 
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that

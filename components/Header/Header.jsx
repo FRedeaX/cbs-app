@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
 import { memo, useEffect, useRef, useState } from "react";
-
 import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
 import {
   GET_OVERLAY_FRAGMENT,
@@ -12,6 +11,8 @@ import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
+import SearchMobile from "../Search/mobile/Search.Mobile";
+import Search from "../Search/Search";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";
@@ -91,6 +92,9 @@ const Header = ({ menus }) => {
             )}
           </nav>
           <div className={classNames(classes.secondary)}>
+            <div className={classes.search}>
+              <Search />
+            </div>
             <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
               <NavList data={menus[1].menuItems} isRight />
@@ -98,6 +102,9 @@ const Header = ({ menus }) => {
           </div>
         </div>
         <div className={classes.mobile}>
+          <div className={classes.search}>
+            <SearchMobile />
+          </div>
           <HeaderSocial />
           <Button
             className={classNames(classes.controls_button, {

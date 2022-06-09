@@ -18,19 +18,13 @@
 }
 
 .blockquote {
+  --paragraph-font-size: 19px;
+  --paragraph-color: var(--titleColor);
+  --paragraph-font-weight: 300;
+  --paragraph-font-style: italic;
+
   margin: 16px 0;
-}
-
-.p {
-  color: var(--titleColor);
-  font-weight: 300;
-  font-size: 24px;
   font-family: var(--font-R-S);
-
-  /* 26px; */
-  font-style: italic;
-
-  /* hsl(42deg 100% 28%); */
 }
 
 .caption {

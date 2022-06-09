@@ -30,6 +30,9 @@
       }
     ],
 
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+
     "react/no-danger": "off",
     "react/no-underscore-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",
