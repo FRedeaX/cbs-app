@@ -1,15 +1,14 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
-
 import Head from "../../../components/Head/Head";
 import HomePage from "../../../components/Pages/HomePage/HomePage";
+import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../../../components/Posts/PostsRoot";
 import Layout from "../../../components/UI/Layout/Layout";
-import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
 import {
   getMenu,
   paginationLoad,
@@ -75,17 +74,21 @@ export async function getStaticProps({ params }) {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) =>
-      removeDuplicateTag(data.posts.nodes).then((removeDuplicateRes) =>
-        plaiceholder(removeDuplicateRes.result).then((p) => p),
-      ),
-    )
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posts.nodes.length === 0)
+        throw new Error("data.posts.nodes of null");
+
+      const removeDuplicateRes = await removeDuplicateTag(data.posts.nodes);
+      const plaiceholderRes = await plaiceholder(removeDuplicateRes.result);
+      return plaiceholderRes;
+    })
     .catch((err) => {
-      captureException(err, "FETCH_ARTICLES");
+      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
       return null;
     });
 
-  if (!posts) {
+  if (posts === null) {
     return {
       notFound: true,
     };
@@ -95,15 +98,18 @@ export async function getStaticProps({ params }) {
     .query({
       query: FETCH_POSTER,
     })
-    .then(({ data }) =>
-      dateConversion(data.posters.nodes).then((dateRes) =>
-        sort(dateRes).then((sortRes) =>
-          filter(sortRes).then((filterRes) => filterRes),
-        ),
-      ),
-    )
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posters.nodes.length === 0)
+        throw new Error("data.posters.nodes of null");
+
+      const dateRes = await dateConversion(data.posters.nodes);
+      const sortRes = await sort(dateRes);
+      const filterRes = await filter(sortRes);
+      return filterRes;
+    })
     .catch((err) => {
-      captureException(err, "FETCH_POSTER");
+      captureException({ ...err, cstMessage: "FETCH_POSTER" });
       return null;
     });
 

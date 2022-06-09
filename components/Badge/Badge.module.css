@@ -5,6 +5,6 @@
   background-color: var(--badge-background-color, var(--black-80));
   border-radius: 4px;
 
-  /* color: hsl(0deg 0% 100% / 62%);
-  background-color: hsl(0deg 0% 12% / 65%); */
+  /* color: hsl(0deg, 0%, 100%, 62%);
+  background-color: hsl(0deg, 0%, 12%, 65%); */
 }

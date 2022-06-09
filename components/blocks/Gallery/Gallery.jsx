@@ -111,9 +111,9 @@ export const Gallery = ({
         role="button"
         tabIndex="0">
         <div
-          style={{
-            backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
-          }}
+          // style={{
+          //   backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
+          // }}
           className={classNames(
             classes.container,
             classes[`container_isZoom_${zoom}`],

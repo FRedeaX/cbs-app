@@ -2,11 +2,12 @@
 .block {
   --button-text-align: left;
   --submenu-border-radius: 12px;
+  --header-border-height: 1px;
 
   z-index: 3;
   font-size: 15px;
   background-color: var(--bg-white-95);
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: var(--header-border-height) solid #dbdbdb;
 }
 
 .position {
@@ -48,27 +49,26 @@
   font-size: 13px;
 }
 
-/* .secondary > ul > li {
-  font-size: 13px;
-} */
-
 /*
  *  desktop
  */
 @media screen and (min-width: 951px) {
   .position--hidden {
-    transform: translateY(-101px);
+    transform: translateY(
+      calc(var(--header-desktop-height) * -1 - var(--header-border-height))
+    );
   }
 
   .logo {
-    width: 80px;
-    min-width: 80px;
+    width: calc(var(--header-desktop-height) - 20px);
+    min-width: calc(var(--header-desktop-height) - 20px);
   }
 
   .menu {
     --icon-display: none;
 
-    width: calc(100% - 86px);
+    /* width: calc(100% - 86px); */
+    width: 100%;
     margin: 16px 0 0 6px;
   }
 
@@ -81,6 +81,14 @@
     text-align: end;
   }
 
+  .secondary .search {
+    width: 100%;
+    max-width: 700px;
+    margin-right: 20px;
+    padding: 4px 0 0 6px;
+    text-align: left;
+  }
+
   .mobile {
     display: none;
   }
@@ -91,17 +99,19 @@
  */
 @media screen and (max-width: 950px) {
   .position--hidden {
-    transform: translateY(-81px);
+    transform: translateY(
+      calc(var(--header-mobile-height) * -1 - var(--header-border-height))
+    );
   }
 
   .logo {
-    width: 60px;
-    min-width: 60px;
+    width: calc(var(--header-mobile-height) - 20px);
+    min-width: calc(var(--header-mobile-height) - 20px);
   }
 
   .menu {
     position: fixed;
-    top: 80px;
+    top: var(--header-mobile-height);
     right: 0;
     bottom: 0;
     width: 300px;
@@ -126,6 +136,7 @@
     width: 55%;
   }
 
+  .secondary .search,
   .Social_desktope {
     display: none !important;
   }
@@ -134,10 +145,18 @@
     display: flex;
   }
 
+  .mobile .search {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+
   .controls_button {
     right: -8px;
     width: 40px;
     height: 40px;
+    outline: initial;
   }
 
   .inner {

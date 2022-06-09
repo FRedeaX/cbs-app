@@ -1,7 +1,7 @@
 const removeDuplicateTag = async (data) => {
   const arrTags = [];
   const result = [];
-  if (!data) return { arrTags, result };
+  if (data && data.length === 0) return { arrTags, result };
 
   data.forEach((post) => {
     const tags = post.tags.nodes[0];

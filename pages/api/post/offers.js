@@ -1,5 +1,4 @@
 import { captureException } from "@sentry/nextjs";
-
 import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
 import { plaiceholder } from "../../../helpers/backend";
 import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routers/Post/Post";
@@ -40,7 +39,10 @@ export default async function offers(req, res) {
             id,
           },
         })
-        .then(({ data: { post } }) => {
+        .then(({ data: { post }, error }) => {
+          if (error !== undefined) throw new Error(error.message);
+          if (post === null) throw new Error("data.post of null");
+
           const date = new Date(post.date);
           return {
             notIn: post.postId,
@@ -59,9 +61,27 @@ export default async function offers(req, res) {
           };
         })
         .catch((err) => {
-          captureException(err, "API_OFFERS_GET_MINIMUM_DATA_FOR_OFFER");
-          return null;
+          captureException({
+            ...err,
+            cstMessage: "API_OFFERS_GET_MINIMUM_DATA_FOR_OFFER",
+          });
+          return {
+            notIn: null,
+            keywords: "",
+            categoryIn: [],
+            tagIn: "",
+            dateQuery: {},
+          };
         });
+
+      if (
+        notIn === null &&
+        keywords === "" &&
+        categoryIn.length === 0 &&
+        tagIn === ""
+      ) {
+        res.status(500).json({ message: "minimum data for offer is null" });
+      }
 
       const postListByCategory = await client
         .query({
@@ -72,10 +92,16 @@ export default async function offers(req, res) {
             dateQuery,
           },
         })
-        .then(({ data }) => plaiceholder(data.posts.nodes))
+        .then(({ data, error }) => {
+          if (error !== undefined) throw new Error(error.message);
+          if (data.posts.nodes.length === 0)
+            throw new Error("data.posts.nodes of null");
+
+          return plaiceholder(data.posts.nodes);
+        })
         .catch((err) => {
-          captureException(err, "API_OFFERS_FETCH_ARTICLES");
-          return null;
+          captureException({ ...err, cstMessage: "API_OFFERS_FETCH_ARTICLES" });
+          return [];
         });
 
       let similarPostList = null;
@@ -89,18 +115,21 @@ export default async function offers(req, res) {
               search: keywords,
             },
           })
-          .then(({ data }) => plaiceholder(data.posts.nodes))
+          .then(({ data, error }) => {
+            if (error !== undefined) throw new Error(error.message);
+            if (data.posts.nodes.length === 0)
+              throw new Error("data.posts.nodes of null");
+
+            return plaiceholder(data.posts.nodes);
+          })
           .catch((err) => {
-            captureException(err, "API_OFFERS_FETCH_ARTICLES");
-            return null;
+            captureException({
+              ...err,
+              cstMessage: "API_OFFERS_FETCH_ARTICLES",
+            });
+            return [];
           });
       }
-
-      // .then((p) => p))
-      //   .catch((err) => {
-      //     captureException(err, "API_FETCH_ARTICLES");
-      //     return null;
-      //   });
 
       res.status(200).json({
         data: JSON.stringify({
@@ -110,6 +139,7 @@ export default async function offers(req, res) {
         }),
       });
     } catch (error) {
+      captureException({ ...error, cstMessage: "ERR_IDs" });
       res.status(500).json({ message: "ERR_ID", error });
     }
   } else res.status(500).end("query not found");

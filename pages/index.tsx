@@ -1,14 +1,16 @@
-import type { GetStaticProps, NextPage } from "next";
 import { captureException } from "@sentry/nextjs";
-
+import type { GetStaticProps, NextPage } from "next";
 import Head from "../components/Head/Head";
 import HomePage from "../components/Pages/HomePage/HomePage";
+import {
+  FETCH_POSTER,
+  IPosters,
+} from "../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
 import Layout from "../components/UI/Layout/Layout";
-import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import {
   getMenu,
   paginationLoad,
@@ -21,7 +23,7 @@ import { RKEY_POSTS } from "../store/redis/redisKeys";
 
 interface IProps {
   menu: Array<object>;
-  posters: Array<object>;
+  posters: IPosters;
   posts: Array<object>;
   pages: number;
 }
@@ -29,6 +31,7 @@ interface IProps {
 const Home: NextPage<IProps> = ({ menu, posters, posts, pages }) => (
   <Layout menu={menu} paddingSides={0}>
     <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
+    {/* {console.log(posters)} */}
     <HomePage
       posters={posters}
       posts={posts}
@@ -49,7 +52,23 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => data);
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posts.nodes.length === 0)
+        throw new Error("data.posts.nodes of null");
+
+      return data;
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
+      return null;
+    });
+
+  if (dataPosts === null) {
+    return {
+      notFound: true,
+    };
+  }
 
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes)
     .then((nodes) => plaiceholder(nodes.result).then((p) => p))
@@ -74,15 +93,18 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       query: FETCH_POSTER,
       fetchPolicy: "network-only",
     })
-    .then(({ data }) =>
-      dateConversion(data.posters.nodes).then((dateRes) =>
-        sort(dateRes).then((sortRes) =>
-          filter(sortRes).then((filterRes) => filterRes),
-        ),
-      ),
-    )
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.posters.nodes.length === 0)
+        throw new Error("data.posters.nodes of null");
+
+      const dateRes = await dateConversion(data.posters.nodes);
+      const sortRes = await sort(dateRes);
+      const filterRes = await filter(sortRes);
+      return filterRes;
+    })
     .catch((err) => {
-      captureException(err);
+      captureException({ ...err, cstMessage: "FETCH_POSTER" });
       return null;
     });
 

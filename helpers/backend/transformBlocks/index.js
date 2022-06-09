@@ -2,15 +2,15 @@
 // const sizeOf = require("image-size");
 import https from "https";
 import sizeOf from "image-size";
-
 import removeBackslash from "../removeBackslash";
 
-const addAttributes = (block, data) => ({
+const addAttributes = (block, attributes, args) => ({
   ...block,
   attributes: {
     ...block.attributes,
-    ...data,
+    ...attributes,
   },
+  ...args,
 });
 
 const getSizeOf = (url) =>
@@ -59,11 +59,9 @@ const transformBlocks = async (blocks) => {
 
   blocks.forEach((block, index) => {
     switch (block.name) {
-      case "core/image":
-      case "core/media-text": {
-        const url = block.attributes.url || block.attributes.mediaUrl;
+      case "core/image": {
         promise.push(
-          getSizeOf(url)
+          getSizeOf(block.attributes.url)
             .then(({ width, height }) => {
               blockList[index] = addAttributes(block, {
                 width,
@@ -77,21 +75,35 @@ const transformBlocks = async (blocks) => {
         break;
       }
 
-      // case "core/media-text": {
-      //   promise.push(
-      //     getSizeOf(block.attributes.mediaUrl)
-      //       .then(({ width, height }) => {
-      //         blockList[index] = addAttributes(block, {
-      //           width,
-      //           height,
-      //         });
-      //       })
-      //       .catch(({ message }) => {
-      //         blockList[index] = { name: `error: ${block.name}`, message };
-      //       }),
-      //   );
-      //   break;
-      // }
+      case "core/media-text": {
+        promise.push(
+          new Promise(async (resolve) => {
+            try {
+              const { width, height } = await getSizeOf(
+                block.attributes.mediaUrl,
+              );
+              const { blocks: innerBlocks } = await transformBlocks(
+                block.innerBlocks,
+              );
+
+              resolve(
+                (blockList[index] = {
+                  ...block,
+                  innerBlocks,
+                  attributes: {
+                    ...block.attributes,
+                    width,
+                    height,
+                  },
+                }),
+              );
+            } catch ({ message }) {
+              blockList[index] = { name: `error: ${block.name}`, message };
+            }
+          }),
+        );
+        break;
+      }
 
       case "core/gallery": {
         const images = [];

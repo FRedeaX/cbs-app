@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import Head from "../components/Head/Head";
 import { FETCH_LIBRARY, Library } from "../components/Pages/Library/Library";
 import Layout from "../components/UI/Layout/Layout";
@@ -23,7 +24,22 @@ export async function getServerSideProps() {
       },
       fetchPolicy: "network-only",
     })
-    .then(({ data }) => transformObject(data.page));
+    .then(async ({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.page === null) throw new Error("data.page of null");
+
+      return await transformObject(data.page);
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_LIBRARY" });
+      return null;
+    });
+
+  if (page === null) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: { menu, page },

@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useIntersectionObserver from "../../helpers/frontend/hooks/useIntersectionObserver";
 
 interface IArgs {
@@ -8,7 +8,9 @@ interface IArgs {
 
 /* eslint-disable no-console */
 export default function useCarusel2(args: IArgs) {
-  const [nodeListRef, { rootRef: scrolledRef }] = useIntersectionObserver({});
+  // const scrolledRef = useRef(null);
+  const [nodeListRef, { rootRef: scrolledRef, rootRefCallback }] =
+    useIntersectionObserver({});
 
   // const scrolledRef = useRef<HTMLDivElement | null>(null);
   const [alreadyScrolled, setAlreadyScrolled] = useState<number>(0);
@@ -23,7 +25,8 @@ export default function useCarusel2(args: IArgs) {
     }
 
     return null;
-  }, [args.itemWidth, scrolledRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args.itemWidth, scrolledRef.current]);
 
   const itemCountOfScreen = useMemo<number | null>(() => {
     if (args?.itemCountOfScreen) return args.itemCountOfScreen;
@@ -37,16 +40,17 @@ export default function useCarusel2(args: IArgs) {
     }
 
     return null;
-  }, [args.itemCountOfScreen, itemWidth, scrolledRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args.itemCountOfScreen, itemWidth, scrolledRef.current]);
 
-  const rootRefCallback = useCallback(
-    (node: ReactNode) => {
-      // console.log("!", node);
+  // const rootRefCallback = useCallback(
+  //   (node: ReactNode) => {
+  //     // console.log("!", node);
 
-      scrolledRef.current = node;
-    },
-    [scrolledRef],
-  );
+  //     scrolledRef.current = node;
+  //   },
+  //   [scrolledRef],
+  // );
 
   // useEffect(() => {
   //   console.log(alreadyScrolled);

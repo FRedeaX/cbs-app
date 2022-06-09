@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import { FETCH_PARENT_URI_PAGES, PageRoot } from "../../components/Pages/Page";
 import Layout from "../../components/UI/Layout/Layout";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
@@ -11,8 +12,18 @@ const Page = ({ menu, page }) => (
 
 export async function getStaticPaths() {
   const paths = await client
-    .query({ query: FETCH_PARENT_URI_PAGES })
-    .then(({ data }) => preparingPaths(data.pages.edges));
+    .query({ query: FETCH_PARENT_URI_PAGES, fetchPolicy: "network-only" })
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.pages.edges.length === 0)
+        throw new Error("data.pages.edges of null");
+
+      return preparingPaths(data.pages.edges);
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+      return [];
+    });
 
   return {
     paths,

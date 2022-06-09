@@ -1,6 +1,3 @@
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import { Box, IconButton } from "@mui/material";
 import classNames from "classnames";
 import {
   Children,
@@ -10,7 +7,10 @@ import {
   ReactNode,
   useCallback,
   useRef,
+  useState,
 } from "react";
+import Button from "../UI/Button/Button";
+import Icon from "../UI/Icon/Icon";
 import classes from "./Carusel2.module.css";
 import useCarusel2 from "./useCarusel2";
 
@@ -26,30 +26,34 @@ const Carusel2: FC<Carusel2Props> = ({
   children,
   itemWidth,
   itemCountOfScreen,
-  isScrollSnap,
-  isButtonsOnSides,
+  isScrollSnap = false,
+  isButtonsOnSides = true,
 }) => {
   const childrenListRef = useRef<Array<ReactNode>>([]);
   // const [isSetChildrenRef, setChildrenRef] = useState<boolean>(false);
-  const [scrolledRef, childrenRef, { onClickHendler, onWellHendler }] =
+  const [scrolledRef, nodeListRef, { onClickHendler, onWellHendler }] =
     useCarusel2({
       itemWidth,
       itemCountOfScreen,
     });
 
+  const [test, settest] = useState(true);
+
+  // срабатывает на каждое нажатие влево/вправо, кроме события скролл
   const setRefs = useCallback(
     (node: ReactNode, index: number): void => {
       if (node === null) return;
 
       childrenListRef.current[index] = node;
-      if (index === Children.count(children) - 1) {
-        childrenRef(childrenListRef.current);
+      if (index === Children.count(children) - 1 && test) {
+        nodeListRef(childrenListRef.current);
         console.log("@@@");
+        settest(false);
       }
 
       // ref.current = node;
     },
-    [children, childrenRef],
+    [children, nodeListRef, test],
   );
 
   const onClickLeftHendler = useCallback(() => {
@@ -71,7 +75,7 @@ const Carusel2: FC<Carusel2Props> = ({
           {Children.map(children, (child, index: number) =>
             cloneElement(child, {
               ref: (ref: never) => {
-                // childrenRef.current[index] = ref;
+                // nodeListRef.current[index] = ref;
                 setRefs(ref, index);
               },
             }),
@@ -79,7 +83,7 @@ const Carusel2: FC<Carusel2Props> = ({
         </div>
       </div>
 
-      <Box
+      {/* <Box
         className={classNames(
           classes.buttonWrapper,
           classes[`buttonWrapper_sides_${isButtonsOnSides}`],
@@ -92,8 +96,8 @@ const Carusel2: FC<Carusel2Props> = ({
           onClick={onClickLeftHendler}>
           <ArrowBackIosRoundedIcon />
         </IconButton>
-      </Box>
-      <Box
+      </Box> */}
+      {/* <div
         className={classNames(
           classes.buttonWrapper,
           classes[`buttonWrapper_sides_${isButtonsOnSides}`],
@@ -101,29 +105,25 @@ const Carusel2: FC<Carusel2Props> = ({
             [classes.buttonWrapper_right]: isButtonsOnSides,
           },
         )}>
-        <IconButton
+        <Button
           className={classNames(classes.button, classes.button_bg)}
-          onClick={onClickRightHendler}>
-          <ArrowForwardIosRoundedIcon />
-        </IconButton>
-      </Box>
+          icon={
+            <span className={classes.button_icon}>
+              <Icon weight="medium" direction="right" />
+            </span>
+          }
+          onClick={onClickRightHendler}
+        />
+      </div> */}
     </div>
   );
 };
 
-Carusel2.defaultProps = {
-  // children: undefined,
-  itemWidth: undefined,
-  itemCountOfScreen: undefined,
-  isScrollSnap: false,
-  isButtonsOnSides: true,
-};
+// function areEqual(prevProps: any, nextProps: any) {
+//   return (
+//     prevProps.children.length === nextProps.children.length
+//     // prevProps.children.isOpen === nextProps.children.isOpen
+//   );
+// }
 
-function areEqual(prevProps: any, nextProps: any) {
-  return (
-    prevProps.children.length === nextProps.children.length
-    // prevProps.children.isOpen === nextProps.children.isOpen
-  );
-}
-
-export default memo(Carusel2, areEqual);
+export default memo(Carusel2);

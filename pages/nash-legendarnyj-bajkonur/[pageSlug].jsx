@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import {
   FETCH_CHILDREN_URI_PAGES,
   PageRoot,
@@ -17,8 +18,19 @@ export async function getStaticPaths() {
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
       variables: { pathname: "nash-legendarnyj-bajkonur" },
+      fetchPolicy: "network-only",
     })
-    .then(({ data }) => preparingPaths(data.page.children.edges));
+    .then(({ data, error }) => {
+      if (error !== undefined) throw new Error(error.message);
+      if (data.page.children.edges.length === 0)
+        throw new Error("data.page.children.edges of null");
+
+      return preparingPaths(data.page.children.edges);
+    })
+    .catch((err) => {
+      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+      return [];
+    });
 
   return {
     paths,
