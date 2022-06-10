@@ -1,11 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 const DEFAULT_ROOT_MARGIN = "0px";
 const DEFAULT_THRESHOLD = [0];
 
 export type IntersectionObserverHookArgs = IntersectionObserverInit;
 
-export type IntersectionObserverHookRefCallbackNode = Element | null;
+export type IntersectionObserverHookRefCallbackNode =
+  | Element
+  | Element[]
+  | null;
 
 export type IntersectionObserverHookRefCallback = (
   node: IntersectionObserverHookRefCallbackNode,
@@ -21,8 +30,8 @@ export type IntersectionObserverHookRootRefCallback = (
 export type IntersectionObserverHookResult = [
   IntersectionObserverHookRefCallback,
   {
-    entry: IntersectionObserverEntry | undefined;
-    rootRef: any;
+    entry: IntersectionObserverEntry | IntersectionObserverEntry[] | undefined;
+    rootRef: IntersectionObserverHookRootRefCallbackNode;
     rootRefCallback: IntersectionObserverHookRootRefCallback;
     // isVisible: boolean;
   },
@@ -36,11 +45,11 @@ function useIntersectionObserver(
   const threshold = args?.threshold ?? DEFAULT_THRESHOLD;
 
   const nodeRef = useRef<IntersectionObserverHookRefCallbackNode>(null);
-  const rootRef = useRef<any>(null);
+  const rootRef = useRef<IntersectionObserverHookRootRefCallbackNode>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const [entry, setEntry] = useState<
-    IntersectionObserverEntry | Array<IntersectionObserverEntry>
+    IntersectionObserverEntry | IntersectionObserverEntry[]
   >();
   // const isVisible = Boolean(entry?.isIntersecting);
 
@@ -53,17 +62,18 @@ function useIntersectionObserver(
 
   const observeCallback = useCallback(
     (
-      newEntry:
-        | IntersectionObserverEntry
-        | IntersectionObserverEntry[]
-        | undefined,
+      newEntry: SetStateAction<
+        IntersectionObserverEntry | IntersectionObserverEntry[] | undefined
+      >,
     ) => {
-      setEntry(newEntry);
+      console.log(newEntry);
+
+      // setEntry(newEntry);
     },
     [],
   );
   const observe = useCallback(() => {
-    const node: any = nodeRef.current;
+    const node = nodeRef.current;
     if (node) {
       const root = rootRef.current;
       const options = { root, rootMargin, threshold };
@@ -78,7 +88,7 @@ function useIntersectionObserver(
       // observer.observe(node[0]);
 
       if (typeof node === "object") {
-        node.forEach((item) => {
+        node.forEach((item: Element) => {
           observer.observe(item);
         });
       } else {
@@ -87,9 +97,7 @@ function useIntersectionObserver(
 
       observerRef.current = observer;
     }
-  }, [rootMargin, threshold]);
-
-  console.log(entry);
+  }, [observeCallback, rootMargin, threshold]);
 
   const initializeObserver = useCallback(() => {
     unobserve();

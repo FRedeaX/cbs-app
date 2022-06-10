@@ -9,8 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-import Button from "../UI/Button/Button";
-import Icon from "../UI/Icon/Icon";
 import classes from "./Carusel2.module.css";
 import useCarusel2 from "./useCarusel2";
 
@@ -119,11 +117,11 @@ const Carusel2: FC<Carusel2Props> = ({
   );
 };
 
-// function areEqual(prevProps: any, nextProps: any) {
-//   return (
-//     prevProps.children.length === nextProps.children.length
-//     // prevProps.children.isOpen === nextProps.children.isOpen
-//   );
-// }
+function areEqual(prevProps: any, nextProps: any) {
+  return (
+    prevProps.children.length === nextProps.children.length
+    // prevProps.children.isOpen === nextProps.children.isOpen
+  );
+}
 
-export default memo(Carusel2);
+export default memo(Carusel2, areEqual);

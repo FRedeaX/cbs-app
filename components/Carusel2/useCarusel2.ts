@@ -9,7 +9,7 @@ interface IArgs {
 /* eslint-disable no-console */
 export default function useCarusel2(args: IArgs) {
   // const scrolledRef = useRef(null);
-  const [nodeListRef, { rootRef: scrolledRef, rootRefCallback }] =
+  const [nodeListRef, { entry, rootRef: scrolledRef, rootRefCallback }] =
     useIntersectionObserver({});
 
   // const scrolledRef = useRef<HTMLDivElement | null>(null);
