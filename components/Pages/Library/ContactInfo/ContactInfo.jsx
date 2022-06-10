@@ -22,12 +22,12 @@ const ContactInfo = ({
     {email && telefon ? (
       <div>
         {email && <Email email={email} cls={classes.link} />}
-        {telefon.tel && <Telefon telefon={telefon} cls={classes.link} />}
+        {telefon && <Telefon telefon={telefon} cls={classes.link} />}
       </div>
     ) : (
       <>
         {email && <Email email={email} cls={classes.link} />}
-        {telefon.tel && <Telefon telefon={telefon} cls={classes.link} />}
+        {telefon && <Telefon telefon={telefon} cls={classes.link} />}
       </>
     )}
   </>
