@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { Heading } from "../../../../blocks/Heading/Heading";
@@ -25,33 +26,36 @@ const Schedule = (props) => {
             className={classNames(classesInfo.title, classes.title)}>
             График работы
           </Heading>
-          <div className={classes.controls}>
-            <LibraryButton
-              href={{
-                pathname: "/biblioteki",
-                query: {
-                  lib: lib || FILIAL_DEFAULT,
-                  schedule: schedule || SCHEDULE_DEFAULT,
-                  holiday: false,
-                },
-              }}
-              isActive={holiday === "false" || holiday === undefined}
-              className={classes.link}>
-              Обычный
-            </LibraryButton>
-            <LibraryButton
-              href={{
-                pathname: "/biblioteki",
-                query: {
-                  lib: lib || FILIAL_DEFAULT,
-                  schedule: schedule || SCHEDULE_DEFAULT,
-                  holiday: true,
-                },
-              }}
-              isActive={holiday === "true"}>
-              Праздничный
-            </LibraryButton>
-          </div>
+          {(props.scheduleSecondary.schedule ||
+            props.scheduleSecondary.scheduleAup) && (
+            <div className={classes.controls}>
+              <LibraryButton
+                href={{
+                  pathname: "/biblioteki",
+                  query: {
+                    lib: lib || FILIAL_DEFAULT,
+                    schedule: schedule || SCHEDULE_DEFAULT,
+                    holiday: false,
+                  },
+                }}
+                isActive={holiday === "false" || holiday === undefined}
+                className={classes.link}>
+                Обычный
+              </LibraryButton>
+              <LibraryButton
+                href={{
+                  pathname: "/biblioteki",
+                  query: {
+                    lib: lib || FILIAL_DEFAULT,
+                    schedule: schedule || SCHEDULE_DEFAULT,
+                    holiday: true,
+                  },
+                }}
+                isActive={holiday === "true"}>
+                Праздничный
+              </LibraryButton>
+            </div>
+          )}
         </div>
 
         <div className={classes.controls}>
