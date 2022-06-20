@@ -1,14 +1,10 @@
+/* eslint-disable no-console */
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import classNames from "classnames";
-import {
-  Children,
-  cloneElement,
-  FC,
-  memo,
-  ReactNode,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import { Children, FC, memo, ReactNode } from "react";
+import CaruselButton from "./Carusel.Button/Carusel.Button";
+import CaruselList from "./Carusel.List";
 import classes from "./Carusel2.module.css";
 import useCarusel2 from "./useCarusel2";
 
@@ -22,104 +18,89 @@ interface Carusel2Props {
 
 const Carusel2: FC<Carusel2Props> = ({
   children,
+  length,
   itemWidth,
   itemCountOfScreen,
   isScrollSnap = false,
   isButtonsOnSides = true,
 }) => {
-  const childrenListRef = useRef<Array<ReactNode>>([]);
-  // const [isSetChildrenRef, setChildrenRef] = useState<boolean>(false);
-  const [scrolledRef, nodeListRef, { onClickHendler, onWellHendler }] =
-    useCarusel2({
-      itemWidth,
-      itemCountOfScreen,
-    });
-
-  const [test, settest] = useState(true);
-
-  // срабатывает на каждое нажатие влево/вправо, кроме события скролл
-  const setRefs = useCallback(
-    (node: ReactNode, index: number): void => {
-      if (node === null) return;
-
-      childrenListRef.current[index] = node;
-      if (index === Children.count(children) - 1 && test) {
-        nodeListRef(childrenListRef.current);
-        console.log("@@@");
-        settest(false);
-      }
-
-      // ref.current = node;
+  const [
+    nodeListRefCallback,
+    {
+      onClickHendler,
+      onKeyDownHendler,
+      onWellHendler,
+      rootRefCallback,
+      isPrev,
+      isNext,
     },
-    [children, nodeListRef, test],
-  );
+  ] = useCarusel2({
+    length: length ?? Children.count(children),
+    itemWidth,
+    itemCountOfScreen,
+  });
 
-  const onClickLeftHendler = useCallback(() => {
-    onClickHendler("prev");
-  }, [onClickHendler]);
-  const onClickRightHendler = useCallback(() => {
-    onClickHendler("next");
-  }, [onClickHendler]);
+  // useEffect(() => {
+  //   rootRefCallback(scrolledRef.current);
+  // }, [rootRefCallback]);
+
+  // useEffect(() => {
+  //   const selector = children[0].props.className.split(" ")[0];
+  //   const childrenList = document.querySelectorAll(`.${selector}`);
+
+  //   const root = scrolledRef.current;
+  //   const options = { root, rootMargin: "0px", threshold: [0.95] };
+
+  //   const observer = new IntersectionObserver((entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         console.log(entry.target.dataset.idx, entry.target.offsetLeft);
+  //       }
+  //     });
+  //   }, options);
+
+  //   childrenList.forEach((element: any) => observer.observe(element));
+  // }, [children]);
+  console.log({ isPrev, isNext });
 
   return (
     <div className={classes.root}>
       <div
-        ref={scrolledRef}
-        onWheelCapture={onWellHendler}
+        ref={rootRefCallback}
+        role="presentation"
+        // onKeyDown={onKeyDownHendler}
+        // onWheelCapture={onWellHendler}
         className={classNames(classes.scrolled, {
           [classes.scrolled_scrollSnap]: isScrollSnap,
         })}>
         <div className={classes.itemList}>
-          {Children.map(children, (child, index: number) =>
-            cloneElement(child, {
-              ref: (ref: never) => {
-                // nodeListRef.current[index] = ref;
-                setRefs(ref, index);
-              },
-            }),
-          )}
+          <CaruselList nodeListRefCallback={nodeListRefCallback}>
+            {children}
+          </CaruselList>
         </div>
       </div>
 
-      {/* <Box
-        className={classNames(
-          classes.buttonWrapper,
-          classes[`buttonWrapper_sides_${isButtonsOnSides}`],
-          {
-            [classes.buttonWrapper_left]: isButtonsOnSides,
-          },
-        )}>
-        <IconButton
-          className={classNames(classes.button, classes.button_bg)}
-          onClick={onClickLeftHendler}>
-          <ArrowBackIosRoundedIcon />
-        </IconButton>
-      </Box> */}
-      {/* <div
-        className={classNames(
-          classes.buttonWrapper,
-          classes[`buttonWrapper_sides_${isButtonsOnSides}`],
-          {
-            [classes.buttonWrapper_right]: isButtonsOnSides,
-          },
-        )}>
-        <Button
-          className={classNames(classes.button, classes.button_bg)}
-          icon={
-            <span className={classes.button_icon}>
-              <Icon weight="medium" direction="right" />
-            </span>
-          }
-          onClick={onClickRightHendler}
-        />
-      </div> */}
+      <CaruselButton
+        direction="prev"
+        isActive={isPrev}
+        isButtonsOnSides={isButtonsOnSides}
+        onClick={onClickHendler}>
+        <ArrowBackIosRoundedIcon />
+      </CaruselButton>
+      <CaruselButton
+        direction="next"
+        isActive={isNext}
+        isButtonsOnSides={isButtonsOnSides}
+        onClick={onClickHendler}>
+        <ArrowForwardIosRoundedIcon />
+      </CaruselButton>
     </div>
   );
 };
 
-function areEqual(prevProps: any, nextProps: any) {
+function areEqual(prevProps: Carusel2Props, nextProps: Carusel2Props) {
   return (
-    prevProps.children.length === nextProps.children.length
+    Children.count(prevProps.children) === Children.count(nextProps.children)
     // prevProps.children.isOpen === nextProps.children.isOpen
   );
 }
