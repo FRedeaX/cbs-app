@@ -1,14 +1,13 @@
 import classNames from "classnames";
 import { memo } from "react";
 
-import Carousel from "../../../Carusel/Carousel";
 import { Heading } from "../../../blocks/Heading/Heading";
+import Carousel2 from "../../../Carusel2/Carusel2";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
 
 const GroupCards = ({ data, title, description, length, isClamp = false }) => (
   <div className={classes.container}>
-    {/* {console.log("render GroupCards")} */}
     {(title || description) && (
       <div className={classes.head}>
         {title && (
@@ -21,15 +20,16 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
         )}
       </div>
     )}
-    <Carousel
+    {console.log(data[0].title)}
+    <Carousel2
       length={length}
       itemWidth={288}
       itemMargin={5}
+      isOffsetSides
       className={classNames({
-        [classes.count_1]: length === 1,
-        [classes.count_2]: length === 2,
-        [classes.count_3]: length === 3,
-      })}>
+        [classes[`count_${length}`]]: length < 4,
+      })}
+      forceUpdate={data[0].title}>
       {data.map((post, index) => (
         <Card
           key={post.id}
@@ -41,7 +41,7 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
           imagePriority={index < 3}
         />
       ))}
-    </Carousel>
+    </Carousel2>
   </div>
 );
 

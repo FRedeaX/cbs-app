@@ -1,0 +1,54 @@
+.root {
+  z-index: 1;
+}
+
+.root_visibility {
+  transition: opacity 0.2s var(--animation-ease-out);
+}
+
+.root_visibility_false {
+  opacity: var(--carusel-button-visibility, 0);
+  pointer-events: none;
+}
+
+.root_visibility_true {
+  opacity: 1;
+}
+
+.root_sides_true {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.root_prev {
+  left: var(--carusel-button-left, 0);
+}
+
+.root_next {
+  right: var(--carusel-button-right, 0);
+}
+
+.iconButton {
+  width: var(--carusel-button-width, 44px);
+  height: var(--carusel-button-height, 44px);
+  transition: transform 0.15s var(--animation-ease-out);
+}
+
+.root_sides_true:hover .iconButton_animation {
+  transform: scale(1.1);
+}
+
+.iconButton[disabled] {
+  cursor: default;
+  pointer-events: initial;
+}
+
+.root_sides_true .iconButton_bg {
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: hsl(222deg, 13%, 28%, 20%) 0 1px 12px 0;
+}

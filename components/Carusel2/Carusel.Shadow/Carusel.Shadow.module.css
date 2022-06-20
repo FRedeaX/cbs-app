@@ -1,0 +1,29 @@
+.root_visibility {
+  transition: opacity 0.2s var(--animation-ease-out);
+}
+
+.root_visibility_false {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.root_visibility_true {
+  opacity: 1;
+}
+
+.root {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 20px;
+  box-shadow: rgba(0, 0, 0, 20%) -10px 0 12px -6px;
+}
+
+.root_prev {
+  left: -20px;
+  transform: scaleX(-1);
+}
+
+.root_next {
+  right: -20px;
+}

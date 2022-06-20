@@ -112,6 +112,7 @@
   justify-content: flex-end;
   margin: var(--carousel-controls-margin, 0);
 }
+
 .controls-center {
   --button-width: var(--carousel-button-width, 56px);
   --button-height: var(--carousel-button-height, 44px);

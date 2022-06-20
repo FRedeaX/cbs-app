@@ -25,8 +25,8 @@ import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
 // import { useOnScreen } from "../../helpers/frontend";
-import classes from "./Post.module.css";
 import Offer from "./offer/Offer";
+import classes from "./Post.module.css";
 import usePost from "./usePost";
 
 export const Post = ({
@@ -66,7 +66,6 @@ export const Post = ({
         onClick={hendeToTop}>
         <span className={classes["button_to-top_text"]}>Наверх</span>
       </Button> */}
-
       <Article
         title={title}
         categories={categories.nodes}
@@ -76,12 +75,12 @@ export const Post = ({
         image={image}
       />
 
-      {offerList.length > 0 && (
+      {offerList !== null && (
         <div className={classes.feed}>
           <Offer
-            postListByCategory={offerList[0].postListByCategory}
-            similarPostList={offerList[0].similarPostList}
-            categories={categories.nodes}
+            postListByCategory={offerList.postListByCategory}
+            similarPostList={offerList.similarPostList}
+            categories={categories.nodes.map((c) => c.name)}
             // nextPost={nextPost}
           />
         </div>

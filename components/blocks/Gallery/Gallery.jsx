@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+
 import { createMarkup, delay } from "../../../helpers";
 import {
   GET_OVERLAY_FRAGMENT,
@@ -9,7 +10,7 @@ import {
 } from "../../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Badge from "../../Badge/Badge";
-import Carousel2 from "../../Carusel2/Carusel2";
+import Carousel from "../../Carusel/Carousel";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Gallery.module.css";
@@ -111,9 +112,9 @@ export const Gallery = ({
         role="button"
         tabIndex="0">
         <div
-          // style={{
-          //   backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
-          // }}
+          style={{
+            backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
+          }}
           className={classNames(
             classes.container,
             classes[`container_isZoom_${zoom}`],
@@ -121,14 +122,14 @@ export const Gallery = ({
           {/* <div className={classes.loader} aria-hidden="true">
             <Loader2 isLoading />
           </div> */}
-          <Carousel2
+          <Carousel
             isScrollSnap
             isShadow={false}
             isOpen={zoom}
             itemCountOfScreen={1}
             length={images.length}
             setCount={setCount}>
-            {images.map((image) => (
+            {images.map((image, index) => (
               // <div>
               <figure
                 key={image.id}
@@ -147,7 +148,7 @@ export const Gallery = ({
                   src={image.url}
                   width={image.width}
                   height={image.height}
-                  priority={zoom}
+                  loading={index === 0 || zoom ? "eager" : "lazy"}
                   objectFit="contain"
                 />
                 <figcaption
@@ -156,7 +157,7 @@ export const Gallery = ({
               </figure>
               // </div>
             ))}
-          </Carousel2>
+          </Carousel>
           {zoom === false && (
             <Badge
               className={classes.badge}

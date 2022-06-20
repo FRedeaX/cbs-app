@@ -12,7 +12,10 @@
     */
 
     /* stylelint-disable-next-line prettier/prettier */
-    width: calc(100% - var(--group-cards-container-margin, 10px) - var(--group-cards-container-margin, 10px));
+    width: calc(
+      100% - var(--group-cards-container-margin, 10px) -
+        var(--group-cards-container-margin, 10px)
+    );
     margin: var(--group-cards-container-margin, 10px);
   }
 }
@@ -21,7 +24,10 @@
   .container {
     /* При форматировании на несколько строк DevTools перестают подсвечивать переменные */
     /* stylelint-disable-next-line prettier/prettier */
-    --carousel-controls-margin: var(--group-cards-carousel-controls-margin, 0 -30px);
+    --carousel-controls-margin: var(
+      --group-cards-carousel-controls-margin,
+      0 -30px
+    );
     --carousel-button-width: var(--group-cards-carousel-button-width, 66px);
     --carousel-controls-center-padding: 0;
     --carousel-controls-width: var(
@@ -29,6 +35,10 @@
       calc(100% + 60px)
     );
   }
+}
+
+.container {
+  --carusel-offset-bottom: 8px;
 }
 
 .head {
@@ -79,6 +89,11 @@
 } */
 
 @media screen and (min-width: 769px) {
+  .container {
+    --group-cards-translate-y: -6px;
+    --carusel-offset-top: calc(var(--group-cards-translate-y) * -1);
+  }
+
   .article {
     transition-timing-function: cubic-bezier(0.21, 0.01, 0.3, 0.07);
     transition-duration: 0.3s;
@@ -86,7 +101,7 @@
   }
 
   .article:hover {
-    transform: translateY(-6px);
+    transform: translateY(var(--group-cards-translate-y));
   }
 }
 

@@ -23,7 +23,7 @@ const usePost = () => {
     });
   };
 
-  const [offerList, setOfferListt] = useState([]);
+  const [offerList, setOfferListt] = useState(null);
 
   // {
   //   nextPost: null,
@@ -39,7 +39,7 @@ const usePost = () => {
       if (response.ok === false)
         throw new Error(`status: ${response.status}, message: ${json.message}`);
 
-      setOfferListt((prev) => [...prev, JSON.parse(json.data)]);
+      setOfferListt(JSON.parse(json.data));
     } catch (error) {
       console.error(error);
     }

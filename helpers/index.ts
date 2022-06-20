@@ -3,6 +3,7 @@ import createMarkup from "./createMarkup";
 import delay from "./delay";
 import isFront from "./isFront";
 import lineClamp from "./lineClamp";
+import * as localStorage from "./localStorage";
 import throttler from "./throttler";
 import verticalAlignToFlext from "./verticalAlignToFlext";
 
@@ -14,6 +15,7 @@ export {
   lineClamp,
   throttler,
   verticalAlignToFlext,
+  localStorage,
 };
 
 // export const scrollbarWidth = () => {

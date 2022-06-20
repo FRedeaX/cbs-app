@@ -1,6 +1,5 @@
-/* eslint-disable react/display-name */
 import classNames from "classnames";
-import { forwardRef, LegacyRef, memo, ReactNode } from "react";
+import { forwardRef, memo, ReactNode } from "react";
 
 import classes from "./Button.module.css";
 
@@ -140,4 +139,5 @@ const Button = forwardRef<HTMLButtonElement | any, IButton>(
   },
 );
 
+Button.displayName = "Button";
 export default memo(Button);

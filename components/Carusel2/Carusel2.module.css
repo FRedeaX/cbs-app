@@ -1,5 +1,8 @@
 .root {
+  position: relative;
   width: 100%;
+  margin-top: calc(var(--carusel-offset-top, 0) * -1);
+  margin-bottom: calc(var(--carusel-offset-bottom, 0) * -1);
 
   /* height: 500px; */
   overflow: hidden;
@@ -8,7 +11,9 @@
 .scrolled {
   overflow-x: scroll;
   overflow-y: hidden;
-  white-space: nowrap;
+
+  /* white-space: nowrap; */
+
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -26,47 +31,6 @@
 
 .itemList {
   display: flex;
-}
-
-.buttonWrapper_sides_true {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  margin: auto 6px;
-}
-
-.buttonWrapper_left {
-  left: var(--carusel-button-left, 0);
-}
-
-.buttonWrapper_right {
-  right: var(--carusel-button-right, 0);
-}
-
-.button {
-  width: var(--carusel-button-width, 44px);
-  height: var(--carusel-button-height, 44px);
-  transition: transform 0.15s cubic-bezier(0.18, 0.24, 0.18, 0.71);
-}
-
-.button:hover {
-  transform: scale(1.1);
-}
-
-.buttonWrapper_sides_true .button:hover {
-  background-color: #fff;
-}
-
-.buttonWrapper_sides_true .button_bg {
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: hsl(222deg, 13%, 28%, 20%) 0 1px 12px 0;
-}
-
-@media screen and (width <= 720px) {
-  .buttonWrapper {
-    display: none;
-  }
+  padding-top: var(--carusel-offset-top, 0);
+  padding-bottom: var(--carusel-offset-bottom, 0);
 }
