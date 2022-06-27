@@ -39,12 +39,12 @@ const CaruselButton: FC<CaruselButtonProps> = ({
           [classes[`root_${direction}`]]: isButtonsOnSides,
         },
       )}
+      onKeyDown={onKeyDown}
       onClick={onClickHendler}>
       <IconButton
         className={classNames(classes.iconButton, classes.iconButton_bg, {
           [classes.iconButton_animation]: isActive,
         })}
-        onKeyDown={onKeyDown}
         disabled={!isActive}>
         {children}
       </IconButton>
