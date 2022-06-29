@@ -11,7 +11,7 @@ const TAB_SIMILAR = "similarPostList";
 const TAB_CATEGORY = "postListByCategory";
 
 const Offer = forwardRef(
-  ({ similarPostList, postListByCategory, categories }, ref) => {
+  ({ id, similarPostList, postListByCategory, categories }, ref) => {
     const [value, setValue] = useState(
       similarPostList?.length > 0 ? TAB_SIMILAR : TAB_CATEGORY,
     );
@@ -61,6 +61,7 @@ const Offer = forwardRef(
               </Box>
               <TabPanel value={TAB_SIMILAR} sx={{ padding: 0 }}>
                 <GroupCards
+                  id={`${id}${TAB_SIMILAR[0]}`}
                   data={similarPostList}
                   length={similarPostList?.length}
                   isClamp
@@ -68,6 +69,7 @@ const Offer = forwardRef(
               </TabPanel>
               <TabPanel value={TAB_CATEGORY} sx={{ padding: 0 }}>
                 <GroupCards
+                  id={`${id}${TAB_CATEGORY[10]}`}
                   data={postListByCategory}
                   length={postListByCategory?.length}
                   isClamp

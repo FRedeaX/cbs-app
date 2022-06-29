@@ -25,8 +25,9 @@ import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
 // import { useOnScreen } from "../../helpers/frontend";
-import Offer from "./offer/Offer";
+import { getShortID } from "../../helpers";
 import classes from "./Post.module.css";
+import Offer from "./offer/Offer";
 import usePost from "./usePost";
 
 export const Post = ({
@@ -78,6 +79,7 @@ export const Post = ({
       {offerList !== null && (
         <div className={classes.feed}>
           <Offer
+            id={getShortID(id)}
             postListByCategory={offerList.postListByCategory}
             similarPostList={offerList.similarPostList}
             categories={categories.nodes.map((c) => c.name)}

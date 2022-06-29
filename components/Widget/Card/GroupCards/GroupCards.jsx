@@ -1,12 +1,20 @@
 import classNames from "classnames";
 import { memo } from "react";
 
+import { getShortID } from "../../../../helpers";
+import Carusel2 from "../../../Carusel2/Carusel2";
 import { Heading } from "../../../blocks/Heading/Heading";
-import Carousel2 from "../../../Carusel2/Carusel2";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
 
-const GroupCards = ({ data, title, description, length, isClamp = false }) => (
+const GroupCards = ({
+  id = "",
+  data,
+  title,
+  description,
+  length,
+  isClamp = false,
+}) => (
   <div className={classes.container}>
     {(title || description) && (
       <div className={classes.head}>
@@ -20,8 +28,8 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
         )}
       </div>
     )}
-    {console.log(data[0].title)}
-    <Carousel2
+
+    <Carusel2
       length={length}
       itemWidth={288}
       itemMargin={5}
@@ -29,7 +37,7 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
       className={classNames({
         [classes[`count_${length}`]]: length < 4,
       })}
-      forceUpdate={data[0].title}>
+      id={`${id}${getShortID(data[0].id)}`}>
       {data.map((post, index) => (
         <Card
           key={post.id}
@@ -41,7 +49,7 @@ const GroupCards = ({ data, title, description, length, isClamp = false }) => (
           imagePriority={index < 3}
         />
       ))}
-    </Carousel2>
+    </Carusel2>
   </div>
 );
 
