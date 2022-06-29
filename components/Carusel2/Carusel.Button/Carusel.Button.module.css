@@ -48,7 +48,7 @@
 }
 
 .root_sides_true .iconButton_bg {
-  background-color: #fff;
+  background-color: #fff !important;
   border-radius: 50%;
   box-shadow: hsl(222deg, 13%, 28%, 20%) 0 1px 12px 0;
 }
