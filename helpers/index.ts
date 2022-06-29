@@ -1,6 +1,7 @@
 import asyncLoadScript from "./asyncLoadScript";
 import createMarkup from "./createMarkup";
 import delay from "./delay";
+import getShortID from "./getShortID";
 import isFront from "./isFront";
 import lineClamp from "./lineClamp";
 import * as localStorage from "./localStorage";
@@ -16,6 +17,7 @@ export {
   throttler,
   verticalAlignToFlext,
   localStorage,
+  getShortID,
 };
 
 // export const scrollbarWidth = () => {

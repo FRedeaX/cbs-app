@@ -84,8 +84,6 @@ function useIntersectionObserver(
   }, [callback, rootMargin, threshold]);
 
   const initializeObserver = useCallback(() => {
-    console.log("__obs__");
-
     unobserve();
     observe();
   }, [observe, unobserve]);

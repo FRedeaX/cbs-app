@@ -2,11 +2,12 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { Fade } from "@mui/material";
 import classNames from "classnames";
-import { Children, FC, memo, ReactElement } from "react";
+import { Children, FC, ReactElement, memo } from "react";
+
+import classes from "./Carusel2.module.css";
 import CaruselButton from "./Carusel.Button/Carusel.Button";
 import CaruselList from "./Carusel.List";
 import CaruselShadow from "./Carusel.Shadow/Carusel.Shadow";
-import classes from "./Carusel2.module.css";
 import useCarusel2 from "./useCarusel2";
 
 interface Carusel2Props {
@@ -19,12 +20,12 @@ interface Carusel2Props {
   isOffsetSides: boolean;
   isShadow: boolean;
   className: string;
-  forceUpdate: string;
+  id?: string;
 }
 
 const Carusel2: FC<Carusel2Props> = ({
   children,
-  length,
+  length = Children.count(children),
   itemWidth = 0,
   itemMargin = 0,
   isScrollSnap = false,
@@ -32,7 +33,7 @@ const Carusel2: FC<Carusel2Props> = ({
   isOffsetSides = false,
   isShadow = true,
   className,
-  forceUpdate,
+  id,
 }) => {
   const [
     nodeListRefCallback,
@@ -45,14 +46,14 @@ const Carusel2: FC<Carusel2Props> = ({
       isDisplayNavigation,
     },
   ] = useCarusel2({
-    length: length ?? Children.count(children),
+    length,
     itemWidth,
     itemMargin,
     isOffsetSides,
-    id: children[0].key as string,
+    id: id || (children[0].key as string),
   });
 
-  console.log("__Carusel2__", children[0].key, children[0].props.data.title);
+  // console.log("__Carusel2__", children, children[0].props.data.title);
 
   return (
     <div className={classes.root}>

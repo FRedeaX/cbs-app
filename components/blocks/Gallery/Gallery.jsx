@@ -1,12 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 import { createMarkup, delay } from "../../../helpers";
 import {
   GET_OVERLAY_FRAGMENT,
-  overlayVar
+  overlayVar,
 } from "../../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Badge from "../../Badge/Badge";
@@ -14,7 +14,7 @@ import Carousel from "../../Carusel/Carousel";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Gallery.module.css";
-// import useExtractColors from "./useExtractColors";
+import useExtractColors from "./useExtractColors";
 
 export const galleryBlockGQL = {
   fragments: gql`
@@ -46,11 +46,11 @@ export const galleryBlockGQL = {
 //   );
 // }
 
-function areEqual(prevProps, nextProps) {
-  console.log(prevProps.images.length, nextProps.images.length);
+// function areEqual(prevProps, nextProps) {
+//   console.log(prevProps.images.length, nextProps.images.length);
 
-  return prevProps.images.length === nextProps.images.length;
-}
+//   return prevProps.images.length === nextProps.images.length;
+// }
 
 export const Gallery = memo(
   ({
@@ -59,11 +59,11 @@ export const Gallery = memo(
     images,
     // ref,
   }) => {
-    // const { getColors, extractColors } = useExtractColors();
-    // useEffect(() => {
-    //   const ids = images.map((img) => img.id);
-    //   getColors(ids);
-    // }, [getColors, images]);
+    const { getColors, extractColors } = useExtractColors();
+    useEffect(() => {
+      const ids = images.map((img) => img.id);
+      getColors(ids);
+    }, [getColors, images]);
 
     // useEffect(() => {
     //   console.log(extractColors);
@@ -89,136 +89,104 @@ export const Gallery = memo(
       setZoom(true);
     };
 
-    // useEffect(() => {
-    //   if (
-    //     (!state.overlay.isOpen ||
-    //       state.scrollY !== positionScrollYRefVar.current) &&
-    //     zoom
-    //   ) {
-    //     if (state.scrollY !== positionScrollYRefVar.current)
-    //       overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-    //     setZoom(false);
-    //   }
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [ state?.overlay.isOpen, state?.scrollY ]);
+    useEffect(() => {
+      if (
+        (!state.overlay.isOpen ||
+          state.scrollY !== positionScrollYRefVar.current) &&
+        zoom
+      ) {
+        if (state.scrollY !== positionScrollYRefVar.current)
+          overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
+        setZoom(false);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state?.overlay.isOpen, state?.scrollY]);
 
-  return (
-    <div className={classNames(classes.block, className)}>
-      <figure
-        ref={figureRef}
-        className={classNames(
-          classes.wrapper,
-          classes[`wrapper_isZoom_${zoom}`],
-        )}
-        style={{ zIndex: zoom ? "4" : delay(250).then("") }}
-        onClick={hendleClick}
-        onKeyPress={hendleClick}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        role="button"
-        tabIndex="0">
-        <div
-          style={{
-            backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
-          }}
+    return (
+      <div className={classNames(classes.block, className)}>
+        <figure
+          ref={figureRef}
           className={classNames(
             classes.wrapper,
             classes[`wrapper_isZoom_${zoom}`],
           )}
-          // style={{ zIndex: zoom ? "4" : delay(250).then("") }}
+          style={{ zIndex: zoom ? "4" : delay(250).then("") }}
           onClick={hendleClick}
           onKeyPress={hendleClick}
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
           role="button"
           tabIndex="0">
           <div
-            // style={{
-            //   backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
-            // }}
             className={classNames(
-              classes.container,
-              classes[`container_isZoom_${zoom}`],
-            )}>
-            {/* <div className={classes.loader} aria-hidden="true">
-            <Loader2 isLoading />
-          </div> */}
-          <Carousel
-            isScrollSnap
-            isShadow={false}
-            isOpen={zoom}
-            itemCountOfScreen={1}
-            length={images.length}
-            setCount={setCount}>
-            {images.map((image, index) => (
-              // <div>
-              <figure
-                key={image.id}
-                // style={{
-                //   minWidth: "100%",
-                //   margin: "auto",
-                //   maxHeight: "94vh",
-                //   scrollSnapAlign: "start",
-                // }}
-                className={classNames(
-                  classes.image,
-                  classes[`image_isZoom_${zoom}`],
-                )}>
-                <Image
-                  alt={image.alt}
-                  src={image.url}
-                  width={image.width}
-                  height={image.height}
-                  loading={index === 0 || zoom ? "eager" : "lazy"}
-                  objectFit="contain"
-                />
-                <figcaption
-                  dangerouslySetInnerHTML={createMarkup(image.caption)}
-                />
-              </figure>
-              // </div>
-            ))}
-          </Carousel>
-          {zoom === false && (
-            <Badge
-              className={classes.badge}
-              count={count + 1}
-              length={images.length}
-              setCount={setCount}>
-              {images.map((image, index) => (
-                <figure
-                  key={image.id}
-                  data-idx={index + 1}
-                  className={classNames(
-                    classes.image,
-                    classes[`image_isZoom_${zoom}`],
-                  )}>
-                  <Image
-                    alt={image.alt}
-                    src={image.url}
-                    width={image.width}
-                    height={image.height}
-                    // priority={index === 0}
-                    loading={index === 0 || zoom ? "eager" : "lazy"}
-                    objectFit="contain"
-                  />
-                  <figcaption
-                    dangerouslySetInnerHTML={createMarkup(image.caption)}
-                  />
-                </figure>
-              ))}
-            </Carousel2>
-            {zoom === false && (
-              <Badge
-                className={classes.badge}
-                count={count + 1}
-                length={images.length}
-              />
+              classes.wrapper,
+              classes[`wrapper_isZoom_${zoom}`],
             )}
+            // style={{ zIndex: zoom ? "4" : delay(250).then("") }}
+            onClick={hendleClick}
+            onKeyPress={hendleClick}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+            role="button"
+            tabIndex="0">
+            <div
+              style={{
+                backgroundColor: `rgba(${extractColors[count]?.LightMuted.rgb}, 0.8)`,
+              }}
+              className={classNames(
+                classes.container,
+                classes[`container_isZoom_${zoom}`],
+              )}>
+              {/* <div className={classes.loader} aria-hidden="true">
+              <Loader2 isLoading />
+            </div> */}
+              <Carousel
+                isScrollSnap
+                isShadow={false}
+                isOpen={zoom}
+                itemCountOfScreen={1}
+                length={images.length}
+                setCount={setCount}>
+                {images.map((image, index) => (
+                  <figure
+                    key={image.id}
+                    // style={{
+                    //   minWidth: "100%",
+                    //   margin: "auto",
+                    //   maxHeight: "94vh",
+                    //   scrollSnapAlign: "start",
+                    // }}
+                    className={classNames(
+                      classes.image,
+                      classes[`image_isZoom_${zoom}`],
+                    )}>
+                    <Image
+                      alt={image.alt}
+                      src={image.url}
+                      width={image.width}
+                      height={image.height}
+                      loading={index === 0 || zoom ? "eager" : "lazy"}
+                      objectFit="contain"
+                    />
+                    <figcaption
+                      dangerouslySetInnerHTML={createMarkup(image.caption)}
+                    />
+                  </figure>
+                ))}
+              </Carousel>
+              {zoom === false && (
+                <Badge
+                  className={classes.badge}
+                  count={count + 1}
+                  length={images.length}
+                />
+              )}
+            </div>
+            <figcaption
+              className={classes.caption}
+              dangerouslySetInnerHTML={createMarkup(caption)}
+            />
           </div>
-          <figcaption
-            className={classes.caption}
-            dangerouslySetInnerHTML={createMarkup(caption)}
-          />
         </figure>
+
         <div
           className={classNames(
             classes.controls,

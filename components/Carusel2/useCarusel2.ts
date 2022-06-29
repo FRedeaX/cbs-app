@@ -1,5 +1,6 @@
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { isBrowser } from "react-device-detect";
+
 import { localStorage } from "../../helpers";
 import useIntersectionObserver, {
   IntersectionObserverHookRefCallback,
@@ -60,6 +61,7 @@ export default function useCarusel2(args: IArgs): useCarusel2HookResult {
   const [isDisplayNavigation, setDisplayNavigation] = useState(false);
   const rootWidth = useRef<number>(0);
   const alreadyScrolled = useRef<number>(0);
+
   const itemCountOfScreen = useRef<IItemCountOfScreen[]>([]);
 
   const observerCallback = useCallback(
@@ -78,22 +80,20 @@ export default function useCarusel2(args: IArgs): useCarusel2HookResult {
           offsetLeft,
           offsetWidth,
         };
+      });
 
-        itemCountOfScreen.current.forEach((node) => {
-          if (node.isIntersecting) {
-            const cstScrollTo = node.offsetLeft - args.itemMargin * FULL_MARGIN;
-            alreadyScrolled.current = cstScrollTo;
-          }
-        });
-
-        if (isIntersecting) {
-          setPrev(
-            !itemCountOfScreen.current[itemCountOfScreen.current.length - 1]
-              ?.isIntersecting,
-          );
-          setNext(!itemCountOfScreen.current[0]?.isIntersecting);
+      itemCountOfScreen.current.forEach((node) => {
+        if (node.isIntersecting) {
+          const cstScrollTo = node.offsetLeft - args.itemMargin * FULL_MARGIN;
+          alreadyScrolled.current = cstScrollTo;
         }
       });
+
+      setPrev(
+        !itemCountOfScreen.current[itemCountOfScreen.current.length - 1]
+          ?.isIntersecting,
+      );
+      setNext(!itemCountOfScreen.current[0]?.isIntersecting);
 
       if (!isDisplayNavigation && isBrowser) {
         const intersecting = entries.filter((entry) => entry.isIntersecting);
@@ -103,27 +103,59 @@ export default function useCarusel2(args: IArgs): useCarusel2HookResult {
     [args.itemMargin, args.length, isDisplayNavigation],
   );
 
-  const [
-    nodeListRefCallbackObserver,
-    { rootRefCallback: rootRefCallbackObserver },
-  ] = useIntersectionObserver(
-    {
-      threshold: 0.95,
-    },
-    observerCallback,
-  );
+  const [nodeListRefCallback, { rootRefCallback: rootRefCallbackObserver }] =
+    useIntersectionObserver(
+      {
+        threshold: 0.95,
+      },
+      observerCallback,
+    );
 
   const rootRef = useRef<HTMLDivElement | null>(null);
 
-  const setScroll = useCallback((left: number) => {
-    if (rootRef.current === null) return;
-    alreadyScrolled.current = left;
+  const saveScrolled = useCallback(
+    async (id: string, carrentScroll: number) => {
+      await localStorage.get<ISaveScrolled>(SAVE_SCROLLED).then((storage) => {
+        const scroll = {
+          ...storage,
+          [id]: carrentScroll,
+        };
 
-    rootRef.current.scrollTo({
-      left,
-      behavior: "smooth",
-    });
-  }, []);
+        localStorage.set(SAVE_SCROLLED, scroll);
+      });
+    },
+    [],
+  );
+
+  const setScroll = useCallback(
+    (left: number) => {
+      if (rootRef.current === null) return;
+
+      saveScrolled(args.id, left);
+      alreadyScrolled.current = left;
+      rootRef.current.scrollTo({
+        left,
+        behavior: "smooth",
+      });
+    },
+    [args.id, saveScrolled],
+  );
+
+  const restoringScroll = useCallback(
+    async (id: string) => {
+      const storage = await localStorage.get<ISaveScrolled>(SAVE_SCROLLED);
+      setScroll(storage?.[id] ?? 0);
+    },
+    [setScroll],
+  );
+
+  useEffect(() => {
+    restoringScroll(args.id);
+
+    return () => {
+      saveScrolled(args.id, alreadyScrolled.current);
+    };
+  }, [args.id, restoringScroll, saveScrolled]);
 
   const onClickHendler = useCallback<useCarusel2HookOnClickHendler>(
     async (direction) => {
@@ -168,56 +200,12 @@ export default function useCarusel2(args: IArgs): useCarusel2HookResult {
     [onClickHendler],
   );
 
-  const saveScrolled = useCallback(
-    async (id: string, carrentScroll: number) => {
-      localStorage.get<ISaveScrolled>(SAVE_SCROLLED).then((storage) => {
-        console.log(id, carrentScroll, "_saveScrolled_: ", storage);
-
-        const scroll: ISaveScrolled = {
-          ...storage,
-          [id]: carrentScroll,
-        };
-        localStorage.set(SAVE_SCROLLED, scroll);
-      });
-    },
-    [],
-  );
-
-  useEffect(
-    () => () => {
-      console.log("!!!");
-
-      saveScrolled(args.id, alreadyScrolled.current);
-    },
-    [args.id, saveScrolled],
-  );
-
-  const restoringScroll = useCallback(async () => {
-    const storage = await localStorage.get<ISaveScrolled>(SAVE_SCROLLED);
-    // console.log(args.id, "storage", storage);
-    console.log("restoringScroll", alreadyScrolled.current);
-
-    setScroll(storage?.[args.id] ?? 0);
-
-    console.log("setRestoringScroll", alreadyScrolled.current);
-  }, [args.id, setScroll]);
-
-  console.log(alreadyScrolled.current);
-
   const rootRefCallback = useCallback<useCarusel2HookRootRefCallback>(
     (rootNode) => {
       rootRef.current = rootNode;
       rootRefCallbackObserver(rootNode);
     },
     [rootRefCallbackObserver],
-  );
-
-  const nodeListRefCallback = useCallback(
-    (rootNode) => {
-      nodeListRefCallbackObserver(rootNode);
-      restoringScroll();
-    },
-    [nodeListRefCallbackObserver, restoringScroll],
   );
 
   return [
