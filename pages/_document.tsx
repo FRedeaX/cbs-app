@@ -1,7 +1,4 @@
-import createEmotionServer from "@emotion/server/create-instance";
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import { Children } from "react";
-import createEmotionCache from "../utility/createEmotionCache";
 
 // import Script from "next/script";
 // import { scrollbarWidth } from "~/helpers";

@@ -1,10 +1,11 @@
 import { Box, IconButton } from "@mui/material";
 import classNames from "classnames";
 import { FC, ReactNode, useCallback } from "react";
+
 import {
   useCarusel2HookOnClickHendler,
   useCarusel2HookOnKeyDownHendler,
-} from "../useCarusel2";
+} from "../useCarusel";
 import classes from "./Carusel.Button.module.css";
 
 interface CaruselButtonProps {

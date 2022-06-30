@@ -1,21 +1,47 @@
 import { useQuery } from "@apollo/client";
 import classNames from "classnames";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Children,
+  FC,
+  ReactElement,
+  SyntheticEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { isBrowser } from "react-device-detect";
 
-import { delay, throttler } from "../../helpers";
-import { GET_WIDTH } from "../../store/variables/windowWidth";
-import Button from "../UI/Button/Button";
-import Icon from "../UI/Icon/Icon";
-import classes from "./Carousel.module.css";
+import { delay, throttler } from "../../../helpers";
+import { GET_WIDTH } from "../../../store/variables/windowWidth";
+import Button from "../../UI/Button/Button";
+import Icon from "../../UI/Icon/Icon";
+import classes from "./Carousel.Legacy.module.css";
 
 // import smoothscroll from "smoothscroll-polyfill";
 
-const Carousel = ({
+export interface CarouselLegacyProps {
+  children: ReactElement[];
+  length?: number;
+  itemWidth?: number;
+  itemCountOfScreen?: number;
+  itemMargin?: number;
+  isShadow?: boolean;
+  isScrollSnap?: boolean;
+  isOpen?: boolean;
+  setCount?: (count: number) => void;
+  controlsPosition: "top" | "center";
+  className: string;
+  classNameControl: string;
+}
+
+const CarouselLegacy: FC<CarouselLegacyProps> = ({
   children,
   length,
-  itemWidth,
-  itemCountOfScreen,
+  itemWidth: _itemWidth,
+  itemCountOfScreen: _itemCountOfScreen,
   itemMargin = 0,
   isShadow = true,
   isScrollSnap = false,
@@ -27,57 +53,70 @@ const Carousel = ({
 }) => {
   const { data } = useQuery(GET_WIDTH);
 
-  const scrollRef = useRef();
-  const alreadyScrolledRefVar = useRef(0);
-  const countRefVar = useRef(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const alreadyScrolledRefVar = useRef<number>(0);
+  const countRefVar = useRef<number>(0);
   // const dragXRefVar = useRef(0);
 
   // ширина 1-го элемента
-  const itemWidthRef = useRef(itemWidth);
+  const itemWidth = useMemo<number | null>(() => {
+    if (_itemWidth) return _itemWidth;
+
+    if (scrollRef.current === null) return null;
+    const node = scrollRef.current?.childNodes?.[0].childNodes?.[1];
+    if (node instanceof HTMLElement) {
+      return node.offsetWidth;
+    }
+
+    return null;
+  }, [_itemWidth]);
+
   // кол-во видимых элементов на экране
-  const itemCountOfScreenRef = useRef(itemCountOfScreen);
-  useEffect(() => {
-    if (scrollRef.current === undefined) return;
-    const scrolled = scrollRef.current;
-    const scrolledOffsetW = scrolled.offsetWidth;
+  const itemCountOfScreen = useMemo<number | null>(() => {
+    if (_itemCountOfScreen) return _itemCountOfScreen;
 
-    if (itemWidth === undefined)
-      itemWidthRef.current = scrolled.children?.[0].children?.[1]?.offsetWidth;
+    if (scrollRef.current === null) return null;
+    if (itemWidth !== null) {
+      return Math.max(Math.floor(scrollRef.current.offsetWidth / itemWidth), 1);
+    }
 
-    if (itemCountOfScreenRef.current === undefined)
-      itemCountOfScreenRef.current = Math.max(
-        Math.floor(scrolledOffsetW / itemWidthRef.current),
-        1,
-      );
-  }, [itemWidth, scrollRef, isOpen, data?.windowWidth]);
+    return null;
+  }, [_itemCountOfScreen, itemWidth]);
 
   const [isLeft, setLeft] = useState(false);
   const [isRight, setRight] = useState(false);
 
   useEffect(() => {
-    if (!scrollRef.current) return;
+    if (!scrollRef.current || !itemWidth || !itemCountOfScreen) return;
     const scrolled = scrollRef.current;
     const wrapperWidth = scrolled.offsetWidth;
-    const l = length || children.length;
+    const l = length || Children.count(children);
 
     if (
-      wrapperWidth < (itemWidthRef.current + itemMargin * 2) * l ||
-      l > itemCountOfScreenRef.current
+      wrapperWidth < (itemWidth + itemMargin * 2) * l ||
+      l > itemCountOfScreen
     ) {
       setRight(true);
     } else {
       setLeft(false);
       setRight(false);
     }
-  }, [scrollRef, children.length, length, itemMargin, setRight]);
+  }, [
+    scrollRef,
+    length,
+    itemMargin,
+    setRight,
+    itemWidth,
+    itemCountOfScreen,
+    children,
+  ]);
 
   const hendleClick = useCallback(
-    (direction) => {
-      if (!scrollRef.current) return;
+    (direction: "left" | "right") => {
+      if (!scrollRef.current || !itemWidth || !itemCountOfScreen) return;
 
-      const scrolled = scrollRef.current;
-      const scrollTo =
-        (itemWidthRef.current + itemMargin * 2) * itemCountOfScreenRef.current;
+      const scrolled = scrollRef.current as HTMLDivElement;
+      const scrollTo = (itemWidth + itemMargin * 2) * itemCountOfScreen;
 
       if (direction === "left") alreadyScrolledRefVar.current -= scrollTo;
       else if (direction === "right") alreadyScrolledRefVar.current += scrollTo;
@@ -106,14 +145,14 @@ const Carousel = ({
 
       if (setCount !== undefined) setCount(countRefVar.current);
     },
-    [isOpen, itemMargin, setCount],
+    [isOpen, itemCountOfScreen, itemMargin, itemWidth, setCount],
   );
 
-  const hendleScroll = (event) => {
+  const hendleScroll = (event: SyntheticEvent) => {
     event.stopPropagation();
-    if (!scrollRef.current) return;
 
     delay(900).then(() => {
+      if (!scrollRef.current) return;
       const scrolled = scrollRef.current;
       alreadyScrolledRefVar.current = scrolled.scrollLeft;
 
@@ -157,7 +196,7 @@ const Carousel = ({
   // };
 
   const hendleKey = useCallback(
-    (event) => {
+    (event: any) => {
       event.stopPropagation();
       if (event.key === "ArrowRight") hendleClick("right");
       else if (event.key === "ArrowLeft") hendleClick("left");
@@ -165,9 +204,9 @@ const Carousel = ({
     [hendleClick],
   );
 
-  const buttonNextRef = useRef(null);
+  const buttonNextRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (isOpen && isBrowser) {
+    if (isOpen && isBrowser && buttonNextRef) {
       buttonNextRef.current.focus();
       window.addEventListener("keydown", hendleKey, false);
     } else window.removeEventListener("keydown", hendleKey, false);
@@ -182,14 +221,11 @@ const Carousel = ({
     // if (!"scrollBehavior" in document.documentElement.style) {
     //   smoothscroll.polyfill();
     // }
-    alreadyScrolledRefVar.current =
-      scrollRef.current.children?.[0].children?.[0]?.offsetWidth *
-      countRefVar.current;
+    const childrenNode = scrollRef.current.children?.[0]
+      .children?.[0] as HTMLDivElement;
 
-    // console.log();
-    // scrollRef.current.scroll({
-    //   left: alreadyScrolledRefVar.current,
-    // });
+    alreadyScrolledRefVar.current =
+      (childrenNode?.offsetWidth || 0) * countRefVar.current;
   }, [isOpen, data?.windowWidth]);
 
   // console.log("render Carousel");
@@ -284,4 +320,4 @@ const Carousel = ({
 //   );
 // }
 
-export default memo(Carousel);
+export default memo(CarouselLegacy);

@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
 import { memo, useEffect, useRef, useState } from "react";
+
 import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
 import {
   GET_OVERLAY_FRAGMENT,
@@ -11,8 +12,8 @@ import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
-import SearchMobile from "../Search/mobile/Search.Mobile";
 import Search from "../Search/Search";
+import SearchMobile from "../Search/mobile/Search.Mobile";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";

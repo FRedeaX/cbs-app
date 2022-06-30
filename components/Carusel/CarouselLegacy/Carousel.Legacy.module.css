@@ -96,9 +96,6 @@
   display: block;
 }
 
-/*
-* чтобы срабатывало событие скрола отключаем pointer-events
-*/
 .controls {
   position: absolute;
   display: flex;
@@ -113,6 +110,9 @@
   margin: var(--carousel-controls-margin, 0);
 }
 
+/*
+* чтобы срабатывало событие скрола отключаем pointer-events
+*/
 .controls-center {
   --button-width: var(--carousel-button-width, 56px);
   --button-height: var(--carousel-button-height, 44px);

@@ -4,13 +4,13 @@ import { Fade } from "@mui/material";
 import classNames from "classnames";
 import { Children, FC, ReactElement, memo } from "react";
 
-import classes from "./Carusel2.module.css";
 import CaruselButton from "./Carusel.Button/Carusel.Button";
 import CaruselList from "./Carusel.List";
 import CaruselShadow from "./Carusel.Shadow/Carusel.Shadow";
-import useCarusel2 from "./useCarusel2";
+import classes from "./Carusel.module.css";
+import useCarusel from "./useCarusel";
 
-interface Carusel2Props {
+export interface Carusel2Props {
   children: ReactElement[];
   length: number;
   itemWidth?: number;
@@ -23,7 +23,7 @@ interface Carusel2Props {
   id?: string;
 }
 
-const Carusel2: FC<Carusel2Props> = ({
+const Carusel: FC<Carusel2Props> = ({
   children,
   length = Children.count(children),
   itemWidth = 0,
@@ -45,7 +45,7 @@ const Carusel2: FC<Carusel2Props> = ({
       isNext,
       isDisplayNavigation,
     },
-  ] = useCarusel2({
+  ] = useCarusel({
     length,
     itemWidth,
     itemMargin,
@@ -124,4 +124,4 @@ function areEqual(prevProps: Carusel2Props, nextProps: Carusel2Props) {
   );
 }
 
-export default memo(Carusel2, areEqual);
+export default memo(Carusel, areEqual);

@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -5,12 +6,11 @@ import { useCallback, useEffect, useState } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
 import Title, { SUBTITLE } from "../../Title/Title";
-import ButtonList from "./ButtonList/ButtonList";
 import { Heading } from "../../blocks/Heading/Heading";
+import ButtonList from "./ButtonList/ButtonList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
 import LibraryInfo from "./LibraryInfo/LibraryInfo";
-import { gql } from "@apollo/client";
 
 let map;
 const YMAP_API =

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { memo } from "react";
 
 import { getShortID } from "../../../../helpers";
-import Carusel2 from "../../../Carusel2/Carusel2";
+import CaruselRoot from "../../../Carusel/CaruselRoot";
 import { Heading } from "../../../blocks/Heading/Heading";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
@@ -29,7 +29,7 @@ const GroupCards = ({
       </div>
     )}
 
-    <Carusel2
+    <CaruselRoot
       length={length}
       itemWidth={288}
       itemMargin={5}
@@ -49,7 +49,7 @@ const GroupCards = ({
           imagePriority={index < 3}
         />
       ))}
-    </Carusel2>
+    </CaruselRoot>
   </div>
 );
 

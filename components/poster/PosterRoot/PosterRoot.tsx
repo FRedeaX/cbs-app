@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { memo } from "react";
-import Carousel from "../../Carusel/Carousel";
+
+import CarouselLegacy from "../../Carusel/CarouselLegacy/Carousel.Legacy";
 // import PosterGroup from "../PosterGroup/PosterGroup";
 import PosterItem, { IPoster, posterItemGQL } from "../PosterItem/PosterItem";
 import PosterList from "../PosterList/PosterList";
@@ -32,7 +33,7 @@ interface PosterRootProps {
 
 const PosterRoot = ({ posters, className }: PosterRootProps): JSX.Element => (
   <PosterList className={className?.list}>
-    <Carousel
+    <CarouselLegacy
       length={posters.length}
       // skipTo={posters.skip}
       isShadow={false}
@@ -47,7 +48,7 @@ const PosterRoot = ({ posters, className }: PosterRootProps): JSX.Element => (
           count={posters.length}
         />
       ))}
-    </Carousel>
+    </CarouselLegacy>
   </PosterList>
 );
 

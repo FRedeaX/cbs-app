@@ -55,7 +55,7 @@ const OFFSET_LEFT_MARGIN = 2; /* 1. */
 const FULL_MARGIN = 2; /* 2. */
 const SAVE_SCROLLED = "saveScrolled";
 
-export default function useCarusel2(args: IArgs): useCarusel2HookResult {
+export default function useCarusel(args: IArgs): useCarusel2HookResult {
   const [isPrev, setPrev] = useState(false);
   const [isNext, setNext] = useState(true);
   const [isDisplayNavigation, setDisplayNavigation] = useState(false);
@@ -113,6 +113,12 @@ export default function useCarusel2(args: IArgs): useCarusel2HookResult {
 
   const rootRef = useRef<HTMLDivElement | null>(null);
 
+  //
+  /**
+   * TODO: на тач устройствах после восстановления прокрутки не очевидно, что слева есть контент т.к.
+   * saveScrolled не учитывает args.isOffsetSides
+   * или добавить визуальное отображение о количстве элементов и текущей позиции (scrolbar?)
+   */
   const saveScrolled = useCallback(
     async (id: string, carrentScroll: number) => {
       await localStorage.get<ISaveScrolled>(SAVE_SCROLLED).then((storage) => {

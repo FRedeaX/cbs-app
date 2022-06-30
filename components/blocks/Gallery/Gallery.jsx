@@ -10,7 +10,7 @@ import {
 } from "../../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Badge from "../../Badge/Badge";
-import Carousel from "../../Carusel/Carousel";
+import CarouselLegacy from "../../Carusel/CarouselLegacy/Carousel.Legacy";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Gallery.module.css";
@@ -138,7 +138,7 @@ export const Gallery = memo(
               {/* <div className={classes.loader} aria-hidden="true">
               <Loader2 isLoading />
             </div> */}
-              <Carousel
+              <CarouselLegacy
                 isScrollSnap
                 isShadow={false}
                 isOpen={zoom}
@@ -171,7 +171,7 @@ export const Gallery = memo(
                     />
                   </figure>
                 ))}
-              </Carousel>
+              </CarouselLegacy>
               {zoom === false && (
                 <Badge
                   className={classes.badge}
