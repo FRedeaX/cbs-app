@@ -74,6 +74,11 @@
    */
   --header-desktop-height: 100px;
   --header-mobile-height: 80px;
+
+  /*
+   * Animation
+   */
+  --animation-ease-out: cubic-bezier(0.18, 0.24, 0.18, 0.71);
 }
 
 /* @media screen and (min-width: 769px) {

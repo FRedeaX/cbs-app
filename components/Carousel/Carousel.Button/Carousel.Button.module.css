@@ -1,0 +1,81 @@
+.root_visibility {
+  transition: opacity 0.2s var(--animation-ease-out);
+}
+
+.root_visibility_false {
+  opacity: var(--carousel-button-visibility, 0);
+  pointer-events: none;
+}
+
+.root_visibility_true {
+  opacity: 1;
+}
+
+.root {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  width: var(--carousel-button-width);
+  height: var(--carousel-button-height);
+}
+
+/**
+  * .sides_true
+  */
+.sides_true .root {
+  top: 0;
+  bottom: 0;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.sides_true .direction_prev {
+  left: var(--carousel-button-left, 0);
+}
+
+/**
+  * .sides_false
+  */
+.sides_false {
+  --carousel-button-visibility: 0.3;
+
+  position: absolute;
+  top: -28px;
+  right: 0;
+}
+
+.sides_false .direction_prev {
+  right: var(--carousel-button-left, 36px);
+}
+
+/**
+  * .sides_true, 
+  * .sides_false
+  */
+.sides_true .direction_next,
+.sides_false .direction_next {
+  right: var(--carousel-button-right, 0);
+  justify-content: var(--carousel-button-next-justify-content);
+}
+
+.iconButton {
+  width: var(--carousel-icon-button-width, 44px);
+  height: var(--carousel-icon-button-height, 44px);
+}
+
+.iconButton[disabled] {
+  cursor: default;
+  pointer-events: initial;
+}
+
+.sides_true .root:hover .iconButton_animation {
+  background-color: #eee;
+  box-shadow: hsl(222deg, 13%, 28%, 25%) 0 0 12px 0;
+  transform: scale(1.1);
+}
+
+.sides_true .iconButton_bg {
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: hsl(222deg, 13%, 28%, 20%) 0 1px 12px 0;
+}

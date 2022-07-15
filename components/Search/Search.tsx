@@ -8,9 +8,10 @@ import {
 } from "@mui/material";
 import classNames from "classnames";
 import { ChangeEvent, FC, useCallback, useRef } from "react";
+
 import debounce from "../../helpers/debounce";
-import classes from "./Search.module.css";
 import SearchToggleFrom from "./Search.ToggleFrom";
+import classes from "./Search.module.css";
 import Suggestion from "./Suggestion/Suggestion";
 import SuggestionList from "./Suggestion/SuggestionList";
 import useForm from "./useForm";

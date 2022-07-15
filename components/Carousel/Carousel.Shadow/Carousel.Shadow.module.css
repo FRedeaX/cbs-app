@@ -1,0 +1,41 @@
+.root_visibility {
+  transition: opacity 0.2s var(--animation-ease-out);
+}
+
+.root_visibility_false {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.root_visibility_true {
+  opacity: 1;
+}
+
+.root {
+  position: absolute;
+  top: var(--carousel-shadow-top, 0);
+  bottom: var(--carousel-shadow-bottom, 0);
+  z-index: 1;
+  display: var(--carousel-shadow-display);
+  width: 20px;
+  box-shadow: rgba(0, 0, 0, 20%) -10px 0 12px -6px;
+}
+
+.root_prev {
+  left: -20px;
+  transform: scaleX(-1);
+}
+
+.root_next {
+  right: -20px;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
