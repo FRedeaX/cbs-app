@@ -56,7 +56,7 @@
   /* customs */
   --font-R-S: "Roboto-Slab", serif;
   --bg-white-95: #f2f2f2 /*var(--white); */;
-  --scrollbarWidth: 17px;
+  --scrollbar-width: 17px;
   --layout-padding-sides: 10px;
   --background-color-white: rgb(247, 247, 247);
   --bg-controls: var(--white);

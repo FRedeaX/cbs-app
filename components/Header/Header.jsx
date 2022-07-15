@@ -74,7 +74,9 @@ const Header = ({ menus }) => {
   if (!menus) return null;
   return (
     <header
-      style={{ right: state?.isHeaderPosReset ? `var(--scrollbarWidth)` : "0" }}
+      style={{
+        right: state?.isHeaderPosReset ? `var(--scrollbar-width)` : "0",
+      }}
       className={classNames(classes.block, classes.position, {
         [classes["position--hidden"]]: isHeaderHidden,
       })}>

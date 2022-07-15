@@ -193,7 +193,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: calc(100vw - var(--scrollbarWidth));
+  width: calc(100vw - var(--scrollbar-width));
   height: 100vh;
   padding-top: 44px;
   transform: translate(-50%, -50%);

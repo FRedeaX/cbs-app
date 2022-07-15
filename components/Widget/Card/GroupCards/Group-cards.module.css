@@ -48,6 +48,13 @@
   font-size: 16px;
 }
 
+.count_1,
+.count_2,
+.count_3 {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
 .count_1 {
   justify-content: center;
 }

@@ -9,7 +9,7 @@ function scrollbarWidth(): string {
   const carrentScrollbarWidth = outer.offsetWidth - inner.offsetWidth;
   outer.parentNode?.removeChild(outer);
   document.body.style.setProperty(
-    "--scrollbarWidth",
+    "--scrollbar-width",
     `${carrentScrollbarWidth}px`,
   );
   return "";
