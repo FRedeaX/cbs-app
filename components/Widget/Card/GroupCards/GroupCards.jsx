@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import { memo } from "react";
 
-import { getShortID } from "../../../../helpers";
-import CaruselRoot from "../../../Carusel/CaruselRoot";
+import CarouselRoot from "../../../Carousel/CarouselRoot";
 import { Heading } from "../../../blocks/Heading/Heading";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
+import { concatenationID } from "./GroupCards.utils";
 
 const GroupCards = ({
   id = "",
@@ -28,8 +28,7 @@ const GroupCards = ({
         )}
       </div>
     )}
-
-    <CaruselRoot
+    <CarouselRoot
       length={length}
       itemWidth={288}
       itemMargin={5}
@@ -37,7 +36,7 @@ const GroupCards = ({
       className={classNames({
         [classes[`count_${length}`]]: length < 4,
       })}
-      id={`${id}${getShortID(data[0].id)}`}>
+      saveID={concatenationID(id, data[0]?.id)}>
       {data.map((post, index) => (
         <Card
           key={post.id}
@@ -49,7 +48,7 @@ const GroupCards = ({
           imagePriority={index < 3}
         />
       ))}
-    </CaruselRoot>
+    </CarouselRoot>
   </div>
 );
 

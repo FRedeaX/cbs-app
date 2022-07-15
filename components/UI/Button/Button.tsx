@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { forwardRef, memo, ReactNode } from "react";
+import { ReactNode, forwardRef, memo } from "react";
 
 import classes from "./Button.module.css";
 

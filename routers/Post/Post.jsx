@@ -1,14 +1,8 @@
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
-// import classNames from "classnames";
 import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
-// import Button from "../../components/UI/Button/Button";
-// import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
 import { embedBlockGQL } from "../../components/blocks/Embed/Embed";
 import { fileBlockGQL } from "../../components/blocks/File/File";
@@ -24,11 +18,9 @@ import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
-// import { useOnScreen } from "../../helpers/frontend";
-import { getShortID } from "../../helpers";
 import classes from "./Post.module.css";
+import { getShortID, usePost } from "./Post.utils";
 import Offer from "./offer/Offer";
-import usePost from "./usePost";
 
 export const Post = ({
   id,

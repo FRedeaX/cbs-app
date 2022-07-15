@@ -1,8 +1,5 @@
-/* eslint-disable @next/next/no-script-in-head */
 import type { NextPage } from "next";
 
-import NHead from "next/head";
-import Script from "next/script";
 import SEO from "../SEO/SEO";
 
 interface IProps {
@@ -14,39 +11,13 @@ interface IProps {
 }
 
 const Head: NextPage<IProps> = ({ title, description, image, video, url }) => (
-  <>
-    <NHead>
-      <Script
-        id="scrollbarWidth"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: (function scrollWidth(): string {
-            if (typeof window === "undefined") return "";
-            const outer = document.createElement("div");
-            outer.style.visibility = "hidden";
-            outer.style.overflow = "scroll";
-            document.body.appendChild(outer);
-            const inner = document.createElement("div");
-            outer.appendChild(inner);
-            const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-            outer.parentNode?.removeChild(outer);
-            document.body.style.setProperty(
-              "--scrollbarWidth",
-              `${scrollbarWidth}px`,
-            );
-            return "";
-          })(),
-        }}
-      />
-    </NHead>
-    <SEO
-      title={title}
-      description={description}
-      image={image}
-      video={video}
-      url={url}
-    />
-  </>
+  <SEO
+    title={title}
+    description={description}
+    image={image}
+    video={video}
+    url={url}
+  />
 );
 
 export default Head;

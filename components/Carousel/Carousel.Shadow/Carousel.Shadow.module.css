@@ -13,8 +13,10 @@
 
 .root {
   position: absolute;
-  top: -5px;
-  bottom: -5px;
+  top: var(--carousel-shadow-top, 0);
+  bottom: var(--carousel-shadow-bottom, 0);
+  z-index: 1;
+  display: var(--carousel-shadow-display);
   width: 20px;
   box-shadow: rgba(0, 0, 0, 20%) -10px 0 12px -6px;
 }
@@ -26,4 +28,14 @@
 
 .root_next {
   right: -20px;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
 }

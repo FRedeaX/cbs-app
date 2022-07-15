@@ -2,17 +2,6 @@ import { useCallback, useEffect, useRef } from "react";
 
 const DEFAULT_ROOT_MARGIN = "0px";
 const DEFAULT_THRESHOLD = [0];
-
-// interface IntersectionObserverEntryInit {
-//   boundingClientRect: DOMRectInit;
-//   intersectionRatio: number;
-//   intersectionRect: DOMRectInit;
-//   isIntersecting: boolean;
-//   rootBounds: DOMRectInit | null;
-//   target: Element;
-//   time: DOMHighResTimeStamp;
-// }
-
 interface IntersectionObserverInit {
   rootMargin?: string;
   threshold?: number | number[];

@@ -1,25 +1,25 @@
 import {
   Children,
-  cloneElement,
   FC,
-  memo,
   ReactElement,
+  cloneElement,
+  memo,
   useCallback,
   useRef,
 } from "react";
+
 import { IntersectionObserverHookRefCallback } from "../../helpers/frontend/hooks/useIntersectionObserver";
 
-interface CaruselListProps {
+interface ICarouselListProps {
   children: ReactElement[];
   nodeListRefCallback: IntersectionObserverHookRefCallback;
 }
 
-const CaruselList: FC<CaruselListProps> = ({
+const CarouselList: FC<ICarouselListProps> = ({
   children,
   nodeListRefCallback,
 }) => {
   const childrenListRef = useRef<Element[]>([]);
-  // const isSetChildrenRef = useRef<boolean>(false);
 
   const setRefs = useCallback(
     (node: Element, index: number): void => {
@@ -28,26 +28,34 @@ const CaruselList: FC<CaruselListProps> = ({
       childrenListRef.current[index] = node;
       if (index === Children.count(children) - 1) {
         nodeListRefCallback(childrenListRef.current);
-        // isSetChildrenRef.current = true;
       }
     },
     [children, nodeListRefCallback],
   );
 
-  return Children.map(children, (child: ReactElement, index: number) =>
-    cloneElement(child, {
-      ref: (ref: Element) => {
-        setRefs(ref, index);
-      },
-    }),
+  return (
+    <>
+      {Children.map(children, (child: ReactElement, index: number) =>
+        cloneElement(child, {
+          ref: (ref: Element) => {
+            setRefs(ref, index);
+          },
+        }),
+      )}
+    </>
   );
 };
 
-function areEqual(prevProps: CaruselListProps, nextProps: CaruselListProps) {
+function areEqual(
+  prevProps: ICarouselListProps,
+  nextProps: ICarouselListProps,
+) {
   return (
-    prevProps.children[0].key === nextProps.children[0].key &&
+    prevProps.children[0]?.key === nextProps.children[0]?.key &&
+    prevProps.children[0]?.props.className ===
+      nextProps.children[0]?.props.className &&
     Children.count(prevProps.children) === Children.count(nextProps.children)
   );
 }
 
-export default memo(CaruselList, areEqual);
+export default memo(CarouselList, areEqual);

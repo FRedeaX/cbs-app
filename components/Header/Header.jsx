@@ -13,7 +13,7 @@ import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 // import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
 import Search from "../Search/Search";
-import SearchMobile from "../Search/mobile/Search.Mobile";
+import SearchMobile from "../Search/mobile/Search.mobile";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";

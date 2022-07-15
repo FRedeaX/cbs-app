@@ -3,25 +3,29 @@ import classNames from "classnames";
 import { FC, ReactNode, useCallback } from "react";
 
 import {
-  useCarusel2HookOnClickHendler,
-  useCarusel2HookOnKeyDownHendler,
-} from "../useCarusel";
-import classes from "./Carusel.Button.module.css";
+  useCarouselHookOnClickHendler,
+  useCarouselHookOnKeyDownHendler,
+} from "../Carousel.utils";
+import classes from "./Carousel.Button.module.css";
 
-interface CaruselButtonProps {
+interface ICarouselButtonProps {
   children: ReactNode;
   direction: "next" | "prev";
   isActive: boolean;
-  isButtonsOnSides: boolean;
-  onClick: useCarusel2HookOnClickHendler;
-  onKeyDown: useCarusel2HookOnKeyDownHendler;
+  onClick: useCarouselHookOnClickHendler;
+  onKeyDown: useCarouselHookOnKeyDownHendler;
 }
 
-const CaruselButton: FC<CaruselButtonProps> = ({
+const style = {
+  transitionTimingFunction: "var(--animation-ease-out)",
+  transitionDuration: "0.15s",
+  transitionProperty: "background-color, box-shadow, transform",
+};
+
+const CarouselButton: FC<ICarouselButtonProps> = ({
   children,
   direction,
   isActive,
-  isButtonsOnSides,
   onClick,
   onKeyDown,
 }) => {
@@ -33,12 +37,9 @@ const CaruselButton: FC<CaruselButtonProps> = ({
     <Box
       className={classNames(
         classes.root,
-        classes[`root_sides_${isButtonsOnSides}`],
         classes.root_visibility,
         classes[`root_visibility_${isActive}`],
-        {
-          [classes[`root_${direction}`]]: isButtonsOnSides,
-        },
+        classNames(classes[`direction_${direction}`]),
       )}
       onKeyDown={onKeyDown}
       onClick={onClickHendler}>
@@ -46,6 +47,7 @@ const CaruselButton: FC<CaruselButtonProps> = ({
         className={classNames(classes.iconButton, classes.iconButton_bg, {
           [classes.iconButton_animation]: isActive,
         })}
+        sx={style}
         disabled={!isActive}>
         {children}
       </IconButton>
@@ -53,4 +55,4 @@ const CaruselButton: FC<CaruselButtonProps> = ({
   );
 };
 
-export default CaruselButton;
+export default CarouselButton;

@@ -42,7 +42,10 @@ const Offer = forwardRef(
                   borderColor: "divider",
                   margin: "0 10px 15px",
                 }}>
-                <TabList onChange={handleChange}>
+                <TabList
+                  onChange={handleChange}
+                  variant="scrollable"
+                  scrollButtons="auto">
                   <Tab
                     label="Похожие"
                     title="Похожие статьи"

@@ -6,16 +6,7 @@
 }
 @media screen and (min-width: 961px) {
   .container {
-    /*
-      GoogleChrome 49 не поддерживает вложение calc
-      width: calc(100% - calc(var(--group-cards-container-margin, 10px) * 2))
-    */
-
-    /* stylelint-disable-next-line prettier/prettier */
-    width: calc(
-      100% - var(--group-cards-container-margin, 10px) -
-        var(--group-cards-container-margin, 10px)
-    );
+    width: calc(100% - (var(--group-cards-container-margin, 10px) * 2));
     margin: var(--group-cards-container-margin, 10px);
   }
 }
@@ -28,7 +19,6 @@
       --group-cards-carousel-controls-margin,
       0 -30px
     );
-    --carousel-button-width: var(--group-cards-carousel-button-width, 66px);
     --carousel-controls-center-padding: 0;
     --carousel-controls-width: var(
       --group-cards-carousel-controls-width,
@@ -38,7 +28,7 @@
 }
 
 .container {
-  --carusel-offset-bottom: 8px;
+  --carousel-offset-bottom: 8px;
 }
 
 .head {
@@ -91,7 +81,7 @@
 @media screen and (min-width: 769px) {
   .container {
     --group-cards-translate-y: -6px;
-    --carusel-offset-top: calc(var(--group-cards-translate-y) * -1);
+    --carousel-offset-top: calc(var(--group-cards-translate-y) * -1);
   }
 
   .article {

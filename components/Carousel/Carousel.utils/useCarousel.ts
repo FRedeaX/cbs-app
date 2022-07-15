@@ -1,17 +1,23 @@
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { isBrowser } from "react-device-detect";
 
-import { localStorage } from "../../helpers";
+import { localStorage } from "../../../helpers";
 import useIntersectionObserver, {
   IntersectionObserverHookRefCallback,
-} from "../../helpers/frontend/hooks/useIntersectionObserver";
+} from "../../../helpers/frontend/hooks/useIntersectionObserver";
+import {
+  FULL_MARGIN,
+  OFFSET_LEFT_MARGIN,
+  SAVE_SCROLLED,
+} from "../Carousel.const";
+import { offsetSides } from "./offsetSides";
 
-interface IArgs {
+export interface IArgs {
   length: number;
-  itemWidth: number;
   itemMargin: number;
   isOffsetSides: boolean;
-  id: string;
+  id?: string;
+  setCount?: (count: number) => void;
 }
 
 interface IItemCountOfScreen {
@@ -24,38 +30,29 @@ interface ISaveScrolled {
   [key: string]: number;
 }
 
-export type useCarusel2HookOnClickHendler = (
+export type useCarouselHookOnClickHendler = (
   direction: "next" | "prev",
 ) => void;
-export type useCarusel2HookOnKeyDownHendler = (
+export type useCarouselHookOnKeyDownHendler = (
   event: KeyboardEvent<HTMLAnchorElement> | KeyboardEvent<HTMLDivElement>,
 ) => void;
-type useCarusel2HookRootRefCallback = (rootNode: HTMLDivElement | null) => void;
+export type useCarouselHookRootRefCallback = (
+  rootNode: HTMLDivElement | null,
+) => void;
 
-type useCarusel2HookResult = [
+export type useCarouselHookResult = [
   IntersectionObserverHookRefCallback,
   {
-    onClickHendler: useCarusel2HookOnClickHendler;
-    onKeyDownHendler: useCarusel2HookOnKeyDownHendler;
-    rootRefCallback: useCarusel2HookRootRefCallback;
+    onClickHendler: useCarouselHookOnClickHendler;
+    onKeyDownHendler: useCarouselHookOnKeyDownHendler;
+    rootRefCallback: useCarouselHookRootRefCallback;
     isPrev: boolean;
     isNext: boolean;
     isDisplayNavigation: boolean;
   },
 ];
 
-/**
- * 1. Учитываем правй отступ "offsetLeft"
- * (itemMargin * OFFSET_LEFT_MARGIN)
- *
- * 2. Рассчитываем полный отступ
- * (itemMargin * FULL_MARGIN)
- */
-const OFFSET_LEFT_MARGIN = 2; /* 1. */
-const FULL_MARGIN = 2; /* 2. */
-const SAVE_SCROLLED = "saveScrolled";
-
-export default function useCarusel(args: IArgs): useCarusel2HookResult {
+export const useCarousel = (args: IArgs): useCarouselHookResult => {
   const [isPrev, setPrev] = useState(false);
   const [isNext, setNext] = useState(true);
   const [isDisplayNavigation, setDisplayNavigation] = useState(false);
@@ -80,12 +77,20 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
           offsetLeft,
           offsetWidth,
         };
+
+        if (isIntersecting && args.setCount !== undefined) {
+          args.setCount(count);
+        }
       });
 
       itemCountOfScreen.current.forEach((node) => {
         if (node.isIntersecting) {
-          const cstScrollTo = node.offsetLeft - args.itemMargin * FULL_MARGIN;
-          alreadyScrolled.current = cstScrollTo;
+          const nodeSum = node.offsetLeft - args.itemMargin * FULL_MARGIN;
+          // const scrollTo = args.isOffsetSides
+          //   ? nodeSum - offsetSides(rootWidth.current, nodeSum, args.itemMargin)
+          //   : nodeSum;
+
+          alreadyScrolled.current = nodeSum;
         }
       });
 
@@ -95,12 +100,15 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
       );
       setNext(!itemCountOfScreen.current[0]?.isIntersecting);
 
+      /**
+       * Проверяем необходимость отображения кнопок навигации
+       */
       if (!isDisplayNavigation && isBrowser) {
         const intersecting = entries.filter((entry) => entry.isIntersecting);
         setDisplayNavigation(intersecting.length < args.length && isBrowser);
       }
     },
-    [args.itemMargin, args.length, isDisplayNavigation],
+    [args, isDisplayNavigation],
   );
 
   const [nodeListRefCallback, { rootRefCallback: rootRefCallbackObserver }] =
@@ -116,11 +124,12 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
   //
   /**
    * TODO: на тач устройствах после восстановления прокрутки не очевидно, что слева есть контент т.к.
-   * saveScrolled не учитывает args.isOffsetSides
+   * observerCallback не учитывает args.isOffsetSides
    * или добавить визуальное отображение о количстве элементов и текущей позиции (scrolbar?)
    */
   const saveScrolled = useCallback(
-    async (id: string, carrentScroll: number) => {
+    async (carrentScroll: number, id?: string) => {
+      if (id === undefined) return;
       await localStorage.get<ISaveScrolled>(SAVE_SCROLLED).then((storage) => {
         const scroll = {
           ...storage,
@@ -137,7 +146,7 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
     (left: number) => {
       if (rootRef.current === null) return;
 
-      saveScrolled(args.id, left);
+      saveScrolled(left, args.id);
       alreadyScrolled.current = left;
       rootRef.current.scrollTo({
         left,
@@ -148,7 +157,8 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
   );
 
   const restoringScroll = useCallback(
-    async (id: string) => {
+    async (id?: string) => {
+      if (id === undefined) return;
       const storage = await localStorage.get<ISaveScrolled>(SAVE_SCROLLED);
       setScroll(storage?.[id] ?? 0);
     },
@@ -159,11 +169,11 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
     restoringScroll(args.id);
 
     return () => {
-      saveScrolled(args.id, alreadyScrolled.current);
+      saveScrolled(alreadyScrolled.current, args.id);
     };
   }, [args.id, restoringScroll, saveScrolled]);
 
-  const onClickHendler = useCallback<useCarusel2HookOnClickHendler>(
+  const onClickHendler = useCallback<useCarouselHookOnClickHendler>(
     async (direction) => {
       if (direction === "prev") {
         const scrollTo = itemCountOfScreen.current.reduce(
@@ -184,8 +194,9 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
           0,
         );
 
-        const offsetSides = (rootWidth.current - nodeSum) / 2 - args.itemMargin;
-        const newValue = args.isOffsetSides ? nodeSum - offsetSides : nodeSum;
+        const newValue = args.isOffsetSides
+          ? nodeSum - offsetSides(rootWidth.current, nodeSum, args.itemMargin)
+          : nodeSum;
 
         const scrollTo = alreadyScrolled.current + newValue;
         const maxOffsetLeft =
@@ -198,7 +209,7 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
     [args.isOffsetSides, args.itemMargin, setScroll],
   );
 
-  const onKeyDownHendler = useCallback<useCarusel2HookOnKeyDownHendler>(
+  const onKeyDownHendler = useCallback<useCarouselHookOnKeyDownHendler>(
     ({ code }) => {
       if (code === "ArrowRight" || code === "KeyD") onClickHendler("next");
       if (code === "ArrowLeft" || code === "KeyA") onClickHendler("prev");
@@ -206,7 +217,7 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
     [onClickHendler],
   );
 
-  const rootRefCallback = useCallback<useCarusel2HookRootRefCallback>(
+  const rootRefCallback = useCallback<useCarouselHookRootRefCallback>(
     (rootNode) => {
       rootRef.current = rootNode;
       rootRefCallbackObserver(rootNode);
@@ -225,4 +236,4 @@ export default function useCarusel(args: IArgs): useCarusel2HookResult {
       isDisplayNavigation,
     },
   ];
-}
+};

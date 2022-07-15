@@ -46,7 +46,7 @@
 /*
  * width <= 1339
  */
-@media screen and (max-width: 1339px) {
+@media screen and (width <= 1339px) {
   .wrapper {
     flex-direction: column;
     max-width: 960px;
@@ -62,6 +62,7 @@
   .group:first-child {
     margin-left: 4px;
   }
+
   .group:last-child {
     margin-right: 4px;
   }
@@ -72,9 +73,9 @@
 }
 
 /*
- * width < 1339 & width >= 480
+ * width < 1340 & width >= 480
  */
-@media screen and (max-width: 1339px) and (min-width: 480px) {
+@media screen and (width >= 480px) and (width < 1340px) {
   .item {
     width: 440px;
   }
@@ -83,15 +84,16 @@
 /*
  * width >= 1340
  */
-@media screen and (min-width: 1340px) {
+@media screen and (width >= 1340px) {
   .poster {
+    --carousel-shadow-display: none;
+
     position: sticky;
     top: 10px;
     order: 1;
-    max-width: 350px;
+    max-width: 340px;
     height: max-content;
-    height: fit-content;
-    margin: 10px 0 10px 0;
+    margin: 10px 0;
   }
 
   /* .list {
@@ -100,9 +102,9 @@
 
   .item {
     height: inherit;
-    margin: 10px;
     scroll-snap-align: start;
   }
+
   @supports (display: grid) {
     .item {
       height: max-content;
@@ -116,6 +118,15 @@
 
 .post {
   max-width: 960px;
+}
+
+@media screen and (width > 1012px) {
+  .post {
+    --carousel-button-next-justify-content: flex-end;
+    --carousel-button-width: 65px;
+    --carousel-button-left: -28px;
+    --carousel-button-right: -28px;
+  }
 }
 
 .alert-link {

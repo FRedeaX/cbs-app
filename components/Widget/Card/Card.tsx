@@ -2,7 +2,8 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { forwardRef, LegacyRef } from "react";
+import { FC, LegacyRef, forwardRef } from "react";
+
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
 import classes from "./Card.module.css";
@@ -49,7 +50,7 @@ interface CardProps {
 // }
 
 // eslint-disable-next-line react/display-name
-export const Card = forwardRef(
+export const Card: FC<CardProps> = forwardRef(
   (
     {
       data: { isSticky, title, uri, categories, excerpt, featuredImage },
@@ -61,7 +62,7 @@ export const Card = forwardRef(
       lineClamp,
       isBig,
       isSmall,
-    }: CardProps,
+    },
     ref: LegacyRef<HTMLElement>,
   ) => {
     if (isClamp === true && lineClamp === undefined) {

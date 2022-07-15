@@ -1,4 +1,4 @@
-import isFront from "../isFront";
+import { isFront } from "..";
 
 const isIntersection: boolean =
   isFront &&

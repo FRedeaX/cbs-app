@@ -1,14 +1,15 @@
 import classNames from "classnames";
 import { FC } from "react";
-import classes from "./Carusel.Shadow.module.css";
 
-interface CaruselShadowProps {
+import classes from "./Carousel.Shadow.module.css";
+
+interface ICarouselShadowProps {
   direction: "next" | "prev";
   isShadow: boolean;
   isActive: boolean;
 }
 
-const CaruselShadow: FC<CaruselShadowProps> = ({
+const CarouselShadow: FC<ICarouselShadowProps> = ({
   direction,
   isShadow,
   isActive,
@@ -24,4 +25,4 @@ const CaruselShadow: FC<CaruselShadowProps> = ({
     />
   ) : null;
 
-export default CaruselShadow;
+export default CarouselShadow;

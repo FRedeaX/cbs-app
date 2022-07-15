@@ -1,12 +1,12 @@
 // import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 
-const usePost = () => {
+export const usePost = () => {
   // const router = useRouter();
   // const forward;
   // const toTop;
   const [scroll, setScroll] = useState(0);
-  const hendeForward = () => {};
+  // const hendeForward = () => {};
   const hendeToTop = () => {
     if (scroll !== 0) {
       setScroll(0);
@@ -23,14 +23,16 @@ const usePost = () => {
     });
   };
 
+  /**
+   * offerList = {
+   *   nextPost: null,
+   *   PostListByCategory: null,
+   * }
+   */
   const [offerList, setOfferListt] = useState(null);
 
-  // {
-  //   nextPost: null,
-  //   PostListByCategory: null,
-  // }
-
   const hendleOffers = useCallback(async (ID) => {
+    setOfferListt(null);
     try {
       const response = await fetch(
         `${window.location.origin}/api/post/offers?id=${ID}`,
@@ -45,7 +47,5 @@ const usePost = () => {
     }
   }, []);
 
-  return { hendeForward, hendeToTop, hendleOffers, offerList };
+  return { hendeToTop, hendleOffers, offerList };
 };
-
-export default usePost;

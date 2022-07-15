@@ -1,4 +1,6 @@
-const getShortID = (id: string) => {
+export const getShortID = (id: string) => {
+  if (!id) return undefined;
+
   switch (id.length) {
     case 16:
       return id.slice(9, 13);
@@ -6,5 +8,3 @@ const getShortID = (id: string) => {
       return id;
   }
 };
-
-export default getShortID;
