@@ -1,14 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
 import classNames from "classnames";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
-
-import Button from "../../../../UI/Button/Button";
 import { Heading } from "../../../../blocks/Heading/Heading";
+import LibraryButton from "../../LibraryButton/LibraryButton";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Schedule.module.css";
 import ScheduleList from "./ScheduleList/ScheduleList";
-import LibraryButton from "../../LibraryButton/LibraryButton";
 
 const FILIAL_DEFAULT = "cgb";
 const SCHEDULE_DEFAULT = "default";
