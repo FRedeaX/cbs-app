@@ -3,6 +3,7 @@
 .block {
   position: relative;
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
   width: 280px;
   margin: 10px 5px;
@@ -15,7 +16,7 @@
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 4px 12px; */
 
   /* box-shadow: rgba(30, 30, 30, 0.1) 0 2px 12px -2px; */
-  box-shadow: rgb(30 30 30 / 10%) 0 2px 6px;
+  box-shadow: rgba(30, 30, 30, 10%) 0 2px 6px;
   cursor: default;
 }
 
@@ -74,7 +75,7 @@
 .title {
   margin-top: 0;
   margin-bottom: 6px;
-  color: rgb(30 30 30 / 92%);
+  color: rgba(30, 30, 30, 92%);
   font-weight: 500;
   font-size: 0.9375em;
 }
@@ -131,7 +132,6 @@
  */
 @media screen and (min-width: 480px) {
   .block {
-    flex: 1;
     flex-direction: row;
     min-width: 330px;
     padding: 14px 12px 6px;

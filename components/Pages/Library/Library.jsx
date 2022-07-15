@@ -1,9 +1,10 @@
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+
 import { asyncLoadScript } from "../../../helpers";
-import { Heading } from "../../blocks/Heading/Heading";
 import Title, { SUBTITLE } from "../../Title/Title";
+import { Heading } from "../../blocks/Heading/Heading";
 import ButtonList from "./ButtonList/ButtonList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";

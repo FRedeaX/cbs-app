@@ -1,0 +1,11 @@
+.root {
+  position: relative;
+  width: 100%;
+  margin-top: calc(var(--carousel-offset-top, 0) * -1);
+  margin-bottom: calc(var(--carousel-offset-bottom, 0) * -1);
+}
+
+.itemList {
+  padding-top: var(--carousel-offset-top, 0);
+  padding-bottom: var(--carousel-offset-bottom, 0);
+}
