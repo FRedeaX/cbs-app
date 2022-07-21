@@ -29,6 +29,6 @@
 
 @supports (display: grid) {
   .itemList {
-    height: max-content;
+    width: max-content;
   }
 }

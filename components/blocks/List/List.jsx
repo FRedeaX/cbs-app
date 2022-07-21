@@ -7,6 +7,8 @@ export const listBlockGQL = {
   fragments: gql`
     fragment listBlockGQL on CoreListBlock {
       ... on CoreListBlock {
+        name
+        originalContent
         attributes {
           ... on CoreListBlockAttributes {
             anchor
@@ -17,7 +19,6 @@ export const listBlockGQL = {
             values
           }
         }
-        originalContent
       }
     }
   `,

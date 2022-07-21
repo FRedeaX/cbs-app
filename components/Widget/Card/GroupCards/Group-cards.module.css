@@ -48,26 +48,25 @@
   font-size: 16px;
 }
 
-.count_1,
-.count_2,
-.count_3 {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
 .count_1 {
   justify-content: center;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 @media screen and (min-width: 616px) {
   .count_2 {
     justify-content: center;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 }
 
 @media screen and (min-width: 924px) {
   .count_3 {
     justify-content: center;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 }
 
