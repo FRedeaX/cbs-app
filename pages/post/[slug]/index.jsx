@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+
 import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
 import {
@@ -62,7 +63,7 @@ export async function getStaticPaths() {
       }));
     })
     .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+      captureException({ ...err, cstMessage: "articlesQuery" });
       return [];
     });
 

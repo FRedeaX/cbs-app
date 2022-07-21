@@ -11,7 +11,7 @@ import { headingBlockGQL } from "../../components/blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../components/blocks/Html/Html";
 import { imageBlockGQL } from "../../components/blocks/Image/Figure";
 import { listBlockGQL } from "../../components/blocks/List/List";
-import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
+import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText.utils/mediaTextBlockGQL";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
 import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
