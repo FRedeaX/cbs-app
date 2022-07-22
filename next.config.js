@@ -36,6 +36,10 @@ const nextConfig = withTM({
   experimental: {
     optimizeCss: true,
     // staticPageGenerationTimeout: 180,
+    images: {
+      unoptimized: true,
+      minimumCacheTTL: 86400,
+    },
   },
   eslint: {
     ignoreDuringBuilds: true,
