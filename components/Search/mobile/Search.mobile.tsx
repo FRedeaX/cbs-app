@@ -16,13 +16,14 @@ import {
   useRef,
   useState,
 } from "react";
+
 import debounce from "../../../helpers/debounce";
 import SearchToggleFrom from "../Search.ToggleFrom";
 import Suggestion from "../Suggestion/Suggestion";
 import SuggestionList from "../Suggestion/SuggestionList";
 import useForm from "../useForm";
 import useSearch from "../useSearch";
-import classes from "./Search.Mobile.module.css";
+import classes from "./Search.mobile.module.css";
 
 const SearchMobile: FC = () => {
   const [isClearButton, setClearButton] = useState<boolean>(false);

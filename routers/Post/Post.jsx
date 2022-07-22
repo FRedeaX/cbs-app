@@ -1,14 +1,8 @@
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable arrow-body-style */
 import { gql } from "@apollo/client";
-// import classNames from "classnames";
 import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
-// import Button from "../../components/UI/Button/Button";
-// import Icon from "../../components/UI/Icon/Icon";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
 import { embedBlockGQL } from "../../components/blocks/Embed/Embed";
 import { fileBlockGQL } from "../../components/blocks/File/File";
@@ -17,17 +11,16 @@ import { headingBlockGQL } from "../../components/blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../components/blocks/Html/Html";
 import { imageBlockGQL } from "../../components/blocks/Image/Figure";
 import { listBlockGQL } from "../../components/blocks/List/List";
-import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText";
+import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText.utils/mediaTextBlockGQL";
 import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
 import { separatorBlockGQL } from "../../components/blocks/Separator/Separator";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/Spacer";
 import { tableBlockGQL } from "../../components/blocks/Table/Table";
 import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
-// import { useOnScreen } from "../../helpers/frontend";
 import classes from "./Post.module.css";
+import { getShortID, usePost } from "./Post.utils";
 import Offer from "./offer/Offer";
-import usePost from "./usePost";
 
 export const Post = ({
   id,
@@ -66,7 +59,6 @@ export const Post = ({
         onClick={hendeToTop}>
         <span className={classes["button_to-top_text"]}>Наверх</span>
       </Button> */}
-
       <Article
         title={title}
         categories={categories.nodes}
@@ -76,12 +68,13 @@ export const Post = ({
         image={image}
       />
 
-      {offerList.length > 0 && (
+      {offerList !== null && (
         <div className={classes.feed}>
           <Offer
-            postListByCategory={offerList[0].postListByCategory}
-            similarPostList={offerList[0].similarPostList}
-            categories={categories.nodes}
+            id={getShortID(id)}
+            postListByCategory={offerList.postListByCategory}
+            similarPostList={offerList.similarPostList}
+            categories={categories.nodes.map((c) => c.name)}
             // nextPost={nextPost}
           />
         </div>

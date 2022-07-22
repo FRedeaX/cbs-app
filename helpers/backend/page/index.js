@@ -1,7 +1,8 @@
 import { captureException } from "@sentry/nextjs";
+
 // eslint-disable-next-line import/no-cycle
 import { transformBlocks } from "..";
-import { FETCH_PAGE } from "../../../components/Pages/Page";
+import { FETCH_PAGE } from "../../../components/Pages/Page/Page.utils";
 import { client } from "../../../store/apollo-client";
 
 const getPage = async (id) => {

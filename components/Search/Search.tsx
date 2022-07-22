@@ -1,16 +1,13 @@
 /* eslint-disable react/require-default-props */
-import CloseIcon from "@mui/icons-material/Close";
-import SearchIcon from "@mui/icons-material/Search";
-import {
-  InputAdornment,
-  InputBase,
-  InputBaseComponentProps,
-} from "@mui/material";
+// import CloseIcon from "@mui/icons-material/Close";
+// import SearchIcon from "@mui/icons-material/Search";
+import { InputBase, InputBaseComponentProps } from "@mui/material";
 import classNames from "classnames";
 import { ChangeEvent, FC, useCallback, useRef } from "react";
+
 import debounce from "../../helpers/debounce";
-import classes from "./Search.module.css";
 import SearchToggleFrom from "./Search.ToggleFrom";
+import classes from "./Search.module.css";
 import Suggestion from "./Suggestion/Suggestion";
 import SuggestionList from "./Suggestion/SuggestionList";
 import useForm from "./useForm";
@@ -92,26 +89,26 @@ const Search: FC<SearchProps> = ({ className }) => {
             placeholder="Поиск..."
             id="search-input"
             fullWidth
-            sx={{
-              borderRadius: "12px",
-              padding: "0 12px",
-              backgroundColor: "#fff",
-              boxShadow: "inset rgba(30, 30, 30, 10%) 0 -2px 6px 2px",
-            }}
-            inputProps={{
-              sx: {
-                width: "100%",
-                height: "36px",
-                padding: 0,
-                border: "none",
-                backgroundColor: "transparent",
-              },
-            }}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
-            }
+            // sx={{
+            //   borderRadius: "12px",
+            //   padding: "0 12px",
+            //   backgroundColor: "#fff",
+            //   boxShadow: "inset rgba(30, 30, 30, 10%) 0 -2px 6px 2px",
+            // }}
+            // inputProps={{
+            //   sx: {
+            //     width: "100%",
+            //     height: "36px",
+            //     padding: 0,
+            //     border: "none",
+            //     backgroundColor: "transparent",
+            //   },
+            // }}
+            // startAdornment={
+            //   <InputAdornment position="start">
+            //     <SearchIcon fontSize="small" />
+            //   </InputAdornment>
+            // }
             inputRef={inputRef}
             onFocus={onFocusHendler}
             onChange={onChangeHendler}
@@ -125,11 +122,12 @@ const Search: FC<SearchProps> = ({ className }) => {
         </Suggestion>
       </form>
       <SearchToggleFrom isSearch={isSearch} onClick={hendleToggleForm}>
-        {isSearch ? (
+        {/* <Fade in={isSearch}>
           <CloseIcon fontSize="small" />
-        ) : (
+        </Fade>
+        <Fade in={!isSearch}>
           <SearchIcon fontSize="small" />
-        )}
+        </Fade> */}
       </SearchToggleFrom>
     </div>
   );

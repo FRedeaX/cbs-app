@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 
+import CarouselScroller from "../../Carousel/Carousel.Scroller/Carousel.Scroller";
 import classes from "./Category.module.css";
 
 const Category = ({ data, cls }) => {
@@ -8,16 +9,13 @@ const Category = ({ data, cls }) => {
 
   return (
     <div className={classes.block}>
-      <div className={classes.wrapper}>
-        {data.map((term) => {
-          if (term.name === "slider") return null;
-          return (
-            <Link key={term.termTaxonomyId} href={term.uri} prefetch={false}>
-              <a className={classNames(classes.link, cls)}>{term.name}</a>
-            </Link>
-          );
-        })}
-      </div>
+      <CarouselScroller>
+        {data.map((term) => (
+          <Link key={term.termTaxonomyId} href={term.uri} prefetch={false}>
+            <a className={classNames(classes.link, cls)}>{term.name}</a>
+          </Link>
+        )) }
+      </CarouselScroller>
     </div>
   );
 };
