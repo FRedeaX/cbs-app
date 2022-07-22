@@ -8,6 +8,7 @@ export const headingBlockGQL = {
   fragments: gql`
     fragment headingBlockGQL on CoreHeadingBlock {
       ... on CoreHeadingBlock {
+        name
         attributes {
           ... on CoreHeadingBlockAttributes {
             anchor

@@ -1,6 +1,6 @@
-import isFront from "../isFront";
+import { isFront } from "..";
 
-const isIntersection =
+const isIntersection: boolean =
   isFront &&
   "IntersectionObserver" in window &&
   "IntersectionObserverEntry" in window &&

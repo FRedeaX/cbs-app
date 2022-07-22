@@ -1,6 +1,6 @@
 .block {
   --button-border-width: 0;
-  --button-hidden-opacity: 0.3;
+  --carousel-button-visibility: 0.3;
   --carousel-wrapper-padding-top: 66px;
 
   /* --carousel-wrapper-padding-bottom: 26px; */
@@ -38,7 +38,9 @@
 } */
 
 .container {
-  /* height: 100%; */
+  display: flex;
+  align-items: center;
+  height: 100%;
   overflow: hidden;
   border-radius: 16px;
   transition: background-color 0.3s ease-out;
@@ -182,8 +184,8 @@
 .image_isZoom_false > span {
   position: absolute !important;
   top: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
 }
 
 /* Gallery open */
@@ -191,7 +193,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: calc(100vw - var(--scrollbarWidth));
+  width: calc(100vw - var(--scrollbar-width));
   height: 100vh;
   padding-top: 44px;
   transform: translate(-50%, -50%);

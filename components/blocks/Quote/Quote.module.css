@@ -3,6 +3,10 @@
   margin: 16px 20px 20px;
 }
 
+.block:first-child {
+  margin-top: 0;
+}
+
 .block:last-child {
   margin-bottom: 0;
 }
@@ -23,14 +27,14 @@
   --paragraph-font-weight: 300;
   --paragraph-font-style: italic;
 
-  margin: 16px 0;
+  margin: 0 0 10px;
   font-family: var(--font-R-S);
 }
 
 .caption {
   color: var(--black-50);
   font-size: 14.5px;
-  line-height: 1;
+  line-height: 22px;
 
   /* margin-left: 78px; */
 }

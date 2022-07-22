@@ -17,7 +17,7 @@ const Overlay = ({ isTouch = false }) => {
   const addStyle = useCallback(() => {
     if (isOverflow) {
       document.body.style.overflow = "hidden";
-      document.body.style.marginRight = `var(--scrollbarWidth)`;
+      document.body.style.marginRight = `var(--scrollbar-width)`;
     }
   }, [isOverflow]);
   const removeStyle = useCallback(() => {

@@ -1,6 +1,6 @@
 {
   "name": "cbs-app",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
@@ -28,11 +28,12 @@
     "css-scroll-snap-polyfill": "^0.1.2",
     "graphql": "^16.5.0",
     "image-size": "^1.0.1",
+    "intersection-observer-polyfill": "^0.1.0",
     "isomorphic-dompurify": "^0.18.0",
     "next": "12.1.6",
     "next-transpile-modules": "^9.0.0",
     "node-fetch": "^3.2.4",
-    "node-vibrant": "^3.2.1-alpha.1",
+    "node-vibrant": "^3.1.6",
     "plaiceholder": "^2.3.0",
     "react": "18.1.0",
     "react-device-detect": "^2.2.2",
@@ -42,6 +43,7 @@
     "tedis": "^0.1.12"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/elasticsearch": "^5.0.40",
     "@types/node": "17.0.32",
     "@types/react": "18.0.9",
@@ -74,9 +76,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome 49"
     ],
     "development": [
       "last 1 chrome version",

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import classNames from "classnames";
+
 import { createMarkup } from "../../../helpers";
 import classes from "./Paragraph.module.css";
 

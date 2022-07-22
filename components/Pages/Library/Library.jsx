@@ -1,20 +1,16 @@
-import classNames from "classnames";
-import Link from "next/link";
+import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
 import Title, { SUBTITLE } from "../../Title/Title";
-import ButtonList from "./ButtonList/ButtonList";
 import { Heading } from "../../blocks/Heading/Heading";
+import ButtonList from "./ButtonList/ButtonList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
 import LibraryInfo from "./LibraryInfo/LibraryInfo";
-import { gql } from "@apollo/client";
 
 let map;
-const YMAP_API =
-  "https://api-maps.yandex.ru/2.1/?apikey=76dd679b-d43f-4800-b744-f749eb0b34aa&lang=ru_RU";
 
 export const Library = ({ filialList }) => {
   const router = useRouter();
@@ -93,7 +89,7 @@ export const Library = ({ filialList }) => {
       setIsMap(true);
     }
 
-    asyncLoadScript(YMAP_API, window.ymaps).then(() =>
+    asyncLoadScript(process.env.NEXT_PUBLIC_YMAP_API, window.ymaps).then(() =>
       window.ymaps.ready(init),
     );
   }, [filialList, router, schedule, isMap]);

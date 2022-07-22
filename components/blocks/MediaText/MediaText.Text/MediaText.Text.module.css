@@ -1,0 +1,58 @@
+/**
+ * Flext
+ */
+.mediaType_flex .root {
+  align-self: center;
+}
+
+.mediaType_flex .root_aline_top {
+  align-self: start;
+}
+
+.mediaType_flex .root_aline_bottom {
+  align-self: end;
+}
+
+/**
+ * Background padding
+ */
+
+@media screen and (width >= 768px) {
+  .background .root_left {
+    padding: 3% 0 3% 3.5%;
+  }
+
+  .background .root_right {
+    padding: 3% 3.5% 3% 0;
+  }
+}
+
+@media screen and (width < 768px) {
+  .background .mediaType_flex .root_left {
+    padding: 4% 6% 0;
+  }
+
+  .background .mediaType_flex .root_right {
+    padding: 0 6% 4%;
+  }
+}
+
+@media screen and (width < 768px) and (width > 425px) {
+  .background .mediaType_float .root_left {
+    padding: 2% 3%;
+  }
+
+  .background .mediaType_float .root_right {
+    padding: 2% 3%;
+  }
+}
+
+@media screen and (width <= 425px) {
+  .background .mediaType_float .root_left {
+    padding: 4% 4% 0;
+  }
+
+  .background .mediaType_float .root_right {
+    padding: 0 4% 4%;
+  }
+}

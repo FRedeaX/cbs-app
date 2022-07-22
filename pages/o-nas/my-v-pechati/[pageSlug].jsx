@@ -1,8 +1,7 @@
 import { captureException } from "@sentry/nextjs";
-import {
-  FETCH_CHILDREN_URI_PAGES,
-  PageRoot,
-} from "../../../components/Pages/Page";
+
+import { PageRoot } from "../../../components/Pages/Page";
+import { FETCH_CHILDREN_URI_PAGES } from "../../../components/Pages/Page/Page.utils";
 import Layout from "../../../components/UI/Layout/Layout";
 import { getMenu, getPage, preparingPaths } from "../../../helpers/backend";
 import { client } from "../../../store/apollo-client";

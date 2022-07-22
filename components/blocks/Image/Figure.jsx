@@ -39,6 +39,7 @@ export const Figure = ({
   url,
   isImageZoom = true,
   children,
+  isFill,
 }) => {
   const { data: state } = useQuery(gql`
     query {
@@ -138,6 +139,7 @@ export const Figure = ({
         }}
         className={classNames(classes.figure, {
           [classes.figure_zoom_true]: isZoom === true,
+          [classes.figure_height]: isFill,
         })}>
         {children}
         {caption && (

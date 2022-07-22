@@ -8,6 +8,7 @@ export const verseBlockGQL = {
   fragments: gql`
     fragment verseBlockGQL on CoreVerseBlock {
       ... on CoreVerseBlock {
+        name
         attributes {
           ... on CoreVerseBlockAttributes {
             anchor
@@ -18,7 +19,6 @@ export const verseBlockGQL = {
             textColor
           }
         }
-        name
       }
     }
   `,
