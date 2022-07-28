@@ -1,8 +1,9 @@
 import { memo } from "react";
-import { Card, Idata } from "../Card";
+
+import { Card, IData } from "../Card";
 
 interface СardListUngroupedProps {
-  nodes: Array<Idata>;
+  nodes: Array<IData>;
   isHorizontal: boolean;
 }
 

@@ -58,7 +58,6 @@ export async function getStaticPaths() {
       return data.posts.nodes.map((post) => ({
         params: {
           slug: post.slug,
-          // slug: [post.slug],
         },
       }));
     })

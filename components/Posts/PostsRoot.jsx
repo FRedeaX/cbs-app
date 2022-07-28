@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const POSTS_PAGINATION_GQL = gql`
-  query GetPostsPagination($cursor: String, $first: Int!, $tagNotIn: [ID]) {
+  query GetPostsPagination($cursor: String, $first: Int, $tagNotIn: [ID]) {
     posts(after: $cursor, first: $first, where: { tagNotIn: $tagNotIn }) {
       nodes {
         id
