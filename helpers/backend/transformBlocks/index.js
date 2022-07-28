@@ -2,6 +2,7 @@
 // const sizeOf = require("image-size");
 import https from "https";
 import sizeOf from "image-size";
+
 import removeBackslash from "../removeBackslash";
 
 const addAttributes = (block, attributes, args) => ({
@@ -51,7 +52,7 @@ const getSizeOf = (url) =>
     // });
   });
 
-const transformBlocks = async (blocks) => {
+export const transformBlocks = async (blocks) => {
   if (!blocks) throw new Error("blocks of null");
   const blockList = [];
   const video = [];
@@ -224,5 +225,3 @@ const transformBlocks = async (blocks) => {
 //     video,
 //   };
 // };
-
-export default transformBlocks;

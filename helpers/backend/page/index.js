@@ -1,11 +1,10 @@
 import { captureException } from "@sentry/nextjs";
 
-// eslint-disable-next-line import/no-cycle
-import { transformBlocks } from "..";
 import { FETCH_PAGE } from "../../../components/Pages/Page/Page.utils";
 import { client } from "../../../store/apollo-client";
+import { transformBlocks } from "../transformBlocks";
 
-const getPage = async (id) => {
+export const getPage = async (id) => {
   const page = await client
     .query({
       query: FETCH_PAGE,
@@ -30,5 +29,3 @@ const getPage = async (id) => {
     });
   return page;
 };
-
-export default getPage;

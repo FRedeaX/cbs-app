@@ -17,7 +17,7 @@ const setErrorProps = (src, message) => ({
   },
 });
 
-const plaiceholder = async (data) => {
+export const plaiceholder = async (data) => {
   if (data && data.length === 0) throw new Error("data of null");
 
   const result = JSON.parse(JSON.stringify(data));
@@ -67,4 +67,3 @@ const plaiceholder = async (data) => {
   await Promise.all(promise);
   return result;
 };
-export default plaiceholder;

@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
-// import { errorHelper } from "../../errorHendler";
-// eslint-disable-next-line import/no-cycle
-import { removeDuplicateTag } from "..";
 import { client } from "../../../store/apollo-client";
 import clientRedis from "../../../store/redis";
 import { pullIDs, setFeed } from "../post/feed";
+import { removeDuplicateTag } from "../post/removeDuplicateTag";
 
 /**
  *
@@ -18,7 +16,12 @@ import { pullIDs, setFeed } from "../post/feed";
     tags: массив, теги встречающийся в выборке на предыдущей странице
   };
  */
-const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
+export const paginationLoad = async ({
+  key,
+  query,
+  endCursor,
+  category = "",
+}) => {
   let pagination;
 
   try {
@@ -103,5 +106,3 @@ const paginationLoad = async ({ key, query, endCursor, category = "" }) => {
 
   return pagination;
 };
-
-export default paginationLoad;
