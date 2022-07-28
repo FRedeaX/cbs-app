@@ -71,11 +71,9 @@ export const paginationLoad = async ({
     switch (query.definitions[0].name.value) {
       case "GetPostsPaginationByCategory":
         pageInfo = data.category.posts.pageInfo;
-        console.log("@@", { pageInfo });
         break;
       default:
         pageInfo = data.posts.pageInfo;
-        console.log("@@", { pageInfo });
         // eslint-disable-next-line no-await-in-loop
         tags = await removeDuplicateTag(data.posts.nodes).then((response) =>
           response.arrTags.length

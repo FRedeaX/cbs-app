@@ -1,19 +1,19 @@
 import { captureException } from "@sentry/nextjs";
 import type { GetStaticProps, NextPage } from "next";
+
 import Head from "../components/Head/Head";
 import HomePage from "../components/Pages/HomePage/HomePage";
-import {
-  FETCH_POSTER,
-  IPosters,
-} from "../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
 import Layout from "../components/UI/Layout/Layout";
+import { IPoster } from "../components/poster/PosterItem/PosterItem";
+import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
+import { paginationLoad } from "../core/pagination";
 import {
+  _pageInfo,
   getMenu,
-  paginationLoad,
   plaiceholder,
   removeDuplicateTag,
 } from "../helpers/backend";
@@ -21,10 +21,16 @@ import { dateConversion, filter, sort } from "../helpers/backend/poster";
 import { client } from "../store/apollo-client";
 import { RKEY_POSTS } from "../store/redis/redisKeys";
 
+interface IPostData {
+  posts: {
+    nodes: object[];
+    pageInfo: _pageInfo;
+  };
+}
 interface IProps {
   menu: Array<object>;
-  posters: IPosters;
-  posts: Array<object>;
+  posters: IPoster[];
+  posts: IPostData["posts"]["nodes"];
   pages: number;
 }
 
@@ -77,16 +83,22 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       return null;
     });
 
-  const pages = await paginationLoad({
+  const pages = await paginationLoad<IPostData>({
     key: RKEY_POSTS,
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
-  })
-    .then((pagesInfo: any) => pagesInfo[pagesInfo.length - 1].number - 1)
-    .catch((err: any) => {
-      captureException(err);
-      return null;
-    });
+  });
+
+  // await paginationLoad({
+  //   key: RKEY_POSTS,
+  //   query: POSTS_PAGINATION_GQL,
+  //   endCursor: dataPosts?.posts.pageInfo.endCursor,
+  // })
+  //   .then((pagesInfo: any) => pagesInfo[pagesInfo.length - 1].number - 1)
+  //   .catch((err: any) => {
+  //     captureException(err);
+  //     return null;
+  //   });
 
   const posters = await client
     .query({
@@ -113,7 +125,7 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       menu,
       posters,
       posts,
-      pages,
+      pages: 1,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE || "60", 10),
   };

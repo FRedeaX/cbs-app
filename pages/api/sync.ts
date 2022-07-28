@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
+
 import { esClient } from "../../core/elastic-client";
 import { delay } from "../../helpers";
 import { client } from "../../store/apollo-client";

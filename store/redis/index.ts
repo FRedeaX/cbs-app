@@ -1,14 +1,14 @@
 import { Tedis } from "tedis";
 
-// import { errorHelper } from "../../helpers/errorHendler";
 let client;
 
 try {
+  const port = process.env.REDIS_PORT;
+
   if (typeof window === "undefined") {
     client = new Tedis({
       host: `${process.env.REDIS_HOST}`,
-      // host: `${process.env.REDIS_HOST_DEV}`,
-      port: `${process.env.REDIS_PORT}`,
+      port: port ? parseInt(port, 10) : undefined,
     });
   }
 } catch (error) {
