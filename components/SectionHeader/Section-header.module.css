@@ -1,6 +1,6 @@
 .block {
   --button-border-width: 0;
-  --button-link-color: rgba(30, 30, 30, 0.9);
+  --button-link-color: rgba(30, 30, 30, 90%);
 
   padding-left: 10px;
   font-family: var(--font-R-S);
@@ -16,7 +16,7 @@
 }
 
 .link {
-  padding: 0;
+  --button-text-padding: 0;
 }
 
 /* .link::before {
