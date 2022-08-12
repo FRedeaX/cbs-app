@@ -20,7 +20,6 @@ interface IProps {
   menu: Array<object>;
   page: InformatsionnyieListkiPage;
   pagination: number;
-  notFound?: boolean;
 }
 
 const Page: NextPage<IProps> = ({ menu, page, pagination }: IProps) => (
@@ -40,7 +39,7 @@ export const getStaticPaths = () => ({
   fallback: "blocking",
 });
 
-export const getStaticProps: GetStaticProps = async ({
+export const getStaticProps: GetStaticProps<IProps> = async ({
   params: { page: pageNumber },
 }) => {
   const menu = await getMenu();
@@ -52,18 +51,14 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   const carrentPage = pagesInfo[pageNumber - 1];
-  if (carrentPage === undefined) pageNotFound();
+  if (carrentPage === undefined) return pageNotFound;
 
   const page = await getChildrenPage({
     id: `nashi-izdaniya/informatsionnyie-listki`,
     cursor: carrentPage.cursor,
   });
 
-  if (!page) {
-    return {
-      notFound: true,
-    };
-  }
+  if (!page) return pageNotFound;
 
   return {
     props: {

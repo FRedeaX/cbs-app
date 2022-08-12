@@ -25,8 +25,6 @@ export const loadByRedis = async (
     const pagination = await JSON.parse(response);
 
     if (endCursor === pagination[1]?.cursor || endCursor === undefined) {
-      // eslint-disable-next-line no-console
-      console.log(`load pagination: ${key}`);
       return pagination;
     }
 
