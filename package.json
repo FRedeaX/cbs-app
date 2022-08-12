@@ -22,7 +22,7 @@
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.7.0",
-    "@sentry/nextjs": "^7.10.0",
+    "@sentry/nextjs": "^6.19.7",
     "classnames": "^2.3.1",
     "critters": "^0.0.16",
     "css-scroll-snap-polyfill": "^0.1.2",

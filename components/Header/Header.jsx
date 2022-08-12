@@ -17,9 +17,8 @@ import SearchMobile from "../Search/mobile/Search.mobile";
 import Button from "../UI/Button/Button";
 // import { scrollbarWidth } from 'helpers';
 import classes from "./Header.module.css";
-import { MenuGQL } from "./Header.utils/menuGQL";
 import HeaderSocial from "./HeaderSocial/HeaderSocial";
-import NavList from "./NavList/NavList";
+import NavList, { MenuGQL } from "./NavList/NavList";
 
 export const FETCH_MENU = gql`
   query FetchMenu {

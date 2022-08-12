@@ -1,4 +1,4 @@
-import { exceptionLog } from "./exceptionLog";
+import { captureException } from "@sentry/nextjs";
 
 export async function get<T extends object>(key: string): Promise<T | null> {
   try {
@@ -6,7 +6,7 @@ export async function get<T extends object>(key: string): Promise<T | null> {
     if (storage) return JSON.parse(storage);
     return null;
   } catch (err) {
-    exceptionLog({ err, cstMessage: "getLocalStorage" });
+    captureException({ err, cstMessage: "getLocalStorage" });
     return null;
   }
 }
@@ -15,6 +15,6 @@ export const set = (key: string, value: object): void => {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch (err) {
-    exceptionLog({ err, cstMessage: "setLocalStorage" });
+    captureException({ err, cstMessage: "setLocalStorage" });
   }
 };

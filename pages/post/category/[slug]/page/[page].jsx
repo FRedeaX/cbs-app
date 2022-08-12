@@ -1,19 +1,17 @@
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
-
-import { getPageInfoCategory } from "..";
 import Head from "../../../../../components/Head/Head";
 import HomePage from "../../../../../components/Pages/HomePage/HomePage";
 import {
-  POSTS_PAGINATION_BY_CATEGORY_GQL,
   fetchArticlesByCategory,
+  POSTS_PAGINATION_BY_CATEGORY_GQL,
 } from "../../../../../components/Posts/PostsRoot";
 import Layout from "../../../../../components/UI/Layout/Layout";
 import {
-  getLastPageNumber,
+  getMenu,
   paginationLoad,
-} from "../../../../../core/pagination";
-import { getMenu, plaiceholder } from "../../../../../helpers/backend";
+  plaiceholder,
+} from "../../../../../helpers/backend";
 import { client } from "../../../../../store/apollo-client";
 import { RKEY_POSTS_BY_CATEGORY } from "../../../../../store/redis/redisKeys";
 
@@ -42,17 +40,14 @@ const Home = ({ menu, posts, pages, categoryName }) => {
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { slug: "meropriyatie", page: "2" } },
-      { params: { slug: "vyistavka", page: "2" } },
-      { params: { slug: "novosti", page: "2" } },
-      { params: { slug: "tsgb", page: "2" } },
-      { params: { slug: "tsgdb", page: "2" } },
-      { params: { slug: "filial-1", page: "2" } },
-      { params: { slug: "filial-5", page: "2" } },
-      { params: { slug: "ooefkitl", page: "2" } },
-      { params: { slug: "ibo", page: "2" } },
+      {
+        params: {
+          slug: "novosti",
+          page: "2",
+        },
+      },
     ],
-    fallback: "blocking",
+    fallback: true,
   };
 }
 
@@ -61,18 +56,10 @@ export async function getStaticProps({ params: { slug, page } }) {
   const pagesInfo = await paginationLoad({
     key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
-    id: slug,
-    pageInfoCallback: getPageInfoCategory,
+    category: slug,
   });
 
-  const carrentPage = pagesInfo[page - 1];
-  if (carrentPage === undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { cursor } = carrentPage;
+  const { cursor } = pagesInfo[page - 1 || 0];
   const { posts, categoryName } = await client
     .query({
       query: fetchArticlesByCategory,
@@ -111,7 +98,7 @@ export async function getStaticProps({ params: { slug, page } }) {
   return {
     props: {
       menu,
-      pages: getLastPageNumber(pagesInfo),
+      pages: pagesInfo[pagesInfo.length - 1].number - 1,
       posts,
       categoryName,
     },
