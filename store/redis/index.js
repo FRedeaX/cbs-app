@@ -1,19 +1,10 @@
-import { Tedis } from "tedis";
+import { createClient } from "@redis/client";
 
-// import { errorHelper } from "../../helpers/errorHendler";
-let client;
+const clientRedis = createClient();
 
-try {
-  if (typeof window === "undefined") {
-    client = new Tedis({
-      host: `${process.env.REDIS_HOST}`,
-      // host: `${process.env.REDIS_HOST_DEV}`,
-      port: `${process.env.REDIS_PORT}`,
-    });
-  }
-} catch (error) {
+clientRedis.on("error", (err) => {
   // eslint-disable-next-line no-console
-  console.error("@", error);
-}
-const clientRedis = client;
+  console.log("Redis Client Error", err);
+});
+
 export default clientRedis;

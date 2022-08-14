@@ -22,7 +22,7 @@ export const paginationLoad = async ({
   endCursor,
   category = "",
 }) => {
-  let pagination;
+  let pagination = null;
 
   try {
     const response = await clientRedis.get(key);
