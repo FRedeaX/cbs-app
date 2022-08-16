@@ -18,8 +18,8 @@ import {
   removeDuplicateTag,
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
+import { RKEY_POSTS } from "../lib/redis/redisKeys";
 import { client } from "../store/apollo-client";
-import { RKEY_POSTS } from "../store/redis/redisKeys";
 
 interface IPostData {
   posts: {

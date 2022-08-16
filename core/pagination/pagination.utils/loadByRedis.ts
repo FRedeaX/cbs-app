@@ -1,5 +1,5 @@
 import { exceptionLog } from "../../../helpers";
-import clientRedis from "../../../store/redis";
+import { clientRedis } from "../../../lib/redis";
 import { pageInfo } from "./type";
 
 export interface ILoadByRedis {

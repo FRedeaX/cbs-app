@@ -14,7 +14,7 @@ import {
   getMenu,
   pageNotFound,
 } from "../../../../helpers/backend";
-import { RKEY_IL } from "../../../../store/redis/redisKeys";
+import { RKEY_IL } from "../../../../lib/redis";
 
 interface IProps {
   menu: Array<object>;

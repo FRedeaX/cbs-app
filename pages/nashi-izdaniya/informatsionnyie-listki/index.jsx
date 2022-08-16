@@ -4,7 +4,7 @@ import { FETCH_CHILDREN_PAGE_PAGINATION } from "../../../components/Pages/Page/P
 import Layout from "../../../components/UI/Layout/Layout";
 import { getLastPageNumber, paginationLoad } from "../../../core/pagination";
 import { getChildrenPage, getMenu } from "../../../helpers/backend";
-import { RKEY_IL } from "../../../store/redis/redisKeys";
+import { RKEY_IL } from "../../../lib/redis";
 
 const Page = ({ menu, page, pagination }) => (
   <Layout menu={menu} size="m">
@@ -25,7 +25,6 @@ export async function getStaticProps() {
   const page = await getChildrenPage({
     id: `nashi-izdaniya/informatsionnyie-listki`,
   });
-  // console.log(page.children.pageInfo.endCursor);
 
   if (!page) {
     return {

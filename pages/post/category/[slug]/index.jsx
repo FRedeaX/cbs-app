@@ -10,8 +10,8 @@ import Layout from "../../../../components/UI/Layout/Layout";
 import { getLastPageNumber, paginationLoad } from "../../../../core/pagination";
 import { exceptionLog } from "../../../../helpers";
 import { getMenu, plaiceholder } from "../../../../helpers/backend";
+import { RKEY_POSTS_BY_CATEGORY } from "../../../../lib/redis";
 import { client } from "../../../../store/apollo-client";
-import { RKEY_POSTS_BY_CATEGORY } from "../../../../store/redis/redisKeys";
 
 const Home = ({ menu, posts, pages, name }) => {
   const {

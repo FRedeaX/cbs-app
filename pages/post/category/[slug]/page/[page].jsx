@@ -14,8 +14,8 @@ import {
   paginationLoad,
 } from "../../../../../core/pagination";
 import { getMenu, plaiceholder } from "../../../../../helpers/backend";
+import { RKEY_POSTS_BY_CATEGORY } from "../../../../../lib/redis";
 import { client } from "../../../../../store/apollo-client";
-import { RKEY_POSTS_BY_CATEGORY } from "../../../../../store/redis/redisKeys";
 
 const Home = ({ menu, posts, pages, categoryName }) => {
   const {

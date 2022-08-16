@@ -18,8 +18,8 @@ import {
   removeDuplicateTag,
 } from "../../../helpers/backend";
 import { dateConversion, filter, sort } from "../../../helpers/backend/poster";
+import { RKEY_POSTS } from "../../../lib/redis";
 import { client } from "../../../store/apollo-client";
-import { RKEY_POSTS } from "../../../store/redis/redisKeys";
 
 const Home = ({ menu, posts, pages, posters }) => {
   const {

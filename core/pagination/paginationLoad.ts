@@ -7,7 +7,9 @@ import {
   ILoadByGraphQL,
   ILoadByRedis,
   loadByGraphQL,
+  loadByRedis,
   pageInfo,
+  saveByRedis,
 } from "./pagination.utils";
 
 interface IPaginationLoad<TData> extends ILoadByGraphQL<TData> {
@@ -24,13 +26,13 @@ export async function paginationLoad<TData>({
   pageInfoCallback,
 }: IPaginationLoad<TData>): Promise<pageInfo[]> {
   try {
-    // const paginationRedis: pageInfo[] | null = await loadByRedis({
-    //   key,
-    //   endCursor,
-    // });
-    // if (paginationRedis !== null) {
-    //   return paginationRedis;
-    // }
+    const paginationRedis: pageInfo[] | null = await loadByRedis({
+      key,
+      endCursor,
+    });
+    if (paginationRedis !== null) {
+      return paginationRedis;
+    }
 
     const paginationGraphQL: pageInfo[] = await loadByGraphQL<TData>({
       query,
@@ -38,7 +40,7 @@ export async function paginationLoad<TData>({
       isTags,
       pageInfoCallback,
     });
-    // saveByRedis(key, paginationGraphQL);
+    saveByRedis(key, paginationGraphQL);
 
     return paginationGraphQL;
   } catch (error) {
