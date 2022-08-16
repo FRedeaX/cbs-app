@@ -40,7 +40,10 @@ export async function getStaticPaths() {
       if (data.page.children.edges.length === 0)
         throw new Error("data.page.children.edges of null");
 
-      return preparingPaths(data.page.children.edges);
+      return preparingPaths(
+        data.page.children.edges,
+        "informatsionnyie-listki",
+      );
     })
     .catch((err) => {
       captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });

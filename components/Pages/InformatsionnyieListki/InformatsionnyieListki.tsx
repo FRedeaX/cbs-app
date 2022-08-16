@@ -26,8 +26,8 @@ export const InformatsionnyieListki: FC<IInformatsionnyieListki> = ({
   pagination,
 }) => (
   <>
-    <div className={classes.root}>
-      <Heading level="1">{page.title}</Heading>
+    <div className={classes.header}>
+      <Heading level={1}>{page.title}</Heading>
     </div>
     <div className={classes.container}>
       <СardListUngrouped nodes={page.children.nodes} isHorizontal />

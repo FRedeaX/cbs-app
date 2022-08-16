@@ -1,4 +1,4 @@
-import clientRedis from "../../../../store/redis";
+import { clientRedis } from "../../../../lib/redis";
 
 export const pullIDs = (nodeList) => nodeList.map((node) => node.id);
 
