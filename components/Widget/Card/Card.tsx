@@ -8,7 +8,7 @@ import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
 import classes from "./Card.module.css";
 
-export interface Idata {
+export interface IData {
   id?: string;
   isSticky?: boolean;
   title: string;
@@ -24,7 +24,7 @@ export interface Idata {
 }
 
 interface CardProps {
-  data: Idata;
+  data: IData;
   imagePriority?: boolean;
   prefetch?: boolean;
   isHorizontal: boolean;

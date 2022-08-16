@@ -1,37 +1,42 @@
-import { captureException } from "@sentry/nextjs";
 import type { GetStaticProps, NextPage } from "next";
+
 import Head from "../components/Head/Head";
 import HomePage from "../components/Pages/HomePage/HomePage";
-import {
-  FETCH_POSTER,
-  IPosters,
-} from "../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
 import Layout from "../components/UI/Layout/Layout";
+import { IPoster } from "../components/poster/PosterItem/PosterItem";
+import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
+import { getLastPageNumber, paginationLoad } from "../core/pagination";
+import { exceptionLog } from "../helpers";
 import {
+  _pageInfo,
   getMenu,
-  paginationLoad,
   plaiceholder,
   removeDuplicateTag,
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
+import { RKEY_POSTS } from "../lib/redis/redisKeys";
 import { client } from "../store/apollo-client";
-import { RKEY_POSTS } from "../store/redis/redisKeys";
 
+interface IPostData {
+  posts: {
+    nodes: object[];
+    pageInfo: _pageInfo;
+  };
+}
 interface IProps {
   menu: Array<object>;
-  posters: IPosters;
-  posts: Array<object>;
+  posters: IPoster[];
+  posts: IPostData["posts"]["nodes"];
   pages: number;
 }
 
-const Home: NextPage<IProps> = ({ menu, posters, posts, pages }) => (
+const Home: NextPage<IProps> = ({ menu, posters, posts, pages }: IProps) => (
   <Layout menu={menu} paddingSides={0}>
     <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
-    {/* {console.log(posters)} */}
     <HomePage
       posters={posters}
       posts={posts}
@@ -40,6 +45,9 @@ const Home: NextPage<IProps> = ({ menu, posters, posts, pages }) => (
     />
   </Layout>
 );
+
+export const getPageInfoPosts = (data: IPostData): _pageInfo =>
+  data.posts.pageInfo;
 
 export const getStaticProps: GetStaticProps<IProps> = async () => {
   const menu = await getMenu(false);
@@ -60,7 +68,7 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       return data;
     })
     .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
+      exceptionLog({ ...err, cstMessage: "FETCH_ARTICLES" });
       return null;
     });
 
@@ -73,20 +81,17 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes)
     .then((nodes) => plaiceholder(nodes.result).then((p) => p))
     .catch((err) => {
-      captureException(err);
+      exceptionLog(err);
       return null;
     });
 
-  const pages = await paginationLoad({
+  const pages = await paginationLoad<IPostData>({
     key: RKEY_POSTS,
     query: POSTS_PAGINATION_GQL,
     endCursor: dataPosts?.posts.pageInfo.endCursor,
-  })
-    .then((pagesInfo: any) => pagesInfo[pagesInfo.length - 1].number - 1)
-    .catch((err: any) => {
-      captureException(err);
-      return null;
-    });
+    isTags: true,
+    pageInfoCallback: getPageInfoPosts,
+  }).then(getLastPageNumber);
 
   const posters = await client
     .query({
@@ -104,7 +109,7 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       return filterRes;
     })
     .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_POSTER" });
+      exceptionLog({ ...err, cstMessage: "FETCH_POSTER" });
       return null;
     });
 

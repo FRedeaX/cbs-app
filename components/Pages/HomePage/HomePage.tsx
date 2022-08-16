@@ -2,12 +2,13 @@
 import classnames from "classnames";
 import type { NextPage } from "next";
 import { memo } from "react";
-import PosterRoot, { IPosters } from "../../poster/PosterRoot/PosterRoot";
+
 import SectionHeader from "../../SectionHeader/SectionHeader";
-// import { GET_WIDTH } from "../../../store/variables/windowWidth";
+import Pagination from "../../UI/Pagination/Pagination";
 import CardList from "../../Widget/Card/CardList";
+// import { GET_WIDTH } from "../../../store/variables/windowWidth";
+import PosterRoot, { IPosters } from "../../poster/PosterRoot/PosterRoot";
 import classes from "./Home-Page.module.css";
-import Pagination from "./Pagination/Pagination";
 
 interface IHomePageProps {
   posters: IPosters;
@@ -25,22 +26,7 @@ const HomePage: NextPage<IHomePageProps> = ({
   paginationURI,
   categoryName,
   isGroupCards = true,
-}) => (
-  // const { data } = useQuery(GET_WIDTH);
-
-  // const [isTowColumn, setTowColumn] = useState(data?.windowWidth >= 1300);
-
-  // useEffect(() => {
-  //   if (data.windowWidth >= 1300 && !isTowColumn) {
-  //     setTowColumn(true);
-  //   } else if (data.windowWidth < 1300 && isTowColumn) {
-  //     setTowColumn(false);
-  //   }
-  // }, [isTowColumn, data?.windowWidth]);
-
-  // console.log({ posters, posts, pages });
-
-  /* <Today className={classes.today} /> */
+}: IHomePageProps) => (
   <div className={classes.wrapper}>
     {posters && posters.length > 0 && (
       <aside className={classnames(classes.section, classes.poster)}>
