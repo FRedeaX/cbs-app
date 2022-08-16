@@ -1,7 +1,8 @@
+/* eslint-disable no-nested-ternary */
+
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { gql } from "@apollo/client";
 import classNames from "classnames";
 import classNamesBind from "classnames/bind";
 import { memo } from "react";
@@ -45,7 +46,6 @@ const NavItems = ({
                 // className={classes["icon_width"]}
               />
             }
-            // className={classes.button}
             onClick={(event) => onClick(event, true)}>
             <span
               style={{ width: "100%" }}
@@ -101,35 +101,31 @@ const NavItems = ({
                   />
                 </Button>
               </ActiveLink>
+            ) : path === "/elcatalog/" ? (
+              <a
+                href={path}
+                className={classes.link}
+                target="_blank"
+                rel="noreferrer noopener">
+                <span className={classes.text}>{label}</span>
+              </a>
             ) : (
-              <>
-                {path === "/elcatalog/" ? (
-                  <a
-                    href={path}
-                    className={classes.link}
-                    target="_blank"
-                    rel="noreferrer noopener">
-                    <span className={classes.text}>{label}</span>
-                  </a>
-                ) : (
-                  <ActiveLink
-                    activeClassName={classes.link_active}
-                    href={path}
-                    prefetch={false}>
-                    <a
-                      className={cx({
-                        link: true,
-                        "link--cursor": !!childItems?.nodes.length,
-                      })}
-                      onClick={() => overlayVar({ isOpen: false })}>
-                      <span
-                        className={cx({ text: true, text_mb: subItem })}
-                        dangerouslySetInnerHTML={createMarkup(label)}
-                      />
-                    </a>
-                  </ActiveLink>
-                )}
-              </>
+              <ActiveLink
+                activeClassName={classes.link_active}
+                href={path}
+                prefetch={false}>
+                <a
+                  className={cx({
+                    link: true,
+                    "link--cursor": !!childItems?.nodes.length,
+                  })}
+                  onClick={() => overlayVar({ isOpen: false })}>
+                  <span
+                    className={cx({ text: true, text_mb: subItem })}
+                    dangerouslySetInnerHTML={createMarkup(label)}
+                  />
+                </a>
+              </ActiveLink>
             )}
             {!!childItems?.nodes.length && (
               <NavList
@@ -151,14 +147,3 @@ const NavItems = ({
 };
 
 export default memo(NavItems);
-
-export const menuItemsGQL = {
-  fragments: gql`
-    fragment menuItemsGQL on MenuItem {
-      id
-      label
-      path
-      parentId
-    }
-  `,
-};
