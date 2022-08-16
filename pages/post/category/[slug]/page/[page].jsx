@@ -1,17 +1,19 @@
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+
+import { getPageInfoCategory } from "..";
 import Head from "../../../../../components/Head/Head";
 import HomePage from "../../../../../components/Pages/HomePage/HomePage";
 import {
-  fetchArticlesByCategory,
   POSTS_PAGINATION_BY_CATEGORY_GQL,
+  fetchArticlesByCategory,
 } from "../../../../../components/Posts/PostsRoot";
 import Layout from "../../../../../components/UI/Layout/Layout";
 import {
-  getMenu,
+  getLastPageNumber,
   paginationLoad,
-  plaiceholder,
-} from "../../../../../helpers/backend";
+} from "../../../../../core/pagination";
+import { getMenu, plaiceholder } from "../../../../../helpers/backend";
 import { client } from "../../../../../store/apollo-client";
 import { RKEY_POSTS_BY_CATEGORY } from "../../../../../store/redis/redisKeys";
 
@@ -40,14 +42,17 @@ const Home = ({ menu, posts, pages, categoryName }) => {
 export async function getStaticPaths() {
   return {
     paths: [
-      {
-        params: {
-          slug: "novosti",
-          page: "2",
-        },
-      },
+      { params: { slug: "meropriyatie", page: "2" } },
+      { params: { slug: "vyistavka", page: "2" } },
+      { params: { slug: "novosti", page: "2" } },
+      { params: { slug: "tsgb", page: "2" } },
+      { params: { slug: "tsgdb", page: "2" } },
+      { params: { slug: "filial-1", page: "2" } },
+      { params: { slug: "filial-5", page: "2" } },
+      { params: { slug: "ooefkitl", page: "2" } },
+      { params: { slug: "ibo", page: "2" } },
     ],
-    fallback: true,
+    fallback: "blocking",
   };
 }
 
@@ -56,10 +61,18 @@ export async function getStaticProps({ params: { slug, page } }) {
   const pagesInfo = await paginationLoad({
     key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
-    category: slug,
+    id: slug,
+    pageInfoCallback: getPageInfoCategory,
   });
 
-  const { cursor } = pagesInfo[page - 1 || 0];
+  const carrentPage = pagesInfo[page - 1];
+  if (carrentPage === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { cursor } = carrentPage;
   const { posts, categoryName } = await client
     .query({
       query: fetchArticlesByCategory,
@@ -98,7 +111,7 @@ export async function getStaticProps({ params: { slug, page } }) {
   return {
     props: {
       menu,
-      pages: pagesInfo[pagesInfo.length - 1].number - 1,
+      pages: getLastPageNumber(pagesInfo),
       posts,
       categoryName,
     },

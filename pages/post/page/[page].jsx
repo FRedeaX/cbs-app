@@ -1,17 +1,19 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+
+import { getPageInfoPosts } from "../..";
 import Head from "../../../components/Head/Head";
 import HomePage from "../../../components/Pages/HomePage/HomePage";
-import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../../../components/Posts/PostsRoot";
 import Layout from "../../../components/UI/Layout/Layout";
+import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
+import { getLastPageNumber, paginationLoad } from "../../../core/pagination";
 import {
   getMenu,
-  paginationLoad,
   plaiceholder,
   removeDuplicateTag,
 } from "../../../helpers/backend";
@@ -40,30 +42,28 @@ const Home = ({ menu, posts, pages, posters }) => {
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [
-      {
-        params: {
-          page: "2",
-        },
-      },
-    ],
-    fallback: true,
-  };
-}
+export const getStaticPaths = () => ({
+  paths: [{ params: { page: "2" } }],
+  fallback: "blocking",
+});
 
-// getServerSideProps
-// getStaticProps
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params: { page } }) {
   const menu = await getMenu();
-  const page = params.page - 1;
   const pagesInfo = await paginationLoad({
     key: RKEY_POSTS,
     query: POSTS_PAGINATION_GQL,
+    isTags: true,
+    pageInfoCallback: getPageInfoPosts,
   });
-  const { cursor, tags } = pagesInfo[page];
 
+  const carrentPage = pagesInfo[page - 1];
+  if (carrentPage === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { cursor, tags } = carrentPage;
   const posts = await client
     .query({
       query: FETCH_ARTICLES,
@@ -117,7 +117,7 @@ export async function getStaticProps({ params }) {
     props: {
       menu,
       posters,
-      pages: pagesInfo[pagesInfo.length - 1].number - 1,
+      pages: getLastPageNumber(pagesInfo),
       posts,
     },
     revalidate: parseInt(process.env.POST_REVALIDATE, 10),
