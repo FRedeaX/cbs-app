@@ -24,7 +24,6 @@ interface IProps {
 
 const Page: NextPage<IProps> = ({ menu, page, pagination }: IProps) => (
   <Layout menu={menu} size="m">
-    {/* {console.log(page.children.nodes)} */}
     {page.children.nodes.length > 0 && (
       <>
         <Head title={page.title} description={page.excerpt} />
@@ -39,7 +38,7 @@ export const getStaticPaths = () => ({
   fallback: "blocking",
 });
 
-export const getStaticProps: GetStaticProps<IProps> = async ({
+export const getStaticProps: GetStaticProps = async ({
   params: { page: pageNumber },
 }) => {
   const menu = await getMenu();

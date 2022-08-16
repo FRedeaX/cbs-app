@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-import Button from "../../../UI/Button/Button";
-import Icon from "../../../UI/Icon/Icon";
+import Button from "../Button/Button";
+import Icon from "../Icon/Icon";
 import classes from "./Pagination.module.css";
 
 const Pagination = ({ pages, paginationOffset = 2, paginationURI }) => {
