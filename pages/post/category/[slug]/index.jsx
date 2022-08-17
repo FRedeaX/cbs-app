@@ -1,19 +1,17 @@
-import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+
 import Head from "../../../../components/Head/Head";
 import HomePage from "../../../../components/Pages/HomePage/HomePage";
 import {
-  fetchArticlesByCategory,
   POSTS_PAGINATION_BY_CATEGORY_GQL,
+  fetchArticlesByCategory,
 } from "../../../../components/Posts/PostsRoot";
 import Layout from "../../../../components/UI/Layout/Layout";
-import {
-  getMenu,
-  paginationLoad,
-  plaiceholder,
-} from "../../../../helpers/backend";
+import { getLastPageNumber, paginationLoad } from "../../../../core/pagination";
+import { exceptionLog } from "../../../../helpers";
+import { getMenu, plaiceholder } from "../../../../helpers/backend";
+import { RKEY_POSTS_BY_CATEGORY } from "../../../../lib/redis";
 import { client } from "../../../../store/apollo-client";
-import { RKEY_POSTS_BY_CATEGORY } from "../../../../store/redis/redisKeys";
 
 const Home = ({ menu, posts, pages, name }) => {
   const {
@@ -40,15 +38,21 @@ const Home = ({ menu, posts, pages, name }) => {
 export async function getStaticPaths() {
   return {
     paths: [
-      {
-        params: {
-          slug: "novosti",
-        },
-      },
+      { params: { slug: "meropriyatie" } },
+      { params: { slug: "vyistavka" } },
+      { params: { slug: "novosti" } },
+      { params: { slug: "tsgb" } },
+      { params: { slug: "tsgdb" } },
+      { params: { slug: "filial-1" } },
+      { params: { slug: "filial-5" } },
+      { params: { slug: "ooefkitl" } },
+      { params: { slug: "ibo" } },
     ],
     fallback: "blocking",
   };
 }
+
+export const getPageInfoCategory = (data) => data.category.posts.pageInfo;
 
 export async function getStaticProps({ params: { slug } }) {
   const menu = await getMenu();
@@ -70,7 +74,7 @@ export async function getStaticProps({ params: { slug } }) {
       return data;
     })
     .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
+      exceptionLog({ ...err, cstMessage: "FETCH_ARTICLES" });
       return null;
     });
 
@@ -82,7 +86,7 @@ export async function getStaticProps({ params: { slug } }) {
 
   const posts = await plaiceholder(postsByCategory.category.posts.nodes).catch(
     (err) => {
-      captureException({ ...err, cstMessage: "fetchArticlesByCategory" });
+      exceptionLog(err);
       return null;
     },
   );
@@ -91,13 +95,9 @@ export async function getStaticProps({ params: { slug } }) {
     key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
     query: POSTS_PAGINATION_BY_CATEGORY_GQL,
     endCursor: postsByCategory.category?.posts.pageInfo.endCursor,
-    category: slug,
-  })
-    .then((pagesInfo) => pagesInfo[pagesInfo.length - 1].number - 1)
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "POSTS_PAGINATION_BY_CATEGORY_GQL" });
-      return null;
-    });
+    id: slug,
+    pageInfoCallback: getPageInfoCategory,
+  }).then(getLastPageNumber);
 
   const name = postsByCategory.category.posts.nodes[0].categories.nodes.filter(
     (node) => node.slug === slug,

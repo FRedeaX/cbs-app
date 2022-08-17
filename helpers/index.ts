@@ -5,8 +5,10 @@ import lineClamp from "./lineClamp";
 import throttler from "./throttler";
 import verticalAlignToFlext from "./verticalAlignToFlext";
 
+export * from "./exceptionLog";
 export * from "./isFront";
 export * as localStorage from "./localStorage";
+export * from "./noop";
 export {
   asyncLoadScript,
   createMarkup,

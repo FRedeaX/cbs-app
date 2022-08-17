@@ -81,56 +81,53 @@ const stringToObject = (str: string): any =>
     ),
   );
 
-const createScheduleDefault = (
-  schedule: any,
-  aup: string = "",
-): IScheduleNode[] => {
+const createScheduleDefault = (schedule: any, aup = ""): IScheduleNode[] => {
   const res: IScheduleNode[] = [
     {
       day: "пн",
-      time: schedule["monday" + aup],
+      time: schedule[`monday${aup}`],
     },
     {
       day: "вт",
-      time: schedule["tuesday" + aup],
+      time: schedule[`tuesday${aup}`],
     },
     {
       day: "ср",
-      time: schedule["wednesday" + aup],
+      time: schedule[`wednesday${aup}`],
     },
     {
       day: "чт",
-      time: schedule["thursday" + aup],
+      time: schedule[`thursday${aup}`],
     },
     {
       day: "пт",
-      time: schedule["friday" + aup],
+      time: schedule[`friday${aup}`],
     },
     {
       day: "сб",
-      time: schedule["saturday" + aup],
+      time: schedule[`saturday${aup}`],
     },
     {
       day: "вс",
-      time: schedule["sunday" + aup],
+      time: schedule[`sunday${aup}`],
     },
   ];
-  const lunchBreak = schedule["lunchbreak" + aup][0] === "false" ? false : true;
-  const cleanupDay = schedule["cleanupday" + aup][0] === "false" ? false : true;
+  const lunchBreak = schedule[`lunchbreak${aup}`][0] !== "false";
+  const cleanupDay = schedule[`cleanupday${aup}`][0] !== "false";
 
   if (lunchBreak) {
     res.push({
       lunchBreak,
       day: "Обед",
-      time: schedule["lunchbreak" + aup][1],
+      time: schedule[`lunchbreak${aup}`][1],
     });
   }
 
   if (cleanupDay) {
     res.push({
-      cleanupDay: cleanupDay,
+      cleanupDay,
       day: "Санитарный день",
-      time: schedule["cleanupday" + aup][1],
+      time: schedule[`cleanupday${aup}`][1],
     });
   }
 

@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { gql } from "@apollo/client";
 import classNamesBind from "classnames/bind";
 import { memo } from "react";
 
 // eslint-disable-next-line import/no-cycle
-import NavItems, { menuItemsGQL } from "../NavItems/NavItems";
+import NavItems from "../NavItems/NavItems";
 import classes from "./Nav-list.module.css";
 
 const NavList = ({
@@ -59,13 +58,12 @@ const NavList = ({
         );
   };
 
-  // console.log("L_Render");
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <ul
       className={classNameList}
       onClick={closeAllHendler}
-      onKeyPress={closeAllHendler}>
+      onKeyPress={closeAllHendler}
+      role="presentation">
       <NavItems
         data={data.nodes}
         subItem={subList}
@@ -80,31 +78,3 @@ const NavList = ({
 };
 
 export default memo(NavList);
-
-export const MenuGQL = {
-  fragments: gql`
-    fragment MenuGQL on Menu {
-      menuItems(where: { parentId: "" }) {
-        nodes {
-          ...menuItemsGQL
-          childItems {
-            nodes {
-              ...menuItemsGQL
-              childItems {
-                nodes {
-                  ...menuItemsGQL
-                  childItems {
-                    nodes {
-                      ...menuItemsGQL
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    ${menuItemsGQL.fragments}
-  `,
-};

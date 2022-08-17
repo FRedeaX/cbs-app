@@ -1,6 +1,6 @@
-const removeDuplicateTag = async (data) => {
-  const arrTags = [];
+export const removeDuplicateTag = async (data) => {
   const result = [];
+  const arrTags = [];
   if (data && data.length === 0) return { arrTags, result };
 
   data.forEach((post) => {
@@ -18,5 +18,3 @@ const removeDuplicateTag = async (data) => {
   });
   return { arrTags, result };
 };
-
-export default removeDuplicateTag;
