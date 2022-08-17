@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 // import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
-import { memo, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
 import {
@@ -71,7 +71,11 @@ const Header = ({ menus }) => {
     prevScrollYRef.current = state.scrollY;
   }, [state?.scrollY, state?.isHeaderHidden, isHeaderHidden]);
 
-  // console.log(isHeaderHidden);
+  const hendleOpenMenu = useCallback(() => {
+    overlayVar({ isOpen: !isOpen, zIndex: 2, isOverflow: true });
+    setOpen(!isOpen);
+  }, [isOpen]);
+
   if (!menus) return null;
   return (
     <header
@@ -114,10 +118,7 @@ const Header = ({ menus }) => {
             className={classNames(classes.controls_button, {
               [classes["controls_button--active"]]: isOpen,
             })}
-            onClick={() => {
-              overlayVar({ isOpen: !isOpen, zIndex: 2, isOverflow: true });
-              setOpen(!isOpen);
-            }}>
+            onClick={hendleOpenMenu}>
             <span className={classes.inner} />
           </Button>
         </div>
@@ -140,4 +141,4 @@ const Header = ({ menus }) => {
 //   */
 // }
 
-export default memo(Header);
+export default Header;

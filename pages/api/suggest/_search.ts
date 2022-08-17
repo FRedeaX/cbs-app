@@ -28,14 +28,25 @@ export default async function _search(
           // no_match_size
           pre_tags: ["<mark>"],
           post_tags: ["</mark>"],
-          number_of_fragments: 1,
           fields: {
-            "title.text": {},
+            "title.text": {
+              number_of_fragments: 0,
+            },
             title: {
+              number_of_fragments: 0,
               // matched_fields: ["title", "title.text"],
             },
             content: {
+              number_of_fragments: 1,
               fragment_size: 200,
+            },
+          },
+        },
+        aggs: {
+          category: {
+            terms: {
+              field: "category.name.raw",
+              size: 50,
             },
           },
         },

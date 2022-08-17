@@ -16,6 +16,11 @@ export interface ISearchHitsNode {
   };
 }
 
+export interface IBucketsAggregations {
+  key: string;
+  doc_count: number;
+}
+
 export interface ISearchResponse {
   took: number;
   timed_out: boolean;
@@ -32,5 +37,12 @@ export interface ISearchResponse {
     };
     max_score: number;
     hits: Array<ISearchHitsNode> | [];
+  };
+  aggregations: {
+    category: {
+      doc_count_error_upper_bound: number;
+      sum_other_doc_count: number;
+      buckets: Array<IBucketsAggregations>;
+    };
   };
 }

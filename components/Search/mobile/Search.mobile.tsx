@@ -11,13 +11,14 @@ import classNames from "classnames";
 import {
   ChangeEvent,
   FC,
+  memo,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
 
-import debounce from "../../../helpers/debounce";
+import { debounce } from "../../../helpers";
 import SearchToggleFrom from "../Search.ToggleFrom";
 import Suggestion from "../Suggestion/Suggestion";
 import SuggestionList from "../Suggestion/SuggestionList";
@@ -133,4 +134,4 @@ const SearchMobile: FC = () => {
   );
 };
 
-export default SearchMobile;
+export default memo(SearchMobile);

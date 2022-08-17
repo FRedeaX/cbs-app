@@ -2,14 +2,15 @@
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import {
+  Fade,
   InputAdornment,
   InputBase,
   InputBaseComponentProps,
 } from "@mui/material";
 import classNames from "classnames";
-import { ChangeEvent, FC, useCallback, useRef } from "react";
+import { ChangeEvent, FC, memo, useCallback, useRef } from "react";
 
-import debounce from "../../helpers/debounce";
+import { debounce } from "../../helpers";
 import SearchToggleFrom from "./Search.ToggleFrom";
 import classes from "./Search.module.css";
 import Suggestion from "./Suggestion/Suggestion";
@@ -119,19 +120,27 @@ const Search: FC<SearchProps> = ({ className }) => {
             onBlur={onBlurHendler}
           />
         </div>
-        <Suggestion isSuggest={isSuggest}>
+        <Suggestion
+          isSuggest={isSuggest}
+          // aggregationNodes={data?.aggregations.category.buckets}
+        >
           <SuggestionList nodes={data?.hits?.hits} />
         </Suggestion>
       </form>
       <SearchToggleFrom isSearch={isSearch} onClick={hendleToggleForm}>
-        {isSearch ? (
-          <CloseIcon fontSize="small" />
-        ) : (
-          <SearchIcon fontSize="small" />
-        )}
+        <Fade in={isSearch}>
+          <span className={classes.icon}>
+            <CloseIcon fontSize="small" />
+          </span>
+        </Fade>
+        <Fade in={!isSearch}>
+          <span className={classes.icon}>
+            <SearchIcon fontSize="small" />
+          </span>
+        </Fade>
       </SearchToggleFrom>
     </div>
   );
 };
 
-export default Search;
+export default memo(Search);
