@@ -1,8 +1,0 @@
-import DOMPurify from "isomorphic-dompurify";
-
-function createMarkup(text) {
-  if (!text) return undefined;
-  return { __html: DOMPurify.sanitize(text, { USE_PROFILES: { html: true } }) };
-}
-
-export default createMarkup;
