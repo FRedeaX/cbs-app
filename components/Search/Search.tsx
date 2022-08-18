@@ -2,7 +2,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import {
-  Fade,
   InputAdornment,
   InputBase,
   InputBaseComponentProps,
@@ -128,16 +127,11 @@ const Search: FC<SearchProps> = ({ className }) => {
         </Suggestion>
       </form>
       <SearchToggleFrom isSearch={isSearch} onClick={hendleToggleForm}>
-        <Fade in={isSearch}>
-          <span className={classes.icon}>
-            <CloseIcon fontSize="small" />
-          </span>
-        </Fade>
-        <Fade in={!isSearch}>
-          <span className={classes.icon}>
-            <SearchIcon fontSize="small" />
-          </span>
-        </Fade>
+        {isSearch ? (
+          <CloseIcon fontSize="small" />
+        ) : (
+          <SearchIcon fontSize="small" />
+        )}
       </SearchToggleFrom>
     </div>
   );
