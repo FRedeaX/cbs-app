@@ -7,8 +7,10 @@ import {
   KeyboardEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
+
 import { delay } from "../../helpers";
 
 // interface IUseForm {
@@ -26,7 +28,9 @@ import { delay } from "../../helpers";
  */
 const DELAY_CSS_TRANSITION_50_PERCENT = 250 / 2;
 
-const useForm = (inputRef?: InputBaseComponentProps) => {
+const useForm = () => {
+  const inputRef = useRef<InputBaseComponentProps>();
+
   const [isSearch, setSearch] = useState<boolean>(false);
   const [isSuggest, setSuggest] = useState<boolean>(false);
 
@@ -37,23 +41,23 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
   }, [asPath, setSuggest]);
 
   const setFocus = useCallback(() => {
-    if (inputRef === undefined) return;
-
     /* 1. */
     delay(DELAY_CSS_TRANSITION_50_PERCENT).then(() => {
-      inputRef.focus();
+      if (inputRef.current === undefined) return;
+
+      inputRef.current.focus();
     });
   }, [inputRef]);
 
   const resetInput = useCallback(() => {
-    if (inputRef === undefined) return;
-    // eslint-disable-next-line no-param-reassign
-    inputRef.value = "";
+    if (inputRef.current === undefined) return;
+
+    inputRef.current.value = "";
     setFocus();
   }, [inputRef, setFocus]);
 
   const toggleForm = useCallback(() => {
-    if (inputRef === undefined) {
+    if (inputRef.current === undefined) {
       setSearch(false);
       setSuggest(false);
       return;
@@ -67,7 +71,7 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
       setSuggest(!prev);
       return !prev;
     });
-  }, [inputRef]);
+  }, []);
 
   const onKeyDownHendler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
@@ -101,6 +105,7 @@ const useForm = (inputRef?: InputBaseComponentProps) => {
   );
 
   return {
+    inputRef,
     isSearch,
     isSuggest,
     setFocus,

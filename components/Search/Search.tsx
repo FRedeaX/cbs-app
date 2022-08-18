@@ -1,13 +1,9 @@
 /* eslint-disable react/require-default-props */
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  InputAdornment,
-  InputBase,
-  InputBaseComponentProps,
-} from "@mui/material";
+import { InputAdornment, InputBase } from "@mui/material";
 import classNames from "classnames";
-import { ChangeEvent, FC, memo, useCallback, useRef } from "react";
+import { ChangeEvent, FC, memo, useCallback } from "react";
 
 import { debounce } from "../../helpers";
 import SearchToggleFrom from "./Search.ToggleFrom";
@@ -45,9 +41,8 @@ const Search: FC<SearchProps> = ({ className }) => {
     event.preventDefault();
   }, []);
 
-  // +
-  const inputRef = useRef<InputBaseComponentProps>();
   const {
+    inputRef,
     isSearch,
     isSuggest,
     resetInput,
@@ -55,7 +50,7 @@ const Search: FC<SearchProps> = ({ className }) => {
     onKeyDownHendler,
     onFocusHendler,
     onBlurHendler,
-  } = useForm(inputRef?.current);
+  } = useForm();
 
   // useEffect(() => {
   //   if (data && data.hits && data.hits.hits.length > 0) {
