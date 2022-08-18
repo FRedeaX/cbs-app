@@ -22,6 +22,7 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 const nextConfig = withTM({
+  output: "standalone",
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
@@ -29,7 +30,6 @@ const nextConfig = withTM({
 
   images: {
     domains: [process.env.HOST],
-    // domains: [process.env.HOST_DEV],
     // formats: ["image/avif", "image/webp"],
     formats: ["image/webp"],
   },
