@@ -1,5 +1,7 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
+import { ST } from "../core/metrics/st";
+
 // import Script from "next/script";
 // import { scrollbarWidth } from "~/helpers";
 
@@ -51,6 +53,8 @@ class _Document extends Document {
 
           <meta name="theme-color" content="#f2f2f2" />
           <meta name="yandex-verification" content="b761a7a26da38d4e" />
+
+          <ST />
         </Head>
         <body
           style={{
