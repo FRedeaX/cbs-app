@@ -1,5 +1,34 @@
+interface IPoster {
+  content: string;
+  excerpt: string;
+  posterDepartments: {
+    nodes: [];
+  };
+  posterDate: {
+    dateStart: {
+      day: string;
+      month: number;
+      monthText: string;
+    };
+    dateEnd: {
+      day: string | null;
+      month: number | null;
+      monthText: string | null;
+    };
+    time: string | null;
+  };
+  title: string;
+  id: string;
+}
+
+type Date = {
+  month: number;
+  day: number;
+  hours: number;
+};
+
 /* eslint-disable prefer-destructuring */
-const getStringMonth = (month) => {
+const getStringMonth = (month: number | null) => {
   switch (String(month)) {
     case "1":
       return "Января";
@@ -30,12 +59,15 @@ const getStringMonth = (month) => {
   }
 };
 
-const isPush = ({ posterDate }, { month, day, hours }) => {
-  const posterDay = parseInt(posterDate.dateStart.day, 10);
-  const posterMonth = posterDate.dateStart.month;
+const isPush = (
+  { posterDate: { dateStart, dateEnd } }: IPoster,
+  { month, day, hours }: Date,
+) => {
+  const posterDay = parseInt(dateStart.day, 10);
+  const posterMonth = dateStart.month;
 
-  const posterDayEnd = parseInt(posterDate.dateEnd.day, 10) || null;
-  const posterMonthEnd = posterDate.dateEnd.month;
+  const posterDayEnd = parseInt(dateEnd.day ?? "", 10);
+  const posterMonthEnd = dateEnd.month;
 
   if (posterMonthEnd !== null) {
     if (posterMonthEnd < month) return false;
@@ -61,15 +93,17 @@ const isPush = ({ posterDate }, { month, day, hours }) => {
  * @param {*} posterList
  * @returns posterList
  */
-export const dateConversion = async (posterList) => {
+export const dateConversion = async (
+  posterList: any,
+): Promise<IPoster[] | null> => {
   if (!posterList) return null;
-  const result = [];
+  const result: IPoster[] = [];
   let dayStart;
   let monthStart;
   let dayEnd;
   let monthEnd;
 
-  posterList.forEach((poster) => {
+  posterList.forEach((poster: any) => {
     dayStart = poster.posterDate.date.split("/")[0];
     monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
 
@@ -101,18 +135,28 @@ export const dateConversion = async (posterList) => {
   return result;
 };
 
-export const sort = async (posterList) => {
+/**
+ * 1. Так как в один день могут начинаться события продолжительностью
+ * один и более дней, ставим однодневные мероприятия в раньше
+ */
+export const sort = async (posterList: IPoster[]) => {
   if (!posterList) return null;
+
   return posterList.sort(
-    (a, b) =>
-      a.posterDate.dateStart.month - b.posterDate.dateStart.month ||
-      a.posterDate.dateStart.day - b.posterDate.dateStart.day,
+    (
+      { posterDate: { dateStart: aDateStart, dateEnd: aDateEnd } },
+      { posterDate: { dateStart: bDateStart, dateEnd: bDateEnd } },
+    ) =>
+      aDateStart.month - bDateStart.month ||
+      parseInt(aDateStart.day, 10) - parseInt(bDateStart.day, 10) ||
+      /* 1. */
+      parseInt(aDateEnd.day ?? "0", 10) - parseInt(bDateEnd.day ?? "0", 10),
   );
 };
 
-export const filter = async (posterList) => {
+export const filter = async (posterList: IPoster[]) => {
   if (!posterList) return null;
-  // let skip = 0;
+
   const date = new Date();
   const currentDate = {
     month: date.getMonth() + 1,
