@@ -35,6 +35,7 @@ const nextConfig = withTM({
   },
   experimental: {
     optimizeCss: true,
+    scrollRestoration: true,
     // staticPageGenerationTimeout: 180,
     // images: {
     // unoptimized: true,
