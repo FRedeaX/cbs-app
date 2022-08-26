@@ -1,5 +1,6 @@
-import { captureException } from "@sentry/nextjs";
 import * as Vibrant from "node-vibrant";
+
+import { exceptionLog } from "../../../helpers";
 import { GET_SOURCE_THUMBNAIL_URL } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
@@ -39,11 +40,8 @@ export default async function extractColors(req, res) {
 
           return result;
         })
-        .catch((err) => {
-          captureException({
-            ...err,
-            cstMessage: "API_EXTRACT_COLORS_GET_SOURCE_THUMBNAIL_URL",
-          });
+        .catch((error) => {
+          exceptionLog(error);
           return [];
         });
 
@@ -52,7 +50,7 @@ export default async function extractColors(req, res) {
         data: JSON.stringify(colors),
       });
     } catch (error) {
-      captureException({ ...error, cstMessage: "ERR_IDs" });
+      exceptionLog(error);
       res.status(500).json({ cstMessage: "ERR_IDs", error });
     }
   } else res.status(500).end("query not found");

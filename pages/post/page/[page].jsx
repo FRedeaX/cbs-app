@@ -1,5 +1,4 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
-import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import { getPageInfoPosts } from "../..";
@@ -12,6 +11,7 @@ import {
 import Layout from "../../../components/UI/Layout/Layout";
 import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
 import { getLastPageNumber, paginationLoad } from "../../../core/pagination";
+import { exceptionLog } from "../../../helpers";
 import {
   getMenu,
   plaiceholder,
@@ -83,8 +83,8 @@ export async function getStaticProps({ params: { page } }) {
       const plaiceholderRes = await plaiceholder(removeDuplicateRes.result);
       return plaiceholderRes;
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_ARTICLES" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 
@@ -108,8 +108,8 @@ export async function getStaticProps({ params: { page } }) {
       const filterRes = await filter(sortRes);
       return filterRes;
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_POSTER" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 

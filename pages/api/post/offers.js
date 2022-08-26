@@ -1,5 +1,5 @@
-import { captureException } from "@sentry/nextjs";
 import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
+import { exceptionLog } from "../../../helpers";
 import { plaiceholder } from "../../../helpers/backend";
 import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
@@ -21,13 +21,13 @@ export default async function offers(req, res) {
       //         fetchPolicy: "network-only",
       //       })
       //       .then(({ data }) => transformBlocks(data.post))
-      //       .catch((err) => {
-      //         captureException(err, "GET_POST_CONTENT_BY_BLOCKS");
+      //       .catch((error) => {
+      //         exceptionLog(error);
       //         return null;
       //       }),
       //   )
-      //   .catch((err) => {
-      //     captureException(err, "getFeed");
+      //   .catch((error) => {
+      //     exceptionLog(error);
       //     return null;
       //   });
 
@@ -60,11 +60,8 @@ export default async function offers(req, res) {
             },
           };
         })
-        .catch((err) => {
-          captureException({
-            ...err,
-            cstMessage: "API_OFFERS_GET_MINIMUM_DATA_FOR_OFFER",
-          });
+        .catch((error) => {
+          exceptionLog(error);
           return {
             notIn: null,
             keywords: "",
@@ -99,8 +96,8 @@ export default async function offers(req, res) {
 
           return plaiceholder(data.posts.nodes);
         })
-        .catch((err) => {
-          captureException({ ...err, cstMessage: "API_OFFERS_FETCH_ARTICLES" });
+        .catch((error) => {
+          exceptionLog(error);
           return [];
         });
 
@@ -122,11 +119,8 @@ export default async function offers(req, res) {
 
             return plaiceholder(data.posts.nodes);
           })
-          .catch((err) => {
-            captureException({
-              ...err,
-              cstMessage: "API_OFFERS_FETCH_ARTICLES",
-            });
+          .catch((error) => {
+            exceptionLog(error);
             return [];
           });
       }
@@ -139,7 +133,7 @@ export default async function offers(req, res) {
         }),
       });
     } catch (error) {
-      captureException({ ...error, cstMessage: "ERR_IDs" });
+      exceptionLog(error);
       res.status(500).json({ message: "ERR_ID", error });
     }
   } else res.status(500).end("query not found");

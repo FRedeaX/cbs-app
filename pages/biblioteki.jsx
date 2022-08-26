@@ -1,7 +1,7 @@
-import { captureException } from "@sentry/nextjs";
 import Head from "../components/Head/Head";
 import { FETCH_LIBRARY, Library } from "../components/Pages/Library/Library";
 import Layout from "../components/UI/Layout/Layout";
+import { exceptionLog } from "../helpers";
 import { getMenu } from "../helpers/backend";
 import transformObject from "../helpers/backend/biblioteki";
 import { client } from "../store/apollo-client";
@@ -30,8 +30,8 @@ export async function getServerSideProps() {
 
       return await transformObject(data.page);
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_LIBRARY" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 
