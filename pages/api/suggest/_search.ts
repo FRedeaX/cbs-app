@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { NextApiRequest, NextApiResponse } from "next";
+
 import { esClient } from "../../../core/elastic-client";
 
 interface INextApiRequest extends NextApiRequest {
@@ -20,7 +21,7 @@ export default async function _search(
         query: {
           multi_match: {
             query,
-            analyzer: "rus_eng_key_analyzer",
+            // analyzer: "rus_eng_key_analyzer",
             fields: ["title.text", "title", "content"],
           },
         },

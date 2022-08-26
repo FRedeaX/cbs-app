@@ -4,6 +4,7 @@
   --search-suggestion-max-height: 60vh;
   --search-suggestion-margin-top: 4px;
   --search-suggestion-border-radius: 16px;
+  --paragraph-font-size: 13px;
 
   display: flex;
   align-items: center;

@@ -1,7 +1,9 @@
 import { ApolloProvider } from "@apollo/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProps as NextAppProps } from "next/app";
 import { FunctionComponent, useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
+
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
 import { client } from "../store/apollo-client";
@@ -23,12 +25,16 @@ const App: FunctionComponent<AppProps> = ({
     smoothscroll.polyfill();
   }, []);
 
+  const queryClient = new QueryClient();
+
   return (
     <ApolloProvider client={client}>
       {/* <CacheProvider value={emotionCache}> */}
       <ErrorBoundary>
-        {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </ErrorBoundary>
       <Overlay />
       {/* </CacheProvider> */}

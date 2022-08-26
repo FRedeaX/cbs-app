@@ -5,7 +5,7 @@ import { InputAdornment, InputBase } from "@mui/material";
 import classNames from "classnames";
 import { ChangeEvent, FC, memo, useCallback } from "react";
 
-import { debounce } from "../../helpers";
+import { Loader } from "./Loader/Loader";
 import SearchToggleFrom from "./Search.ToggleFrom";
 import classes from "./Search.module.css";
 import Suggestion from "./Suggestion/Suggestion";
@@ -20,20 +20,15 @@ interface SearchProps {
 
 const Search: FC<SearchProps> = ({ className }) => {
   // +
-  const { suggestData, resetData, data } = useSearch();
+  const { search, data, isLoading } = useSearch();
 
   // +
   const onChangeHendler = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
-      if (value.length === 0) {
-        resetData();
-        return;
-      }
-
-      debounce(suggestData(value), 150);
+      search(value);
     },
-    [resetData, suggestData],
+    [search],
   );
 
   // +
@@ -52,22 +47,14 @@ const Search: FC<SearchProps> = ({ className }) => {
     onBlurHendler,
   } = useForm();
 
-  // useEffect(() => {
-  //   if (data && data.hits && data.hits.hits.length > 0) {
-  //     setSuggest(true);
-  //   }
-  // }, [data, setSuggest]);
-
   // +
   const hendleToggleForm = useCallback(() => {
-    if (isSearch) {
-      toggleForm();
-    } else {
-      resetData();
+    if (!isSearch) {
+      search("");
       resetInput();
-      toggleForm();
     }
-  }, [isSearch, resetData, resetInput, toggleForm]);
+    toggleForm();
+  }, [isSearch, resetInput, search, toggleForm]);
 
   return (
     <div
@@ -114,11 +101,10 @@ const Search: FC<SearchProps> = ({ className }) => {
             onBlur={onBlurHendler}
           />
         </div>
-        <Suggestion
-          isSuggest={isSuggest}
-          // aggregationNodes={data?.aggregations.category.buckets}
-        >
-          <SuggestionList nodes={data?.hits?.hits} />
+        <Suggestion isSuggest={isSuggest}>
+          {/* <BucketАggregationList nodes={data?.aggregations.category.buckets} /> */}
+          <SuggestionList data={data?.hits} />
+          <Loader isLoading={isLoading} />
         </Suggestion>
       </form>
       <SearchToggleFrom isSearch={isSearch} onClick={hendleToggleForm}>

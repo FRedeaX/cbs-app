@@ -1,27 +1,24 @@
-/* eslint-disable no-console */
-import { useCallback, useState } from "react";
-import { ISearchResponse } from "../../lib/elastic";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
+import { useDebounce } from "../../helpers/frontend/hooks/useDebounce";
+import { fetchSuggestData } from "./Search.utils";
 
 const useSearch = () => {
-  const [data, setData] = useState<ISearchResponse | null>();
+  const [searchString, setSearch] = useState<string>("");
+  const debouncedSearch = useDebounce<string>(searchString, 150);
 
-  const suggestData = useCallback(async (query: string): Promise<void> => {
-    const q = query.trim();
-    if (q.length === 0) return;
+  const query = debouncedSearch.trim();
+  const isLongEnough = query.length > 0;
+  const { data, isLoading } = useQuery(
+    ["search", debouncedSearch],
+    fetchSuggestData,
+    {
+      enabled: isLongEnough,
+    },
+  );
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ES_URL}?query=${q}`)
-      .then((response: Response) => response.json())
-      .then((result) => {
-        setData(result);
-      })
-      .catch((error: Error) => console.error(error));
-  }, []);
-
-  const resetData = useCallback(() => {
-    setData(null);
-  }, [setData]);
-
-  return { suggestData, resetData, data };
+  return { search: setSearch, data, isLoading: isLongEnough && isLoading };
 };
 
 export default useSearch;

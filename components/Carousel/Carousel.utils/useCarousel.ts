@@ -69,8 +69,13 @@ export const useCarousel = (args: IArgs): useCarouselHookResult => {
       }
 
       entries.forEach(({ isIntersecting, target }) => {
-        const { offsetLeft, offsetWidth } = target as HTMLElement;
-        const count = Math.round((offsetLeft + offsetWidth) / offsetWidth);
+        const { offsetLeft, offsetWidth, dataset } = target as HTMLElement;
+
+        const countByIndex = parseInt(dataset.idx ?? "", 10);
+        const countByOffset = Math.round(
+          (offsetLeft + offsetWidth) / offsetWidth,
+        );
+        const count = countByIndex ?? countByOffset;
 
         itemCountOfScreen.current[args.length - count] = {
           isIntersecting,

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
+
 import { esClient } from "../../core/elastic-client";
 import { delay } from "../../helpers";
 import { client } from "../../store/apollo-client";
@@ -33,27 +34,6 @@ const GET_POSTS = gql`
     }
   }
 `;
-//       blocks {
-//         name
-//         ...paragraphBlockGQL
-//         ...quoteBlockGQL
-//         ...listBlockGQL
-//         ...mediaTextBlockGQL
-//         ...headingBlockGQL
-//         ...verseBlockGQL
-//       }
-// ${paragraphBlockGQL.fragments}
-// ${quoteBlockGQL.fragments}
-// ${listBlockGQL.fragments}
-// ${mediaTextBlockGQL.fragments}
-// ${headingBlockGQL.fragments}
-// ${verseBlockGQL.fragments}
-
-interface IBlock {
-  name: string;
-  attributes: object;
-  innerBlocks: Array<IBlock>;
-}
 
 interface IPost {
   id: string;
@@ -72,40 +52,7 @@ interface IPost {
       slug: string;
     }[];
   };
-  // blocks: Array<IBlock>;
 }
-
-// function flatBlock(blockList: Array<IBlock>): string {
-//   // if (!blockList) return "";
-
-//   return blockList
-//     .map((block: IBlock): string => {
-//       switch (block.name) {
-//         case "core/paragraph":
-//         case "core/heading":
-//         case "core/verse": {
-//           return block.attributes.content;
-//         }
-
-//         case "core/quote":
-//         case "core/pullquote":
-//         case "core/list": {
-//           return block.attributes.value;
-//         }
-
-//         case "core/columns":
-//         case "core/column":
-//         case "core/media-text": {
-//           return block.innerBlocks && flatBlock(block.innerBlocks);
-//         }
-
-//         default:
-//           return "";
-//       }
-//     })
-//     .join(" ")
-//     .replaceAll(/<[^>]*>?/gm, "");
-// }
 
 let count = 0;
 async function indexesParties(after: string): Promise<void> {
@@ -137,7 +84,6 @@ async function indexesParties(after: string): Promise<void> {
     await esClient.bulk({ refresh: true, body: operations });
 
     count += postList.nodes.length;
-    // console.log(count, postList.nodes[postList.nodes.length - 1].title);
     if (postList.pageInfo.hasNextPage) {
       await delay(1000).then(async () => {
         await indexesParties(postList.pageInfo.endCursor);

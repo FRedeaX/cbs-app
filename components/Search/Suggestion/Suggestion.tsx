@@ -6,7 +6,7 @@ import classes from "./Suggestion.module.css";
 const Suggestion: FC<{
   isSuggest: boolean;
   // aggregationNodes: IBucketsAggregations[] | null | undefined;
-  children?: ReactNode;
+  children: ReactNode;
 }> = ({ isSuggest, children }) => (
   <div
     className={classNames(classes.block, {

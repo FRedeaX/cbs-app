@@ -16,6 +16,17 @@ export interface ISearchHitsNode {
   };
 }
 
+interface ISearchHitsTotal {
+  value: number;
+  relation: string;
+}
+
+export interface ISearchHits {
+  hits: Array<ISearchHitsNode> | [];
+  max_score: number;
+  total: ISearchHitsTotal;
+}
+
 export interface IBucketsAggregations {
   key: string;
   doc_count: number;
@@ -30,14 +41,7 @@ export interface ISearchResponse {
     skipped: number;
     failed: number;
   };
-  hits: {
-    total: {
-      value: number;
-      relation: string;
-    };
-    max_score: number;
-    hits: Array<ISearchHitsNode> | [];
-  };
+  hits: ISearchHits;
   aggregations: {
     category: {
       doc_count_error_upper_bound: number;

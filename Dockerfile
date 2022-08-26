@@ -31,7 +31,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
 COPY --from=builder /app/components ./components
-COPY --from=builder /app/config ./config
 COPY --from=builder /app/core ./core
 COPY --from=builder /app/helpers ./helpers
 COPY --from=builder /app/lib ./lib
