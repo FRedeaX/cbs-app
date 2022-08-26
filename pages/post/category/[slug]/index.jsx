@@ -73,8 +73,8 @@ export async function getStaticProps({ params: { slug } }) {
 
       return data;
     })
-    .catch((err) => {
-      exceptionLog({ ...err, cstMessage: "FETCH_ARTICLES" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 
@@ -85,8 +85,8 @@ export async function getStaticProps({ params: { slug } }) {
   }
 
   const posts = await plaiceholder(postsByCategory.category.posts.nodes).catch(
-    (err) => {
-      exceptionLog(err);
+    (error) => {
+      exceptionLog(error);
       return null;
     },
   );

@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
-import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
+import { exceptionLog } from "../../../helpers";
 import {
   getMenu,
   sortingCategories,
@@ -13,7 +13,6 @@ import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
-  // console.log(post);
   const { isFallback } = useRouter();
   return (
     <Layout menu={menu} loading={isFallback} size="m">
@@ -62,8 +61,8 @@ export async function getStaticPaths() {
         },
       }));
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "articlesQuery" });
+    .catch((error) => {
+      exceptionLog(error);
       return [];
     });
 
@@ -97,8 +96,8 @@ export async function getStaticProps({ params }) {
         },
       };
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "GET_POST_CONTENT_BY_BLOCKS" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 

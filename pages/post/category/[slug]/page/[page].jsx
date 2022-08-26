@@ -1,4 +1,3 @@
-import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
 
 import { getPageInfoCategory } from "..";
@@ -13,6 +12,7 @@ import {
   getLastPageNumber,
   paginationLoad,
 } from "../../../../../core/pagination";
+import { exceptionLog } from "../../../../../helpers";
 import { getMenu, plaiceholder } from "../../../../../helpers/backend";
 import { RKEY_POSTS_BY_CATEGORY } from "../../../../../lib/redis";
 import { client } from "../../../../../store/apollo-client";
@@ -97,8 +97,8 @@ export async function getStaticProps({ params: { slug, page } }) {
           )?.[0]?.name || null,
       };
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "fetchArticlesByCategory" });
+    .catch((error) => {
+      exceptionLog(error);
       return { posts: null, categoryName: null };
     });
 

@@ -7,7 +7,7 @@ const useExtractColors = () => {
     fetch(`${window.location.origin}/api/image/extractColors?ids=${IDs}`)
       .then((res) => res.json())
       .then((json) => setExtractColors(JSON.parse(json.data)))
-      .catch((err) => console.warn(err));
+      .catch((error) => console.warn(error));
   }, []);
 
   return { getColors, extractColors };

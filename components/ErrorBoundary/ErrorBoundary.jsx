@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-import { captureException } from "@sentry/nextjs";
 import { Component } from "react";
+
+import { exceptionLog } from "../../helpers";
 import Button from "../UI/Button/Button";
 
 class ErrorBoundary extends Component {
@@ -16,9 +17,7 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error({ error, errorInfo });
-    // You can also log the error to an error reporting service
-    captureException({ error, errorInfo, cstMessage: "ErrorBoundary" });
+    exceptionLog({ error, errorInfo });
   }
 
   render() {

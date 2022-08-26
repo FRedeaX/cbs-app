@@ -1,7 +1,7 @@
-import { captureException } from "@sentry/nextjs";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 
+import { exceptionLog } from "../../helpers";
 import classes from "./Badge.module.css";
 
 const Badge = ({ count, length, className, loading = false }) => {
@@ -14,7 +14,7 @@ const Badge = ({ count, length, className, loading = false }) => {
       </div>
     );
 
-  captureException({
+  exceptionLog({
     message: `Badge. Count: ${count}`,
     path: { asPath: router.asPath, route: router.route },
   });
