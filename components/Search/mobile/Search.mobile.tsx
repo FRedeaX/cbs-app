@@ -1,24 +1,11 @@
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  IconButton,
-  InputAdornment,
-  InputBase,
-  InputBaseComponentProps,
-} from "@mui/material";
+import { IconButton, InputAdornment, InputBase } from "@mui/material";
 import classNames from "classnames";
-import {
-  ChangeEvent,
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, FC, memo, useCallback, useEffect, useState } from "react";
 
-import { debounce } from "../../../helpers";
+import { Loader } from "../Loader/Loader";
 import SearchToggleFrom from "../Search.ToggleFrom";
 import Suggestion from "../Suggestion/Suggestion";
 import SuggestionList from "../Suggestion/SuggestionList";
@@ -28,31 +15,25 @@ import classes from "./Search.mobile.module.css";
 
 const SearchMobile: FC = () => {
   const [isClearButton, setClearButton] = useState<boolean>(false);
-  const { suggestData, resetData, data } = useSearch();
+  const { search, data, isLoading } = useSearch();
 
-  const inputRef = useRef<InputBaseComponentProps>();
   const {
+    inputRef,
     isSearch,
     isSuggest,
     setFocus,
     resetInput,
     toggleForm,
     onFocusHendler,
-  } = useForm(inputRef?.current);
+  } = useForm();
 
   const onChangeHendler = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
-      if (value.length === 0) {
-        setClearButton(false);
-        resetData();
-        return;
-      }
-
-      debounce(suggestData(value), 150);
+      search(value);
       setClearButton(true);
     },
-    [suggestData, resetData],
+    [search],
   );
 
   const handleSubmit = useCallback((event: ChangeEvent<HTMLFormElement>) => {
@@ -60,10 +41,10 @@ const SearchMobile: FC = () => {
   }, []);
 
   const hendleReset = useCallback(() => {
-    resetData();
+    search("");
     resetInput();
     setClearButton(false);
-  }, [resetData, resetInput]);
+  }, [resetInput, search]);
 
   const hendleOpenForm = useCallback(() => {
     toggleForm();
@@ -124,7 +105,8 @@ const SearchMobile: FC = () => {
           onChange={onChangeHendler}
         />
         <Suggestion isSuggest={isSuggest}>
-          <SuggestionList nodes={data?.hits?.hits} />
+          <SuggestionList data={data?.hits} />
+          <Loader isLoading={isLoading} />
         </Suggestion>
       </form>
       <SearchToggleFrom isSearch={isSearch} onClick={hendleOpenForm}>
