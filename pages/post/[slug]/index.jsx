@@ -86,7 +86,8 @@ export async function getStaticProps({ params }) {
     // .then(({ data }) => transformBlocks(data.post))
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
-      if (data.post === null) throw new Error("data.posts of null");
+      if (data.post === null)
+        throw new Error(`{message: data.post of null, slug: ${params.slug} }`);
 
       return {
         ...data.post,
