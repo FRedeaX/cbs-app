@@ -18,8 +18,8 @@ export const getFeed = async (key, id) => {
       (postsIDs) =>
         postsIDs[postsIDs.findIndex((post) => post === id) + 1] || null,
     )
-    .catch((err) => {
-      throw new Error(err);
+    .catch((error) => {
+      throw new Error(error);
     });
 
   return nextPostID;

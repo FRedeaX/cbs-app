@@ -25,8 +25,8 @@ export const getPage = async (id) => {
         ...(await transformBlocks(data.page.blocks)),
       };
     })
-    .catch((err) => {
-      exceptionLog({ ...err, cstMessage: "FETCH_PAGE" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
   return page;
@@ -52,8 +52,8 @@ export async function getChildrenPage({ id, cursor = "", first = 10 }) {
 
       return data.page;
     })
-    .catch((err) => {
-      exceptionLog({ ...err, cstMessage: "FETCH_PAGE" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
   return page;

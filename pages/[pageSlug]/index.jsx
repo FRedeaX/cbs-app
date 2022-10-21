@@ -1,8 +1,7 @@
-import { captureException } from "@sentry/nextjs";
-
 import { PageRoot } from "../../components/Pages/Page";
 import { FETCH_PARENT_URI_PAGES } from "../../components/Pages/Page/Page.utils";
 import Layout from "../../components/UI/Layout/Layout";
+import { exceptionLog } from "../../helpers";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
 
@@ -22,8 +21,8 @@ export async function getStaticPaths() {
 
       return preparingPaths(data.pages.edges);
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_PARENT_URI_PAGES" });
+    .catch((error) => {
+      exceptionLog(error);
       return [];
     });
 

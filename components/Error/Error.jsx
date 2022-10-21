@@ -1,14 +1,13 @@
 /* eslint-disable no-console */
-import { captureException } from "@sentry/nextjs";
 import Link from "next/link";
 import { useEffect } from "react";
+
+import { exceptionLog } from "../../helpers";
 import Button from "../UI/Button/Button";
 
 const Error = ({ route }) => {
   useEffect(() => {
-    console.error({ route });
-    // You can also log the error to an error reporting service
-    captureException({ ...route, cstMessage: "404 page" });
+    exceptionLog({ ...route, cstMessage: "404 page" });
   }, [route]);
 
   return (

@@ -67,8 +67,8 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
 
       return data;
     })
-    .catch((err) => {
-      exceptionLog({ ...err, cstMessage: "FETCH_ARTICLES" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 
@@ -80,8 +80,8 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
 
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes)
     .then((nodes) => plaiceholder(nodes.result).then((p) => p))
-    .catch((err) => {
-      exceptionLog(err);
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 
@@ -108,8 +108,8 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
       const filterRes = await filter(sortRes);
       return filterRes;
     })
-    .catch((err) => {
-      exceptionLog({ ...err, cstMessage: "FETCH_POSTER" });
+    .catch((error) => {
+      exceptionLog(error);
       return null;
     });
 

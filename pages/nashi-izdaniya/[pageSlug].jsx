@@ -1,11 +1,10 @@
-import { captureException } from "@sentry/nextjs";
-
 import Head from "../../components/Head/Head";
 import { PageRoot } from "../../components/Pages/Page";
 import { FETCH_CHILDREN_URI_PAGES } from "../../components/Pages/Page/Page.utils";
 import Layout from "../../components/UI/Layout/Layout";
 import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
 import { Heading } from "../../components/blocks/Heading/Heading";
+import { exceptionLog } from "../../helpers";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
 import { client } from "../../store/apollo-client";
 
@@ -45,14 +44,14 @@ export async function getStaticPaths() {
         "informatsionnyie-listki",
       );
     })
-    .catch((err) => {
-      captureException({ ...err, cstMessage: "FETCH_CHILDREN_URI_PAGES" });
+    .catch((error) => {
+      exceptionLog(error);
       return [];
     });
 
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
   };
 }
 
