@@ -26,7 +26,7 @@ import {
   useCarouselHookResultLegacy,
 } from "./Carousel.utils";
 
-interface IUseCarousel {
+export interface IUseCarousel {
   (args: IArgs | IArgsLegacy):
     | useCarouselHookResult
     | useCarouselHookResultLegacy;

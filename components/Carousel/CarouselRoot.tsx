@@ -3,14 +3,15 @@ import { FC } from "react";
 
 import { isFront } from "../../helpers";
 import isIntersection from "../../helpers/frontend/isIntersection";
-import Carousel, { ICarouselProps } from "./Carousel";
+import Carousel, { ICarouselProps, IUseCarousel } from "./Carousel";
 import { useCarousel, useCarouselLegacy } from "./Carousel.utils";
 
-// interface ICarouselProps {
-//   useCarousel?: IUseCarousel;
-// }
+type carouselProps = Omit<ICarouselProps, "useCarousel">;
+interface ICarouselRootProps extends carouselProps {
+  useCarousel?: IUseCarousel;
+}
 
-const CarouselRoot: FC<ICarouselProps> = (props) => (
+const CarouselRoot: FC<ICarouselRootProps> = (props) => (
   <Carousel
     {...props}
     // useCarousel={useCarousel}
