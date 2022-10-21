@@ -1,1 +1,2 @@
-export * from "./fetchSuggestData";
+export * from "./fetchSearchData";
+export * from "./getFilterStringFromList";

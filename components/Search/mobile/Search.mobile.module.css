@@ -1,4 +1,4 @@
-.block {
+.root {
   --card-image-display: none;
   --search-suggestion-top: var(--header-mobile-height);
   --search-suggestion-bottom: 0;
@@ -15,11 +15,12 @@
 
 .form {
   position: fixed;
+  z-index: 1;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
+
   transition: all 0.25s;
 }
 
@@ -31,13 +32,4 @@
 .form_isVisible_true {
   visibility: visible;
   opacity: 1;
-}
-
-.clear {
-  transition: opacity 0.15s;
-}
-
-.clear_visibility_hidden {
-  opacity: 0;
-  pointer-events: none;
 }

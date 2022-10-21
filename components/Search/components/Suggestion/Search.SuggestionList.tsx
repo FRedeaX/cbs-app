@@ -1,13 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import { FC } from "react";
 
-import { ISearchHits, ISearchHitsNode } from "../../../lib/elastic";
-import { Card } from "../../Widget/Card/Card";
-import { Paragraph } from "../../blocks/Paragraph/Paragraph";
+import { Maybe, Omit } from "../../../../helpers/typings/utility-types";
+import { ISearchHits, ISearchHitsNode } from "../../../../lib/elastic/type";
+import { Card, ICardProps } from "../../../Widget/Card/Card";
+import { Paragraph } from "../../../blocks/Paragraph/Paragraph";
 
-const SuggestionList: FC<{
-  data: ISearchHits | undefined;
-}> = ({ data }) => {
+interface ISearchSuggestionListProps extends Omit<ICardProps, "data"> {
+  data: Maybe<ISearchHits>;
+}
+
+export const SearchSuggestionList: FC<ISearchSuggestionListProps> = ({
+  data,
+  ...all
+}) => {
   if (data === undefined) return null;
 
   if (data.total.value === 0) {
@@ -35,16 +41,18 @@ const SuggestionList: FC<{
                 sourceUrl: node._source.thumbnail.url,
               },
             },
+            categories: {
+              nodes: node._source.category,
+            },
           }}
           prefetch={false}
-          isHorizontal
-          isSmall
-          isClamp
-          lineClamp={3}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...all}
+          // isSmall
+          // isClamp
+          // lineClamp={3}
         />
       ))}
     </>
   );
 };
-
-export default SuggestionList;

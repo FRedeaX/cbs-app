@@ -28,24 +28,8 @@
   opacity: 1;
 }
 
-.input {
-  display: flex;
-}
-
 .icon {
   position: absolute;
 
   display: flex;
 }
-
-/* .input > div > div {
-  height: 36px;
-  overflow: hidden;
-  border-radius: 16px;
-  background-color: transparent;
-} */
-
-/* .input > div > div::before,
-.input > div > div:hover::before {
-  border-bottom: none !important;
-} */

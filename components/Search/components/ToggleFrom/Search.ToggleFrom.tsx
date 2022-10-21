@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
 import { FC, ReactNode } from "react";
 
-const SearchToggleFrom: FC<{
+export const SearchToggleFrom: FC<{
   isSearch: boolean;
   onClick: () => void;
   children: ReactNode;
@@ -19,5 +19,3 @@ const SearchToggleFrom: FC<{
     {children}
   </IconButton>
 );
-
-export default SearchToggleFrom;

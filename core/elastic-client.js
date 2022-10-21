@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/prefer-default-export */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Client } = require("@elastic/elasticsearch");
 
 export const esClient = new Client({

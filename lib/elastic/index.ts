@@ -1,52 +1,36 @@
-export interface ISearchHitsNode {
-  _index: string;
-  _type: string;
-  _id: string;
-  _score: number;
-  highlight: {
-    content: Array<string>;
-    title: Array<string>;
-    "title.text": Array<string>;
-  };
-  _source: {
-    title: string;
-    excerpt?: string;
-    link: string;
-    thumbnail: { url: string };
-  };
-}
+import { ISearchParams } from "../../components/Search/Search.utils/type";
+import { highlight } from "./highlight";
 
-interface ISearchHitsTotal {
-  value: number;
-  relation: string;
-}
+export const createBodyRequest = (query: ISearchParams) => {
+  // eslint-disable-next-line no-underscore-dangle
+  const category = query.category ? query.category.split(",") : null;
 
-export interface ISearchHits {
-  hits: Array<ISearchHitsNode> | [];
-  max_score: number;
-  total: ISearchHitsTotal;
-}
-
-export interface IBucketsAggregations {
-  key: string;
-  doc_count: number;
-}
-
-export interface ISearchResponse {
-  took: number;
-  timed_out: boolean;
-  _shards: {
-    total: number;
-    successful: number;
-    skipped: number;
-    failed: number;
+  return {
+    query: {
+      bool: {
+        must: {
+          multi_match: {
+            query: query.text,
+            // analyzer: "rus_eng_key_analyzer",
+            fields: ["title.text", "title", "content"],
+          },
+        },
+      },
+    },
+    ...(category && {
+      post_filter: {
+        terms: { "category.name.raw": category },
+      },
+    }),
+    highlight,
+    aggs: {
+      category: {
+        terms: {
+          field: "category.name.raw",
+          size: 50,
+        },
+      },
+    },
+    _source: ["title", "excerpt", "link", "thumbnail", "category"],
   };
-  hits: ISearchHits;
-  aggregations: {
-    category: {
-      doc_count_error_upper_bound: number;
-      sum_other_doc_count: number;
-      buckets: Array<IBucketsAggregations>;
-    };
-  };
-}
+};

@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 
-import { delay } from "../../helpers";
+import { delay } from "../../../../helpers";
 
 // interface IUseForm {
 //   isSearch: boolean;
@@ -28,7 +28,7 @@ import { delay } from "../../helpers";
  */
 const DELAY_CSS_TRANSITION_50_PERCENT = 250 / 2;
 
-const useForm = () => {
+export const useFormold = () => {
   const inputRef = useRef<InputBaseComponentProps>();
 
   const [isSearch, setSearch] = useState<boolean>(false);
@@ -49,12 +49,12 @@ const useForm = () => {
     });
   }, [inputRef]);
 
-  const resetInput = useCallback(() => {
-    if (inputRef.current === undefined) return;
+  // const resetInput = useCallback(() => {
+  //   if (inputRef.current === undefined) return;
 
-    inputRef.current.value = "";
-    setFocus();
-  }, [inputRef, setFocus]);
+  //   inputRef.current.value = "";
+  //   setFocus();
+  // }, [inputRef, setFocus]);
 
   const toggleForm = useCallback(() => {
     if (inputRef.current === undefined) {
@@ -69,10 +69,12 @@ const useForm = () => {
         return !prev;
       }
       setSuggest(!prev);
+      setFocus();
       return !prev;
     });
-  }, []);
+  }, [setFocus]);
 
+  // -
   const onKeyDownHendler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "Escape") {
@@ -95,8 +97,9 @@ const useForm = () => {
   const onBlurHendler = useCallback(
     (event: FocusEvent<HTMLInputElement>) => {
       if (
-        event.currentTarget === event.target &&
-        event.currentTarget.contains(event.relatedTarget)
+        event.currentTarget.contains(event.target) &&
+        (!event.relatedTarget ||
+          event.currentTarget.contains(event.relatedTarget))
       ) {
         setSuggest(false);
       }
@@ -108,13 +111,10 @@ const useForm = () => {
     inputRef,
     isSearch,
     isSuggest,
-    setFocus,
-    resetInput,
+    // resetInput,
     toggleForm,
     onKeyDownHendler,
     onFocusHendler,
     onBlurHendler,
   };
 };
-
-export default useForm;
