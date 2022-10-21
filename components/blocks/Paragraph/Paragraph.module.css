@@ -8,11 +8,12 @@
 
 .block {
   margin: 6px 0 20px;
-  color: var(--paragraph-color, --black);
-  font-weight: var(--paragraph-font-weight);
+
   font-size: calc(var(--paragraph-font-size, 16px) + 3 * (100vw / 1600));
+  font-weight: var(--paragraph-font-weight);
   font-style: var(--paragraph-font-style);
   line-height: 28px;
+  color: var(--paragraph-color, --black);
   white-space: pre-line;
 }
 
