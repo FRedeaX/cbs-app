@@ -23,19 +23,25 @@ export interface IData {
   };
 }
 
-interface CardProps {
+export interface ICardProps {
   data: IData;
   imagePriority?: boolean;
   prefetch?: boolean;
-  isHorizontal: boolean;
+  isHorizontal?: boolean;
   className?: string;
   isClamp?: boolean;
   lineClamp?: number;
   isBig?: boolean;
   isSmall?: boolean;
+
+  /**
+   * прокидываем HTML data-* атрибут
+   * see Carousel.List components
+   */
+  "data-idx"?: string;
 }
 
-export const Card: FC<CardProps> = forwardRef(
+export const Card: FC<ICardProps> = forwardRef(
   (
     {
       data: { isSticky, title, uri, categories, excerpt, featuredImage },
@@ -47,6 +53,7 @@ export const Card: FC<CardProps> = forwardRef(
       lineClamp = isClamp ? getLineClamp(title, 30, 3) : undefined,
       isBig,
       isSmall,
+      "data-idx": dataIdx,
     },
     ref: LegacyRef<HTMLElement>,
   ) => (
@@ -60,7 +67,8 @@ export const Card: FC<CardProps> = forwardRef(
           [classes.sticky]: isSticky,
         },
         className,
-      )}>
+      )}
+      data-idx={dataIdx}>
       {featuredImage && featuredImage.node.sourceUrl && (
         <div
           className={classNames(classes.image, {

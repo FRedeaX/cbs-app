@@ -37,6 +37,7 @@ const CarouselList: FC<ICarouselListProps> = ({
     <>
       {Children.map(children, (child: ReactElement, index: number) =>
         cloneElement(child, {
+          "data-idx": index + 1,
           ref: (ref: Element) => {
             setRefs(ref, index);
           },
