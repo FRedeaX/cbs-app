@@ -39,7 +39,7 @@ const Offer = forwardRef(
               <Box
                 sx={{
                   borderBottom: 1,
-                  borderColor: "divider",
+                  borderBottomColor: "divider",
                   margin: "0 10px 15px",
                 }}>
                 <TabList
