@@ -1,13 +1,15 @@
 import type { GetStaticProps, NextPage } from "next";
 
 import Head from "../components/Head/Head";
-import HomePage from "../components/Pages/HomePage/HomePage";
+import HomePage, {
+  IHomePageProps,
+  IPostData,
+} from "../components/Pages/HomePage/HomePage";
 import {
   FETCH_ARTICLES,
   POSTS_PAGINATION_GQL,
 } from "../components/Posts/PostsRoot";
 import Layout from "../components/UI/Layout/Layout";
-import { IPoster } from "../components/poster/PosterItem/PosterItem";
 import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import { getLastPageNumber, paginationLoad } from "../core/pagination";
 import { exceptionLog } from "../helpers";
@@ -21,20 +23,16 @@ import { dateConversion, filter, sort } from "../helpers/backend/poster";
 import { RKEY_POSTS } from "../lib/redis/redisKeys";
 import { client } from "../store/apollo-client";
 
-interface IPostData {
-  posts: {
-    nodes: object[];
-    pageInfo: _pageInfo;
-  };
-}
-interface IProps {
+type HomePageProps = Omit<
+  IHomePageProps,
+  "paginationURI" | "categoryName" | "isGroupCards"
+>;
+
+interface IHomeProps extends HomePageProps {
   menu: Array<object>;
-  posters: IPoster[];
-  posts: IPostData["posts"]["nodes"];
-  pages: number;
 }
 
-const Home: NextPage<IProps> = ({ menu, posters, posts, pages }: IProps) => (
+const Home: NextPage<IHomeProps> = ({ menu, posters, posts, pages }) => (
   <Layout menu={menu} paddingSides={0}>
     <Head description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
     <HomePage
@@ -49,7 +47,7 @@ const Home: NextPage<IProps> = ({ menu, posters, posts, pages }: IProps) => (
 export const getPageInfoPosts = (data: IPostData): _pageInfo =>
   data.posts.pageInfo;
 
-export const getStaticProps: GetStaticProps<IProps> = async () => {
+export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
   const menu = await getMenu(false);
   const dataPosts = await client
     .query({

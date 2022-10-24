@@ -3,16 +3,27 @@ import classnames from "classnames";
 import type { NextPage } from "next";
 import { memo } from "react";
 
+import { _pageInfo } from "../../../helpers/backend";
+// import { GET_WIDTH } from "../../../store/variables/windowWidth";
+import { Nullable } from "../../../helpers/typings/utility-types";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import Pagination from "../../UI/Pagination/Pagination";
+import { IData } from "../../Widget/Card/Card";
 import CardList from "../../Widget/Card/CardList";
-// import { GET_WIDTH } from "../../../store/variables/windowWidth";
-import PosterRoot, { IPosters } from "../../poster/PosterRoot/PosterRoot";
+import { IPoster } from "../../poster/PosterItem/PosterItem";
+import PosterRoot from "../../poster/PosterRoot/PosterRoot";
 import classes from "./Home-Page.module.css";
 
-interface IHomePageProps {
-  posters: IPosters;
-  posts: Array<object>;
+export interface IPostData {
+  posts: {
+    nodes: IData[];
+    pageInfo: _pageInfo;
+  };
+}
+
+export interface IHomePageProps {
+  posters: Nullable<IPoster[]>;
+  posts: IPostData["posts"]["nodes"];
   pages: number;
   paginationURI: string;
   categoryName?: string;
