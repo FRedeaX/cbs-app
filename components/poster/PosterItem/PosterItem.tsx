@@ -59,6 +59,12 @@ interface PosterItemProps {
   data: IPoster;
   count: number;
   className?: string;
+
+  /**
+   * прокидываем HTML data-* атрибут
+   * see Carousel.List components
+   */
+  "data-idx"?: string;
 }
 
 const PosterItem: FC<PosterItemProps> = forwardRef(
@@ -67,6 +73,7 @@ const PosterItem: FC<PosterItemProps> = forwardRef(
       data: { posterDate, title, content, excerpt, posterDepartments },
       count,
       className,
+      "data-idx": dataIdx,
     },
     ref: LegacyRef<HTMLDivElement>,
   ) => (
@@ -74,7 +81,8 @@ const PosterItem: FC<PosterItemProps> = forwardRef(
       ref={ref}
       className={classNames(className, classes.block, {
         [classes.block_count_1]: count !== undefined && count === 1,
-      })}>
+      })}
+      data-idx={dataIdx}>
       <div className={classes.header}>
         <PosterDate
           dateStart={posterDate.dateStart}

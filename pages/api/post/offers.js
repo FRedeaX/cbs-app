@@ -41,7 +41,8 @@ export default async function offers(req, res) {
         })
         .then(({ data: { post }, error }) => {
           if (error !== undefined) throw new Error(error.message);
-          if (post === null) throw new Error("data.post of null");
+          if (post === null) return [];
+          // throw new Error("data.post of null");
 
           const date = new Date(post.date);
           return {
@@ -91,8 +92,8 @@ export default async function offers(req, res) {
         })
         .then(({ data, error }) => {
           if (error !== undefined) throw new Error(error.message);
-          if (data.posts.nodes.length === 0)
-            throw new Error("data.posts.nodes of null");
+          if (data.posts.nodes.length === 0) return [];
+          // throw new Error("data.posts.nodes of null");
 
           return plaiceholder(data.posts.nodes);
         })
@@ -114,8 +115,8 @@ export default async function offers(req, res) {
           })
           .then(({ data, error }) => {
             if (error !== undefined) throw new Error(error.message);
-            if (data.posts.nodes.length === 0)
-              throw new Error("data.posts.nodes of null");
+            if (data.posts.nodes.length === 0) return [];
+            // throw new Error("data.posts.nodes of null");
 
             return plaiceholder(data.posts.nodes);
           })

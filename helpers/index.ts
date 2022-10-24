@@ -9,6 +9,7 @@ export * from "./exceptionLog";
 export * from "./isFront";
 export * as localStorage from "./localStorage";
 export * from "./noop";
+export * from "./omit";
 export {
   asyncLoadScript,
   createMarkup,

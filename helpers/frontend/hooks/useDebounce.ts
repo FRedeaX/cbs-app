@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * https://usehooks.com/useDebounce/
+ * see https://usehooks.com/useDebounce/
  * @param value
  * @param delay
  * @returns

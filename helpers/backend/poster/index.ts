@@ -1,3 +1,5 @@
+import { Nullable } from "../../typings/utility-types";
+
 interface IPoster {
   content: string;
   excerpt: string;
@@ -139,7 +141,7 @@ export const dateConversion = async (
  * 1. Так как в один день могут начинаться события продолжительностью
  * один и более дней, ставим однодневные мероприятия в раньше
  */
-export const sort = async (posterList: IPoster[]) => {
+export const sort = async (posterList: Nullable<IPoster[]>) => {
   if (!posterList) return null;
 
   return posterList.sort(
@@ -154,7 +156,7 @@ export const sort = async (posterList: IPoster[]) => {
   );
 };
 
-export const filter = async (posterList: IPoster[]) => {
+export const filter = async (posterList: Nullable<IPoster[]>) => {
   if (!posterList) return null;
 
   const date = new Date();
