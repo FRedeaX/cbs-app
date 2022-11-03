@@ -7,7 +7,7 @@ import { FC } from "react";
 import { Columns } from "./Columns/Columns";
 import { Embed } from "./Embed/Embed";
 import { File } from "./File/File";
-import { Gallery } from "./Gallery/Gallery";
+import { Gallery } from "./Gallery2/Gallery";
 import { Heading } from "./Heading/Heading";
 import { Html } from "./Html/Html";
 import { Figure } from "./Image/Figure";
@@ -57,7 +57,13 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
             );
 
           case "core/gallery":
-            return <Gallery key={key} {...block.attributes} />;
+            return (
+              <Gallery
+                key={key}
+                {...block.attributes}
+                images={block.attributes.images.slice(0, 2)}
+              />
+            );
 
           case "core/image": {
             const { caption, align, alt, url, width, height } =
