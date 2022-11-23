@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, LegacyRef, forwardRef } from "react";
+import { FC, HTMLAttributes, LegacyRef, forwardRef } from "react";
 
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
@@ -23,7 +23,7 @@ export interface IData {
   };
 }
 
-export interface ICardProps {
+export interface ICardProps extends HTMLAttributes<HTMLElement> {
   data: IData;
   imagePriority?: boolean;
   prefetch?: boolean;
@@ -33,12 +33,6 @@ export interface ICardProps {
   lineClamp?: number;
   isBig?: boolean;
   isSmall?: boolean;
-
-  /**
-   * прокидываем HTML data-* атрибут
-   * see Carousel.List components
-   */
-  "data-idx"?: string;
 }
 
 export const Card: FC<ICardProps> = forwardRef(
@@ -53,7 +47,7 @@ export const Card: FC<ICardProps> = forwardRef(
       lineClamp = isClamp ? getLineClamp(title, 30, 3) : undefined,
       isBig,
       isSmall,
-      "data-idx": dataIdx,
+      ...props
     },
     ref: LegacyRef<HTMLElement>,
   ) => (
@@ -68,7 +62,7 @@ export const Card: FC<ICardProps> = forwardRef(
         },
         className,
       )}
-      data-idx={dataIdx}>
+      {...props}>
       {featuredImage && featuredImage.node.sourceUrl && (
         <div
           className={classNames(classes.image, {

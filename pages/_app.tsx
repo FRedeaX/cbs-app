@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { ApolloProvider } from "@apollo/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "@mui/material/styles";
 import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -8,15 +9,15 @@ import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
 import { client } from "../store/apollo-client";
 import "../styles.css";
+import { lightTheme } from "../styles/theme/lightTheme";
 
 // interface AppProps extends NextAppProps {
 // emotionCache: EmotionCache;
 // }
 
 // const clientSideEmotionCache = createEmotionCache();
-const queryClient = new QueryClient();
+// const theme = createTheme({}, ruRU);
 
-/* eslint-disable react/jsx-props-no-spreading */
 const App: FC<NextAppProps> = ({
   Component,
   // emotionCache = clientSideEmotionCache,
@@ -30,10 +31,9 @@ const App: FC<NextAppProps> = ({
     <ApolloProvider client={client}>
       {/* <CacheProvider value={emotionCache}> */}
       <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          {/* // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+        <ThemeProvider theme={lightTheme}>
           <Component {...pageProps} />
-        </QueryClientProvider>
+        </ThemeProvider>
       </ErrorBoundary>
       <Overlay />
       {/* </CacheProvider> */}

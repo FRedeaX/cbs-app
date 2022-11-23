@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-// import '@yandex/ui/esm/Button/Button.css';
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -10,12 +9,9 @@ import {
 } from "../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
-// import { isMobile as isMobileDevice } from "react-device-detect";
 import Logo from "../Logo/Logo";
-import Search from "../Search/Search";
-import SearchMobile from "../Search/mobile/Search.mobile";
 import Button from "../UI/Button/Button";
-// import { scrollbarWidth } from 'helpers';
+import { HeaderSearch } from "./Header.Search/Header.Search";
 import classes from "./Header.module.css";
 import { MenuGQL } from "./Header.utils/menuGQL";
 import HeaderSocial from "./HeaderSocial/HeaderSocial";
@@ -101,7 +97,7 @@ const Header = ({ menus }) => {
           </nav>
           <div className={classNames(classes.secondary)}>
             <div className={classes.search}>
-              <Search />
+              <HeaderSearch />
             </div>
             <HeaderSocial className={classes.Social_desktope} />
             {menus && menus[1]?.menuItems && (
@@ -111,7 +107,7 @@ const Header = ({ menus }) => {
         </div>
         <div className={classes.mobile}>
           <div className={classes.search}>
-            <SearchMobile />
+            <HeaderSearch />
           </div>
           <HeaderSocial />
           <Button

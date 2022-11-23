@@ -1,4 +1,4 @@
-import { getShortID } from "../../../../../routers/Post/Post.utils";
+import { getShortID } from "../../../../../routes/Post/Post.utils";
 
 export const concatenationID = (
   parentID?: string,

@@ -5,7 +5,9 @@ import lineClamp from "./lineClamp";
 import throttler from "./throttler";
 import verticalAlignToFlext from "./verticalAlignToFlext";
 
+export * from "./declOfNum";
 export * from "./exceptionLog";
+export * from "./isEmptyArray";
 export * from "./isFront";
 export * as localStorage from "./localStorage";
 export * from "./noop";

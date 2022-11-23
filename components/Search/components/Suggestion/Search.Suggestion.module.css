@@ -1,0 +1,32 @@
+.root {
+  position: absolute;
+  top: var(--search-suggestion-top);
+  right: 0;
+  bottom: var(--search-suggestion-bottom);
+  left: var(--search-suggestion-left);
+  transform: translateY(16px);
+
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+
+  max-height: var(--search-suggestion-max-height);
+  margin-top: var(--search-suggestion-margin-top);
+  padding: 10px 5px;
+
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(204, 204, 204, 50%);
+  backdrop-filter: blur(16px);
+  border-radius: var(--search-suggestion-border-radius);
+
+  transition: all 0.2s ease;
+}
+
+/* .suggestion input:focus, */
+.root_isVisible {
+  transform: translateY(0);
+  transform: translateY(0);
+
+  visibility: visible;
+  opacity: 1;
+}

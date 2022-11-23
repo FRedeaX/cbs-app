@@ -9,7 +9,7 @@ import {
   sortingCategories,
   transformBlocks,
 } from "../../../helpers/backend";
-import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routers/Post/Post";
+import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routes/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
