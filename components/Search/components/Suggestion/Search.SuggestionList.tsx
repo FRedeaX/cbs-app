@@ -2,13 +2,12 @@
 import { FC } from "react";
 
 import { Maybe, Omit } from "../../../../helpers/typings/utility-types";
-import { ISearchHits, ISearchHitsNode } from "../../../../lib/elastic/type";
+import { SearchHits } from "../../../../lib/elastic/type";
 import { Card, ICardProps } from "../../../Widget/Card/Card";
 import { Paragraph } from "../../../blocks/Paragraph/Paragraph";
 
-interface ISearchSuggestionListProps extends Omit<ICardProps, "data"> {
-  data: Maybe<ISearchHits>;
-}
+type Data = { data: Maybe<SearchHits> };
+type ISearchSuggestionListProps = Data & Omit<ICardProps, keyof Data>;
 
 export const SearchSuggestionList: FC<ISearchSuggestionListProps> = ({
   data,
@@ -26,14 +25,14 @@ export const SearchSuggestionList: FC<ISearchSuggestionListProps> = ({
 
   return (
     <>
-      {data.hits.map((node: ISearchHitsNode) => (
+      {data.hits.map((node) => (
         <Card
           key={node?._id}
           data={{
             title:
               node.highlight?.["title.text"]?.[0] ||
               node.highlight?.title?.[0] ||
-              node._source.title,
+              node._source?.title,
             excerpt: node.highlight?.content?.[0] || node._source.excerpt,
             uri: new URL(node._source.link).pathname,
             featuredImage: {
@@ -42,7 +41,7 @@ export const SearchSuggestionList: FC<ISearchSuggestionListProps> = ({
               },
             },
             categories: {
-              nodes: node._source.category,
+              nodes: [...node._source.departments, ...node._source.categories],
             },
           }}
           prefetch={false}

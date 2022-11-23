@@ -1,4 +1,21 @@
-export interface ISearchHitsNode {
+import { SearchResponse } from "@elastic/elasticsearch/api/types";
+
+import { Nullable } from "../../helpers/typings/utility-types";
+
+type SearchCategoryNode = {
+  name: string;
+  slug: string;
+};
+
+export type SearchSource = {
+  title: string;
+  excerpt?: string;
+  link: string;
+  thumbnail: { url: string };
+  categories: SearchCategoryNode[];
+  departments: SearchCategoryNode[];
+};
+export type SearchHitsNode = {
   _index: string;
   _type: string;
   _id: string;
@@ -8,46 +25,50 @@ export interface ISearchHitsNode {
     title: Array<string>;
     "title.text": Array<string>;
   };
-  _source: {
-    title: string;
-    excerpt?: string;
-    link: string;
-    thumbnail: { url: string };
-    category: { name: string; slug: string }[];
-  };
-}
+  _source: SearchSource;
+};
 
-interface ISearchHitsTotal {
+type SearchHitsTotal = {
   value: number;
   relation: string;
-}
+};
 
-export interface ISearchHits {
-  hits: Array<ISearchHitsNode> | [];
+export type SearchHits = {
+  total: SearchHitsTotal;
+  hits: SearchHitsNode[] | [];
   max_score: number;
-  total: ISearchHitsTotal;
-}
+};
 
-export interface IBucketsAggregations {
+export type BucketsAggregations = {
   key: string;
   doc_count: number;
-}
+}[];
 
-export interface ISearchResponse {
-  took: number;
-  timed_out: boolean;
-  _shards: {
-    total: number;
-    successful: number;
-    skipped: number;
-    failed: number;
+export type ListBucketsAggregations = {
+  [key: string]: number;
+};
+
+type Aggregation<T> = {
+  doc_count_error_upper_bound: number;
+  sum_other_doc_count: number;
+  buckets: T;
+};
+
+type Aggregations<TAggs, TFacet> = {
+  departments: Aggregation<Nullable<TAggs>>;
+  categories: Aggregation<Nullable<TAggs>>;
+  facets: {
+    doc_count: number;
+    departments: Aggregation<TFacet>;
+    categories: Aggregation<TFacet>;
   };
-  hits: ISearchHits;
-  aggregations: {
-    category: {
-      doc_count_error_upper_bound: number;
-      sum_other_doc_count: number;
-      buckets: Array<IBucketsAggregations>;
-    };
-  };
-}
+};
+
+export type SearchResponseBackend = {
+  aggregations: Aggregations<BucketsAggregations, BucketsAggregations>;
+} & SearchResponse<SearchHits>;
+
+export type SearchResponseFrontend = {
+  aggregations: Aggregations<ListBucketsAggregations, BucketsAggregations>;
+  hits: SearchHits;
+} & SearchResponse<SearchHits>;

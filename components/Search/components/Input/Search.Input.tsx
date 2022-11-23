@@ -7,33 +7,22 @@ import {
   InputBaseProps,
 } from "@mui/material";
 import classNames from "classnames";
-import { useRouter } from "next/router";
 import { ChangeEvent, FC, useRef } from "react";
 
-import { useForkRef } from "../../../../helpers/frontend/hooks";
-import { HendleSetValue } from "../../Search.utils/hooks";
+import { useInput } from "../../utils/hooks";
 import classes from "./Search.Input.module.css";
 
-interface ISearchInputProps extends InputBaseProps {
-  hendleSetValue: HendleSetValue;
-}
-
-export const SearchInput: FC<ISearchInputProps> = ({
-  value,
-  inputRef: inputForkRef,
-  hendleSetValue,
-  ...all
-}) => {
+export const SearchInput: FC<InputBaseProps> = ({ ...all }) => {
+  const { value, hendleSetValue } = useInput();
   const inputRef = useRef<InputBaseComponentProps>();
-  const handleRef = useForkRef(inputRef, inputForkRef);
-  const { push: routerPush } = useRouter();
+  // const { push: routerPush } = useRouter();
 
   const hendleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     hendleSetValue(target.value);
   };
 
   const hendleReset = () => {
-    routerPush("/search");
+    // routerPush("/search");
     hendleSetValue("");
     if (inputRef.current === undefined) return;
     inputRef.current.focus();
@@ -54,7 +43,7 @@ export const SearchInput: FC<ISearchInputProps> = ({
         backgroundColor: "#fff",
         border: "2px solid var(--black-10)",
         borderRadius: "12px",
-        padding: "0 12px",
+        paddingLeft: "12px",
         // boxShadow: "inset rgba(30, 30, 30, 10%) 0 -2px 6px 2px",
         ...all.sx,
       }}
@@ -65,7 +54,7 @@ export const SearchInput: FC<ISearchInputProps> = ({
           ...all.inputProps?.sx,
         },
       }}
-      inputRef={handleRef}
+      inputRef={inputRef}
       endAdornment={
         <InputAdornment position="end">
           <IconButton

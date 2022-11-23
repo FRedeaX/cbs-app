@@ -1,4 +1,4 @@
-export * from "./Filters/Search.Filters";
+export * from "./Filter/Search.Filter";
 export * from "./Form/Search.Form";
 export * from "./Input/Search.Input";
 export * from "./Loader/Search.Loader";

@@ -1,4 +1,4 @@
-// import { FETCH_ARTICLE } from "../../../routers/Post/Post";
+// import { FETCH_ARTICLE } from "../../../routes/Post/Post";
 // import { authClient } from "../../../store/apollo-client";
 
 // const loadPreview = async (query) => {

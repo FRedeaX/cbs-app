@@ -1,7 +1,7 @@
 import { SearchRequest } from "@elastic/elasticsearch/api/types";
 
-import { SearchParams } from "../../components/Search/Search.utils/type";
 import { SEARCH_HIT_SIZE } from "../../components/Search/components/Pagination/Search.Pagination";
+import { SearchParams } from "../../components/Search/utils/type";
 import * as aggs from "./aggs";
 import { highlight } from "./highlight";
 
@@ -14,6 +14,11 @@ export const createBodyRequest = (
   const page = parseInt(query.page ?? "1", 10) - 1;
 
   const isSize = !!(text || departments || categories);
+
+  const filter = [];
+  if (departments)
+    filter.push({ terms: { "departments.name.raw": departments } });
+  if (categories) filter.push({ terms: { "categories.name.raw": categories } });
 
   return {
     from: page * SEARCH_HIT_SIZE,
@@ -31,49 +36,19 @@ export const createBodyRequest = (
             multi_match: {
               query: text,
               // analyzer: "rus_eng_key_analyzer",
+              // analyzer: "synonym_analyzer",
               fields: ["title.text", "title", "content"],
             },
           },
         }),
-        ...(departments && {
-          filter: [
-            {
-              terms: { "departments.name.raw": departments },
-            },
-          ],
+        ...(filter.length > 0 && {
+          filter,
         }),
       },
     },
-    ...(categories && {
-      post_filter: {
-        terms: { "categories.name.raw": categories },
-      },
-    }),
     highlight,
     aggs: {
-      all: {
-        global: {},
-        aggs: {
-          keyword: {
-            filter: {
-              bool: {
-                ...(text && {
-                  must: {
-                    multi_match: {
-                      query: text,
-                      // analyzer: "rus_eng_key_analyzer",
-                      fields: ["title.text", "title", "content"],
-                    },
-                  },
-                }),
-              },
-            },
-            aggs: {
-              departments: aggs.departments,
-            },
-          },
-        },
-      },
+      departments: aggs.departments,
       categories: aggs.categories,
       facets: {
         global: {},

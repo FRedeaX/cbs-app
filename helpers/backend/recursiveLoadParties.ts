@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { DocumentNode } from "graphql";
 
 import { client } from "../../store/apollo-client";
@@ -6,7 +5,7 @@ import delay from "../delay";
 import { exceptionLog } from "../exceptionLog";
 
 export type queryNode = DocumentNode;
-type criticalVariables<TVariables> = TVariables & {
+type criticalVariables = {
   /**
    * @default ""
    */
@@ -26,7 +25,7 @@ export type _pageInfo = {
 export type _pageInfoCallback<TData> = (data: TData) => _pageInfo;
 type _updatedVariablesCallback<TVariables> = () => TVariables;
 
-export interface IRecursiveLoadParties<TVariables, TData> {
+export interface IRecursiveLoadParties<TData, TVariables = criticalVariables> {
   /**
    * GraphQL запрос
    */
@@ -35,7 +34,7 @@ export interface IRecursiveLoadParties<TVariables, TData> {
   /**
    * Переменные передаваемые в GraphQL запрос
    */
-  variables: criticalVariables<TVariables>;
+  variables?: TVariables;
 
   /**
    * Асинхронная функция, выполняемая для каждой партии
@@ -66,9 +65,10 @@ export interface IRecursiveLoadParties<TVariables, TData> {
   delayMS?: number;
 }
 
-export async function recursiveLoadParties<TVariables, TData>(
-  args: IRecursiveLoadParties<TVariables, TData>,
-): Promise<void> {
+export async function recursiveLoadParties<
+  TData,
+  TVariables = criticalVariables,
+>(args: IRecursiveLoadParties<TData, TVariables>): Promise<void> {
   const {
     query,
     callbackFn,
@@ -76,7 +76,7 @@ export async function recursiveLoadParties<TVariables, TData>(
     updatedVariablesCallback,
     delayMS = 0,
   } = args;
-  const variables: criticalVariables<TVariables> = {
+  const variables = {
     cursor: "",
     first: 10,
     ...args.variables,
@@ -98,7 +98,7 @@ export async function recursiveLoadParties<TVariables, TData>(
         ...variables,
         cursor: pageInfo.endCursor,
         ...updatedVariablesCallback?.(),
-      };
+      } as TVariables;
 
       await delay(delayMS).then(async () => {
         await recursiveLoadParties({ ...args, variables: newVariables });

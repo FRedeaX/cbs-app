@@ -9,6 +9,17 @@
         "ru_stemmer": {
           "type": "stemmer",
           "language": "russian"
+        },
+        "synonyms": {
+          "type": "synonym",
+          "synonyms_path": "synonyms.txt",
+          "updateable": true
+        }
+      },
+      "tokenizer": {
+        "synonym_tokenizer": {
+          "type": "pattern",
+          "pattern": ",(?![|])"
         }
       },
       "analyzer": {
@@ -20,6 +31,11 @@
         "wp_txt": {
           "filter": ["lowercase", "ru_stop", "ru_stemmer"],
           "tokenizer": "standard"
+        },
+        "synonym_analyzer": {
+          "tokenizer": "standard",
+          // "tokenizer": "synonym_tokenizer",
+          "filter": ["synonyms"]
         },
         "rus_eng_key_analyzer": {
           "char_filter": ["rus_eng_key"],
@@ -93,14 +109,29 @@
   },
   "mappings": {
     "properties": {
-      "category": {
+      "categories": {
         "properties": {
           "name": {
             "type": "text",
             "fields": {
               "raw": {
-                "type": "keyword",
-                "index": false
+                "type": "keyword"
+              }
+            }
+          },
+          "slug": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      },
+      "departments": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fields": {
+              "raw": {
+                "type": "keyword"
               }
             }
           },

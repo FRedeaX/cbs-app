@@ -1,0 +1,67 @@
+.submitButton {
+  height: 40px;
+  margin-left: 4px;
+
+  /* width: 40px; */
+  text-transform: capitalize;
+}
+
+.body {
+  display: flex;
+  padding-top: 10px;
+}
+@media screen and (width <= 768px) {
+  .body {
+    flex-direction: column;
+  }
+}
+
+.Aside {
+  --seacrh-filter-margin: 0 0 20px 0;
+  --seacrh-filter-overflow-y: auto;
+  --seacrh-filter-max-height: calc(8 * 32px);
+}
+@media screen and (width > 768px) {
+  .Aside {
+    flex-basis: 280px;
+    flex-shrink: 0;
+    padding: 10px 10px 0 0;
+  }
+}
+
+.result {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+@media screen and (width < 1100px) {
+  .result {
+    --card-image-flex: 0;
+  }
+}
+
+.result--loading::after {
+  content: "";
+
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  background-color: rgba(255, 255, 255, 50%);
+  border-radius: 24px;
+}
+
+@media screen and (width <= 925px) and (width > 768px) {
+  .result {
+    --card-width: 100%;
+    --card-max-width: 400px;
+    --card-margin: 10px auto;
+  }
+}
+
+.Pagination {
+  margin-top: 10px;
+}

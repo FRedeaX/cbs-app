@@ -1,7 +1,7 @@
 import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
 import { exceptionLog } from "../../../helpers";
 import { plaiceholder } from "../../../helpers/backend";
-import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routers/Post/Post";
+import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routes/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 export default async function offers(req, res) {
