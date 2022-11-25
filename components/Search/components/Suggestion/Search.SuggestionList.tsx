@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import { FC } from "react";
 
+import { SearchHits } from "../../../../core/elastic/type";
 import { Maybe, Omit } from "../../../../helpers/typings/utility-types";
-import { SearchHits } from "../../../../lib/elastic/type";
 import { Card, ICardProps } from "../../../Widget/Card/Card";
 import { Paragraph } from "../../../blocks/Paragraph/Paragraph";
 

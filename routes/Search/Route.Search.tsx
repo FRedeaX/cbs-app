@@ -11,7 +11,7 @@ import {
 } from "../../components/Search/components";
 import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
 import { useSearch } from "../../components/Search/utils/hooks";
-import { SearchResponseFrontend } from "../../lib/elastic/type";
+import { SearchResponseFrontend } from "../../core/elastic/type";
 import { SearchAside, UAPlatform } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
@@ -36,18 +36,18 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
       <Box className={classes.body}>
         <SearchAside
           className={classes.Aside}
-          count={data?.hits.total.value}
+          count={data?.hits.hits.length && data?.hits.total.value}
           platform={platform}>
           <SearchFilters
             legend="Филиал (отдел)"
             name="departments"
-            nodes={data?.aggregations.departments.buckets}
+            nodes={data?.aggregations.departments.facet.departments.buckets}
             facet={data?.aggregations.facets.departments.buckets}
           />
           <SearchFilters
             legend="Категория"
             name="categories"
-            nodes={data?.aggregations.categories.buckets}
+            nodes={data?.aggregations.categories.facet.categories.buckets}
             facet={data?.aggregations.facets.categories.buckets}
           />
         </SearchAside>

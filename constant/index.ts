@@ -1,1 +1,1 @@
-export const SEARCH_PATHNAME = "/search";
+export * from "../core/elastic/constant";

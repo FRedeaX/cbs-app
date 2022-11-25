@@ -1,12 +1,12 @@
 import { SearchParams } from "../../components/Search/utils/type";
-import { esClient } from "../../core/elastic-client";
-import { convertAggregationsToObject } from "./convertAggregationsToObject";
-import { createBodyRequest } from "./createBodyRequest";
+import { esClient } from "../../lib/elastic/client";
 import {
   SearchHits,
   SearchResponseBackend,
   SearchResponseFrontend,
 } from "./type";
+import { convertAggregationsToObject } from "./utility/convertAggregationsToObject";
+import { createBodyRequest } from "./utility/createBodyRequest";
 
 export const searchQuery = async (
   query: SearchParams,

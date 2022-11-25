@@ -4,8 +4,12 @@
 
 .formGroup {
   overflow-y: var(--seacrh-filter-overflow-y);
-  flex-wrap: nowrap;
   max-height: var(--seacrh-filter-max-height);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
 }
 
 .text {

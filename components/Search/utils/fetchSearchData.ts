@@ -1,4 +1,4 @@
-import { SearchResponseFrontend } from "../../../lib/elastic/type";
+import { SearchResponseFrontend } from "../../../core/elastic/type";
 import { SearchParams } from "./type";
 
 interface IFetchSearchData extends SearchParams {

@@ -3,7 +3,7 @@ import { useState } from "react";
 import useSWR from "swr";
 
 import { fetchSearchData } from "..";
-import { SearchResponseFrontend } from "../../../../lib/elastic/type";
+import { SearchResponseFrontend } from "../../../../core/elastic/type";
 import { SearchParams } from "../type";
 
 export const useSearch = (ssrData: SearchResponseFrontend) => {

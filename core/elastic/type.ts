@@ -55,8 +55,8 @@ type Aggregation<T> = {
 };
 
 type Aggregations<TAggs, TFacet> = {
-  departments: Aggregation<Nullable<TAggs>>;
-  categories: Aggregation<Nullable<TAggs>>;
+  departments: { facet: { departments: Aggregation<Nullable<TAggs>> } };
+  categories: { facet: { categories: Aggregation<Nullable<TAggs>> } };
   facets: {
     doc_count: number;
     departments: Aggregation<TFacet>;

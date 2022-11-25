@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { esClient } from "../../core/elastic-client";
 import {
   _pageInfo,
   recursiveLoadParties,
   splitDepartmentAndCategories,
 } from "../../helpers/backend";
+import { esClient } from "../../lib/elastic/client";
 
 const GET_POSTS = gql`
   query GET_POSTS($cursor: String, $first: Int) {

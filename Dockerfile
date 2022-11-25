@@ -31,11 +31,12 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
 COPY --from=builder /app/components ./components
+COPY --from=builder /app/constant ./constant
 COPY --from=builder /app/core ./core
 COPY --from=builder /app/helpers ./helpers
 COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/pages ./pages
-COPY --from=builder /app/routers ./routers
+COPY --from=builder /app/routes ./routers
 COPY --from=builder /app/store ./package
 COPY --from=builder /app/styles ./styles
 COPY --from=builder /app/utility ./utility
