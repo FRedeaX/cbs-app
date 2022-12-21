@@ -2,11 +2,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 
-import { fetchSearchData } from "..";
-import { SearchResponseFrontend } from "../../../../core/elastic/type";
+import { SearchResponseFrontend } from "../../../../core/elastic/search/type";
+import { Nullable } from "../../../../helpers/typings/utility-types";
+import { FetchSearchData, fetchSearchData } from "../fetchSearchData";
 import { SearchParams } from "../type";
 
-export const useSearch = (ssrData: SearchResponseFrontend) => {
+type SWRKey = FetchSearchData & SearchParams;
+
+export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
   const { text, categories, departments, page } = useRouter()
     .query as SearchParams;
   const [state, setState] = useState<SearchResponseFrontend>(ssrData);
@@ -19,7 +22,11 @@ export const useSearch = (ssrData: SearchResponseFrontend) => {
     (!departments && !categories && !page && state.hits.hits.length > 0)
   );
 
-  const { data, isValidating } = useSWR(
+  const { data, isValidating } = useSWR<
+    SearchResponseFrontend,
+    unknown,
+    Nullable<SWRKey>
+  >(
     isLongEnough
       ? {
           apiUrl: process.env.NEXT_PUBLIC_API_ES_URL,
@@ -32,7 +39,9 @@ export const useSearch = (ssrData: SearchResponseFrontend) => {
     fetchSearchData,
     {
       fallbackData: state,
-      onSuccess: (_data) => setState(isLongEnough ? _data : ssrData),
+      onSuccess: (_data) => {
+        setState(isLongEnough ? _data : ssrData);
+      },
     },
   );
   // const [data, setData] = useState(undefined);

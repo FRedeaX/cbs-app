@@ -1,6 +1,6 @@
 import { AggregationsAggregationContainer } from "@elastic/elasticsearch/api/types";
 
-import { FACET_SIZE } from "../../../constant/index";
+import { FACET_SIZE } from "../../../../constant/index";
 
 const departments: AggregationsAggregationContainer = {
   terms: {

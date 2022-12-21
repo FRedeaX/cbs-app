@@ -23,6 +23,8 @@
     "@mui/material": "^5.7.0",
     "@redis/client": "^1.2.0",
     "@sentry/nextjs": "^6.19.7",
+    "@types/autosuggest-highlight": "^3.2.0",
+    "autosuggest-highlight": "^3.3.4",
     "classnames": "^2.3.1",
     "critters": "^0.0.16",
     "css-scroll-snap-polyfill": "^0.1.2",

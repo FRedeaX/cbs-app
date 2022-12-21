@@ -10,7 +10,7 @@ import { FC, ReactNode } from "react";
 import {
   BucketsAggregations,
   ListBucketsAggregations,
-} from "../../../../core/elastic/type";
+} from "../../../../core/elastic/search/type";
 import { Maybe, Nullable } from "../../../../helpers/typings/utility-types";
 import { useFilter } from "../../utils/hooks/useFilter";
 import classes from "./Search.filter.module.css";
@@ -35,7 +35,11 @@ export const SearchFilters: FC<ISearchFilters> = ({
   return (
     <div className={classes.root}>
       <FormControl fullWidth size="small">
-        <FormLabel component="legend">{legend}</FormLabel>
+        <FormLabel
+          component="legend"
+          sx={{ fontWeight: 500, color: "var(--black)" }}>
+          {legend}
+        </FormLabel>
         <FormGroup sx={{ display: "block" }} className={classes.formGroup}>
           <div className={classes.body}>
             {facetList.map((facet) => (

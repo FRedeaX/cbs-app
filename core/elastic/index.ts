@@ -1,1 +1,2 @@
-export * from "./utility/createBodyRequest";
+export * from "./search/searchQuery";
+export * from "./suggest/suggestQuery";

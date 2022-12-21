@@ -1,9 +1,15 @@
-.clear {
-  opacity: 0.8;
-  transition: opacity 0.15s;
-}
+.root {
+  /* Input */
+  --search-input-height: var(--search-height);
+  --search-input-border-radius: var(--search-border-radius) 0 0
+    var(--search-border-radius);
 
-.clear_visibility_hidden {
-  pointer-events: none;
-  opacity: 0;
+  /* Button */
+  --search-button-height: var(--search-height);
+  --search-button-border-radius: 0 var(--search-border-radius)
+    var(--search-border-radius) 0;
+
+  z-index: calc(var(--suggestion-z-index) + 1);
+  display: flex;
+  width: 100%;
 }

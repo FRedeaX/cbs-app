@@ -1,5 +1,4 @@
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
@@ -8,10 +7,11 @@ import {
   SearchFilters,
   SearchForm,
   SearchInput,
+  Suggestion,
 } from "../../components/Search/components";
 import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
-import { useSearch } from "../../components/Search/utils/hooks";
-import { SearchResponseFrontend } from "../../core/elastic/type";
+import { useQuerySearch } from "../../components/Search/utils/hooks";
+import { SearchResponseFrontend } from "../../core/elastic/search/type";
 import { SearchAside, UAPlatform } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
@@ -20,17 +20,18 @@ export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
 } & UAPlatform;
 
+// eslint-disable-next-line arrow-body-style
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
-  const { data, isLoading } = useSearch(ssrData);
+  const { data, isLoading } = useQuerySearch(ssrData);
   const isHorizontal = useMediaQuery("(min-width: 1100px)");
+
+  console.log(data);
 
   return (
     <RouteContainer className={classes.root}>
       <SearchForm>
         <SearchInput />
-        <Button type="submit" color="inherit" className={classes.submitButton}>
-          <SearchRoundedIcon fontSize="small" />
-        </Button>
+        <Suggestion />
       </SearchForm>
 
       <Box className={classes.body}>

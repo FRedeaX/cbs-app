@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from "next";
 
 import Head from "../../components/Head/Head";
 import Layout from "../../components/UI/Layout/Layout";
-import { searchQuery } from "../../core/elastic/searchQuery";
+import { searchQuery } from "../../core/elastic/search/searchQuery";
 import { exceptionLog } from "../../helpers";
 import { getMenu, getUAPlatform } from "../../helpers/backend";
 import { UA } from "../../helpers/backend/getUA/const";

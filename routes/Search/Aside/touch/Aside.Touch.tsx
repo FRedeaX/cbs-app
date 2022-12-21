@@ -41,7 +41,7 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
       </Button>
       <SwipeableDrawer
         anchor="bottom"
-        swipeAreaWidth={0}
+        disableSwipeToOpen
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={isOpen}

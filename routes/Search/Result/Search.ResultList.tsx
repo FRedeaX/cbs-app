@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import { Card, ICardProps } from "../../../components/Widget/Card/Card";
 import { Paragraph } from "../../../components/blocks/Paragraph/Paragraph";
-import { SearchHits } from "../../../core/elastic/type";
+import { SearchHits } from "../../../core/elastic/search/type";
 import { Maybe, Omit } from "../../../helpers/typings/utility-types";
 
 type Data = { data: Maybe<SearchHits> };

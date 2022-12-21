@@ -24,6 +24,6 @@ export type Defaultize<TSource, TKeys extends keyof TSource> = TSource & {
 };
 
 /**
- * Тип который ничего не возвращает.
+ * Возвращает функцию которая ничего не принимает и не возвращает.
  */
 export type Void = () => void;

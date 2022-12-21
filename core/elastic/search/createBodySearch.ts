@@ -2,11 +2,11 @@ import { SearchRequest } from "@elastic/elasticsearch/api/types";
 
 import { SEARCH_HIT_SIZE } from "../../../components/Search/components/Pagination/Search.Pagination";
 import { SearchParams } from "../../../components/Search/utils/type";
-import * as aggs from "../queryBlock/aggs";
-import { highlight } from "../queryBlock/highlight";
-import { textSearch } from "../queryBlock/textSearch";
+import * as aggs from "./queryBlock/aggs";
+import { highlight } from "./queryBlock/highlight";
+import { textSearch } from "./queryBlock/textSearch";
 
-export const createBodyRequest = (
+export const createBodySearch = (
   query: SearchParams,
 ): SearchRequest["body"] => {
   const text = typeof query.text === "string" ? query.text : null;
@@ -24,12 +24,6 @@ export const createBodyRequest = (
   return {
     from: page * SEARCH_HIT_SIZE,
     size: isSize ? SEARCH_HIT_SIZE : 0,
-    suggest: {
-      gotsuggest: {
-        text: query.text ?? "",
-        term: { field: "title.text" },
-      },
-    },
     query: {
       bool: {
         ...(text && textSearch(text)),

@@ -1,4 +1,4 @@
-import { Maybe, Nullable } from "../../../helpers/typings/utility-types";
+import { Maybe, Nullable } from "../../../../helpers/typings/utility-types";
 import { BucketsAggregations, ListBucketsAggregations } from "../type";
 
 export const convertArrayToObject = (
