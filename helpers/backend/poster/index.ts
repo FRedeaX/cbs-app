@@ -11,6 +11,7 @@ interface IPoster {
       day: string;
       month: number;
       monthText: string;
+      year: number;
     };
     dateEnd: {
       day: string | null;
@@ -24,6 +25,7 @@ interface IPoster {
 }
 
 type Date = {
+  year: number;
   month: number;
   day: number;
   hours: number;
@@ -63,7 +65,7 @@ const getStringMonth = (month: number | null) => {
 
 const isPush = (
   { posterDate: { dateStart, dateEnd } }: IPoster,
-  { month, day, hours }: Date,
+  { year, month, day, hours }: Date,
 ) => {
   const posterDay = parseInt(dateStart.day, 10);
   const posterMonth = dateStart.month;
@@ -71,21 +73,22 @@ const isPush = (
   const posterDayEnd = parseInt(dateEnd.day ?? "", 10);
   const posterMonthEnd = dateEnd.month;
 
-  if (posterMonthEnd !== null) {
-    if (posterMonthEnd < month) return false;
-    if (posterMonthEnd === month) {
-      if (posterDayEnd < day || (posterDayEnd === day && hours > 18)) {
-        return false;
+  if (dateStart.year === year)
+    if (posterMonthEnd !== null) {
+      if (posterMonthEnd < month) return false;
+      if (posterMonthEnd === month) {
+        if (posterDayEnd < day || (posterDayEnd === day && hours > 18)) {
+          return false;
+        }
+      }
+    } else {
+      if (posterMonth < month) return false;
+      if (posterMonth === month) {
+        if (posterDay < day || (posterDay === day && hours > 18)) {
+          return false;
+        }
       }
     }
-  } else {
-    if (posterMonth < month) return false;
-    if (posterMonth === month) {
-      if (posterDay < day || (posterDay === day && hours > 18)) {
-        return false;
-      }
-    }
-  }
 
   return true;
 };
@@ -102,18 +105,22 @@ export const dateConversion = async (
   const result: IPoster[] = [];
   let dayStart;
   let monthStart;
+  let yearStart;
   let dayEnd;
   let monthEnd;
 
   posterList.forEach((poster: any) => {
-    dayStart = poster.posterDate.date.split("/")[0];
-    monthStart = parseInt(poster.posterDate.date.split("/")[1], 10);
+    const dateStartSplit = poster.posterDate.date.split("/");
+    dayStart = dateStartSplit[0];
+    monthStart = parseInt(dateStartSplit[1], 10);
+    yearStart = parseInt(dateStartSplit[2], 10);
 
     dayEnd = null;
     monthEnd = null;
     if (poster.posterDate.dataend !== null) {
-      dayEnd = poster.posterDate.dataend.split("/")[0];
-      monthEnd = parseInt(poster.posterDate.dataend.split("/")[1], 10);
+      const dateEndSplit = poster.posterDate.dataend.split("/");
+      dayEnd = dateEndSplit[0];
+      monthEnd = parseInt(dateEndSplit[1], 10);
     }
 
     result.push({
@@ -123,6 +130,7 @@ export const dateConversion = async (
           day: dayStart,
           month: monthStart,
           monthText: getStringMonth(monthStart),
+          year: yearStart,
         },
         dateEnd: {
           day: dayEnd,
@@ -139,20 +147,26 @@ export const dateConversion = async (
 
 /**
  * 1. Так как в один день могут начинаться события продолжительностью
- * один и более дней, ставим однодневные мероприятия в раньше
+ * один и более дней, ставим однодневные мероприятия в начало
+ *
+ * 2. Так как в один день могут начинаться несколько событий,
+ * ставим мероприятия с указанным временем в начало сортируя по возрастанию
+ * мероприятия без указанного времени получают время равное 24 часам
  */
 export const sort = async (posterList: Nullable<IPoster[]>) => {
   if (!posterList) return null;
 
   return posterList.sort(
     (
-      { posterDate: { dateStart: aDateStart, dateEnd: aDateEnd } },
-      { posterDate: { dateStart: bDateStart, dateEnd: bDateEnd } },
+      { posterDate: { dateStart: aDateStart, dateEnd: aDateEnd, time: atime } },
+      { posterDate: { dateStart: bDateStart, dateEnd: bDateEnd, time: btime } },
     ) =>
       aDateStart.month - bDateStart.month ||
       parseInt(aDateStart.day, 10) - parseInt(bDateStart.day, 10) ||
       /* 1. */
-      parseInt(aDateEnd.day ?? "0", 10) - parseInt(bDateEnd.day ?? "0", 10),
+      parseInt(aDateEnd.day ?? "0", 10) - parseInt(bDateEnd.day ?? "0", 10) ||
+      /* 2. */
+      parseInt(atime ?? "24", 10) - parseInt(btime ?? "24", 10),
   );
 };
 
@@ -161,6 +175,7 @@ export const filter = async (posterList: Nullable<IPoster[]>) => {
 
   const date = new Date();
   const currentDate = {
+    year: date.getFullYear(),
     month: date.getMonth() + 1,
     day: date.getDate(),
     hours: date.getHours(),

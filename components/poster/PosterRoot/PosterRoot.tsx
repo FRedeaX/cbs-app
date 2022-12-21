@@ -8,7 +8,7 @@ import PosterList from "../PosterList/PosterList";
 
 export const FETCH_POSTER = gql`
   query FetchPoster {
-    posters(first: 20) {
+    posters(first: 50) {
       nodes {
         ...posterItem
       }
