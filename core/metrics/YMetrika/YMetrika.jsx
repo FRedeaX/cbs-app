@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Script from "next/script";
 
-const YMetrika = () =>
-  process.env.NODE_ENV === "production" ? (
+export const YMetrika = () =>
+  process.env.NODE_ENV === "production" && (
     <>
       <Script id="sym">
         {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -39,6 +39,4 @@ const YMetrika = () =>
         />
       </a>
     </>
-  ) : null;
-
-export default YMetrika;
+  );
