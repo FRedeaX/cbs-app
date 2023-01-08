@@ -1,25 +1,36 @@
 import classNames from "classnames";
-import { FC, LegacyRef, ReactNode, Ref, forwardRef } from "react";
-
 import {
-  useCarouselHookOnKeyDownHendler,
-  useCarouselLegacyHookScrollHendler,
-} from "../Carousel.utils";
-import classes from "./Carousel.Scroller.module.css";
+  FC,
+  KeyboardEvent,
+  LegacyRef,
+  ReactNode,
+  Ref,
+  TouchEvent,
+  WheelEvent,
+  forwardRef,
+} from "react";
 
-interface ICarouselScrollerProps {
+import classes from "./Scroller.module.css";
+
+type HandleOnKeyDown = (event: KeyboardEvent<HTMLDivElement>) => void;
+
+type HandleOnScroll = (
+  event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
+) => void;
+
+type ScrollerProps = {
   children: ReactNode;
   /**
    * @default false
    */
   isScrollSnap?: boolean;
-  onKeyDown?: useCarouselHookOnKeyDownHendler;
-  onScroll?: useCarouselLegacyHookScrollHendler;
+  onKeyDown?: HandleOnKeyDown;
+  onScroll?: HandleOnScroll;
   className?: string;
   ref?: Ref<HTMLDivElement>;
-}
+};
 
-const CarouselScroller: FC<ICarouselScrollerProps> = forwardRef(
+export const Scroller: FC<ScrollerProps> = forwardRef(
   (
     { children, isScrollSnap = false, onKeyDown, onScroll, className },
     ref?: LegacyRef<HTMLDivElement>,
@@ -38,5 +49,4 @@ const CarouselScroller: FC<ICarouselScrollerProps> = forwardRef(
   ),
 );
 
-CarouselScroller.displayName = "CarouselScroller";
-export default CarouselScroller;
+Scroller.displayName = "Scroller";

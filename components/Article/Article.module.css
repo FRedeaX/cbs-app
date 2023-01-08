@@ -1,8 +1,10 @@
 .container {
   position: relative;
-  width: 95%;
+
+  box-sizing: content-box;
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 5px;
 }
 
 .header {
@@ -16,9 +18,9 @@
 }
 
 .category-link {
-  font-weight: 400;
-  font-size: 14px;
   font-family: var(--font-R-S);
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .body {
@@ -36,6 +38,7 @@
     position: absolute;
     top: -5px;
     left: -80px;
+
     display: flex;
     flex-direction: column;
   }

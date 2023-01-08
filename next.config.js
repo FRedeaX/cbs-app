@@ -25,7 +25,7 @@ const nextConfig = withTM({
   },
 
   images: {
-    domains: [process.env.HOST],
+    domains: [process.env.HOSTNAME],
     // formats: ["image/avif", "image/webp"],
     formats: ["image/webp"],
   },

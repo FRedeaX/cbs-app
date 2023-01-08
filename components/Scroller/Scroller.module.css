@@ -1,13 +1,12 @@
 .root {
-  display: flex;
+  scrollbar-width: none;
+
   overflow-x: scroll;
   overflow-y: hidden;
-
-  /* white-space: nowrap; */
+  display: flex;
 
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .root::-webkit-scrollbar {
@@ -15,10 +14,10 @@
 }
 
 .root_scrollSnap {
+  touch-action: pan-x;
+  scroll-padding: var(--carousel-scroll-snap-padding, 0);
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
-  scroll-padding: var(--carousel-scroll-snap-padding, 0);
-  touch-action: pan-x;
 }
 
 .itemList {
