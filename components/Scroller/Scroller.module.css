@@ -1,0 +1,33 @@
+.root {
+  scrollbar-width: none;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+
+.root::-webkit-scrollbar {
+  display: none;
+}
+
+.root_scrollSnap {
+  touch-action: pan-x;
+  scroll-padding: var(--carousel-scroll-snap-padding, 0);
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+
+.itemList {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+@supports (display: grid) {
+  .itemList {
+    width: max-content;
+  }
+}

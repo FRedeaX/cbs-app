@@ -12,11 +12,6 @@ import {
   saveByRedis,
 } from "./pagination.utils";
 
-interface IPaginationLoad<TData> extends ILoadByGraphQL<TData> {
-  key: ILoadByRedis["key"];
-  endCursor?: ILoadByRedis["endCursor"];
-}
-
 export async function paginationLoad<TData>({
   key,
   endCursor,
@@ -24,7 +19,7 @@ export async function paginationLoad<TData>({
   id,
   isTags,
   pageInfoCallback,
-}: IPaginationLoad<TData>): Promise<pageInfo[]> {
+}: ILoadByRedis & ILoadByGraphQL<TData>): Promise<pageInfo[]> {
   try {
     const paginationRedis: pageInfo[] | null = await loadByRedis({
       key,

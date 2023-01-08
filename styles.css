@@ -11,7 +11,7 @@
   --black-20: hsl(0deg, 0%, 0%, 20%);
   --black-14: hsl(0deg, 0%, 12%, 14%);
   --black-10: hsl(0deg, 0%, 12%, 10%);
-  --gray: hsl(222deg, 13%, 60%);
+  --gray: hsl(0deg, 0%, 43%);
   --dark-gray: hsl(0deg, 0%, 24%);
   --d-dark-gray: hsl(222deg, 13%, 28%, 100%);
   --blue-dark: hsl(218deg, 100%, 37%);
@@ -126,15 +126,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   height: 100vh;
 }
 
 body {
-  margin: 0;
   overflow-y: scroll;
+
+  margin: 0;
+
   font-family: Roboto, Helvetica, Arial, -apple-system, BlinkMacSystemFont,
     sans-serif;
   word-break: break-word;
+
   background-color: var(--bg-white-95);
 
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -171,22 +175,27 @@ figcaption {
 .wp-block-quote {
   margin: 0 0 28px;
   padding-left: 1em;
+
   border-left: 4px solid var(--red-80);
 }
 
 .wp-block-quote cite {
   position: relative;
+
   margin-top: 1em;
-  color: var(--secondary-color);
+
   font-size: 14px;
   font-style: normal;
+  color: var(--secondary-color);
 }
 
 .full-screen {
   position: relative;
+
+  overflow: hidden;
+
   height: 0;
   padding-bottom: 56.25%;
-  overflow: hidden;
 }
 
 .full-screen iframe,
@@ -195,6 +204,7 @@ figcaption {
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
 }
@@ -261,6 +271,7 @@ figcaption {
 .f-l,
 p img {
   float: left;
+
   margin-right: 10px;
 }
 
@@ -270,6 +281,7 @@ p img {
 
 .f-r {
   float: right;
+
   margin-left: 10px;
 }
 

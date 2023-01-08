@@ -1,7 +1,7 @@
 import * as Vibrant from "node-vibrant";
 
 import { exceptionLog } from "../../../helpers";
-import { GET_SOURCE_THUMBNAIL_URL } from "../../../routers/Post/Post";
+import { GET_SOURCE_THUMBNAIL_URL } from "../../../routes/Post/Post";
 import { client } from "../../../store/apollo-client";
 
 // interface IVec3 extends Array<number> {

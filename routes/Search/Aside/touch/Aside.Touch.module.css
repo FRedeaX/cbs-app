@@ -1,0 +1,35 @@
+.header {
+  padding: 20px 0 4px;
+}
+
+.header::before {
+  content: "";
+
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: calc(50% - 18px);
+
+  width: 36px;
+  height: 5px;
+
+  background-color: rgba(0, 0, 0, 18%);
+  border-radius: 16px;
+}
+
+.drawer {
+  --seacrh-filter-margin: 0 0 15px 0;
+
+  overflow-y: auto;
+  padding-top: 15px;
+}
+
+.controls {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.cleare {
+  flex-shrink: 0;
+  margin-right: 15px;
+}

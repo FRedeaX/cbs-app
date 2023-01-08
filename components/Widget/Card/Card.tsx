@@ -33,12 +33,6 @@ export interface ICardProps {
   lineClamp?: number;
   isBig?: boolean;
   isSmall?: boolean;
-
-  /**
-   * прокидываем HTML data-* атрибут
-   * see Carousel.List components
-   */
-  "data-idx"?: string;
 }
 
 export const Card: FC<ICardProps> = forwardRef(
@@ -50,10 +44,9 @@ export const Card: FC<ICardProps> = forwardRef(
       isHorizontal = false,
       className,
       isClamp,
-      lineClamp = isClamp ? getLineClamp(title, 30, 3) : undefined,
+      lineClamp = isClamp ? getLineClamp(title, 32, 3) : undefined,
       isBig,
       isSmall,
-      "data-idx": dataIdx,
     },
     ref: LegacyRef<HTMLElement>,
   ) => (
@@ -67,8 +60,7 @@ export const Card: FC<ICardProps> = forwardRef(
           [classes.sticky]: isSticky,
         },
         className,
-      )}
-      data-idx={dataIdx}>
+      )}>
       {featuredImage && featuredImage.node.sourceUrl && (
         <div
           className={classNames(classes.image, {

@@ -3,8 +3,8 @@
 }
 
 .root_visibility_false {
-  opacity: var(--carousel-button-visibility, 0);
   pointer-events: none;
+  opacity: var(--carousel-button-visibility, 0);
 }
 
 .root_visibility_true {
@@ -14,7 +14,9 @@
 .root {
   position: absolute;
   z-index: 2;
+
   display: inline-flex;
+
   width: var(--carousel-button-width);
   height: var(--carousel-button-height);
 }
@@ -64,14 +66,14 @@
 }
 
 .iconButton[disabled] {
-  cursor: default;
   pointer-events: initial;
+  cursor: default;
 }
 
 .sides_true .root:hover .iconButton_animation {
+  transform: scale(1.1);
   background-color: #eee;
   box-shadow: hsl(222deg, 13%, 28%, 25%) 0 0 12px 0;
-  transform: scale(1.1);
 }
 
 .sides_true .iconButton_bg {

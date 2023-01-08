@@ -51,7 +51,7 @@ export async function loadByGraphQL<TData>({
     };
   };
 
-  await recursiveLoadParties<IUpdatedVariables, TData>({
+  await recursiveLoadParties<TData, IUpdatedVariables>({
     query,
     variables: {
       id,

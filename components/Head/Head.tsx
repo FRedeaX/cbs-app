@@ -4,7 +4,7 @@ import SEO from "../SEO/SEO";
 
 interface IProps {
   title?: string;
-  description: string;
+  description?: string;
   image?: string;
   video?: string;
   url?: string;

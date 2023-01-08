@@ -1,5 +1,8 @@
+/**
+ * Рассчитывает отступ для центрирования элементов внутри контейнера.
+ */
 export const offsetSides = (
-  rootWidth: number,
+  containerWidth: number,
   nodeSum: number,
   itemMargin: number,
-): number => (rootWidth - nodeSum) / 2 - itemMargin;
+): number => (containerWidth - nodeSum) / 2 - itemMargin;
