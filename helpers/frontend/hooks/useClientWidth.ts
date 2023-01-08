@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { isFront } from "../../isFront";
+import { Maybe } from "../../typings/utility-types";
 
 /**
- * Вычисляет высоту вьюпорта
+ * Вычисляет ширину вьюпорта
  */
 const getClientWidth = () =>
   window.innerWidth ||
@@ -11,17 +12,16 @@ const getClientWidth = () =>
   document.body.clientWidth;
 
 /**
- * Провоцирует перерисовку при ресайзе окна и возвращает высоту вьюпорта
+ * Провоцирует перерисовку при ресайзе окна и возвращает ширину вьюпорта
  */
 export const useClientWidth = () => {
-  const [clientWidth, setClientWidth] = useState<number | undefined>(
+  const [clientWidth, setClientWidth] = useState<Maybe<number>>(
     isFront ? getClientWidth() : undefined,
   );
 
-  const recalculateWidth = useCallback(
-    () => setClientWidth(getClientWidth()),
-    [],
-  );
+  const recalculateWidth = useCallback(() => {
+    setClientWidth(getClientWidth());
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", recalculateWidth);

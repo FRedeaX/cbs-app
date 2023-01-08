@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { FC, memo } from "react";
 
-import CarouselRoot from "../../Carousel/CarouselRoot";
+import { CarouselRoot } from "../../Carousel/CarouselRoot";
 // import PosterGroup from "../PosterGroup/PosterGroup";
 import PosterItem, { IPoster, posterItemGQL } from "../PosterItem/PosterItem";
 import PosterList from "../PosterList/PosterList";
@@ -33,12 +33,7 @@ interface PosterRootProps {
 
 const PosterRoot: FC<PosterRootProps> = ({ posters, className }) => (
   <PosterList className={className?.list}>
-    <CarouselRoot
-      length={posters.length}
-      itemMargin={5}
-      isScrollSnap
-      isButtonsOnSides={false}
-      isOffsetSides>
+    <CarouselRoot itemMargin={5} isButtonsOnSides={false}>
       {posters.map((poster) => (
         <PosterItem
           key={poster.id}

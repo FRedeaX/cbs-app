@@ -1,7 +1,6 @@
 import classNames from "classnames";
-import { memo } from "react";
 
-import CarouselRoot from "../../../Carousel/CarouselRoot";
+import { CarouselRoot } from "../../../Carousel/CarouselRoot";
 import { Heading } from "../../../blocks/Heading/Heading";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
@@ -52,4 +51,4 @@ const GroupCards = ({
   </div>
 );
 
-export default memo(GroupCards);
+export default GroupCards;

@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, HTMLAttributes, LegacyRef, forwardRef } from "react";
+import { FC, LegacyRef, forwardRef } from "react";
 
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
@@ -23,7 +23,7 @@ export interface IData {
   };
 }
 
-export interface ICardProps extends HTMLAttributes<HTMLElement> {
+export interface ICardProps {
   data: IData;
   imagePriority?: boolean;
   prefetch?: boolean;
@@ -44,10 +44,9 @@ export const Card: FC<ICardProps> = forwardRef(
       isHorizontal = false,
       className,
       isClamp,
-      lineClamp = isClamp ? getLineClamp(title, 30, 3) : undefined,
+      lineClamp = isClamp ? getLineClamp(title, 32, 3) : undefined,
       isBig,
       isSmall,
-      ...props
     },
     ref: LegacyRef<HTMLElement>,
   ) => (
@@ -61,8 +60,7 @@ export const Card: FC<ICardProps> = forwardRef(
           [classes.sticky]: isSticky,
         },
         className,
-      )}
-      {...props}>
+      )}>
       {featuredImage && featuredImage.node.sourceUrl && (
         <div
           className={classNames(classes.image, {

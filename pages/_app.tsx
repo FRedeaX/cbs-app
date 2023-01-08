@@ -3,7 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
-import smoothscroll from "smoothscroll-polyfill";
+import smoothScroll from "smoothscroll-polyfill";
 
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Overlay from "../components/UI/Overlay/Overlay";
@@ -22,9 +22,12 @@ const App: FC<NextAppProps> = ({
   Component,
   // emotionCache = clientSideEmotionCache,
   pageProps,
+  // eslint-disable-next-line arrow-body-style
 }) => {
   useEffect(() => {
-    smoothscroll.polyfill();
+    // eslint-disable-next-line no-underscore-dangle
+    window.__forceSmoothScrollPolyfill__ = true;
+    smoothScroll.polyfill();
   }, []);
 
   return (
