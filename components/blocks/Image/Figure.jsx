@@ -7,7 +7,6 @@ import {
   GET_OVERLAY_FRAGMENT,
   overlayVar,
 } from "../../../store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Image.module.css";
@@ -44,29 +43,14 @@ export const Figure = ({
   const { data: state } = useQuery(gql`
     query {
       ${GET_OVERLAY_FRAGMENT}
-      ${SCROLLY_FRAGMENT}
     }
   `);
   const figureRef = useRef();
   const [isZoom, setZoom] = useState();
 
-  const positionScrollYRefVar = useRef(0);
   useEffect(() => {
-    if (
-      (!state.overlay.isOpen ||
-        state.scrollY !== positionScrollYRefVar.current) &&
-      isZoom
-    ) {
-      if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-
-      setZoom(false);
-      delay(250).then(() => {
-        figureRef.current.style.zIndex = "";
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.overlay.isOpen, state?.scrollY]);
+    setZoom(state?.overlay.isOpen);
+  }, [state?.overlay.isOpen]);
 
   const getTransform = () => {
     const figure = figureRef.current;
@@ -110,7 +94,6 @@ export const Figure = ({
         color: "white",
         isOverflow: false,
       });
-      positionScrollYRefVar.current = state?.scrollY;
     }
   };
 

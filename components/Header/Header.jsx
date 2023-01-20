@@ -2,11 +2,11 @@ import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { useClientScroll, useToggle } from "../../helpers/frontend/hooks";
 import {
   GET_OVERLAY_FRAGMENT,
   overlayVar,
 } from "../../store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
 import Logo from "../Logo/Logo";
 import Button from "../UI/Button/Button";
 import { HeaderSearch } from "./Header.Search/Header.Search";
@@ -29,14 +29,12 @@ export const FETCH_MENU = gql`
 const Header = ({ menus }) => {
   const {
     data: state,
-    // data: { overlay, scrollY },
+    // data: { overlay },
   } = useQuery(gql`
     query {
       ${GET_OVERLAY_FRAGMENT}
-      ${SCROLLY_FRAGMENT}
     }
   `);
-
   // const [] = useToggle();
 
   const [isOpen, setOpen] = useState(false);
@@ -44,24 +42,27 @@ const Header = ({ menus }) => {
     if (!state.overlay.isOpen) setOpen(false);
   }, [state?.overlay.isOpen]);
 
+  const currentScroll = useClientScroll();
   const prevScrollYRef = useRef(0);
-  const [isHeaderHidden, setHeaderHidden] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useToggle();
   useEffect(() => {
     if (
-      state.scrollY > 80 &&
+      currentScroll > 80 &&
       prevScrollYRef.current !== 0 &&
-      prevScrollYRef.current < state.scrollY &&
-      !state.isHeaderHidden
+      prevScrollYRef.current < currentScroll &&
+      !isHeaderHidden
     ) {
-      setHeaderHidden(true);
+      // Скрываем
+      setIsHeaderHidden();
     } else if (
-      (state.scrollY === 0 || prevScrollYRef.current > state.scrollY) &&
+      (currentScroll === 0 || prevScrollYRef.current > currentScroll) &&
       isHeaderHidden
     ) {
-      setHeaderHidden(false);
+      // Показываем
+      setIsHeaderHidden();
     }
-    prevScrollYRef.current = state.scrollY;
-  }, [state?.scrollY, state?.isHeaderHidden, isHeaderHidden]);
+    prevScrollYRef.current = currentScroll;
+  }, [currentScroll, isHeaderHidden, setIsHeaderHidden]);
 
   const hendleOpenMenu = useCallback(() => {
     overlayVar({ isOpen: !isOpen, zIndex: 2, isOverflow: true });

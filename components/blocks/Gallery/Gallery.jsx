@@ -3,12 +3,11 @@ import classNames from "classnames";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-import { createMarkup, delay, isFront } from "../../../helpers";
+import { createMarkup } from "../../../helpers";
 import {
   GET_OVERLAY_FRAGMENT,
   overlayVar,
 } from "../../../store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
 import Badge from "../../Badge/Badge";
 import CarouselRoot from "../../Carousel/CarouselRoot";
 import Button from "../../UI/Button/Button";
@@ -65,45 +64,24 @@ export const Gallery = ({
   const { data: state } = useQuery(gql`
     query {
       ${GET_OVERLAY_FRAGMENT}
-      ${SCROLLY_FRAGMENT}
     }
   `);
   const figureRef = useRef();
   const [zoom, setZoom] = useState(false);
   const [count, setCount] = useState(1);
 
-  const positionScrollYRefVar = useRef(0);
   const hendleClick = (event) => {
     event.stopPropagation();
     if (zoom || event.target.nodeName !== "IMG") return;
 
     overlayVar({ isOpen: true, opacity: 100, color: "white" });
-    positionScrollYRefVar.current = state?.scrollY;
-    setZoom(true);
 
-    if (isFront) {
-      document.body.style.setProperty("--overlay-transition", "none");
-    }
+    setZoom(true);
   };
 
   useEffect(() => {
-    if (
-      (!state.overlay.isOpen ||
-        state.scrollY !== positionScrollYRefVar.current) &&
-      zoom
-    ) {
-      if (state.scrollY !== positionScrollYRefVar.current) {
-        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-      }
-      setZoom(false);
-      if (isFront) {
-        delay(250).then(() =>
-          document.body.style.setProperty("--overlay-transition", ""),
-        );
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.overlay.isOpen, state?.scrollY]);
+    setZoom(state?.overlay.isOpen);
+  }, [state?.overlay.isOpen]);
 
   if (images.length === 0) return null;
   return (
