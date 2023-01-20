@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
       fetchPolicy: "network-only",
     })
     .then(async ({ data, error }) => {
-      if (error !== undefined) throw new Error(error.message);
+      if (error !== undefined) throw error;
       if (data.posters.nodes.length === 0)
         throw new Error("data.posters.nodes of null");
 

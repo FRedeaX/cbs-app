@@ -1,9 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-import { ST } from "../core/metrics/st";
-
-// import { CSSProperties } from "../helpers/typings/utility-types";
-
 // import Script from "next/script";
 // import { scrollbarWidth } from "~/helpers";
 
@@ -22,6 +18,7 @@ class _Document extends Document {
             rel="stylesheet"
           />
           <link rel="preconnect" href="https://mc.yandex.ru/" />
+          <link rel="preconnect" href="https://www.googletagmanager.com/" />
 
           <link rel="shortcut icon" href="/logos/favicon.ico" />
           <link
@@ -55,8 +52,6 @@ class _Document extends Document {
 
           <meta name="theme-color" content="#f2f2f2" />
           <meta name="yandex-verification" content="b761a7a26da38d4e" />
-
-          <ST />
         </Head>
         <body
           style={{
