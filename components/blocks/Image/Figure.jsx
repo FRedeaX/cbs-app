@@ -134,7 +134,9 @@ export const Figure = ({
         tabIndex="0"
         style={{
           transform: isZoom ? getTransform() : "",
-          zIndex: isZoom ? "4" : delay(250).then(""),
+          zIndex: isZoom
+            ? "calc(var(--header-z-index) + 1)"
+            : delay(250).then(""),
           cursor: isZoom && "default",
         }}
         className={classNames(classes.figure, {
