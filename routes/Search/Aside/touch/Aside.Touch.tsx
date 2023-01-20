@@ -10,7 +10,10 @@ import { FC, ReactNode, useState } from "react";
 
 import { FilterCleare } from "../../../../components/Search/components/Filter/components/Filter.Cleare/Filter.Cleare";
 import { declOfNum } from "../../../../helpers";
-import { Maybe } from "../../../../helpers/typings/utility-types";
+import {
+  CSSProperties,
+  Maybe,
+} from "../../../../helpers/typings/utility-types";
 import {
   sxAsideFilterButton,
   sxAsideHeader,
@@ -25,6 +28,14 @@ type AsideTouchProps = {
 };
 
 const formatResult = declOfNum(["результат", "результата", "результатов"]);
+const sxControls: CSSProperties = {
+  display: "flex",
+  paddingBottom: "10px",
+};
+const sxButtonCleare: CSSProperties = {
+  flexShrink: 0,
+  marginRight: "15px",
+};
 
 export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
   const [isOpen, setOpen] = useState(false);
@@ -52,15 +63,17 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
           </Typography>
         </Box>
         <Container className={classes.drawer}>{children}</Container>
-        <Container className={classes.controls}>
-          <FilterCleare className={classes.cleare}>Сбросить</FilterCleare>
+        <Container sx={sxControls} className={classes.controls}>
+          <FilterCleare sx={sxButtonCleare}>Сбросить</FilterCleare>
 
           <Button
             variant="contained"
             size="small"
             fullWidth
             onClick={() => setOpen(false)}>
-            {count ? `Показать ${count} ${formatResult(count)}` : "Закрыть"}
+            <Typography component="span" variant="inherit" noWrap>
+              {count ? `Показать ${count} ${formatResult(count)}` : "Закрыть"}
+            </Typography>
           </Button>
         </Container>
       </SwipeableDrawer>

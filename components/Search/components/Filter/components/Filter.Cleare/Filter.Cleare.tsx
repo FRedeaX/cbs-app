@@ -2,12 +2,11 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 
-type FilterCleareProps = { children: ReactNode; className?: string };
+import { CSSProperties } from "../../../../../../helpers/typings/utility-types";
 
-export const FilterCleare: FC<FilterCleareProps> = ({
-  children,
-  className,
-}) => {
+type FilterCleareProps = { children: ReactNode; sx?: CSSProperties };
+
+export const FilterCleare: FC<FilterCleareProps> = ({ children, sx }) => {
   const { query, push: routerPush } = useRouter();
   const handleCleare = (): void => {
     routerPush(
@@ -20,12 +19,7 @@ export const FilterCleare: FC<FilterCleareProps> = ({
   };
 
   return (
-    <Button
-      variant="outlined"
-      size="small"
-      className={className}
-      disabled={undefined}
-      onClick={handleCleare}>
+    <Button variant="outlined" size="small" sx={sx} onClick={handleCleare}>
       {children}
     </Button>
   );
