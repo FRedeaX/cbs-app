@@ -1,4 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
+import { ApiError } from "next/dist/server/api-utils";
 
 import Head from "../../components/Head/Head";
 import Layout from "../../components/UI/Layout/Layout";
@@ -27,8 +28,12 @@ export const getServerSideProps: GetServerSideProps<ISearchProps> = async (
 
   const menu = await getMenu();
 
-  const ssrData = await searchQuery(query).catch((error) => {
-    exceptionLog(error);
+  let errData = null;
+  const ssrData = await searchQuery(query).catch((err) => {
+    const error = err as ApiError;
+    errData = error.message;
+
+    exceptionLog(errData);
     return null;
   });
 

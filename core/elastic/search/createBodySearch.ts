@@ -1,19 +1,18 @@
 import { SearchRequest } from "@elastic/elasticsearch/api/types";
 
-import { SEARCH_HIT_SIZE } from "../../../components/Search/components/Pagination/Search.Pagination";
-import { SearchParams } from "../../../components/Search/utils/type";
+import { SEARCH_HIT_SIZE } from "../../../constant";
+import { Nullable } from "../../../helpers/typings/utility-types";
 import * as aggs from "./queryBlock/aggs";
 import { highlight } from "./queryBlock/highlight";
 import { textSearch } from "./queryBlock/textSearch";
 
 export const createBodySearch = (
-  query: SearchParams,
+  text: Nullable<string>,
+  reverseLanguageText: string,
+  departments: Nullable<string[]>,
+  categories: Nullable<string[]>,
+  page: number,
 ): SearchRequest["body"] => {
-  const text = typeof query.text === "string" ? query.text : null;
-  const departments = query.departments?.split(",") ?? null;
-  const categories = query.categories?.split(",") ?? null;
-  const page = parseInt(query.page ?? "1", 10) - 1;
-
   const isSize = !!(text || departments || categories);
 
   const filter = [];
@@ -26,7 +25,12 @@ export const createBodySearch = (
     size: isSize ? SEARCH_HIT_SIZE : 0,
     query: {
       bool: {
-        ...(text && textSearch(text)),
+        ...(text && {
+          should: [
+            textSearch(text, "query_rus"),
+            textSearch(reverseLanguageText, "query_eng"),
+          ],
+        }),
         ...(filter.length > 0 && {
           filter,
         }),
@@ -40,7 +44,12 @@ export const createBodySearch = (
           facet: {
             filter: {
               bool: {
-                ...(text && textSearch(text)),
+                ...(text && {
+                  should: [
+                    textSearch(text, "query_rus"),
+                    textSearch(reverseLanguageText, "query_eng"),
+                  ],
+                }),
                 ...(categories && {
                   filter: {
                     terms: {
@@ -60,7 +69,12 @@ export const createBodySearch = (
           facet: {
             filter: {
               bool: {
-                ...(text && textSearch(text)),
+                ...(text && {
+                  should: [
+                    textSearch(text, "query_rus"),
+                    textSearch(reverseLanguageText, "query_eng"),
+                  ],
+                }),
                 ...(departments && {
                   filter: {
                     terms: {

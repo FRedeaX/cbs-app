@@ -1,41 +1,35 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
-import { noop } from "../../../../../helpers";
+import { SuggestionList } from "../../../../../core/elastic/type";
+import { Nullable } from "../../../../../helpers/typings/utility-types";
 
 export type HighlightedIndex = number;
 export type SetHighlightedIndex = Dispatch<SetStateAction<HighlightedIndex>>;
 
-export type SuggestCount = number;
-export type SetSuggestCount = (count: SuggestCount) => void;
+export type SetSuggestionList = (nodes: SuggestionList) => void;
 
 type Context = {
   /**
-   * index выделеного элемента
+   * `index` выделеного элемента.
    *
    * @default -1
    */
   highlightedIndex: HighlightedIndex;
   /**
-   * Устанавливает index выделеного элемента
+   * Устанавливает `index` выделеного элемента.
    */
   setHighlightedIndex: SetHighlightedIndex;
 
   /**
-   * Количество предложений
+   * Список предложений.
    *
-   * @default 0
+   * @default []
    */
-  suggestCount: SuggestCount;
+  suggestionList: SuggestionList;
   /**
-   * Устанавливает доступное количество предложений
+   * Устанавливает список предложений.
    */
-  setSuggestCount: SetSuggestCount;
+  setSuggestionList: SetSuggestionList;
 };
 
-export const SuggestionContext = createContext<Context>({
-  highlightedIndex: -1,
-  setHighlightedIndex: noop,
-
-  suggestCount: 0,
-  setSuggestCount: noop,
-});
+export const SuggestionContext = createContext<Nullable<Context>>(null);

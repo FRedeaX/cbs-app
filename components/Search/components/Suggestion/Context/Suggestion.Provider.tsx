@@ -1,9 +1,9 @@
 import { FC, ReactNode, useCallback, useMemo, useState } from "react";
 
+import { SuggestionList } from "../../../../../core/elastic/type";
 import {
   HighlightedIndex,
-  SetSuggestCount,
-  SuggestCount,
+  SetSuggestionList,
   SuggestionContext,
 } from "./Suggestion.Context";
 
@@ -13,22 +13,25 @@ export const SuggestionProvider: FC<{ children: ReactNode }> = ({
   const [highlightedIndex, setHighlightedIndex] =
     useState<HighlightedIndex>(-1);
 
-  const [suggestCount, setSuggestCount] = useState<SuggestCount>(0);
+  const [suggestionList, setSuggestionList] = useState<SuggestionList>([]);
 
-  const setCountAndResetIndex = useCallback<SetSuggestCount>((count) => {
-    setSuggestCount(count);
-    setHighlightedIndex(-1);
-  }, []);
+  const setSuggestionListAndResetIndex = useCallback<SetSuggestionList>(
+    (nodes) => {
+      setSuggestionList(nodes);
+      setHighlightedIndex(-1);
+    },
+    [],
+  );
 
   const contextValue = useMemo(
     () => ({
       highlightedIndex,
       setHighlightedIndex,
 
-      suggestCount,
-      setSuggestCount: setCountAndResetIndex,
+      suggestionList,
+      setSuggestionList: setSuggestionListAndResetIndex,
     }),
-    [suggestCount, highlightedIndex, setCountAndResetIndex],
+    [suggestionList, highlightedIndex, setSuggestionListAndResetIndex],
   );
 
   return (

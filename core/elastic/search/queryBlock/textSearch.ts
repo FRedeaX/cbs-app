@@ -1,10 +1,7 @@
-export const textSearch = (text: string) => ({
-  must: {
-    multi_match: {
-      query: text,
-      // analyzer: "rus_eng_key_analyzer",
-      // analyzer: "synonym_analyzer",
-      fields: ["title.text", "title", "content"],
-    },
+export const textSearch = (query: string, name: string) => ({
+  multi_match: {
+    query,
+    fields: ["title", "content"],
+    _name: `match_${name}`,
   },
 });

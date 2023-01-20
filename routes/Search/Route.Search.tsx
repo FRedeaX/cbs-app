@@ -7,32 +7,36 @@ import {
   SearchFilters,
   SearchForm,
   SearchInput,
-  Suggestion,
+  SearchSuggestion,
 } from "../../components/Search/components";
+import { InputProvider } from "../../components/Search/components/Input/context";
 import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
+import { SuggestionProvider } from "../../components/Search/components/Suggestion/context";
 import { useQuerySearch } from "../../components/Search/utils/hooks";
 import { SearchResponseFrontend } from "../../core/elastic/search/type";
-import { SearchAside, UAPlatform } from "./Aside/Search.Aside";
+import { SearchAside, SearchAsideUAPlatform } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
 
 export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
-} & UAPlatform;
+} & SearchAsideUAPlatform;
 
 // eslint-disable-next-line arrow-body-style
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
   const { data, isLoading } = useQuerySearch(ssrData);
   const isHorizontal = useMediaQuery("(min-width: 1100px)");
 
-  console.log(data);
-
   return (
     <RouteContainer className={classes.root}>
-      <SearchForm>
-        <SearchInput />
-        <Suggestion />
-      </SearchForm>
+      <InputProvider>
+        <SuggestionProvider>
+          <SearchForm>
+            <SearchInput autoFocus />
+            <SearchSuggestion />
+          </SearchForm>
+        </SuggestionProvider>
+      </InputProvider>
 
       <Box className={classes.body}>
         <SearchAside

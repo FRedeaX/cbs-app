@@ -1,6 +1,9 @@
 import { SearchResponseBackend, SearchResponseFrontend } from "../type";
 import { convertArrayToObject } from "./convertArrayToObject";
 
+/**
+ * Конвертирует список доступных фильтров в объект.
+ */
 export const convertAggregationsToObject = (
   data: SearchResponseBackend,
 ): SearchResponseFrontend =>

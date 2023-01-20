@@ -1,0 +1,25 @@
+.root {
+  --search-filter-ripple-offset: 12px;
+  --search-filter-checkbox-padding: 4px;
+
+  margin: var(--seacrh-filter-margin);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.docCount {
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
+.docCount::before {
+  content: "•";
+  margin: 0 4px;
+}

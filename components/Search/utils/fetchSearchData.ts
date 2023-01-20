@@ -1,23 +1,15 @@
 import { Maybe } from "../../../helpers/typings/utility-types";
+import { createSearchLink } from "./createSearchLink";
 
 export type FetchSearchData = {
-  apiUrl: Maybe<string>;
+  pathname: string;
 };
 
 export const fetchSearchData = async <Data = unknown>({
-  apiUrl,
+  pathname,
   ...queryKey
 }: FetchSearchData & { [key: string]: Maybe<string> }): Promise<Data> => {
-  if (apiUrl === undefined) throw new Error("ApiUrl of undefined");
-
-  const query = Object.entries(queryKey);
-
-  const url = new URL(apiUrl);
-  query.forEach(([key, value]) => {
-    if (typeof value === "string") url.searchParams.append(key, value);
-  });
-
-  const response = await fetch(url);
+  const response = await fetch(createSearchLink(queryKey, pathname));
   if (!response.ok) throw new Error("Network response error");
 
   return response.json();

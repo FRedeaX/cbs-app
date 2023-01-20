@@ -11,7 +11,7 @@
           "language": "russian"
         },
         "synonyms": {
-          "type": "synonym",
+          "type": "synonym_graph",
           "synonyms_path": "synonyms.txt",
           "updateable": true
         }
@@ -34,75 +34,7 @@
         },
         "synonym_analyzer": {
           "tokenizer": "standard",
-          // "tokenizer": "synonym_tokenizer",
-          "filter": ["synonyms"]
-        },
-        "rus_eng_key_analyzer": {
-          "char_filter": ["rus_eng_key"],
-          "filter": ["lowercase"],
-          "tokenizer": "standard"
-        }
-      },
-      "char_filter": {
-        "rus_eng_key": {
-          "type": "mapping",
-          "mappings": [
-            "a => ф",
-            "b => и",
-            "c => с",
-            "d => в",
-            "e => у",
-            "f => а",
-            "g => п",
-            "h => р",
-            "i => ш",
-            "j => о",
-            "k => л",
-            "l => д",
-            "m => ь",
-            "n => т",
-            "o => щ",
-            "p => з",
-            "r => к",
-            "s => ы",
-            "t => е",
-            "u => г",
-            "v => м",
-            "w => ц",
-            "x => ч",
-            "y => н",
-            "z => я",
-            "A => Ф",
-            "B => И",
-            "C => С",
-            "D => В",
-            "E => У",
-            "F => А",
-            "G => П",
-            "H => Р",
-            "I => Ш",
-            "J => О",
-            "K => Л",
-            "L => Д",
-            "M => Ь",
-            "N => Т",
-            "O => Щ",
-            "P => З",
-            "R => К",
-            "S => Ы",
-            "T => Е",
-            "U => Г",
-            "V => М",
-            "W => Ц",
-            "X => Ч",
-            "Y => Н",
-            "Z => Я",
-            "[ => х",
-            "] => ъ",
-            "; => ж",
-            "< => б",
-            "> => ю"
-          ]
+          "filter": ["synonyms", "lowercase", "ru_stemmer"]
         }
       }
     }
@@ -163,12 +95,16 @@
       },
       "title": {
         "type": "text",
+        "analyzer": "wp_txt",
         "fields": {
           "text": {
             "type": "text"
           }
-        },
-        "analyzer": "wp_txt"
+        }
+      },
+      "title_suggest": {
+        "type": "completion",
+        "analyzer": "standard"
       }
     }
   }

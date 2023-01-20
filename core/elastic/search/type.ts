@@ -2,6 +2,13 @@ import { SearchResponse } from "@elastic/elasticsearch/api/types";
 
 import { Nullable } from "../../../helpers/typings/utility-types";
 
+export type SearchParams = {
+  text?: string;
+  categories?: string;
+  departments?: string;
+  page?: string;
+};
+
 type SearchCategoryNode = {
   name: string;
   slug: string;

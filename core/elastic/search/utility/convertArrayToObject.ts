@@ -1,6 +1,9 @@
 import { Maybe, Nullable } from "../../../../helpers/typings/utility-types";
 import { BucketsAggregations, ListBucketsAggregations } from "../type";
 
+/**
+ * Конвертирует масив в объект.
+ */
 export const convertArrayToObject = (
   nodes: Maybe<Nullable<BucketsAggregations>>,
 ): Nullable<ListBucketsAggregations> => {

@@ -10,8 +10,8 @@
 
 .Aside {
   --seacrh-filter-margin: 0 0 20px 0;
-  --seacrh-filter-overflow-y: auto;
-  --seacrh-filter-max-height: calc(8 * 32px);
+  --custome-scrollbar-overflow-y: auto;
+  --custome-scrollbar-max-height: calc(8 * 32px);
 }
 @media screen and (width > 768px) {
   .Aside {

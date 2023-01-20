@@ -28,6 +28,7 @@
     "classnames": "^2.3.1",
     "critters": "^0.0.16",
     "css-scroll-snap-polyfill": "^0.1.2",
+    "csstype": "^3.1.1",
     "graphql": "^16.5.0",
     "image-size": "^1.0.1",
     "intersection-observer-polyfill": "^0.1.0",

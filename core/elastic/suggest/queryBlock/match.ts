@@ -1,5 +1,5 @@
 export const match = (field: string, query: string, name: string) => ({
-  match_phrase_prefix: {
+  match: {
     [field]: {
       query,
       _name: `match_${name}`,

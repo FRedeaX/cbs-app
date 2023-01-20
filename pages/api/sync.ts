@@ -70,16 +70,16 @@ const callbackFn = async ({ posts: postList }: IPosts): Promise<void> => {
       post.categories.nodes,
     );
 
-    const title_suggest = post.title
-      .replace(/[!:'"«»“”()\\[\]]+/g, "")
-      .split(/[—,-.– ]+/);
+    // const title_suggest = post.title
+    //   .replace(/[!:'"«»“”()\\[\]]+/g, "")
+    //   .split(/[—,-.– ]+/);
 
     return [
       { index: { _index: process.env.ES_INDEX_NAME, _id: post.id } },
       {
         link: post.link,
         title: post.title,
-        title_suggest,
+        // title_suggest,
         excerpt: post.excerpt,
         content: post.content.replaceAll(/<[^>]*>?/gm, ""),
         thumbnail: { url: post.featuredImage?.node.sourceUrl || "" },

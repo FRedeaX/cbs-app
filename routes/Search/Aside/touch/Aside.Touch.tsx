@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC, ReactNode, useState } from "react";
 
-import { FilterCleare } from "../../../../components/Search/components/Filter/Filter.Cleare/Filter.Cleare";
+import { FilterCleare } from "../../../../components/Search/components/Filter/components/Filter.Cleare/Filter.Cleare";
 import { declOfNum } from "../../../../helpers";
 import { Maybe } from "../../../../helpers/typings/utility-types";
 import {
@@ -53,18 +53,14 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
         </Box>
         <Container className={classes.drawer}>{children}</Container>
         <Container className={classes.controls}>
-          {!count && (
-            <FilterCleare className={classes.cleare}>Сбросить</FilterCleare>
-          )}
+          <FilterCleare className={classes.cleare}>Сбросить</FilterCleare>
+
           <Button
             variant="contained"
             size="small"
             fullWidth
-            disabled={!count}
             onClick={() => setOpen(false)}>
-            {count
-              ? `Показать ${count} ${formatResult(count)}`
-              : "Нет результатов"}
+            {count ? `Показать ${count} ${formatResult(count)}` : "Закрыть"}
           </Button>
         </Container>
       </SwipeableDrawer>

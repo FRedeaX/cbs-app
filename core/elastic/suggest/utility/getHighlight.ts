@@ -1,13 +1,20 @@
+/* eslint-disable no-underscore-dangle */
 import match from "autosuggest-highlight/match";
-import { SuggestResponseData } from "../type";
 
+import { SuggestionList } from "../type";
+
+/**
+ * Возвращает массив с номерами позиций совпадающих символов.
+ * @param suggest Массив предложений.
+ * @param query Текс поиска.
+ */
 export const getHighlight = (
-  suggest: SuggestResponseData,
-  query: string
-): [number, number][] => {
-  const result 
-  suggest.title[0].options.forEach(({text}) => {
-    match(text, query);
-
-})
-};
+  suggest: SuggestionList | [],
+  query: string,
+): SuggestionList | [] =>
+  suggest.map((node) => ({
+    ...node,
+    highlight: {
+      title: match(node._source.title, query),
+    },
+  }));

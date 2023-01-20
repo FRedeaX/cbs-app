@@ -2,6 +2,8 @@ import Document, { Head, Html, Main, NextScript } from "next/document";
 
 import { ST } from "../core/metrics/st";
 
+// import { CSSProperties } from "../helpers/typings/utility-types";
+
 // import Script from "next/script";
 // import { scrollbarWidth } from "~/helpers";
 
