@@ -1,11 +1,12 @@
 import { GetServerSideProps, NextPage } from "next";
+import { ApiError } from "next/dist/server/api-utils";
 
 import Head from "../../components/Head/Head";
 import Layout from "../../components/UI/Layout/Layout";
+import { searchQuery } from "../../core/elastic/search/searchQuery";
 import { exceptionLog } from "../../helpers";
 import { getMenu, getUAPlatform } from "../../helpers/backend";
 import { UA } from "../../helpers/backend/getUA/const";
-import { searchQuery } from "../../lib/elastic/searchQuery";
 import { RouteSearch, RouteSearchProps } from "../../routes";
 
 type ISearchProps = {
@@ -27,8 +28,12 @@ export const getServerSideProps: GetServerSideProps<ISearchProps> = async (
 
   const menu = await getMenu();
 
-  const ssrData = await searchQuery(query).catch((error) => {
-    exceptionLog(error);
+  let errData = null;
+  const ssrData = await searchQuery(query).catch((err) => {
+    const error = err as ApiError;
+    errData = error.message;
+
+    exceptionLog(errData);
     return null;
   });
 
