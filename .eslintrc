@@ -51,7 +51,8 @@
     "@next/next/no-document-import-in-page": "off",
 
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "react/jsx-no-duplicate-props": [1, { "ignoreCase": false }]
   },
   "env": {
     "browser": true,

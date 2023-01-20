@@ -1,0 +1,23 @@
+.root {
+  --suggestion-margin-top: -8px;
+
+  position: absolute;
+  z-index: var(--suggestion-z-index);
+  top: var(--search-height);
+  right: 0;
+  left: 0;
+}
+
+.body {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+
+  max-height: var(--search-suggestion-max-height);
+  margin-top: var(--suggestion-margin-top);
+  padding: calc(10px + var(--suggestion-margin-top) * -1) 6px 6px;
+
+  background-color: var(--white);
+  border-top: none;
+  border-radius: 0 0 var(--search-border-radius) var(--search-border-radius);
+  box-shadow: rgba(30, 30, 30, 10%) 0 2px 6px;
+}

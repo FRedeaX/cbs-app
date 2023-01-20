@@ -114,7 +114,7 @@ export const Gallery = ({
           classes.wrapper,
           classes[`wrapper_isZoom_${zoom}`],
         )}
-        style={{ zIndex: zoom ? "4" : "" }}
+        style={{ zIndex: zoom ? "calc(var(--header-z-index) + 1)" : "" }}
         onClick={hendleClick}
         onKeyPress={hendleClick}
         role="presentation">
@@ -123,7 +123,6 @@ export const Gallery = ({
             classes.wrapper,
             classes[`wrapper_isZoom_${zoom}`],
           )}
-          // style={{ zIndex: zoom ? "4" : delay(250).then("") }}
           onClick={hendleClick}
           onKeyPress={hendleClick}
           role="presentation">

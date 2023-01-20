@@ -8,7 +8,7 @@ import { UA } from "./const";
  */
 type Fallback = typeof UA.desktope;
 
-export type GetUAResult = typeof UA.desktope | typeof UA.touch;
+export type UAPlatform = typeof UA.desktope | typeof UA.touch;
 
 /**
  * Возвращает user-agent
@@ -19,7 +19,7 @@ export type GetUAResult = typeof UA.desktope | typeof UA.touch;
 export const getUAPlatform = (
   headers: IncomingHttpHeaders,
   fallback: Fallback = UA.desktope,
-): GetUAResult => {
+): UAPlatform => {
   if (headers["sec-ch-ua-mobile"] === "?0") return UA.desktope;
   if (headers["sec-ch-ua-mobile"] === "?1") return UA.touch;
 
