@@ -3,7 +3,6 @@ import { InMemoryCache } from "@apollo/client";
 import { isHeaderPosResetVar } from "./variables/header";
 import { overlayVar } from "./variables/overlay";
 import { scrollYVar } from "./variables/scrollY";
-import { windowWidthVar } from "./variables/windowWidth";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -12,11 +11,6 @@ const cache = new InMemoryCache({
         scrollY: {
           read() {
             return scrollYVar();
-          },
-        },
-        windowWidth: {
-          read() {
-            return windowWidthVar();
           },
         },
         overlay: {

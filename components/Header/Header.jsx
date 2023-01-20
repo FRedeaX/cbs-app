@@ -8,7 +8,6 @@ import {
   overlayVar,
 } from "../../store/variables/overlay";
 import { SCROLLY_FRAGMENT } from "../../store/variables/scrollY";
-import { GET_WIDTH_FRAGMENT } from "../../store/variables/windowWidth";
 import Logo from "../Logo/Logo";
 import Button from "../UI/Button/Button";
 import { HeaderSearch } from "./Header.Search/Header.Search";
@@ -31,17 +30,14 @@ export const FETCH_MENU = gql`
 const Header = ({ menus }) => {
   const {
     data: state,
-    // data: { windowWidth, overlay, scrollY, isHeaderPosReset },
+    // data: { overlay, scrollY, isHeaderPosReset },
   } = useQuery(gql`
     query {
-      ${GET_WIDTH_FRAGMENT}
       ${GET_OVERLAY_FRAGMENT}
       ${IS_HEADER_POS_RESET_FRAGMENT}
       ${SCROLLY_FRAGMENT}
     }
   `);
-
-  // const [isMobile, setMobile] = useState(false);
 
   const [isOpen, setOpen] = useState(false);
   useEffect(() => {
