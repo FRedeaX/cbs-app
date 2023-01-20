@@ -1,6 +1,5 @@
 import { InMemoryCache } from "@apollo/client";
 
-import { isHeaderPosResetVar } from "./variables/header";
 import { overlayVar } from "./variables/overlay";
 import { scrollYVar } from "./variables/scrollY";
 
@@ -16,11 +15,6 @@ const cache = new InMemoryCache({
         overlay: {
           read() {
             return overlayVar();
-          },
-        },
-        isHeaderPosReset: {
-          read() {
-            return isHeaderPosResetVar();
           },
         },
 

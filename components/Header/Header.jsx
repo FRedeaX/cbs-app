@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { IS_HEADER_POS_RESET_FRAGMENT } from "../../store/variables/header";
 import {
   GET_OVERLAY_FRAGMENT,
   overlayVar,
@@ -30,14 +29,15 @@ export const FETCH_MENU = gql`
 const Header = ({ menus }) => {
   const {
     data: state,
-    // data: { overlay, scrollY, isHeaderPosReset },
+    // data: { overlay, scrollY },
   } = useQuery(gql`
     query {
       ${GET_OVERLAY_FRAGMENT}
-      ${IS_HEADER_POS_RESET_FRAGMENT}
       ${SCROLLY_FRAGMENT}
     }
   `);
+
+  // const [] = useToggle();
 
   const [isOpen, setOpen] = useState(false);
   useEffect(() => {
@@ -72,7 +72,7 @@ const Header = ({ menus }) => {
   return (
     <header
       style={{
-        right: state?.isHeaderPosReset ? `var(--scrollbar-width)` : "0",
+        paddingRight: isOpen ? `var(--scrollbar-width)` : "0",
       }}
       className={classNames(classes.block, classes.position, {
         [classes["position--hidden"]]: isHeaderHidden,
