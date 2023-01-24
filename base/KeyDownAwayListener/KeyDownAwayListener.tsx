@@ -18,6 +18,13 @@ type KeyDownAwayListenerProps = {
 /**
  * Компонент прослушивателя вызывает функцию,
  * когда событие клавиши совпадает с одним из значений `keyboardCode`.
+ *
+ * @example
+ * <KeyDownAwayListener
+ *    onKeyDownAway={setIsOpen}
+ *    keyboardCode={["Escape"]}>
+ * ...
+ * </KeyDownAwayListener>
  */
 export const KeyDownAwayListener: FC<KeyDownAwayListenerProps> = ({
   children,

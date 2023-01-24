@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const menuItemsGQL = {
+const menuItemsGQL = {
   fragments: gql`
     fragment menuItemsGQL on MenuItem {
       id
@@ -11,7 +11,7 @@ export const menuItemsGQL = {
   `,
 };
 
-export const MenuGQL = {
+const MenuGQL = {
   fragments: gql`
     fragment MenuGQL on Menu {
       menuItems(where: { parentId: "" }) {
@@ -38,3 +38,14 @@ export const MenuGQL = {
     ${menuItemsGQL.fragments}
   `,
 };
+
+export const FETCH_MENU = gql`
+  query FetchMenu {
+    menus {
+      nodes {
+        ...MenuGQL
+      }
+    }
+  }
+  ${MenuGQL.fragments}
+`;
