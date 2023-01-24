@@ -28,11 +28,19 @@ type ScrollerProps = {
   onScroll?: HandleOnScroll;
   className?: string;
   ref?: Ref<HTMLDivElement>;
+  refItemList?: Ref<HTMLDivElement>;
 };
 
 export const Scroller: FC<ScrollerProps> = forwardRef(
   (
-    { children, isScrollSnap = false, onKeyDown, onScroll, className },
+    {
+      children,
+      isScrollSnap = false,
+      onKeyDown,
+      onScroll,
+      className,
+      refItemList,
+    },
     ref?: LegacyRef<HTMLDivElement>,
   ) => (
     <div
@@ -44,7 +52,11 @@ export const Scroller: FC<ScrollerProps> = forwardRef(
       className={classNames(classes.root, {
         [classes.root_scrollSnap]: isScrollSnap,
       })}>
-      <div className={classNames(classes.itemList, className)}>{children}</div>
+      <div
+        ref={refItemList}
+        className={classNames(classes.itemList, className)}>
+        {children}
+      </div>
     </div>
   ),
 );

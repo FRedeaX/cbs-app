@@ -4,6 +4,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 
+import classes from "./Blocks.module.css";
 import { Columns } from "./Columns/Columns";
 import { Embed } from "./Embed/Embed";
 import { File } from "./File/File";
@@ -42,7 +43,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
   // console.log({ ...all });
 
   return (
-    <>
+    <div className={classes.root}>
       {blocks.map((block, index) => {
         const key = `${block?.name}_${index}`;
         switch (block?.name) {
@@ -61,7 +62,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
               <Gallery
                 key={key}
                 {...block.attributes}
-                images={block.attributes.images.slice(0, 2)}
+                images={block.attributes.images}
               />
             );
 
@@ -141,7 +142,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
           }
         }
       })}
-    </>
+    </div>
   );
 };
 

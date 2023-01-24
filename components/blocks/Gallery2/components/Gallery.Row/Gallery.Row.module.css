@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: var(--gallery-image-margin);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.caption {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--black-80);
+}

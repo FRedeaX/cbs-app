@@ -1,18 +1,39 @@
-import { FC } from "react";
+import classNames from "classnames";
+import { FC, HTMLAttributes } from "react";
 
-type Image = {
-  id: string;
-  alt: string;
-  url: string;
-  width: number;
-  height: number;
-};
+import { CarouselProvider } from "../../Carousel/Context";
+import classes from "./Gallery.module.css";
+import {
+  GalleryCards,
+  GalleryCardsProps,
+} from "./components/Gallery.Cards/Gallery.Cards";
+import { GalleryViewer } from "./components/Gallery.Viewer/Gallery.Viewer";
+import { GalleryProvider } from "./context";
+
 type GalleryProps = {
-  images: Image[];
-};
+  className: string;
+  __typename?: string;
+} & GalleryCardsProps &
+  HTMLAttributes<HTMLDivElement>;
 
-export const Gallery: FC<GalleryProps> = ({ images }) => {
-  console.log(images);
+export const Gallery: FC<GalleryProps> = ({
+  caption,
+  className,
+  imageCrop,
+  images,
 
-  return <div></div>;
-};
+  // Извлекаем свойства, т.к. они не нужны на DOM узле
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  __typename,
+  ...props
+}) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <div className={classNames(classes.root, className)} {...props}>
+    <GalleryProvider>
+      <CarouselProvider>
+        <GalleryViewer images={images} />
+        <GalleryCards images={images} imageCrop={imageCrop} caption={caption} />
+      </CarouselProvider>
+    </GalleryProvider>
+  </div>
+);

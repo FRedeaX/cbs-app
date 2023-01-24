@@ -1,14 +1,14 @@
-import { MutableRefObject, TouchEvent, WheelEvent, createContext } from "react";
+import { MutableRefObject, createContext } from "react";
 
 import { Nullable } from "../../../helpers/typings/utility-types";
 
 export type CarouselContextHTMLNode = Nullable<HTMLDivElement>;
 
-export type CarouselContextSetItemWidth = (width: number) => void;
-
-export type CarouselContextHandleOnScroll = (
-  event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
+export type CarouselContextItemListRefCallback = (
+  node: CarouselContextHTMLNode,
 ) => void;
+
+export type CarouselContextScrollToIndex = (index?: number) => void;
 
 type CarouselContextProps = {
   /**
@@ -27,9 +27,27 @@ type CarouselContextProps = {
   rightSideNodeRef: MutableRefObject<CarouselContextHTMLNode>;
 
   /**
+   * Обратный вызов на родителе
+   * который содержит список дочерних элементов карусели
+   */
+  itemListRefCallback: CarouselContextItemListRefCallback;
+
+  /**
    * Локальное состояние прокрутки `rootRef`
    */
   scroll: MutableRefObject<number>;
+
+  /**
+   * `index` видимого элемента
+   */
+  indexOfVisibleElement: MutableRefObject<number>;
+
+  /**
+   * Прокручивает контейнер к элементу
+   *
+   * @param index
+   */
+  scrollToIndex: CarouselContextScrollToIndex;
 
   /**
    * Отступ у элемента с одной стороны
@@ -45,19 +63,6 @@ type CarouselContextProps = {
    * Обратный массив смещений
    */
   itemWidthAccumulatedDESC: MutableRefObject<number[]>;
-
-  /**
-   * Заполняет прямой и обратный массив смещений (offset Left)
-   * @param width
-   */
-  setItemWidth: CarouselContextSetItemWidth;
-
-  /**
-   * Синхронизирует положение прокрутки `DOM` с локальным значением,
-   * т.к. `onClick` для возможности прокрутить еще
-   * в момент анимации использует локальное значение
-   */
-  handleOnScroll: CarouselContextHandleOnScroll;
 };
 
 export const CarouselContext =

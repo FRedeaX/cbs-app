@@ -1,13 +1,13 @@
 import { Children, FC, ReactElement, cloneElement } from "react";
 
-import { useCarouselContext } from "./Context";
+import { useCarousel } from "./Carousel.utils/useCarousel";
 
 type CarouselListProps = {
   children: ReactElement[];
 };
 
 const CarouselList: FC<CarouselListProps> = ({ children }) => {
-  const { setItemWidth } = useCarouselContext();
+  const { setItemWidth } = useCarousel();
 
   return (
     <>

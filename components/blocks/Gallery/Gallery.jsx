@@ -25,14 +25,12 @@ export const galleryBlockGQL = {
           ... on CoreGalleryBlockAttributes {
             caption
             className
-            columns
             imageCrop
             images {
               alt
               id
               url
             }
-            sizeSlug
           }
         }
       }

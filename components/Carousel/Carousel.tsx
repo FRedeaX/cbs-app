@@ -6,8 +6,8 @@ import {
   CarouselControls,
   CarouselControlsProps,
 } from "./Carousel.Controls/Carousel.Controls";
-import CarouselList from "./Carousel.List";
 import classes from "./Carousel.module.css";
+import { useCarousel } from "./Carousel.utils/useCarousel";
 import { useCarouselContext } from "./Context";
 
 export type CarouselProps = {
@@ -21,7 +21,6 @@ export type CarouselProps = {
   itemMargin?: number;
 
   className?: string;
-  // setCount?: (count: number) => void;
 } & CarouselControlsProps;
 
 export const Carousel: FC<CarouselProps> = ({
@@ -31,8 +30,9 @@ export const Carousel: FC<CarouselProps> = ({
   isButtonsOnSides,
   isShadow,
 }) => {
-  const { rootRef, leftSideNodeRef, rightSideNodeRef, handleOnScroll } =
+  const { rootRef, itemListRefCallback, leftSideNodeRef, rightSideNodeRef } =
     useCarouselContext();
+  const { handleOnScroll } = useCarousel();
 
   const sidesDivStyle = { minWidth: `${itemMargin}px` };
 
@@ -45,10 +45,11 @@ export const Carousel: FC<CarouselProps> = ({
 
       <Scroller
         ref={rootRef}
+        refItemList={itemListRefCallback}
         onScroll={handleOnScroll}
         className={classNames(classes.itemList, className)}>
         <div ref={leftSideNodeRef} style={sidesDivStyle} />
-        <CarouselList>{children}</CarouselList>
+        {children}
         <div ref={rightSideNodeRef} style={sidesDivStyle} />
       </Scroller>
     </div>

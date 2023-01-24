@@ -7,7 +7,8 @@ import { CarouselButton } from "../Carousel.Button/Carousel.Button";
 import CarouselButtonSides from "../Carousel.Button/Carousel.Button.Sides";
 import CarouselShadow from "../Carousel.Shadow/Carousel.Shadow";
 import CarouselShadowWrapper from "../Carousel.Shadow/Carousel.Shadow.Wrapper";
-import { useCarouselButtons } from "../Carousel.utils/useCarouselButtons";
+import { useCarousel } from "../Carousel.utils/useCarousel";
+import { useCarouselControls } from "../Carousel.utils/useCarouselControls";
 
 export type CarouselControlsProps = {
   /**
@@ -29,7 +30,8 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
   isButtonsOnSides = true,
   isShadow = true,
 }) => {
-  const { isPrev, isNext, handleOnClick } = useCarouselButtons();
+  const { isPrev, isNext } = useCarouselControls();
+  const { handleOnClick } = useCarousel();
 
   const iconSize = isButtonsOnSides ? "medium" : "small";
 

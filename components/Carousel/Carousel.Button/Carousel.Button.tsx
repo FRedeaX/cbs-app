@@ -2,14 +2,14 @@ import { Box, IconButton } from "@mui/material";
 import classNames from "classnames";
 import { FC, ReactNode, useCallback } from "react";
 
-import { useCarouselButtonsHandleOnClick } from "../Carousel.utils/useCarouselButtons";
+import { useCarouselHandleOnClick } from "../Carousel.utils/useCarousel";
 import classes from "./Carousel.Button.module.css";
 
 export type CarouselButtonProps = {
   children: ReactNode;
   direction: "next" | "prev";
   isActive: boolean;
-  onClick: useCarouselButtonsHandleOnClick;
+  onClick: useCarouselHandleOnClick;
 };
 
 const style = {

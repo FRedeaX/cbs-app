@@ -1,38 +1,30 @@
-import { useCallback } from "react";
-import { isBrowser } from "react-device-detect";
+import { TouchEvent, WheelEvent, useCallback } from "react";
 
-import { useTrackVisibility } from "../../../helpers/frontend/hooks/useTrackVisibility";
 import { useCarouselContext } from "../Context";
 import { getNextScroll } from "./getNextScroll";
 import { getPrevScroll } from "./getPrevScroll";
 import { offsetSides } from "./offsetSides";
 
-export type useCarouselButtonsHandleOnClick = (
-  direction: "next" | "prev",
+export type useCarouselHandleOnClick = (direction: "next" | "prev") => void;
+
+export type useCarouselHandleOnScroll = (
+  event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
 ) => void;
 
-export const useCarouselButtons = () => {
+export const useCarousel = (test) => {
   const {
     rootRef,
-    leftSideNodeRef,
-    rightSideNodeRef,
     scroll,
+    indexOfVisibleElement,
     itemMargin,
     itemWidthAccumulatedASC,
     itemWidthAccumulatedDESC,
   } = useCarouselContext();
 
-  const { isVisible: isPrev } = useTrackVisibility(leftSideNodeRef.current, {
-    root: rootRef.current,
-  });
-  const { isVisible: isNext } = useTrackVisibility(rightSideNodeRef.current, {
-    root: rootRef.current,
-  });
-
   /**
    * В зависимости от направления прокручивает контейнер
    */
-  const handleOnClick = useCallback<useCarouselButtonsHandleOnClick>(
+  const handleOnClick = useCallback<useCarouselHandleOnClick>(
     (direction) => {
       if (rootRef.current === null) return;
 
@@ -57,6 +49,9 @@ export const useCarouselButtons = () => {
         );
       }
 
+      console.log(test);
+
+      indexOfVisibleElement.current += 1;
       const nodeSum = Math.abs(currentScroll - scroll.current);
 
       root.scrollTo({
@@ -67,15 +62,27 @@ export const useCarouselButtons = () => {
     [
       rootRef,
       scroll,
+      indexOfVisibleElement,
       itemMargin,
       itemWidthAccumulatedASC,
       itemWidthAccumulatedDESC,
     ],
   );
 
+  /**
+   * Синхронизирует положение прокрутки `DOM` с локальным значением,
+   * т.к. `onClick` для возможности прокрутить еще
+   * в момент анимации использует локальное значение
+   */
+  const handleOnScroll = useCallback<useCarouselHandleOnScroll>(
+    (event) => {
+      scroll.current = event.currentTarget.scrollLeft;
+    },
+    [scroll],
+  );
+
   return {
-    isPrev: !isPrev && isBrowser,
-    isNext: !isNext && isBrowser,
     handleOnClick,
+    handleOnScroll,
   };
 };

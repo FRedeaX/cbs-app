@@ -24,6 +24,9 @@ export type Defaultize<TSource, TKeys extends keyof TSource> = TSource & {
 };
 
 /**
- * Тип который ничего не возвращает.
+ * Возвращает тип функции которая ничего не возвращает.
  */
 export type Void = () => void;
+
+// eslint-disable-next-line no-undef
+export type _NodeListOf<TNode extends Node> = NodeListOf<TNode>;
