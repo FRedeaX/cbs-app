@@ -1,20 +1,22 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { Backdrop } from "@mui/material";
 import classNames from "classnames";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { createMarkup, delay, isFront } from "../../../helpers";
-import {
-  GET_OVERLAY_FRAGMENT,
-  overlayVar,
-} from "../../../store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
+import { createMarkup } from "../../../helpers";
+import { usePreventScroll, useToggle } from "../../../helpers/frontend/hooks";
 import Badge from "../../Badge/Badge";
 import CarouselRoot from "../../Carousel/CarouselRoot";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Gallery.module.css";
 import useExtractColors from "./useExtractColors";
+
+const sxBackdrop = {
+  backgroundColor: "white",
+  zIndex: "calc(var(--header-z-index) + 1)",
+};
 
 export const galleryBlockGQL = {
   fragments: gql`
@@ -62,48 +64,22 @@ export const Gallery = ({
     getColors(ids);
   }, [getColors, images]);
 
-  const { data: state } = useQuery(gql`
-    query {
-      ${GET_OVERLAY_FRAGMENT}
-      ${SCROLLY_FRAGMENT}
-    }
-  `);
   const figureRef = useRef();
-  const [zoom, setZoom] = useState(false);
+  const [isOpen, setIsOpen, { setTrue: setOpen, setFalse: setClose }] =
+    useToggle();
+  usePreventScroll({ enabled: isOpen });
+
   const [count, setCount] = useState(1);
 
-  const positionScrollYRefVar = useRef(0);
-  const hendleClick = (event) => {
-    event.stopPropagation();
-    if (zoom || event.target.nodeName !== "IMG") return;
+  const hendleClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      if (isOpen || event.target.nodeName !== "IMG") return;
 
-    overlayVar({ isOpen: true, opacity: 100, color: "white" });
-    positionScrollYRefVar.current = state?.scrollY;
-    setZoom(true);
-
-    if (isFront) {
-      document.body.style.setProperty("--overlay-transition", "none");
-    }
-  };
-
-  useEffect(() => {
-    if (
-      (!state.overlay.isOpen ||
-        state.scrollY !== positionScrollYRefVar.current) &&
-      zoom
-    ) {
-      if (state.scrollY !== positionScrollYRefVar.current) {
-        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-      }
-      setZoom(false);
-      if (isFront) {
-        delay(250).then(() =>
-          document.body.style.setProperty("--overlay-transition", ""),
-        );
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.overlay.isOpen, state?.scrollY]);
+      setOpen();
+    },
+    [isOpen, setOpen],
+  );
 
   if (images.length === 0) return null;
   return (
@@ -112,19 +88,15 @@ export const Gallery = ({
         ref={figureRef}
         className={classNames(
           classes.wrapper,
-          classes[`wrapper_isZoom_${zoom}`],
+          classes[`wrapper_isZoom_${isOpen}`],
         )}
-        style={{ zIndex: zoom ? "calc(var(--header-z-index) + 1)" : "" }}
-        onClick={hendleClick}
-        onKeyPress={hendleClick}
-        role="presentation">
+        style={{ zIndex: isOpen ? "calc(var(--header-z-index) + 2)" : null }}>
         <div
           className={classNames(
             classes.wrapper,
-            classes[`wrapper_isZoom_${zoom}`],
+            classes[`wrapper_isZoom_${isOpen}`],
           )}
           onClick={hendleClick}
-          onKeyPress={hendleClick}
           role="presentation">
           <div
             style={{
@@ -134,7 +106,7 @@ export const Gallery = ({
             }}
             className={classNames(
               classes.container,
-              classes[`container_isZoom_${zoom}`],
+              classes[`container_isZoom_${isOpen}`],
             )}>
             {/* <div className={classes.loader} aria-hidden="true">
               <Loader2 isLoading />
@@ -142,7 +114,7 @@ export const Gallery = ({
             <CarouselRoot
               isScrollSnap
               isShadow={false}
-              isOpen={zoom}
+              isOpen={isOpen}
               itemCountOfScreen={1}
               length={images.length}
               setCount={setCount}>
@@ -157,14 +129,14 @@ export const Gallery = ({
                   // }}
                   className={classNames(
                     classes.image,
-                    classes[`image_isZoom_${zoom}`],
+                    classes[`image_isZoom_${isOpen}`],
                   )}>
                   <Image
                     alt={image.alt}
                     src={image.url}
                     width={image.width}
                     height={image.height}
-                    loading={index === 0 || zoom ? "eager" : "lazy"}
+                    loading={index === 0 || isOpen ? "eager" : "lazy"}
                     objectFit="contain"
                   />
                   <figcaption
@@ -173,7 +145,7 @@ export const Gallery = ({
                 </figure>
               ))}
             </CarouselRoot>
-            {zoom === false && (
+            {isOpen === false && (
               <Badge
                 className={classes.badge}
                 count={count}
@@ -191,16 +163,16 @@ export const Gallery = ({
       <div
         className={classNames(
           classes.controls,
-          classes[`controls_isZoom_${zoom}`],
+          classes[`controls_isZoom_${isOpen}`],
         )}>
         <div
           style={{
-            backgroundColor: zoom
+            backgroundColor: isOpen
               ? `rgba(${extractColors[count - 1]?.LightMuted.rgb}, 0.2)`
-              : "",
+              : null,
           }}
           className={classes.controls_wrapper}>
-          {zoom === true && (
+          {isOpen === true && (
             <Badge
               className={classes.badge}
               count={count}
@@ -211,25 +183,24 @@ export const Gallery = ({
             {images[count - 1]?.url !== undefined && (
               <Button
                 className={classNames(classes.button_download, {
-                  [classes.button_download_fill]: !zoom,
+                  [classes.button_download_fill]: !isOpen,
                 })}
                 href={images[count - 1]?.url}
                 view="download"
                 icon={<Icon type="download" isGlyph size="xl" side={false} />}
               />
             )}
-            {zoom && (
+            {isOpen && (
               <Button
                 className={classes.button_close}
                 icon={<Icon type="close" size="xxl" />}
-                onClick={() =>
-                  overlayVar({ isOpen: false, color: "var(--bg-white-95)" })
-                }
+                onClick={setIsOpen}
               />
             )}
           </div>
         </div>
       </div>
+      <Backdrop sx={sxBackdrop} open={isOpen} onClick={setClose} />
     </div>
   );
 };

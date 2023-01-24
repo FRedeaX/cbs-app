@@ -1,4 +1,4 @@
-import { FETCH_MENU } from "../../../components/Header/Header";
+import { FETCH_MENU } from "../../../components/Header/utils/menuGQL";
 import { client } from "../../../store/apollo-client";
 import { exceptionLog } from "../../exceptionLog";
 

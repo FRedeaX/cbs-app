@@ -9,7 +9,7 @@ const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
   const { data, loading, error } = useQuery(FETCH_PAGE, {
     variables: {
       id,
-      type,
+      idType: type,
       isPreview: true,
     },
     fetchPolicy: "network-only",
@@ -32,7 +32,7 @@ const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Загрузка данных...</div>;
   if (error) {
     console.error(error);
     return null;

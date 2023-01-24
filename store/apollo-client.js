@@ -1,9 +1,9 @@
 import { ApolloClient, createHttpLink } from "@apollo/client";
-// import fetch from "node-fetch";
 
+// import fetch from "node-fetch";
 // import { onError } from "@apollo/client/link/error";
 // import { setContext } from "@apollo/client/link/context";
-import cache from "./cache";
+import { cache } from "./cache";
 
 const link = createHttpLink({
   // uri: `${process.env.API}`,

@@ -13,6 +13,7 @@ export * from "./isFront";
 export * as localStorage from "./localStorage";
 export * from "./noop";
 export * from "./omit";
+export * as scrollLocker from "./scrollLocker";
 export {
   asyncLoadScript,
   createMarkup,

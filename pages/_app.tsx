@@ -1,13 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
 import smoothscroll from "smoothscroll-polyfill";
 
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
-import Overlay from "../components/UI/Overlay/Overlay";
-import { client } from "../store/apollo-client";
 import "../styles.css";
 import { lightTheme } from "../styles/theme/lightTheme";
 
@@ -28,16 +25,13 @@ const App: FC<NextAppProps> = ({
   }, []);
 
   return (
-    <ApolloProvider client={client}>
+    <ErrorBoundary>
       {/* <CacheProvider value={emotionCache}> */}
-      <ErrorBoundary>
-        <ThemeProvider theme={lightTheme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </ErrorBoundary>
-      <Overlay />
+      <ThemeProvider theme={lightTheme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
       {/* </CacheProvider> */}
-    </ApolloProvider>
+    </ErrorBoundary>
   );
 };
 
