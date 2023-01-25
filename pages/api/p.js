@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { client } from "../../store/apollo-client";
+import { client } from "../../lib/apollo/client";
 
 const p = async (req, res) => {
   const { WORDPRESS_AUTH_REFRESH_TOKEN, GRAPHQL_JWT_AUTH_SECRET_KEY } =

@@ -6,7 +6,6 @@ import Head from "../../components/Head/Head";
 import { GET_POST_CONTENT_BY_BLOCKS, Post } from "./Post";
 
 const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
-  console.log({ id, type });
   const { data, loading, error } = useQuery(GET_POST_CONTENT_BY_BLOCKS, {
     variables: {
       id,
@@ -36,7 +35,7 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
   }, [data]);
   console.log({ post });
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Загрузка данных...</div>;
   if (error) {
     console.error(error);
     return null;

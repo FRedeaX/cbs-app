@@ -1,9 +1,8 @@
 import { Pagination } from "@mui/material";
 import { FC } from "react";
 
-import { usePagination } from "../../utils/hooks";
-
-export const SEARCH_HIT_SIZE = 10;
+import { SEARCH_HIT_SIZE } from "../../../../constant";
+import { usePagination } from "./utils/usePagination";
 
 type SearchPaginationProps = {
   count: number;
@@ -11,6 +10,9 @@ type SearchPaginationProps = {
 };
 
 export const SearchPagination: FC<SearchPaginationProps> = ({
+  /**
+   * Количество результатов.
+   */
   count,
   className,
 }) => {

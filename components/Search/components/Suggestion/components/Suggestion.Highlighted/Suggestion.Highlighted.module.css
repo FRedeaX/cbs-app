@@ -1,0 +1,18 @@
+.root {
+  border-radius: 8px;
+  transition: background-color 150ms;
+}
+
+.root--select {
+  background-color: var(--black-10);
+}
+
+@media screen and (width <= 768px) {
+  .root {
+    --suggestion-border-bottom-width: 1px;
+  }
+
+  .root:last-child {
+    --suggestion-border-bottom-width: 0;
+  }
+}

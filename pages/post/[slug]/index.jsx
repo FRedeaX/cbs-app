@@ -9,8 +9,8 @@ import {
   sortingCategories,
   transformBlocks,
 } from "../../../helpers/backend";
+import { client } from "../../../lib/apollo/client";
 import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routes/Post/Post";
-import { client } from "../../../store/apollo-client";
 
 const PagePost = ({ menu, post }) => {
   const { isFallback } = useRouter();

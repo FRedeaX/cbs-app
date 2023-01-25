@@ -14,7 +14,6 @@
 }
 
 .root_scrollSnap {
-  touch-action: pan-x;
   scroll-padding: var(--carousel-scroll-snap-padding, 0);
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;

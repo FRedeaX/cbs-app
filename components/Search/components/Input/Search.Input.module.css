@@ -1,9 +1,0 @@
-.clear {
-  opacity: 0.8;
-  transition: opacity 0.15s;
-}
-
-.clear_visibility_hidden {
-  pointer-events: none;
-  opacity: 0;
-}

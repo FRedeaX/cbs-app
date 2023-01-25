@@ -11,7 +11,7 @@ export type useCarouselHandleOnScroll = (
   event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
 ) => void;
 
-export const useCarousel = (test) => {
+export const useCarousel = () => {
   const {
     rootRef,
     scroll,
@@ -48,8 +48,6 @@ export const useCarousel = (test) => {
           containerWidth,
         );
       }
-
-      console.log(test);
 
       indexOfVisibleElement.current += 1;
       const nodeSum = Math.abs(currentScroll - scroll.current);

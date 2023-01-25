@@ -1,5 +1,4 @@
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
@@ -8,46 +7,52 @@ import {
   SearchFilters,
   SearchForm,
   SearchInput,
+  SearchSuggestion,
 } from "../../components/Search/components";
+import { InputProvider } from "../../components/Search/components/Input/context";
 import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
-import { useSearch } from "../../components/Search/utils/hooks";
-import { SearchResponseFrontend } from "../../lib/elastic/type";
-import { SearchAside, UAPlatform } from "./Aside/Search.Aside";
+import { SuggestionProvider } from "../../components/Search/components/Suggestion/context";
+import { useQuerySearch } from "../../components/Search/utils/hooks";
+import { SearchResponseFrontend } from "../../core/elastic/search/type";
+import { SearchAside, SearchAsideUAPlatform } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
 
 export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
-} & UAPlatform;
+} & SearchAsideUAPlatform;
 
+// eslint-disable-next-line arrow-body-style
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
-  const { data, isLoading } = useSearch(ssrData);
+  const { data, isLoading } = useQuerySearch(ssrData);
   const isHorizontal = useMediaQuery("(min-width: 1100px)");
 
   return (
     <RouteContainer className={classes.root}>
-      <SearchForm>
-        <SearchInput />
-        <Button type="submit" color="inherit" className={classes.submitButton}>
-          <SearchRoundedIcon fontSize="small" />
-        </Button>
-      </SearchForm>
+      <InputProvider>
+        <SuggestionProvider>
+          <SearchForm>
+            <SearchInput autoFocus />
+            <SearchSuggestion />
+          </SearchForm>
+        </SuggestionProvider>
+      </InputProvider>
 
       <Box className={classes.body}>
         <SearchAside
           className={classes.Aside}
-          count={data?.hits.total.value}
+          count={data?.hits.hits.length && data?.hits.total.value}
           platform={platform}>
           <SearchFilters
             legend="Филиал (отдел)"
             name="departments"
-            nodes={data?.aggregations.departments.buckets}
+            nodes={data?.aggregations.departments.facet.departments.buckets}
             facet={data?.aggregations.facets.departments.buckets}
           />
           <SearchFilters
             legend="Категория"
             name="categories"
-            nodes={data?.aggregations.categories.buckets}
+            nodes={data?.aggregations.categories.facet.categories.buckets}
             facet={data?.aggregations.facets.categories.buckets}
           />
         </SearchAside>

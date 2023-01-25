@@ -4,7 +4,7 @@ import Layout from "../components/UI/Layout/Layout";
 import { exceptionLog } from "../helpers";
 import { getMenu } from "../helpers/backend";
 import transformObject from "../helpers/backend/biblioteki";
-import { client } from "../store/apollo-client";
+import { client } from "../lib/apollo/client";
 
 const Biblioteki = ({ menu, page }) => (
   <Layout menu={menu}>

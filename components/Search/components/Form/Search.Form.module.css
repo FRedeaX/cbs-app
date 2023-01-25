@@ -1,3 +1,11 @@
 .root {
+  --search-height: 40px;
+  --search-border-radius: 12px;
+  --suggestion-z-index: 2;
+}
+
+.body {
+  position: relative;
   display: flex;
+  flex: 1;
 }

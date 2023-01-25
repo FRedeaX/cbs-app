@@ -1,26 +1,16 @@
-import { SearchResponseFrontend } from "../../../lib/elastic/type";
-import { SearchParams } from "./type";
+import { Maybe } from "../../../helpers/typings/utility-types";
+import { createSearchLink } from "./createSearchLink";
 
-interface IFetchSearchData extends SearchParams {
-  apiUrl: string;
-}
+export type FetchSearchData = {
+  pathname: string;
+};
 
-export const fetchSearchData = async ({
-  apiUrl,
+export const fetchSearchData = async <Data = unknown>({
+  pathname,
   ...queryKey
-}: IFetchSearchData): Promise<SearchResponseFrontend> => {
-  console.log("fetch");
+}: FetchSearchData & { [key: string]: Maybe<string> }): Promise<Data> => {
+  const response = await fetch(createSearchLink(queryKey, pathname));
+  if (!response.ok) throw new Error("Network response error");
 
-  const query = Object.entries(queryKey);
-
-  const url = new URL(apiUrl);
-  query.forEach(([key, value]) => {
-    if (value) url.searchParams.append(key, value);
-  });
-
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Network response error");
-  }
   return response.json();
 };

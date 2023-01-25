@@ -21,15 +21,6 @@
   --seacrh-filter-margin: 0 0 15px 0;
 
   overflow-y: auto;
+  margin-bottom: 3px;
   padding-top: 15px;
-}
-
-.controls {
-  display: flex;
-  padding-bottom: 10px;
-}
-
-.cleare {
-  flex-shrink: 0;
-  margin-right: 15px;
 }

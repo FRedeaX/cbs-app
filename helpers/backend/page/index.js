@@ -2,7 +2,7 @@ import {
   FETCH_CHILDREN_PAGE,
   FETCH_PAGE,
 } from "../../../components/Pages/Page/Page.utils";
-import { client } from "../../../store/apollo-client";
+import { client } from "../../../lib/apollo/client";
 import { exceptionLog } from "../../exceptionLog";
 import { transformBlocks } from "../transformBlocks";
 

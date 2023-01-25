@@ -1,4 +1,4 @@
-// import { client } from "~/store/apollo-client";
+// import { client } from "~/lib/apollo/client";
 // import { paginationVar } from "~/store/variables/pagination";
 // import { removeDuplicateTag } from "../post";
 

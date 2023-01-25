@@ -1,12 +1,13 @@
+/* eslint-disable camelcase */
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { esClient } from "../../core/elastic-client";
 import {
   _pageInfo,
   recursiveLoadParties,
   splitDepartmentAndCategories,
 } from "../../helpers/backend";
+import { esClient } from "../../lib/elastic/client";
 
 const GET_POSTS = gql`
   query GET_POSTS($cursor: String, $first: Int) {
@@ -69,11 +70,16 @@ const callbackFn = async ({ posts: postList }: IPosts): Promise<void> => {
       post.categories.nodes,
     );
 
+    // const title_suggest = post.title
+    //   .replace(/[!:'"«»“”()\\[\]]+/g, "")
+    //   .split(/[—,-.– ]+/);
+
     return [
       { index: { _index: process.env.ES_INDEX_NAME, _id: post.id } },
       {
         link: post.link,
         title: post.title,
+        // title_suggest,
         excerpt: post.excerpt,
         content: post.content.replaceAll(/<[^>]*>?/gm, ""),
         thumbnail: { url: post.featuredImage?.node.sourceUrl || "" },

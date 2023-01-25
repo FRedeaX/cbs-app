@@ -8,7 +8,6 @@ import classNamesBind from "classnames/bind";
 import { memo } from "react";
 
 import { createMarkup } from "../../../helpers";
-import { overlayVar } from "../../../store/variables/overlay";
 import ActiveLink from "../../UI/ActiveLink/ActiveLink";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
@@ -118,8 +117,7 @@ const NavItems = ({
                   className={cx({
                     link: true,
                     "link--cursor": !!childItems?.nodes.length,
-                  })}
-                  onClick={() => overlayVar({ isOpen: false })}>
+                  })}>
                   <span
                     className={cx({ text: true, text_mb: subItem })}
                     dangerouslySetInnerHTML={createMarkup(label)}

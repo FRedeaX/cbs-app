@@ -6,7 +6,7 @@ import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/
 import { Heading } from "../../components/blocks/Heading/Heading";
 import { exceptionLog } from "../../helpers";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
-import { client } from "../../store/apollo-client";
+import { client } from "../../lib/apollo/client";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">

@@ -1,0 +1,13 @@
+.root {
+  transition: opacity 0.2s ease;
+}
+
+.root--isVisible_false {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.root--isVisible_true {
+  visibility: visible;
+  opacity: 1;
+}
