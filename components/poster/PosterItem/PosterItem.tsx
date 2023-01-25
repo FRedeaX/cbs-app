@@ -24,6 +24,9 @@ export const posterItemGQL = {
         dataend
         time
       }
+      formOfEvent {
+        value
+      }
       title
       id
     }
@@ -51,6 +54,9 @@ export interface IPoster {
     dateEnd: IDate;
     time: string | null;
   };
+  formOfEvent: {
+    value: "offline" | "online";
+  };
   title: string;
   id: string;
 }
@@ -70,7 +76,14 @@ interface PosterItemProps {
 const PosterItem: FC<PosterItemProps> = forwardRef(
   (
     {
-      data: { posterDate, title, content, excerpt, posterDepartments },
+      data: {
+        posterDate,
+        formOfEvent,
+        title,
+        content,
+        excerpt,
+        posterDepartments,
+      },
       count,
       className,
       "data-idx": dataIdx,
@@ -117,16 +130,16 @@ const PosterItem: FC<PosterItemProps> = forwardRef(
           </a>
         </div>
       )}
+      {formOfEvent.value === "online" && (
+        <span
+          className={classes.type}
+          title="Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС">
+          онлайн
+        </span>
+      )}
     </div>
   ),
 );
 
 PosterItem.displayName = "PosterItem";
 export default PosterItem;
-
-/* <span
-  className={classes.type}
-  title={"Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС"}
->
-  онлайн
-</span> */

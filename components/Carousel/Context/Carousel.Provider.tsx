@@ -1,16 +1,15 @@
 import { FC, ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 
-import { useClientWidth } from "../../../helpers/frontend/hooks";
 import {
   Maybe,
   _NodeListOf as NodeListOf,
 } from "../../../helpers/typings/utility-types";
 import { fillOffsetArray } from "../Carousel.utils/fillOffsetArray";
+import { scrollTo } from "../Carousel.utils/scrollTo";
 import {
   CarouselContext,
   CarouselContextHTMLNode,
-  CarouselContextItemListRefCallback,
-  CarouselContextScrollToIndex,
+  CarouselContextRefCallback,
 } from "./Carousel.Context";
 
 type CarouselProviderProps = {
@@ -22,11 +21,17 @@ type CarouselProviderProps = {
    * @default 0
    */
   itemMargin?: number;
+
+  /**
+   * @default false
+   */
+  isResponsiveWidthsChildren?: boolean;
 };
 
 export const CarouselProvider: FC<CarouselProviderProps> = ({
   children,
   itemMargin = 0,
+  isResponsiveWidthsChildren = false,
 }) => {
   const rootRef = useRef<CarouselContextHTMLNode>(null);
   const itemListRef = useRef<Maybe<NodeListOf<HTMLElement>>>(undefined);
@@ -50,30 +55,36 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
     itemWidthAccumulatedDESC.current = itemWidthAccDESC;
   }, [itemMargin]);
 
-  const scrollToIndex = useCallback<CarouselContextScrollToIndex>((index) => {
-    if (rootRef.current === null) return;
-    if (index !== undefined) {
-      indexOfVisibleElement.current = index;
-    }
+  const recalculateOffsetWidth = useCallback(() => {
+    init();
 
     const root = rootRef.current;
     const itemWidthAccASC = itemWidthAccumulatedASC.current;
 
     scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
-    root.scrollTo({
-      left: scroll.current,
-      behavior: "auto",
-    });
-  }, []);
+    scrollTo(root, { left: scroll.current, behavior: "auto" });
+  }, [init]);
 
   // Провоцирует пересчет прямого и обратного массива смещений
-  const resizeWidth = useClientWidth();
   useEffect(() => {
-    init();
-    scrollToIndex();
-  }, [init, scrollToIndex, resizeWidth]);
+    if (!isResponsiveWidthsChildren) return undefined;
 
-  const itemListRefCallback = useCallback<CarouselContextItemListRefCallback>(
+    window.addEventListener("resize", recalculateOffsetWidth);
+    return () => {
+      window.removeEventListener("resize", recalculateOffsetWidth);
+    };
+  }, [isResponsiveWidthsChildren, recalculateOffsetWidth]);
+
+  const rootRefCallback = useCallback<CarouselContextRefCallback>((node) => {
+    rootRef.current = node;
+
+    const itemWidthAccASC = itemWidthAccumulatedASC.current;
+
+    scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
+    scrollTo(node, { left: scroll.current, behavior: "auto" });
+  }, []);
+
+  const itemListRefCallback = useCallback<CarouselContextRefCallback>(
     (node) => {
       itemListRef.current = node?.childNodes as NodeListOf<HTMLElement>;
       init();
@@ -84,17 +95,18 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
   const value = useMemo(
     () => ({
       rootRef,
+      rootRefCallback,
+      itemListRef,
       itemListRefCallback,
       leftSideNodeRef,
       rightSideNodeRef,
       scroll,
       indexOfVisibleElement,
-      scrollToIndex,
       itemMargin,
       itemWidthAccumulatedASC,
       itemWidthAccumulatedDESC,
     }),
-    [itemListRefCallback, scrollToIndex, itemMargin],
+    [itemListRefCallback, rootRefCallback, itemMargin],
   );
 
   return (

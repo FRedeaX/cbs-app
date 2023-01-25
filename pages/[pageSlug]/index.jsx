@@ -3,7 +3,7 @@ import { FETCH_PARENT_URI_PAGES } from "../../components/Pages/Page/Page.utils";
 import Layout from "../../components/UI/Layout/Layout";
 import { exceptionLog } from "../../helpers";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
-import { client } from "../../store/apollo-client";
+import { client } from "../../lib/apollo/client";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">

@@ -30,3 +30,8 @@ export type Void = () => void;
 
 // eslint-disable-next-line no-undef
 export type _NodeListOf<TNode extends Node> = NodeListOf<TNode>;
+
+/**
+ * Возвращает тип в котором есть типизированные `custom properties`
+ */
+export type { Properties as CSSProperties } from "csstype";

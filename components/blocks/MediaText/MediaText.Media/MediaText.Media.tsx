@@ -33,7 +33,7 @@ const MediaTextMedia: FC<IMediaProps> = ({
       classes.root,
       classes[`root_mediaPosition_${mediaPosition}`],
     )}>
-    <Figure isFill={imageFill}>
+    <Figure>
       <Image
         src={mediaUrl}
         alt={mediaAlt}

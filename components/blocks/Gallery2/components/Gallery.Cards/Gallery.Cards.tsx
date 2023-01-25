@@ -18,7 +18,11 @@ export const GalleryCards: FC<GalleryCardsProps> = ({
   return (
     <figure className={classes.figure}>
       <GalleryRow images={image.big} imageCrop={imageCrop} />
-      <GalleryRow images={image.small} imageCrop={imageCrop} />
+      <GalleryRow
+        images={image.small}
+        imageCrop={imageCrop}
+        offset={image.big.length}
+      />
       {caption && (
         <figcaption className={classes.caption}>{caption}</figcaption>
       )}

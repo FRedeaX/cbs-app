@@ -8,14 +8,14 @@ type GalleryProviderProps = {
 };
 
 export const GalleryProvider: FC<GalleryProviderProps> = ({ children }) => {
-  const [isOpen, setIsOpen] = useToggle(false);
+  const [isOpen, setToggle] = useToggle(false);
 
   const contextValue = useMemo(
     () => ({
       isOpen,
-      setIsOpen,
+      setToggle,
     }),
-    [isOpen, setIsOpen],
+    [isOpen, setToggle],
   );
 
   return (

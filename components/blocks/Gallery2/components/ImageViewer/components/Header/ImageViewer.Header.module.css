@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  height: var(--image-viewer-header-height);
+}
+
+.badge {
+  margin: auto;
+}
+
+.controls {
+  position: absolute;
+  right: 0;
+}

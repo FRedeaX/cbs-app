@@ -11,13 +11,12 @@ export const fillOffsetArray = (
   itemMargin: number,
 ) => {
   const margin = itemMargin * FULL_MARGIN;
-  const itemWidthAccASC: number[] = [];
-  const itemWidthAccDESC: number[] = [];
+  const itemWidthAccASC: number[] = [0];
+  const itemWidthAccDESC: number[] = [0];
 
   nodes.forEach(({ clientWidth }) => {
     // Пропускаем последний элемент карусели
-    // и правую отбивку с правым отступом `rightSideNodeRef`
-    if (itemWidthAccDESC.length === nodes.length - 2) return;
+    if (itemWidthAccDESC.length === nodes.length) return;
 
     const lastValue = itemWidthAccASC[itemWidthAccASC.length - 1] ?? 0;
     itemWidthAccASC.push(clientWidth + margin + lastValue);

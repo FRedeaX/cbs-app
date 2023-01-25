@@ -2,7 +2,6 @@ import classNames from "classnames";
 import {
   FC,
   KeyboardEvent,
-  LegacyRef,
   ReactNode,
   Ref,
   TouchEvent,
@@ -41,7 +40,7 @@ export const Scroller: FC<ScrollerProps> = forwardRef(
       className,
       refItemList,
     },
-    ref?: LegacyRef<HTMLDivElement>,
+    ref,
   ) => (
     <div
       ref={ref}

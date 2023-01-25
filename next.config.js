@@ -25,7 +25,7 @@ const nextConfig = withTM({
   },
 
   images: {
-    domains: [process.env.HOSTNAME],
+    domains: [`${process.env.HOST}`],
     // formats: ["image/avif", "image/webp"],
     formats: ["image/webp"],
   },
@@ -56,7 +56,7 @@ const nextConfig = withTM({
   // },
 
   sentry: {
-    hideSourceMaps: true,
+    hideSourceMaps: false,
   },
 });
 

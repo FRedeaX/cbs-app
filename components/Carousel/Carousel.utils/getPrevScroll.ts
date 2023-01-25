@@ -1,16 +1,16 @@
 import { exceptionLog } from "../../../helpers";
 
 /**
- * Возвращает позицию `scroll` для предыдущего экрана
+ * Возвращает `index` позиции в массиве смещений для предыдущего экрана.
  */
 export const getPrevScroll = (
-  itemWidthAccumulated: number[],
+  itemList: number[],
   currentScroll: number,
   containerWidth: number,
 ): number => {
   if (currentScroll - containerWidth <= 0) return 0;
 
-  const prevItemScrollLeft = itemWidthAccumulated.find(
+  const prevItemScrollLeft = itemList.findIndex(
     (item) => item >= currentScroll - containerWidth,
   );
 

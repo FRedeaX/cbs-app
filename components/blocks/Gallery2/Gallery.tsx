@@ -30,7 +30,7 @@ export const Gallery: FC<GalleryProps> = ({
   // eslint-disable-next-line react/jsx-props-no-spreading
   <div className={classNames(classes.root, className)} {...props}>
     <GalleryProvider>
-      <CarouselProvider>
+      <CarouselProvider isResponsiveWidthsChildren>
         <GalleryViewer images={images} />
         <GalleryCards images={images} imageCrop={imageCrop} caption={caption} />
       </CarouselProvider>

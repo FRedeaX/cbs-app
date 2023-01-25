@@ -1,9 +1,10 @@
-import { TouchEvent, WheelEvent, useCallback } from "react";
+import { TouchEvent, WheelEvent, useCallback, useEffect } from "react";
 
 import { useCarouselContext } from "../Context";
 import { getNextScroll } from "./getNextScroll";
 import { getPrevScroll } from "./getPrevScroll";
 import { offsetSides } from "./offsetSides";
+import { scrollTo } from "./scrollTo";
 
 export type useCarouselHandleOnClick = (direction: "next" | "prev") => void;
 
@@ -11,7 +12,9 @@ export type useCarouselHandleOnScroll = (
   event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
 ) => void;
 
-export const useCarousel = (test) => {
+type useCarouselScrollToIndex = (index: number) => void;
+
+export const useCarousel = () => {
   const {
     rootRef,
     scroll,
@@ -20,6 +23,21 @@ export const useCarousel = (test) => {
     itemWidthAccumulatedASC,
     itemWidthAccumulatedDESC,
   } = useCarouselContext();
+
+  /**
+   * Прокручивает контейнер к элементу
+   */
+  const scrollToIndex = useCallback<useCarouselScrollToIndex>(
+    (index) => {
+      const root = rootRef.current;
+      const itemWidthAccASC = itemWidthAccumulatedASC.current;
+
+      indexOfVisibleElement.current = index;
+      scroll.current = itemWidthAccASC[index];
+      scrollTo(root, { left: scroll.current, behavior: "auto" });
+    },
+    [indexOfVisibleElement, itemWidthAccumulatedASC, rootRef, scroll],
+  );
 
   /**
    * В зависимости от направления прокручивает контейнер
@@ -32,29 +50,29 @@ export const useCarousel = (test) => {
       const currentScroll = scroll.current;
       const itemWidthAccACS = itemWidthAccumulatedASC.current;
       const itemWidthAccDESC = itemWidthAccumulatedDESC.current;
-
       const containerWidth = root.clientWidth;
 
       if (direction === "next") {
-        scroll.current = getNextScroll(
+        const index = getNextScroll(
           itemWidthAccDESC,
           currentScroll,
           containerWidth,
         );
+        scroll.current = itemWidthAccDESC[index];
+        indexOfVisibleElement.current = itemWidthAccDESC.length - 1 - index;
       } else if (direction === "prev") {
-        scroll.current = getPrevScroll(
+        const index = getPrevScroll(
           itemWidthAccACS,
           currentScroll,
           containerWidth,
         );
+        scroll.current = itemWidthAccACS[index];
+        indexOfVisibleElement.current = index;
       }
 
-      console.log(test);
-
-      indexOfVisibleElement.current += 1;
       const nodeSum = Math.abs(currentScroll - scroll.current);
 
-      root.scrollTo({
+      scrollTo(root, {
         left: scroll.current - offsetSides(containerWidth, nodeSum, itemMargin),
         behavior: "smooth",
       });
@@ -82,6 +100,7 @@ export const useCarousel = (test) => {
   );
 
   return {
+    scrollToIndex,
     handleOnClick,
     handleOnScroll,
   };

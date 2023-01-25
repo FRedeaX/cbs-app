@@ -20,8 +20,8 @@ import {
   removeDuplicateTag,
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
+import { client } from "../lib/apollo/client";
 import { RKEY_POSTS } from "../lib/redis/redisKeys";
-import { client } from "../store/apollo-client";
 
 type HomePageProps = Omit<
   IHomePageProps,
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
       fetchPolicy: "network-only",
     })
     .then(async ({ data, error }) => {
-      if (error !== undefined) throw new Error(error.message);
+      if (error !== undefined) throw error;
       if (data.posters.nodes.length === 0)
         throw new Error("data.posters.nodes of null");
 

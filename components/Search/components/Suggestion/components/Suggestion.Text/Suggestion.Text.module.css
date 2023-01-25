@@ -1,0 +1,12 @@
+.root {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 2px 8px;
+
+  border-bottom-style: solid;
+  border-bottom-width: var(--suggestion-border-bottom-width, 0);
+}

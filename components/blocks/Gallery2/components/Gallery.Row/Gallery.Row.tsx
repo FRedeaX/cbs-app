@@ -13,36 +13,49 @@ export type Image = {
 };
 
 export type GalleryRowProps = {
+  images: Image[];
+
   /**
-   * @default true
+   * @default false
    */
   imageCrop?: boolean;
-  images: Image[];
+
+  /**
+   * Смещение `index` относительно предыдущих строк
+   * @default 0
+   */
+  offset?: number;
 };
 
 export const GalleryRow: FC<GalleryRowProps> = ({
-  imageCrop = true,
   images,
+  imageCrop = false,
+  offset = 0,
 }) => (
   <div className={classes.root}>
-    {images.map((image, index) => (
-      <figure
-        key={image.id}
-        style={{ flex: imageCrop ? `${image.width / image.height}` : "1" }}
-        className={classes.wrapper}>
-        <GalleryButton index={index}>
-          <NextImage
-            alt={image.alt}
-            src={image.url}
-            width={image.width}
-            height={image.height}
-            className={classes.image}
-          />
-        </GalleryButton>
-        {image.alt && (
-          <figcaption className={classes.caption}>{image.alt}</figcaption>
-        )}
-      </figure>
-    ))}
+    {images.map((image, index) => {
+      const aspectRatio = image.width / image.height;
+      return (
+        <figure
+          key={image.id}
+          style={{ flex: imageCrop ? `${aspectRatio}` : "1" }}
+          className={classes.wrapper}>
+          <GalleryButton index={index + offset}>
+            <NextImage
+              alt={image.alt}
+              src={image.url}
+              width={450}
+              height={450 / aspectRatio}
+              sizes={`${100 / images.length}vw`}
+              className={classes.image}
+              loading="lazy"
+            />
+          </GalleryButton>
+          {image.alt && (
+            <figcaption className={classes.caption}>{image.alt}</figcaption>
+          )}
+        </figure>
+      );
+    })}
   </div>
 );

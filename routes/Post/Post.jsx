@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
@@ -36,9 +35,9 @@ export const Post = ({
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
   const { hendleOffers, offerList } = usePost();
 
-  useEffect(() => {
-    if (id) hendleOffers(id);
-  }, [hendleOffers, id]);
+  // useEffect(() => {
+  //   if (id) hendleOffers(id);
+  // }, [hendleOffers, id]);
 
   // const [ref, { isVisible }] = useIntersectionObserver({ threshold: 0.5 });
   // useEffect(() => {

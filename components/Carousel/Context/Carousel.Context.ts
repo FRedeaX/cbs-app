@@ -1,66 +1,78 @@
 import { MutableRefObject, createContext } from "react";
 
-import { Nullable } from "../../../helpers/typings/utility-types";
+import {
+  Maybe,
+  _NodeListOf as NodeListOf,
+  Nullable,
+} from "../../../helpers/typings/utility-types";
 
 export type CarouselContextHTMLNode = Nullable<HTMLDivElement>;
+export type CarouselContextItemListRef = Maybe<NodeListOf<HTMLElement>>;
 
-export type CarouselContextItemListRefCallback = (
+export type CarouselContextRefCallback = (
   node: CarouselContextHTMLNode,
 ) => void;
 
-export type CarouselContextScrollToIndex = (index?: number) => void;
-
 type CarouselContextProps = {
   /**
-   * Cсылка на корневой прокручиваемый элемент `DOM`
+   * Cсылка на корневой прокручиваемый элемент `DOM`.
    */
   rootRef: MutableRefObject<CarouselContextHTMLNode>;
 
   /**
-   * Cсылка на крайний левый узел `DOM`
+   * Обратный вызов устанавливает
+   * ссылку на корневой прокручиваемый элемент `DOM`.
+   *
+   * Прокручивает контейнер если `indexOfVisibleElement` больше 0.
+   */
+  rootRefCallback: CarouselContextRefCallback;
+
+  /**
+   * Cсылка на крайний левый узел `DOM`.
    */
   leftSideNodeRef: MutableRefObject<CarouselContextHTMLNode>;
 
   /**
-   * Cсылка на крайний правый узел `DOM`
+   * Cсылка на крайний правый узел `DOM`.
    */
   rightSideNodeRef: MutableRefObject<CarouselContextHTMLNode>;
 
   /**
-   * Обратный вызов на родителе
-   * который содержит список дочерних элементов карусели
+   * Cсылка на `DOM` элемент
+   * который содержит список дочерних элементов карусели.
    */
-  itemListRefCallback: CarouselContextItemListRefCallback;
+  itemListRef: MutableRefObject<CarouselContextItemListRef>;
 
   /**
-   * Локальное состояние прокрутки `rootRef`
+   * Обратный вызов устанавливает ссылку на `DOM` элемент
+   * который содержит список дочерних элементов карусели.
+   *
+   * Заполненяет прямой и обратный массив смещений.
+   */
+  itemListRefCallback: CarouselContextRefCallback;
+
+  /**
+   * Локальное состояние прокрутки `rootRef`.
    */
   scroll: MutableRefObject<number>;
 
   /**
-   * `index` видимого элемента
+   * `index` видимого элемента.
    */
   indexOfVisibleElement: MutableRefObject<number>;
 
   /**
-   * Прокручивает контейнер к элементу
-   *
-   * @param index
-   */
-  scrollToIndex: CarouselContextScrollToIndex;
-
-  /**
-   * Отступ у элемента с одной стороны
+   * Отступ у элемента с одной стороны.
    */
   itemMargin: number;
 
   /**
-   * Массив смещений
+   * Массив смещений.
    */
   itemWidthAccumulatedASC: MutableRefObject<number[]>;
 
   /**
-   * Обратный массив смещений
+   * Обратный массив смещений.
    */
   itemWidthAccumulatedDESC: MutableRefObject<number[]>;
 };

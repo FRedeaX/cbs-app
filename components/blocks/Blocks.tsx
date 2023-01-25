@@ -62,7 +62,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
               <Gallery
                 key={key}
                 {...block.attributes}
-                images={block.attributes.images}
+                images={block.attributes.images.slice(0, 4)}
               />
             );
 

@@ -1,7 +1,7 @@
 import { ButtonBase } from "@mui/material";
 import { FC, ReactNode, useCallback } from "react";
 
-import { useCarouselContext } from "../../../../Carousel/Context";
+import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
 import { useGalleryContext } from "../../context";
 
 type GalleryButtonProps = {
@@ -10,13 +10,13 @@ type GalleryButtonProps = {
 };
 
 export const GalleryButton: FC<GalleryButtonProps> = ({ children, index }) => {
-  const { setIsOpen } = useGalleryContext();
-  const { scrollToIndex } = useCarouselContext();
+  const { setToggle } = useGalleryContext();
+  const { scrollToIndex } = useCarousel();
 
   const hendleSetID = useCallback(() => {
+    setToggle();
     scrollToIndex(index);
-    setIsOpen();
-  }, [index, scrollToIndex, setIsOpen]);
+  }, [index, scrollToIndex, setToggle]);
 
   return <ButtonBase onClick={hendleSetID}>{children}</ButtonBase>;
 };

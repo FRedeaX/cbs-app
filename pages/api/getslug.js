@@ -1,5 +1,5 @@
 // import { gql } from "@apollo/client";
-// import { client } from "~/store/apollo-client";
+// import { client } from "~/lib/apollo/client";
 
 // export default async function handler(req, res) {
 //   const { data } = await client.query({

@@ -1,6 +1,6 @@
 import { DocumentNode } from "graphql";
 
-import { client } from "../../store/apollo-client";
+import { client } from "../../lib/apollo/client";
 import delay from "../delay";
 import { exceptionLog } from "../exceptionLog";
 

@@ -1,18 +1,25 @@
 import { useCallback, useEffect, useRef } from "react";
 
+import { isNodeList } from "../../isNodeList";
+import { _NodeListOf as NodeListOf } from "../../typings/utility-types";
+
 const DEFAULT_ROOT_MARGIN = "0px";
 const DEFAULT_THRESHOLD = [0];
 interface IntersectionObserverInit {
   rootMargin?: string;
   threshold?: number | number[];
 }
-interface IntersectionObserverCallback {
+export interface IntersectionObserverCallback {
   (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
 }
 
 export type IntersectionObserverHookArgs = IntersectionObserverInit;
 
-export type IntersectionObserverHookRefNode = Element | Element[] | null;
+export type IntersectionObserverHookRefNode =
+  | HTMLElement
+  | HTMLElement[]
+  | NodeList
+  | null;
 
 export type IntersectionObserverHookRefCallback = (
   node: IntersectionObserverHookRefNode,
@@ -60,15 +67,13 @@ function useIntersectionObserver(
 
       const observer = new IntersectionObserver(callback, options);
 
-      if (Array.isArray(node)) {
-        node.forEach((item) => {
+      if (Array.isArray(node) || isNodeList(node as NodeList)) {
+        (node as HTMLElement[] | NodeListOf<HTMLElement>).forEach((item) => {
           observer.observe(item);
         });
       } else {
-        observer.observe(node);
+        observerRef.current = observer;
       }
-
-      observerRef.current = observer;
     }
   }, [callback, rootMargin, threshold]);
 
