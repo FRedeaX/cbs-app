@@ -7,7 +7,7 @@ import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import { exceptionLog } from "../helpers";
 import { getMenu } from "../helpers/backend";
 import { dateConversion, sort } from "../helpers/backend/poster";
-import { client } from "../store/apollo-client";
+import { client } from "../lib/apollo/client";
 
 const Poster = ({ menu, posters }) => (
   <>

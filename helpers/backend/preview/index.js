@@ -1,5 +1,5 @@
 // import { FETCH_ARTICLE } from "../../../routes/Post/Post";
-// import { authClient } from "../../../store/apollo-client";
+// import { authClient } from "../../../lib/apollo/client";
 
 // const loadPreview = async (query) => {
 //   const { LOCAL_URL, GRAPHQL_JWT_AUTH_SECRET_KEY } = process.env;

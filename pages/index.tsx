@@ -20,8 +20,8 @@ import {
   removeDuplicateTag,
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
+import { client } from "../lib/apollo/client";
 import { RKEY_POSTS } from "../lib/redis/redisKeys";
-import { client } from "../store/apollo-client";
 
 type HomePageProps = Omit<
   IHomePageProps,

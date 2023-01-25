@@ -1,5 +1,5 @@
 import { FETCH_MENU } from "../../../components/Header/utils/menuGQL";
-import { client } from "../../../store/apollo-client";
+import { client } from "../../../lib/apollo/client";
 import { exceptionLog } from "../../exceptionLog";
 
 export const getMenu = async (isCache = true) => {

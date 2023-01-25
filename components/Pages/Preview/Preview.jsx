@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 
+import { client } from "../../../lib/apollo/client";
 import PreviewPost from "../../../routes/Post/PreviewPost";
-import { client } from "../../../store/apollo-client";
 import PreviewPage from "../Page/PageDefault/PreviewPage";
 
 export const Preview = ({ isPage, id }) => (
