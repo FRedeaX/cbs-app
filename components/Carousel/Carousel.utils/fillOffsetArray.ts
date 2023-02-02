@@ -10,7 +10,8 @@ export const fillOffsetArray = (
   nodes: NodeListOf<HTMLElement>,
   itemMargin: number,
 ) => {
-  const margin = itemMargin * FULL_MARGIN;
+  const margin = itemMargin < 0 ? 0 : itemMargin * FULL_MARGIN;
+
   const itemWidthAccASC: number[] = [0];
   const itemWidthAccDESC: number[] = [0];
 

@@ -1,7 +1,7 @@
 .root {
   scrollbar-width: none;
 
-  overflow-x: scroll;
+  overflow-x: var(--scroller-overflow-x, scroll);
   overflow-y: hidden;
   display: flex;
 

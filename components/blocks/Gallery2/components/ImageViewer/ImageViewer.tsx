@@ -2,30 +2,39 @@ import { SwipeableDrawer, SwipeableDrawerProps } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import { noop } from "../../../../../helpers";
+import { useClientHeight } from "../../../../../helpers/frontend/hooks";
 import classes from "./ImageViewer.module.css";
 
 type ImageViewerProps = {
   children: ReactNode;
-} & Pick<SwipeableDrawerProps, "open" | "onClose">;
+} & Pick<SwipeableDrawerProps, "open" | "onClose" | "onKeyDown">;
 
 export const ImageViewer: FC<ImageViewerProps> = ({
   children,
   open,
   onClose,
-}) => (
-  <SwipeableDrawer
-    anchor="bottom"
-    open={open}
-    onOpen={noop}
-    onClose={onClose}
-    ModalProps={{
-      keepMounted: false,
-    }}
-    hysteresis={1}>
-    <div className={classes.root}>
-      {/* <div className={classes.body}></div> */}
+  onKeyDown,
+}) => {
+  const height = useClientHeight();
 
-      {children}
-    </div>
-  </SwipeableDrawer>
-);
+  return (
+    <SwipeableDrawer
+      anchor="bottom"
+      open={open}
+      onOpen={noop}
+      onClose={onClose}
+      onKeyDown={onKeyDown}
+      ModalProps={{
+        // Возможны проблемы в React 18.
+        // see https://mui.com/material-ui/react-drawer/#keep-mounted
+        keepMounted: false,
+      }}
+      hysteresis={1}>
+      <div
+        style={{ "--image-viewer-height": `${height}px` }}
+        className={classes.root}>
+        {children}
+      </div>
+    </SwipeableDrawer>
+  );
+};

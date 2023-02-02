@@ -38,9 +38,9 @@ export const GalleryRow: FC<GalleryRowProps> = ({
       return (
         <figure
           key={image.id}
-          style={{ flex: imageCrop ? `${aspectRatio}` : "1" }}
+          style={{ flex: imageCrop ? "1" : `${aspectRatio}` }}
           className={classes.wrapper}>
-          <GalleryButton index={index + offset}>
+          <GalleryButton className={classes.button} index={index + offset}>
             <NextImage
               alt={image.alt}
               src={image.url}

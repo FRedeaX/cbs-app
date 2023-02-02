@@ -1,4 +1,4 @@
-import { TouchEvent, WheelEvent, useCallback, useEffect } from "react";
+import { WheelEvent, useCallback } from "react";
 
 import { useCarouselContext } from "../Context";
 import { getNextScroll } from "./getNextScroll";
@@ -9,7 +9,7 @@ import { scrollTo } from "./scrollTo";
 export type useCarouselHandleOnClick = (direction: "next" | "prev") => void;
 
 export type useCarouselHandleOnScroll = (
-  event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
+  event: WheelEvent<HTMLDivElement>,
 ) => void;
 
 type useCarouselScrollToIndex = (index: number) => void;
@@ -44,13 +44,13 @@ export const useCarousel = () => {
    */
   const handleOnClick = useCallback<useCarouselHandleOnClick>(
     (direction) => {
-      if (rootRef.current === null) return;
-
       const root = rootRef.current;
+      if (root === null) return;
+
       const currentScroll = scroll.current;
       const itemWidthAccACS = itemWidthAccumulatedASC.current;
       const itemWidthAccDESC = itemWidthAccumulatedDESC.current;
-      const containerWidth = root.clientWidth;
+      const containerWidth = root.clientWidth + Math.abs(itemMargin);
 
       if (direction === "next") {
         const index = getNextScroll(
@@ -73,7 +73,9 @@ export const useCarousel = () => {
       const nodeSum = Math.abs(currentScroll - scroll.current);
 
       scrollTo(root, {
-        left: scroll.current - offsetSides(containerWidth, nodeSum, itemMargin),
+        left:
+          scroll.current -
+          offsetSides(containerWidth, nodeSum, Math.max(itemMargin, 0)),
         behavior: "smooth",
       });
     },

@@ -1,5 +1,10 @@
 .root {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100vw;
-  height: var(--image-viewer-body-height);
+  height: calc(
+    var(--image-viewer-height, 100vh) - var(--image-viewer-header-height)
+  );
 }

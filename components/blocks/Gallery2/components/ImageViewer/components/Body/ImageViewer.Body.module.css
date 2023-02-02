@@ -1,3 +1,3 @@
 .root {
-  --image-viewer-body-height: calc(100vh - var(--image-viewer-header-height));
+  width: 100vw;
 }

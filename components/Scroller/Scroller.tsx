@@ -4,7 +4,6 @@ import {
   KeyboardEvent,
   ReactNode,
   Ref,
-  TouchEvent,
   WheelEvent,
   forwardRef,
 } from "react";
@@ -13,9 +12,7 @@ import classes from "./Scroller.module.css";
 
 type HandleOnKeyDown = (event: KeyboardEvent<HTMLDivElement>) => void;
 
-type HandleOnScroll = (
-  event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
-) => void;
+type HandleOnScroll = (event: WheelEvent<HTMLDivElement>) => void;
 
 type ScrollerProps = {
   children: ReactNode;
@@ -46,7 +43,6 @@ export const Scroller: FC<ScrollerProps> = forwardRef(
       ref={ref}
       role="presentation"
       onKeyDown={onKeyDown}
-      onTouchEnd={onScroll}
       onWheel={onScroll}
       className={classNames(classes.root, {
         [classes.root_scrollSnap]: isScrollSnap,

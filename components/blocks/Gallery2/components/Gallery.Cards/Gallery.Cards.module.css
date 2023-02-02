@@ -1,5 +1,5 @@
 .figure {
-  --gallery-image-margin: 2px;
+  --gallery-image-margin: 1px;
 
   margin: calc(var(--gallery-image-margin) * -1);
 }
