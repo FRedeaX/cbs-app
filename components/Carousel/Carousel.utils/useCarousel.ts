@@ -1,4 +1,4 @@
-import { TouchEvent, WheelEvent, useCallback, useEffect } from "react";
+import { TouchEvent, WheelEvent, useCallback } from "react";
 
 import { useCarouselContext } from "../Context";
 import { getNextScroll } from "./getNextScroll";
@@ -70,7 +70,10 @@ export const useCarousel = () => {
         indexOfVisibleElement.current = index;
       }
 
-      const nodeSum = Math.abs(currentScroll - scroll.current);
+      const isItemFullWidth = scroll.current % containerWidth;
+      // если следующий элемент занимает всю ширину экрана nodeSum не рассчитываем
+      const nodeSum =
+        isItemFullWidth && Math.abs(currentScroll - scroll.current);
 
       scrollTo(root, {
         left: scroll.current - offsetSides(containerWidth, nodeSum, itemMargin),

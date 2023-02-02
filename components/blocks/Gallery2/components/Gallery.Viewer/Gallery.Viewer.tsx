@@ -32,7 +32,7 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
                 src={image.url}
                 width={image.width}
                 height={image.height}
-                loading="lazy"
+                sizes="100vw"
               />
             </ImageViewerImageWrapper>
           ))}

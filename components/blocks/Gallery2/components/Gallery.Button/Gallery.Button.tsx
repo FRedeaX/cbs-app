@@ -18,5 +18,9 @@ export const GalleryButton: FC<GalleryButtonProps> = ({ children, index }) => {
     scrollToIndex(index);
   }, [index, scrollToIndex, setToggle]);
 
-  return <ButtonBase onClick={hendleSetID}>{children}</ButtonBase>;
+  return (
+    <ButtonBase onClick={hendleSetID} aria-label="Открыть галерею">
+      {children}
+    </ButtonBase>
+  );
 };
