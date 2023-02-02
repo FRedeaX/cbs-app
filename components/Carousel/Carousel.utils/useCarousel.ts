@@ -1,4 +1,4 @@
-import { TouchEvent, WheelEvent, useCallback, useEffect } from "react";
+import { TouchEvent, WheelEvent, useCallback } from "react";
 
 import { useCarouselContext } from "../Context";
 import { getNextScroll } from "./getNextScroll";
