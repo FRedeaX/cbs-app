@@ -42,7 +42,7 @@ export const useCarousel = () => {
   /**
    * В зависимости от направления прокручивает контейнер
    */
-  const handleOnClick = useCallback<useCarouselHandleOnClick>(
+  const containerMovement = useCallback<useCarouselHandleOnClick>(
     (direction) => {
       if (rootRef.current === null) return;
 
@@ -104,7 +104,7 @@ export const useCarousel = () => {
 
   return {
     scrollToIndex,
-    handleOnClick,
+    containerMovement,
     handleOnScroll,
   };
 };
