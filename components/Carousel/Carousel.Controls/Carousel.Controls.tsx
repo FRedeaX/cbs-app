@@ -31,7 +31,7 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
   isShadow = true,
 }) => {
   const { isPrev, isNext } = useCarouselControls();
-  const { handleOnClick } = useCarousel();
+  const { containerMovement } = useCarousel();
 
   const iconSize = isButtonsOnSides ? "medium" : "small";
 
@@ -54,13 +54,13 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
           <CarouselButton
             direction="prev"
             isActive={isPrev}
-            onClick={handleOnClick}>
+            onClick={containerMovement}>
             <ArrowBackIosRoundedIcon fontSize={iconSize} />
           </CarouselButton>
           <CarouselButton
             direction="next"
             isActive={isNext}
-            onClick={handleOnClick}>
+            onClick={containerMovement}>
             <ArrowForwardIosRoundedIcon fontSize={iconSize} />
           </CarouselButton>
         </CarouselButtonSides>

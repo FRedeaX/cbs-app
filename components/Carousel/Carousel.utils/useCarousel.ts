@@ -42,7 +42,7 @@ export const useCarousel = () => {
   /**
    * В зависимости от направления прокручивает контейнер
    */
-  const handleOnClick = useCallback<useCarouselHandleOnClick>(
+  const containerMovement = useCallback<useCarouselHandleOnClick>(
     (direction) => {
       const root = rootRef.current;
       if (root === null) return;
@@ -70,7 +70,10 @@ export const useCarousel = () => {
         indexOfVisibleElement.current = index;
       }
 
-      const nodeSum = Math.abs(currentScroll - scroll.current);
+      const isItemFullWidth = scroll.current % containerWidth;
+      // если следующий элемент занимает всю ширину экрана nodeSum не рассчитываем
+      const nodeSum =
+        isItemFullWidth && Math.abs(currentScroll - scroll.current);
 
       scrollTo(root, {
         left:
@@ -103,7 +106,7 @@ export const useCarousel = () => {
 
   return {
     scrollToIndex,
-    handleOnClick,
+    containerMovement,
     handleOnScroll,
   };
 };

@@ -34,18 +34,18 @@ type DragStateData = {
 
 export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
   const { isOpen, setToggle } = useGalleryContext();
-  const { handleOnClick } = useCarousel();
+  const { containerMovement } = useCarousel();
   const { rootRef, scroll } = useCarouselContext();
 
   const handleOnKeyDown = useCallback<HandleOnKeyDown>(
     (event) => {
       if (event.code === "ArrowRight" || event.code === "KeyD") {
-        handleOnClick("next");
+        containerMovement("next");
       } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
-        handleOnClick("prev");
+        containerMovement("prev");
       }
     },
-    [handleOnClick],
+    [containerMovement],
   );
 
   const { dragProps } = useDrag<DragStateData>((state) => {
@@ -84,7 +84,7 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
       const screenPercentage = (root.clientWidth * 45) / 100;
 
       if (directionMovement && calculatedMovement > screenPercentage) {
-        handleOnClick(mx < 0 ? "next" : "prev");
+        containerMovement(mx < 0 ? "next" : "prev");
       } else {
         root.scrollTo({ left: scroll.current, behavior: "smooth" });
       }

@@ -1,7 +1,6 @@
 import classNames from "classnames";
-import { FC, ReactElement, Ref, forwardRef, useMemo } from "react";
+import { FC, ReactElement } from "react";
 
-import { mergeAllRefs } from "../../helpers/frontend/hooks";
 import { Scroller } from "../Scroller/Scroller";
 import {
   CarouselControls,
@@ -22,48 +21,42 @@ export type CarouselProps = {
   itemMargin?: number;
 
   className?: string;
-  ref?: Ref<HTMLDivElement>;
 } & CarouselControlsProps;
 
-export const Carousel: FC<CarouselProps> = forwardRef(
-  (
-    { children, itemMargin = 0, className, isButtonsOnSides, isShadow },
-    ref,
-  ) => {
-    const {
-      rootRefCallback,
-      itemListRefCallback,
-      leftSideNodeRef,
-      rightSideNodeRef,
-    } = useCarouselContext();
-    const { handleOnScroll } = useCarousel();
+export const Carousel: FC<CarouselProps> = ({
+  children,
+  itemMargin = 0,
+  className,
+  isButtonsOnSides,
+  isShadow,
+}) => {
+  const {
+    rootRefCallback,
+    itemListRefCallback,
+    leftSideNodeRef,
+    rightSideNodeRef,
+  } = useCarouselContext();
+  const { handleOnScroll } = useCarousel();
 
-    const mergedRefs = useMemo(
-      () => mergeAllRefs<HTMLDivElement>(itemListRefCallback, ref),
-      [itemListRefCallback, ref],
-    );
-    const sidesDivStyle = { minWidth: `${itemMargin}px` };
+  const sidesDivStyle = { minWidth: `${itemMargin}px` };
 
-    return (
-      <div className={classes.root}>
-        <CarouselControls
-          isButtonsOnSides={isButtonsOnSides}
-          isShadow={isShadow}
-        />
+  return (
+    <div className={classes.root}>
+      <CarouselControls
+        isButtonsOnSides={isButtonsOnSides}
+        isShadow={isShadow}
+      />
 
-        <Scroller
-          ref={rootRefCallback}
-          onScroll={handleOnScroll}
-          className={classNames(classes.Scroller, className)}>
-          <div ref={leftSideNodeRef} style={sidesDivStyle} />
-          <div ref={mergedRefs} className={classes.itemList}>
-            {children}
-          </div>
-          <div ref={rightSideNodeRef} style={sidesDivStyle} />
-        </Scroller>
-      </div>
-    );
-  },
-);
-
-Carousel.displayName = "Carousel";
+      <Scroller
+        ref={rootRefCallback}
+        onScroll={handleOnScroll}
+        className={classNames(classes.Scroller, className)}>
+        <div ref={leftSideNodeRef} style={sidesDivStyle} />
+        <div ref={itemListRefCallback} className={classes.itemList}>
+          {children}
+        </div>
+        <div ref={rightSideNodeRef} style={sidesDivStyle} />
+      </Scroller>
+    </div>
+  );
+};
