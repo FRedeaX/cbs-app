@@ -10,7 +10,6 @@ export * from "./exceptionLog";
 export * from "./hasAppendPathname";
 export * from "./isEmptyArray";
 export * from "./isFront";
-export * from "./isNodeList";
 export * as localStorage from "./localStorage";
 export * from "./noop";
 export * from "./omit";

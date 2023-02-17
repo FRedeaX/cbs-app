@@ -13,7 +13,7 @@ export type CarouselContextRefCallback = (
   node: CarouselContextHTMLNode,
 ) => void;
 
-type CarouselContextProps = {
+export type CarouselContextProps = {
   /**
    * Cсылка на корневой прокручиваемый элемент `DOM`.
    */
@@ -28,23 +28,13 @@ type CarouselContextProps = {
   rootRefCallback: CarouselContextRefCallback;
 
   /**
-   * Cсылка на крайний левый узел `DOM`.
-   */
-  leftSideNodeRef: MutableRefObject<CarouselContextHTMLNode>;
-
-  /**
-   * Cсылка на крайний правый узел `DOM`.
-   */
-  rightSideNodeRef: MutableRefObject<CarouselContextHTMLNode>;
-
-  /**
-   * Cсылка на `DOM` элемент
+   * Cсылка на `DOM` элемент,
    * который содержит список дочерних элементов карусели.
    */
   itemListRef: MutableRefObject<CarouselContextItemListRef>;
 
   /**
-   * Обратный вызов устанавливает ссылку на `DOM` элемент
+   * Обратный вызов устанавливает ссылку на `DOM` элемент,
    * который содержит список дочерних элементов карусели.
    *
    * Заполненяет прямой и обратный массив смещений.
@@ -52,19 +42,14 @@ type CarouselContextProps = {
   itemListRefCallback: CarouselContextRefCallback;
 
   /**
-   * Локальное состояние прокрутки `rootRef`.
+   * Локальное состояние scrollLeft.
    */
   scroll: MutableRefObject<number>;
 
   /**
-   * `index` видимого элемента.
+   * `index` элемента, к которому был выполнен переход.
    */
   indexOfVisibleElement: MutableRefObject<number>;
-
-  /**
-   * Отступ у элемента с одной стороны.
-   */
-  itemMargin: number;
 
   /**
    * Массив смещений.
@@ -75,6 +60,20 @@ type CarouselContextProps = {
    * Обратный массив смещений.
    */
   itemWidthAccumulatedDESC: MutableRefObject<number[]>;
+
+  /**
+   * Отступ у элемента с одной стороны.
+   *
+   * @default 0
+   */
+  itemMargin: number;
+
+  /**
+   * Тип движения карусели.
+   *
+   * @default scroll
+   */
+  typeMovement: "scroll" | "transform";
 };
 
 export const CarouselContext =

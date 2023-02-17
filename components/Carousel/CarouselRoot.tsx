@@ -1,16 +1,27 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { FC } from "react";
 
 import { Carousel, CarouselProps } from "./Carousel";
-import { CarouselProvider } from "./Context";
+import { CarouselProvider, CarouselProviderProps } from "./Context";
 
-export const CarouselRoot: FC<CarouselProps> = ({
-  itemMargin,
+export const CarouselRoot: FC<
+  CarouselProps & Omit<CarouselProviderProps, "children">
+> = ({
   children,
-  ...props
+  className,
+  isButtonsOnSides,
+  isShadow,
+  itemMargin,
+  typeMovement,
+  isResponsiveWidthsChildren,
 }) => (
-  <CarouselProvider itemMargin={itemMargin}>
-    <Carousel itemMargin={itemMargin} {...props}>
+  <CarouselProvider
+    itemMargin={itemMargin}
+    typeMovement={typeMovement}
+    isResponsiveWidthsChildren={isResponsiveWidthsChildren}>
+    <Carousel
+      className={className}
+      isButtonsOnSides={isButtonsOnSides}
+      isShadow={isShadow}>
       {children}
     </Carousel>
   </CarouselProvider>

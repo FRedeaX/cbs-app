@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 import { columnsBlockGQL } from "../../../blocks/Columns/Columns";
 import { embedBlockGQL } from "../../../blocks/Embed/Embed";
 import { fileBlockGQL } from "../../../blocks/File/File";
-import { galleryBlockGQL } from "../../../blocks/Gallery/Gallery";
+import { galleryBlockGQL } from "../../../blocks/Gallery/utils";
 import { headingBlockGQL } from "../../../blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../../blocks/Html/Html";
 import { imageBlockGQL } from "../../../blocks/Image/Figure";

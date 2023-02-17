@@ -6,7 +6,10 @@ import { getPrevScroll } from "./getPrevScroll";
 import { offsetSides } from "./offsetSides";
 import { scrollTo } from "./scrollTo";
 
-export type useCarouselHandleOnClick = (direction: "next" | "prev") => void;
+export type useCarouselHandleOnClick = (
+  direction: "next" | "prev",
+  scrollTime?: number,
+) => void;
 
 export type useCarouselHandleOnScroll = (
   event: WheelEvent<HTMLDivElement>,
@@ -19,9 +22,10 @@ export const useCarousel = () => {
     rootRef,
     scroll,
     indexOfVisibleElement,
-    itemMargin,
     itemWidthAccumulatedASC,
     itemWidthAccumulatedDESC,
+    itemMargin,
+    typeMovement,
   } = useCarouselContext();
 
   /**
@@ -30,20 +34,44 @@ export const useCarousel = () => {
   const scrollToIndex = useCallback<useCarouselScrollToIndex>(
     (index) => {
       const root = rootRef.current;
+      if (root === null) return;
+
+      const currentScroll = scroll.current;
       const itemWidthAccASC = itemWidthAccumulatedASC.current;
+      const containerWidth = root.clientWidth + Math.abs(itemMargin);
 
       indexOfVisibleElement.current = index;
       scroll.current = itemWidthAccASC[index];
-      scrollTo(root, { left: scroll.current, behavior: "auto" });
+
+      scrollTo(root, {
+        left:
+          scroll.current -
+          offsetSides(
+            containerWidth,
+            currentScroll,
+            scroll.current,
+            Math.max(itemMargin, 0),
+          ),
+        behavior: "smooth",
+        typeMovement,
+      });
     },
-    [indexOfVisibleElement, itemWidthAccumulatedASC, rootRef, scroll],
+    [
+      rootRef,
+      scroll,
+      itemWidthAccumulatedASC,
+      itemMargin,
+      indexOfVisibleElement,
+      typeMovement,
+    ],
   );
 
   /**
-   * В зависимости от направления прокручивает контейнер
+   * В зависимости от направления рассчитывает позицию `scroll` и
+   * прокручивает контейнер.
    */
-  const handleOnClick = useCallback<useCarouselHandleOnClick>(
-    (direction) => {
+  const containerMovement = useCallback<useCarouselHandleOnClick>(
+    (direction, scrollTime) => {
       const root = rootRef.current;
       if (root === null) return;
 
@@ -70,22 +98,28 @@ export const useCarousel = () => {
         indexOfVisibleElement.current = index;
       }
 
-      const nodeSum = Math.abs(currentScroll - scroll.current);
-
       scrollTo(root, {
         left:
           scroll.current -
-          offsetSides(containerWidth, nodeSum, Math.max(itemMargin, 0)),
+          offsetSides(
+            containerWidth,
+            currentScroll,
+            scroll.current,
+            Math.max(itemMargin, 0),
+          ),
         behavior: "smooth",
+        typeMovement,
+        scrollTime,
       });
     },
     [
       rootRef,
       scroll,
-      indexOfVisibleElement,
-      itemMargin,
       itemWidthAccumulatedASC,
       itemWidthAccumulatedDESC,
+      itemMargin,
+      typeMovement,
+      indexOfVisibleElement,
     ],
   );
 
@@ -103,7 +137,7 @@ export const useCarousel = () => {
 
   return {
     scrollToIndex,
-    handleOnClick,
+    containerMovement,
     handleOnScroll,
   };
 };

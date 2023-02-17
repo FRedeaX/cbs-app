@@ -8,7 +8,7 @@ import classes from "./Blocks.module.css";
 import { Columns } from "./Columns/Columns";
 import { Embed } from "./Embed/Embed";
 import { File } from "./File/File";
-import { Gallery } from "./Gallery2/Gallery";
+import { Gallery } from "./Gallery/Gallery";
 import { Heading } from "./Heading/Heading";
 import { Html } from "./Html/Html";
 import { Figure } from "./Image/Figure";

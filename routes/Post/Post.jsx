@@ -1,11 +1,12 @@
 import { gql } from "@apollo/client";
+import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
 import { embedBlockGQL } from "../../components/blocks/Embed/Embed";
 import { fileBlockGQL } from "../../components/blocks/File/File";
-import { galleryBlockGQL } from "../../components/blocks/Gallery/Gallery";
+import { galleryBlockGQL } from "../../components/blocks/Gallery/utils";
 import { headingBlockGQL } from "../../components/blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../components/blocks/Html/Html";
 import { imageBlockGQL } from "../../components/blocks/Image/Figure";
@@ -35,9 +36,9 @@ export const Post = ({
   // const { isOnScreen } = useOnScreen(null, "0px", 0.5);
   const { hendleOffers, offerList } = usePost();
 
-  // useEffect(() => {
-  //   if (id) hendleOffers(id);
-  // }, [hendleOffers, id]);
+  useEffect(() => {
+    if (id) hendleOffers(id);
+  }, [hendleOffers, id]);
 
   // const [ref, { isVisible }] = useIntersectionObserver({ threshold: 0.5 });
   // useEffect(() => {

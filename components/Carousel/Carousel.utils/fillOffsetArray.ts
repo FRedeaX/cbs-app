@@ -1,4 +1,3 @@
-import { _NodeListOf as NodeListOf } from "../../../helpers/typings/utility-types";
 import { FULL_MARGIN } from "../Carousel.const";
 
 /**
@@ -6,10 +5,7 @@ import { FULL_MARGIN } from "../Carousel.const";
  *
  * @param itemMargin Отступ у элемента с одной стороны
  */
-export const fillOffsetArray = (
-  nodes: NodeListOf<HTMLElement>,
-  itemMargin: number,
-) => {
+export const fillOffsetArray = (nodes: HTMLElement[], itemMargin: number) => {
   const margin = itemMargin < 0 ? 0 : itemMargin * FULL_MARGIN;
 
   const itemWidthAccASC: number[] = [0];
