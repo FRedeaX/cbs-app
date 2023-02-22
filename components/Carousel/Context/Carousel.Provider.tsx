@@ -83,7 +83,9 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
   const itemListRefCallback = useCallback<CarouselContextRefCallback>(
     (node) => {
       if (node !== null && node.childNodes !== undefined) {
-        itemListRef.current = Array.from(node.children || []);
+        itemListRef.current = Array.from(
+          (node.children as HTMLElement[]) || [],
+        );
         init();
       }
 
