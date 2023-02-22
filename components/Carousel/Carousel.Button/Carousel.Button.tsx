@@ -43,7 +43,7 @@ export const CarouselButton: FC<CarouselButtonProps> = ({
         })}
         sx={style}
         disabled={!isActive}
-        aria-label={direction === "next" ? "Следующей" : "Предыдущий"}>
+        aria-label={direction === "next" ? "Следующий" : "Предыдущий"}>
         {children}
       </IconButton>
     </Box>

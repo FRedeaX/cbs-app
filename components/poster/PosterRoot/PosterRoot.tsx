@@ -33,7 +33,10 @@ interface PosterRootProps {
 
 const PosterRoot: FC<PosterRootProps> = ({ posters, className }) => (
   <PosterList className={className?.list}>
-    <CarouselRoot itemMargin={5} isButtonsOnSides={false}>
+    <CarouselRoot
+      itemMargin={5}
+      isButtonsOnSides={false}
+      isResponsiveWidthsChildren>
       {posters.map((poster) => (
         <PosterItem
           key={poster.id}

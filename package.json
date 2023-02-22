@@ -23,7 +23,7 @@
     "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.7.0",
     "@redis/client": "^1.2.0",
-    "@sentry/nextjs": "^7.32.1",
+    "@sentry/nextjs": "^6.19.7",
     "@types/autosuggest-highlight": "^3.2.0",
     "autosuggest-highlight": "^3.3.4",
     "classnames": "^2.3.1",
@@ -87,7 +87,8 @@
   },
   "browserslist": {
     "production": [
-      "chrome 49"
+      "chrome 49",
+      "opera 36"
     ],
     "development": [
       "last 1 chrome version",

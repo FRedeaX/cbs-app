@@ -7,6 +7,7 @@ import {
   VisuallyHiddenProps,
 } from "../../../../VisuallyHidden/VisuallyHidden";
 import { GalleryButton } from "../Gallery.Button/Gallery.Button";
+import { GalleryMore } from "../Gallery.More/Gallery.More";
 import classes from "./Gallery.Row.module.css";
 
 export type Image = {
@@ -22,9 +23,9 @@ export type GalleryRowProps = {
   images: Image[];
 
   /**
-   * @default false
+   *
    */
-  imageCrop?: boolean;
+  moreCount?: number;
 
   /**
    * Смещение `index` относительно предыдущих строк.
@@ -40,19 +41,23 @@ export type GalleryRowProps = {
 
 export const GalleryRow: FC<GalleryRowProps> = ({
   images,
-  imageCrop = false,
+  moreCount,
   offset = 0,
   isHiddenFigcaption,
 }) => (
   <div className={classes.root}>
     {images.map((image, index) => {
       const aspectRatio = image.width / image.height;
+
       return (
         <Figure
           key={image.id}
-          style={{ flex: imageCrop ? "1" : `${aspectRatio}` }}
+          style={{ flex: `var(--gallery-image-flex, ${aspectRatio})` }}
           className={classes.wrapper}>
           <GalleryButton className={classes.button} index={index + offset}>
+            {!!moreCount && index === images.length - 1 && (
+              <GalleryMore count={moreCount} />
+            )}
             <NextImage
               alt={image.alt}
               src={image.url}

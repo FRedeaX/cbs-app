@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { Maybe } from "../../typings/utility-types";
 import useIntersectionObserver, {
   IntersectionObserverHookArgs,
   IntersectionObserverHookResult,
@@ -10,8 +11,8 @@ export type TrackVisibilityHookArgs = IntersectionObserverHookArgs;
 export type TrackVisibilityHookResult = [
   IntersectionObserverHookResult[0],
   IntersectionObserverHookResult[1] & {
-    isVisible: boolean;
-    wasEverVisible: boolean;
+    isVisible: Maybe<boolean>;
+    wasEverVisible: Maybe<boolean>;
   },
 ];
 
@@ -19,7 +20,7 @@ export const useTrackVisibility = (
   args?: IntersectionObserverHookArgs,
 ): TrackVisibilityHookResult => {
   const [ref, result] = useIntersectionObserver(args);
-  const isVisible = Boolean(result.entry?.isIntersecting);
+  const isVisible = result.entry?.isIntersecting;
   const [wasEverVisible, setWasEverVisible] = useState(isVisible);
 
   if (isVisible && !wasEverVisible) {

@@ -11,6 +11,10 @@ import { GalleryViewer } from "./components/Gallery.Viewer/Gallery.Viewer";
 import { GalleryProvider } from "./context";
 
 type GalleryProps = {
+  /**
+   * @default false
+   */
+  imageCrop?: boolean;
   className: string;
   __typename?: string;
 } & GalleryCardsProps &
@@ -19,7 +23,7 @@ type GalleryProps = {
 export const Gallery: FC<GalleryProps> = ({
   caption,
   className,
-  imageCrop,
+  imageCrop = false,
   images,
 
   // Извлекаем свойства, т.к. они не нужны на DOM узле
@@ -27,15 +31,21 @@ export const Gallery: FC<GalleryProps> = ({
   __typename,
   ...props
 }) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <div className={classNames(classes.root, className)} {...props}>
+  <div
+    className={classNames(
+      classes.root,
+      { [classes.root_imageCrop]: imageCrop },
+      className,
+    )}
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    {...props}>
     <GalleryProvider>
       <CarouselProvider
         itemMargin={-10}
         typeMovement="transform"
         isResponsiveWidthsChildren>
         <GalleryViewer images={images} />
-        <GalleryCards images={images} imageCrop={imageCrop} caption={caption} />
+        <GalleryCards images={images} caption={caption} />
       </CarouselProvider>
     </GalleryProvider>
   </div>

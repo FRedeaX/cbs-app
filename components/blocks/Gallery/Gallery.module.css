@@ -1,3 +1,9 @@
 .root {
   margin: var(--gallery-margin);
 }
+
+@supports (object-fit: cover) {
+  .root_imageCrop {
+    --gallery-image-flex: 1;
+  }
+}

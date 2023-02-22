@@ -1,0 +1,17 @@
+.root {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--black-50);
+}
+
+.text {
+  font-size: 14px;
+  color: white;
+}

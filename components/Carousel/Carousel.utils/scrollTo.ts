@@ -21,8 +21,9 @@ export const scrollTo = (
     node.scrollTo({ left, behavior });
   } else {
     const childrenNode = node.children[0] as HTMLDivElement;
+    const duration = behavior === "auto" ? 0 : scrollTime;
 
-    childrenNode.style.transition = `transform ${scrollTime}ms ease`;
+    childrenNode.style.transition = `transform ${duration}ms ease`;
     childrenNode.style.transform = `translateX(${left * -1}px)`;
   }
 };

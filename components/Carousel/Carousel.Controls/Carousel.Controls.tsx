@@ -1,8 +1,9 @@
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { Fade } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 
+import isIntersection from "../../../helpers/frontend/isIntersection";
 import { CarouselButton } from "../Carousel.Button/Carousel.Button";
 import CarouselButtonSides from "../Carousel.Button/Carousel.Button.Sides";
 import CarouselShadow from "../Carousel.Shadow/Carousel.Shadow";
@@ -35,12 +36,20 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
 
   const iconSize = isButtonsOnSides ? "medium" : "small";
 
+  const isShadowRef = useRef(isShadow);
+  useEffect(() => {
+    // Отключаем тень если `IntersectionObserver` не поддерживается
+    if (!isIntersection) {
+      isShadowRef.current = false;
+    }
+  }, []);
+
   return (
     <Fade in={isPrev || isNext}>
       <div>
         <CarouselShadowWrapper>
           <CarouselShadow
-            isShadow={isShadow}
+            isShadow={isShadowRef.current}
             direction="prev"
             isActive={isPrev}
           />

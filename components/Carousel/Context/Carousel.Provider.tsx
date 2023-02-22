@@ -1,7 +1,9 @@
 import { FC, ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 
+import { exceptionLog } from "../../../helpers";
 import { Maybe } from "../../../helpers/typings/utility-types";
 import { fillOffsetArray } from "../Carousel.utils/fillOffsetArray";
+import { offsetSides } from "../Carousel.utils/offsetSides";
 import { scrollTo } from "../Carousel.utils/scrollTo";
 import {
   CarouselContext,
@@ -17,6 +19,11 @@ export type CarouselProviderProps = {
    * @default false
    */
   isResponsiveWidthsChildren?: boolean;
+
+  /**
+   * Пропускает указанное количество элементов.
+   */
+  skip?: number;
 } & Partial<Pick<CarouselContextProps, "itemMargin" | "typeMovement">>;
 
 export const CarouselProvider: FC<CarouselProviderProps> = ({
@@ -24,12 +31,13 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
   itemMargin = 0,
   typeMovement = "scroll",
   isResponsiveWidthsChildren = false,
+  skip,
 }) => {
   const rootRef = useRef<CarouselContextHTMLNode>(null);
   const itemListRef = useRef<Maybe<HTMLElement[]>>(undefined);
 
   const scroll = useRef(0);
-  const indexOfVisibleElement = useRef(0);
+  const indexOfVisibleElement = useRef(skip ?? 0);
   const itemWidthAccumulatedASC = useRef<number[]>([]);
   const itemWidthAccumulatedDESC = useRef<number[]>([]);
 
@@ -53,7 +61,7 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
     scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
 
     if (root) {
-      scrollTo(root, { left: scroll.current, typeMovement, scrollTime: 0 });
+      scrollTo(root, { left: scroll.current, behavior: "auto", typeMovement });
     }
   }, [init, typeMovement]);
 
@@ -70,24 +78,42 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
   const rootRefCallback = useCallback<CarouselContextRefCallback>(
     (node) => {
       if (node === null) return;
-
       rootRef.current = node;
+
+      if (indexOfVisibleElement.current === 0) return;
+
+      const currentScroll = scroll.current;
+      const containerWidth = node.clientWidth + Math.abs(itemMargin);
       const itemWidthAccASC = itemWidthAccumulatedASC.current;
+
       scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
 
-      scrollTo(node, { left: scroll.current, behavior: "auto", typeMovement });
+      try {
+        scrollTo(node, {
+          left:
+            scroll.current -
+            offsetSides(
+              containerWidth,
+              currentScroll,
+              scroll.current,
+              Math.max(itemMargin, 0),
+            ),
+          behavior: "auto",
+          typeMovement,
+        });
+      } catch (error) {
+        exceptionLog(error);
+      }
     },
-    [typeMovement],
+    [itemMargin, typeMovement],
   );
 
   const itemListRefCallback = useCallback<CarouselContextRefCallback>(
     (node) => {
       if (node !== null && node.childNodes !== undefined) {
-        itemListRef.current = Array.from(node.children || []);
+        itemListRef.current = Array.prototype.slice.call(node.children || []);
         init();
       }
-
-      // itemListRef.current = node?.childNodes as NodeListOf<HTMLElement>;
     },
     [init],
   );

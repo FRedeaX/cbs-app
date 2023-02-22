@@ -1,6 +1,5 @@
-.root {
-  width: var(--figcaption-width);
-  max-width: 100%;
+.root_outside {
+  margin: var(--figcaption-margin, 4px);
 }
 
 .root_inside {
@@ -22,7 +21,7 @@
 .text {
   cursor: default;
   font-size: var(--figcaption-font-size, 14px);
-  line-height: 1.25;
+  line-height: 1.3em;
   color: var(--black-80);
 }
 
@@ -30,6 +29,8 @@
   overflow: hidden;
   /* stylelint-disable-next-line value-no-vendor-prefix */
   display: -webkit-box;
+
+  padding-top: 2px;
 
   hyphens: auto;
 

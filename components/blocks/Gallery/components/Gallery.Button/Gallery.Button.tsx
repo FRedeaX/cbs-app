@@ -29,7 +29,7 @@ export const GalleryButton: FC<GalleryButtonProps> = ({
     <ButtonBase
       className={classNames(classes.root, className)}
       onClick={hendleSetID}
-      aria-label="Открыть галерею">
+      aria-label="Открыть изображение">
       {children}
     </ButtonBase>
   );

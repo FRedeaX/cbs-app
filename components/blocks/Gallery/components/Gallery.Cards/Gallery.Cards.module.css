@@ -3,9 +3,3 @@
 
   margin: calc(var(--gallery-image-margin) * -1);
 }
-
-.caption {
-  margin-top: 4px;
-  font-size: 14px;
-  color: var(--black-80);
-}

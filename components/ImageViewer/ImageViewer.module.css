@@ -2,4 +2,5 @@
   --image-viewer-header-height: 40px;
 
   touch-action: none;
+  overflow: hidden;
 }

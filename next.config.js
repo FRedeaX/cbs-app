@@ -18,7 +18,7 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 const nextConfig = withTM({
-  output: "standalone",
+  // output: "standalone",
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,

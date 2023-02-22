@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { isBrowser } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 
 import { useTrackVisibility } from "../../../helpers/frontend/hooks/useTrackVisibility";
 import { useCarouselContext } from "../Context";
@@ -30,7 +30,7 @@ export const useCarouselControls = () => {
   ]);
 
   return {
-    isPrev: !isPrev && isBrowser,
-    isNext: !isNext && isBrowser,
+    isPrev: isPrev === undefined ? !!isPrev : !isPrev && isDesktop,
+    isNext: isNext === undefined ? !!isNext : !isNext && isDesktop,
   };
 };

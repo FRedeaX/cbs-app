@@ -13,11 +13,13 @@ export const CarouselRoot: FC<
   itemMargin,
   typeMovement,
   isResponsiveWidthsChildren,
+  skip,
 }) => (
   <CarouselProvider
     itemMargin={itemMargin}
     typeMovement={typeMovement}
-    isResponsiveWidthsChildren={isResponsiveWidthsChildren}>
+    isResponsiveWidthsChildren={isResponsiveWidthsChildren}
+    skip={skip}>
     <Carousel
       className={className}
       isButtonsOnSides={isButtonsOnSides}
