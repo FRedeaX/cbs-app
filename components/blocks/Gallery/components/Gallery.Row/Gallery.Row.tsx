@@ -23,12 +23,12 @@ export type GalleryRowProps = {
   images: Image[];
 
   /**
-   *
+   * Количество изображений доступных в полноэкранном режиме.
    */
   moreCount?: number;
 
   /**
-   * Смещение `index` относительно предыдущих строк.
+   * Смещение `index` относительно предыдущей строки.
    * @default 0
    */
   offset?: number;
