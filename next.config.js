@@ -25,8 +25,7 @@ const nextConfig = withTM({
   },
 
   images: {
-    domains: [`${process.env.HOST}`],
-    // formats: ["image/avif", "image/webp"],
+    domains: [`${process.env.DOMAIN}`],
     formats: ["image/webp"],
   },
   experimental: {
@@ -55,9 +54,9 @@ const nextConfig = withTM({
   //   return redirect([...redirectRoutes], "/");
   // },
 
-  sentry: {
-    hideSourceMaps: true,
-  },
+  // sentry: {
+  //   hideSourceMaps: false,
+  // },
 });
 
 const sentryWebpackPluginOptions = {

@@ -4,7 +4,7 @@ import { memo } from "react";
 import { Card } from "../Card";
 import GroupCards from "../GroupCards/GroupCards";
 
-const СardListGrouped = ({ data }) => {
+const CardListGrouped = ({ data }) => {
   let column = 0;
 
   return data.map((post, index) => {
@@ -43,4 +43,4 @@ const СardListGrouped = ({ data }) => {
   });
 };
 
-export default memo(СardListGrouped);
+export default memo(CardListGrouped);

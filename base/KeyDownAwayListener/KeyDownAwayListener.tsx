@@ -21,7 +21,7 @@ type KeyDownAwayListenerProps = {
  *
  * @example
  * <KeyDownAwayListener
- *    onKeyDownAway={setIsOpen}
+ *    onKeyDownAway={handler}
  *    keyboardCode={["Escape"]}>
  * ...
  * </KeyDownAwayListener>

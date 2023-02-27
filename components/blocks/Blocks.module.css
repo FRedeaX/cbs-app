@@ -1,0 +1,11 @@
+.root {
+  --gallery-margin: 6px 0 20px;
+}
+
+.root:first-child {
+  --gallery-margin: 0 0 20px;
+}
+
+.root:last-child {
+  --gallery-margin: 6px 0 0;
+}

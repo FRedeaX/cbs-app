@@ -1,8 +1,9 @@
-import СardListGrouped from "./СardListGrouped/СardListGrouped";
-import СardListUngrouped from "./СardListUngrouped/СardListUngrouped";
+import { IData } from "./Card";
+import CardListGrouped from "./CardListGrouped/CardListGrouped";
+import CardListUngrouped from "./CardListUngrouped/CardListUngrouped";
 
 interface CardListProps {
-  nodes: Array<object>;
+  nodes: IData[];
   isGroupCards: boolean;
   isHorizontal: boolean;
 }
@@ -13,9 +14,9 @@ const CardList = ({
   isHorizontal = false,
 }: CardListProps) => {
   if (isGroupCards === true) {
-    return <СardListGrouped data={nodes} />;
+    return <CardListGrouped data={nodes} />;
   }
 
-  return <СardListUngrouped nodes={nodes} isHorizontal={isHorizontal} />;
+  return <CardListUngrouped nodes={nodes} isHorizontal={isHorizontal} />;
 };
 export default CardList;

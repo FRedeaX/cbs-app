@@ -7,6 +7,7 @@ export const exceptionLog = (error: any) => {
   if (process.env.NODE_ENV === "development") {
     console.error(error);
   } else {
+    console.error(error);
     captureException(error);
   }
 };

@@ -1,186 +1,50 @@
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import { Fade } from "@mui/material";
 import classNames from "classnames";
-import {
-  Children,
-  FC,
-  ReactElement,
-  TouchEvent,
-  WheelEvent,
-  memo,
-} from "react";
+import { FC, ReactElement } from "react";
 
-import { throttler } from "../../helpers";
-import CarouselButton from "./Carousel.Button/Carousel.Button";
-import CarouselButtonSides from "./Carousel.Button/Carousel.Button.Sides";
-import CarouselList from "./Carousel.List";
-import CarouselScroller from "./Carousel.Scroller/Carousel.Scroller";
-import CarouselShadow from "./Carousel.Shadow/Carousel.Shadow";
-import CarouselShadowWrapper from "./Carousel.Shadow/Carousel.Shadow.Wrapper";
+import { CSSProperties } from "../../helpers/typings/utility-types";
+import { Scroller } from "../Scroller/Scroller";
+import {
+  CarouselControls,
+  CarouselControlsProps,
+} from "./Carousel.Controls/Carousel.Controls";
 import classes from "./Carousel.module.css";
-import {
-  IArgs,
-  IArgsLegacy,
-  useCarouselHookResult,
-  useCarouselHookResultLegacy,
-} from "./Carousel.utils";
+import { useCarousel } from "./Carousel.utils/useCarousel";
+import { useCarouselContext } from "./context";
 
-export interface IUseCarousel {
-  (args: IArgs | IArgsLegacy):
-    | useCarouselHookResult
-    | useCarouselHookResultLegacy;
-}
-
-export interface ICarouselProps {
+export type CarouselProps = {
   children: ReactElement[];
-  // useCarousel: (args: T) => D;
-  useCarousel: IUseCarousel;
-
-  length?: number;
-
-  /**
-   * Отступ у элемента с одной стороны
-   *
-   * @default 0
-   */
-  itemMargin?: number;
-
-  /**
-   * @default false
-   */
-  isScrollSnap?: boolean;
-
-  /**
-   * Расположение кнопок навигации
-   *
-   * @default true
-   */
-  isButtonsOnSides?: boolean;
-
-  /**
-   * Отступ от границ контейнера при использовании кнопок навигации
-   *
-   * @default false
-   */
-  isOffsetSides?: boolean;
-
-  /**
-   * Тень по левой и правой стороне контейнера
-   *
-   * @default true
-   */
-  isShadow?: boolean;
-
   className?: string;
+} & CarouselControlsProps;
 
-  /**
-   * ID для сохранения прокрутки
-   */
-  saveID?: string;
-  setCount?: (count: number) => void;
-}
-
-const Carousel: FC<ICarouselProps> = ({
+export const Carousel: FC<CarouselProps> = ({
   children,
-  length = Children.count(children),
-  itemMargin = 0,
-  isScrollSnap = false,
-  isButtonsOnSides = true,
-  isOffsetSides = false,
-  isShadow = true,
   className,
-  saveID,
-  setCount,
-  useCarousel,
-  ...props
+  isButtonsOnSides,
+  isShadow,
 }) => {
-  const sidesDivStyle = { minWidth: `${itemMargin}px` };
-  const [
-    nodeListRefCallback,
-    {
-      onClickHendler,
-      onKeyDownHendler,
-      rootRefCallback,
-      isPrev,
-      isNext,
-      isDisplayNavigation,
-      hendleScroll,
-    },
-  ] = useCarousel({
-    length,
-    itemMargin,
-    isOffsetSides,
-    id: saveID,
-    setCount,
-    ...props,
-  });
+  const { rootRefCallback, itemListRefCallback, itemMargin } =
+    useCarouselContext();
+  const { handleOnScroll } = useCarousel();
 
-  const onScroll = (
-    event: TouchEvent<HTMLDivElement> | WheelEvent<HTMLDivElement>,
-  ) =>
-    typeof hendleScroll === "function" && throttler(() => hendleScroll(event));
-
-  const iconSize = isButtonsOnSides ? "medium" : "small";
+  const sidesDivStyle: CSSProperties = { minWidth: `${itemMargin}px` };
 
   return (
     <div className={classes.root}>
-      <Fade in={isDisplayNavigation}>
-        <div>
-          <CarouselShadowWrapper>
-            <CarouselShadow
-              isShadow={isShadow}
-              direction="prev"
-              isActive={isPrev}
-            />
-            <CarouselShadow
-              isShadow={isShadow}
-              direction="next"
-              isActive={isNext}
-            />
-          </CarouselShadowWrapper>
-          <CarouselButtonSides isButtonsOnSides={isButtonsOnSides}>
-            <CarouselButton
-              direction="prev"
-              isActive={isPrev}
-              onClick={onClickHendler}
-              onKeyDown={onKeyDownHendler}>
-              <ArrowBackIosRoundedIcon fontSize={iconSize} />
-            </CarouselButton>
-            <CarouselButton
-              direction="next"
-              isActive={isNext}
-              onClick={onClickHendler}
-              onKeyDown={onKeyDownHendler}>
-              <ArrowForwardIosRoundedIcon fontSize={iconSize} />
-            </CarouselButton>
-          </CarouselButtonSides>
-        </div>
-      </Fade>
+      <CarouselControls
+        isButtonsOnSides={isButtonsOnSides}
+        isShadow={isShadow}
+      />
 
-      <CarouselScroller
+      <Scroller
         ref={rootRefCallback}
-        onKeyDown={onKeyDownHendler}
-        onScroll={onScroll}
-        isScrollSnap={isScrollSnap}
-        className={classNames(classes.itemList, className)}>
-        <div style={sidesDivStyle} />
-        <CarouselList nodeListRefCallback={nodeListRefCallback}>
+        onScroll={handleOnScroll}
+        className={classNames(classes.Scroller, className)}>
+        {itemMargin > 0 && <div style={sidesDivStyle} />}
+        <div ref={itemListRefCallback} className={classes.itemList}>
           {children}
-        </CarouselList>
-        <div style={sidesDivStyle} />
-      </CarouselScroller>
+        </div>
+        {itemMargin > 0 && <div style={sidesDivStyle} />}
+      </Scroller>
     </div>
   );
 };
-
-function areEqual(prevProps: ICarouselProps, nextProps: ICarouselProps) {
-  return (
-    prevProps.children[0]?.key === nextProps.children[0]?.key &&
-    prevProps.children[0]?.props.className ===
-      nextProps.children[0]?.props.className &&
-    Children.count(prevProps.children) === Children.count(nextProps.children)
-  );
-}
-
-export default memo(Carousel, areEqual);

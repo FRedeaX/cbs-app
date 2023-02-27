@@ -2,7 +2,7 @@ import Head from "../../components/Head/Head";
 import { PageRoot } from "../../components/Pages/Page";
 import { FETCH_CHILDREN_URI_PAGES } from "../../components/Pages/Page/Page.utils";
 import Layout from "../../components/UI/Layout/Layout";
-import СardListUngrouped from "../../components/Widget/Card/СardListUngrouped/СardListUngrouped";
+import СardListUngrouped from "../../components/Widget/Card/CardListUngrouped/CardListUngrouped";
 import { Heading } from "../../components/blocks/Heading/Heading";
 import { exceptionLog } from "../../helpers";
 import { getMenu, getPage, preparingPaths } from "../../helpers/backend";

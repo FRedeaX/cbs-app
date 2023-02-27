@@ -1,3 +1,4 @@
+export * from "./mergeAllRefs";
 export * from "./useClientHeight";
 export * from "./useClientScroll";
 export * from "./useClientWidth";

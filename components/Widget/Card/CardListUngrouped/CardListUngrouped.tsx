@@ -2,12 +2,12 @@ import { FC, memo } from "react";
 
 import { Card, IData } from "../Card";
 
-interface СardListUngroupedProps {
-  nodes: Array<IData>;
+interface CardListUngroupedProps {
+  nodes: IData[];
   isHorizontal: boolean;
 }
 
-const СardListUngrouped: FC<СardListUngroupedProps> = ({
+const CardListUngrouped: FC<CardListUngroupedProps> = ({
   nodes,
   isHorizontal,
 }) => (
@@ -23,4 +23,4 @@ const СardListUngrouped: FC<СardListUngroupedProps> = ({
   </>
 );
 
-export default memo(СardListUngrouped);
+export default memo(CardListUngrouped);

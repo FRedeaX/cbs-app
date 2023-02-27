@@ -41,7 +41,7 @@ COPY --from=builder /app/routes ./routers
 COPY --from=builder /app/styles ./styles
 COPY --from=builder /app/utility ./utility
 
-COPY --from=builder /app/.env.local ./
+COPY --from=builder /app/.env ./
 COPY --from=builder /app/.env.production ./
 
 COPY --from=builder /app/.eslintrc ./

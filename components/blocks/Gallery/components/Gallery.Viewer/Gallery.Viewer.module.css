@@ -1,0 +1,19 @@
+.root {
+  --scroller-overflow-x: hidden;
+  --carousel-button-left: 10px;
+
+  width: calc(100vw + 10px);
+  margin: 0 -10px;
+}
+
+.imageWrapper {
+  width: calc(100vw + 20px);
+  padding: 0 10px;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}

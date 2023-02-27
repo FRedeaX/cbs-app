@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+}
+
+.wrapper {
+  display: flex;
+  margin: var(--gallery-image-margin);
+}
+
+.button {
+  flex: 1;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (width <= 768px) {
+  .root {
+    --figcaption-line-clamp: 2;
+  }
+}
+
+@media screen and (width <= 425px) {
+  .root {
+    --figcaption-line-clamp: 1;
+  }
+}
