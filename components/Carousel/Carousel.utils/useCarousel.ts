@@ -33,6 +33,8 @@ export const useCarousel = () => {
    */
   const scrollToIndex = useCallback<useCarouselScrollToIndex>(
     (index) => {
+      indexOfVisibleElement.current = index;
+
       const root = rootRef.current;
       if (root === null) return;
 
@@ -40,19 +42,17 @@ export const useCarousel = () => {
       const itemWidthAccASC = itemWidthAccumulatedASC.current;
       const containerWidth = root.clientWidth + Math.abs(itemMargin);
 
-      indexOfVisibleElement.current = index;
       scroll.current = itemWidthAccASC[index];
+      const offset = offsetSides(
+        containerWidth,
+        currentScroll,
+        scroll.current,
+        Math.max(itemMargin, 0),
+      );
 
       scrollTo(root, {
-        left:
-          scroll.current -
-          offsetSides(
-            containerWidth,
-            currentScroll,
-            scroll.current,
-            Math.max(itemMargin, 0),
-          ),
-        behavior: "smooth",
+        left: scroll.current - offset,
+        behavior: "auto",
         typeMovement,
       });
     },
@@ -98,15 +98,15 @@ export const useCarousel = () => {
         indexOfVisibleElement.current = index;
       }
 
+      const offset = offsetSides(
+        containerWidth,
+        currentScroll,
+        scroll.current,
+        Math.max(itemMargin, 0),
+      );
+
       scrollTo(root, {
-        left:
-          scroll.current -
-          offsetSides(
-            containerWidth,
-            currentScroll,
-            scroll.current,
-            Math.max(itemMargin, 0),
-          ),
+        left: scroll.current - offset,
         behavior: "smooth",
         typeMovement,
         scrollTime,

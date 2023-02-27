@@ -87,17 +87,16 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
       const itemWidthAccASC = itemWidthAccumulatedASC.current;
 
       scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
+      const offset = offsetSides(
+        containerWidth,
+        currentScroll,
+        scroll.current,
+        Math.max(itemMargin, 0),
+      );
 
       try {
         scrollTo(node, {
-          left:
-            scroll.current -
-            offsetSides(
-              containerWidth,
-              currentScroll,
-              scroll.current,
-              Math.max(itemMargin, 0),
-            ),
+          left: scroll.current - offset,
           behavior: "auto",
           typeMovement,
         });

@@ -1,9 +1,9 @@
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { Fade } from "@mui/material";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useState } from "react";
 
-import isIntersection from "../../../helpers/frontend/isIntersection";
+import _isIntersection from "../../../helpers/frontend/isIntersection";
 import { CarouselButton } from "../Carousel.Button/Carousel.Button";
 import CarouselButtonSides from "../Carousel.Button/Carousel.Button.Sides";
 import CarouselShadow from "../Carousel.Shadow/Carousel.Shadow";
@@ -36,25 +36,25 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
 
   const iconSize = isButtonsOnSides ? "medium" : "small";
 
-  const isShadowRef = useRef(isShadow);
+  const [isIntersection, setIntersection] = useState(true);
   useEffect(() => {
-    // Отключаем тень если `IntersectionObserver` не поддерживается
-    if (!isIntersection) {
-      isShadowRef.current = false;
-    }
+    // Eсли `IntersectionObserver` не поддерживается
+    // показываем кнопки навигации и
+    // отключаем тень
+    setIntersection(_isIntersection);
   }, []);
 
   return (
-    <Fade in={isPrev || isNext}>
+    <Fade in={isPrev || isNext || !isIntersection}>
       <div>
         <CarouselShadowWrapper>
           <CarouselShadow
-            isShadow={isShadowRef.current}
+            isShadow={isShadow || isIntersection}
             direction="prev"
             isActive={isPrev}
           />
           <CarouselShadow
-            isShadow={isShadow}
+            isShadow={isShadow || isIntersection}
             direction="next"
             isActive={isNext}
           />
@@ -62,13 +62,13 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
         <CarouselButtonSides isButtonsOnSides={isButtonsOnSides}>
           <CarouselButton
             direction="prev"
-            isActive={isPrev}
+            isActive={isPrev || !isIntersection}
             onClick={containerMovement}>
             <ArrowBackIosRoundedIcon fontSize={iconSize} />
           </CarouselButton>
           <CarouselButton
             direction="next"
-            isActive={isNext}
+            isActive={isNext || !isIntersection}
             onClick={containerMovement}>
             <ArrowForwardIosRoundedIcon fontSize={iconSize} />
           </CarouselButton>
