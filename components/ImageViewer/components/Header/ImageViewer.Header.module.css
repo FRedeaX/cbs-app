@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  height: var(--image-viewer-header-height);
+}
+
+.controls {
+  position: absolute;
+  right: 0;
+}

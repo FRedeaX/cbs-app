@@ -1,16 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { Backdrop } from "@mui/material";
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { createMarkup, delay } from "../../../helpers";
-import {
-  GET_OVERLAY_FRAGMENT,
-  overlayVar,
-} from "../../../store/variables/overlay";
-import { SCROLLY_FRAGMENT } from "../../../store/variables/scrollY";
+import { usePreventScroll, useToggle } from "../../../helpers/frontend/hooks";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 import classes from "./Image.module.css";
+
+const sxBackdrop = {
+  zIndex: "calc(var(--header-z-index) + 1)",
+};
 
 export const imageBlockGQL = {
   fragments: gql`
@@ -37,38 +38,14 @@ export const Figure = ({
   align,
   className,
   url,
-  isImageZoom = true,
   children,
   isFill,
 }) => {
-  const { data: state } = useQuery(gql`
-    query {
-      ${GET_OVERLAY_FRAGMENT}
-      ${SCROLLY_FRAGMENT}
-    }
-  `);
-  const figureRef = useRef();
-  const [isZoom, setZoom] = useState();
+  const figureRef = useRef(null);
+  const [isOpen, setIsOpen, { setFalse: setClose }] = useToggle();
+  usePreventScroll({ enabled: isOpen });
 
-  const positionScrollYRefVar = useRef(0);
-  useEffect(() => {
-    if (
-      (!state.overlay.isOpen ||
-        state.scrollY !== positionScrollYRefVar.current) &&
-      isZoom
-    ) {
-      if (state.scrollY !== positionScrollYRefVar.current)
-        overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-
-      setZoom(false);
-      delay(250).then(() => {
-        figureRef.current.style.zIndex = "";
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.overlay.isOpen, state?.scrollY]);
-
-  const getTransform = () => {
+  const getTransform = useCallback(() => {
     const figure = figureRef.current;
     const image = figure.children[0].children[1];
 
@@ -93,29 +70,23 @@ export const Figure = ({
     )
       .toString()
       .substr(0, 3)})`;
-  };
-  const hendleZoom = (event) => {
-    event.stopPropagation();
-    if (isZoom) {
-      setZoom(false);
-      overlayVar({ isOpen: false, color: "var(--bg-white-95)" });
-      delay(250).then(() => {
-        figureRef.current.style.zIndex = "";
-      });
-    } else {
-      setZoom(true);
-      overlayVar({
-        isOpen: true,
-        opacity: 100,
-        color: "white",
-        isOverflow: false,
-      });
-      positionScrollYRefVar.current = state?.scrollY;
-    }
-  };
+  }, []);
 
-  // if (align === "left") align = "flex-start";
-  // else if (align === "right") align = "flex-end";
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (figure === null) return;
+
+    if (isOpen) {
+      figure.style.transform = getTransform();
+      figure.style.zIndex = "calc(var(--header-z-index) + 2)";
+    } else {
+      figure.style.transform = "";
+      delay(250).then(() => {
+        figure.style.zIndex = "";
+      });
+    }
+  }, [getTransform, isOpen]);
+
   return (
     <div
       className={classNames(
@@ -127,22 +98,12 @@ export const Figure = ({
       )}>
       <figure
         ref={figureRef}
-        onClick={isImageZoom ? hendleZoom : null}
-        onKeyPress={isImageZoom ? hendleZoom : null}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        role="button"
-        tabIndex="0"
-        style={{
-          transform: isZoom ? getTransform() : "",
-          zIndex: isZoom
-            ? "calc(var(--header-z-index) + 1)"
-            : delay(250).then(""),
-          cursor: isZoom && "default",
-        }}
+        onClick={setIsOpen}
         className={classNames(classes.figure, {
-          [classes.figure_zoom_true]: isZoom === true,
+          [classes.figure_zoom_true]: isOpen === true,
           [classes.figure_height]: isFill,
-        })}>
+        })}
+        role="presentation">
         {children}
         {caption && (
           <figcaption
@@ -159,6 +120,7 @@ export const Figure = ({
           />
         </div>
       </figure>
+      <Backdrop sx={sxBackdrop} open={isOpen} onClick={setClose} />
     </div>
   );
 };

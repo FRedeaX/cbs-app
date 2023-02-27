@@ -1,0 +1,21 @@
+.root {
+  --figcaption-position-bottom: 20px;
+  --figcaption-position-left: 50%;
+  --figcaption-padding: 4px 8px;
+  --figcaption-border-radius: 8px;
+  --figcaption-text-align: center;
+  --figcaption-font-size: 16px;
+  --figcaption-translate-x: translateX(-50%);
+  --figcaption-margin-right: 0;
+  --figcaption-width: max-content;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: calc(
+    var(--image-viewer-height, 100vh) - var(--image-viewer-header-height)
+  );
+  margin: 0;
+}

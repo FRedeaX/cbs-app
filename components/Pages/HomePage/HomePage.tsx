@@ -4,7 +4,6 @@ import type { NextPage } from "next";
 import { memo } from "react";
 
 import { _pageInfo } from "../../../helpers/backend";
-// import { GET_WIDTH } from "../../../store/variables/windowWidth";
 import { Nullable } from "../../../helpers/typings/utility-types";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import Pagination from "../../UI/Pagination/Pagination";

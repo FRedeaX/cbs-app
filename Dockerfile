@@ -38,7 +38,6 @@ COPY --from=builder /app/helpers ./helpers
 COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/pages ./pages
 COPY --from=builder /app/routes ./routers
-COPY --from=builder /app/store ./store
 COPY --from=builder /app/styles ./styles
 COPY --from=builder /app/utility ./utility
 
@@ -59,7 +58,7 @@ COPY --from=builder /app/tsconfig.json ./
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs

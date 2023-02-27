@@ -2,19 +2,15 @@ import { Box, IconButton } from "@mui/material";
 import classNames from "classnames";
 import { FC, ReactNode, useCallback } from "react";
 
-import {
-  useCarouselHookOnClickHendler,
-  useCarouselHookOnKeyDownHendler,
-} from "../Carousel.utils";
+import { useCarouselHandleOnClick } from "../Carousel.utils/useCarousel";
 import classes from "./Carousel.Button.module.css";
 
-interface ICarouselButtonProps {
+export type CarouselButtonProps = {
   children: ReactNode;
   direction: "next" | "prev";
   isActive: boolean;
-  onClick: useCarouselHookOnClickHendler;
-  onKeyDown: useCarouselHookOnKeyDownHendler;
-}
+  onClick: useCarouselHandleOnClick;
+};
 
 const style = {
   transitionTimingFunction: "var(--animation-ease-out)",
@@ -22,14 +18,13 @@ const style = {
   transitionProperty: "background-color, box-shadow, transform",
 };
 
-const CarouselButton: FC<ICarouselButtonProps> = ({
+export const CarouselButton: FC<CarouselButtonProps> = ({
   children,
   direction,
   isActive,
   onClick,
-  onKeyDown,
 }) => {
-  const onClickHendler = useCallback(() => {
+  const onClickHandler = useCallback(() => {
     onClick(direction);
   }, [direction, onClick]);
 
@@ -41,18 +36,16 @@ const CarouselButton: FC<ICarouselButtonProps> = ({
         classes[`root_visibility_${isActive}`],
         classNames(classes[`direction_${direction}`]),
       )}
-      onKeyDown={onKeyDown}
-      onClick={onClickHendler}>
+      onClick={onClickHandler}>
       <IconButton
         className={classNames(classes.iconButton, classes.iconButton_bg, {
           [classes.iconButton_animation]: isActive,
         })}
         sx={style}
-        disabled={!isActive}>
+        disabled={!isActive}
+        aria-label={direction === "next" ? "Следующий" : "Предыдущий"}>
         {children}
       </IconButton>
     </Box>
   );
 };
-
-export default CarouselButton;

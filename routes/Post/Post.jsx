@@ -6,7 +6,7 @@ import { postGQL } from "../../components/Posts/PostsRoot";
 import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
 import { embedBlockGQL } from "../../components/blocks/Embed/Embed";
 import { fileBlockGQL } from "../../components/blocks/File/File";
-import { galleryBlockGQL } from "../../components/blocks/Gallery/Gallery";
+import { galleryBlockGQL } from "../../components/blocks/Gallery/utils";
 import { headingBlockGQL } from "../../components/blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../components/blocks/Html/Html";
 import { imageBlockGQL } from "../../components/blocks/Image/Figure";

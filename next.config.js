@@ -18,15 +18,14 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 const nextConfig = withTM({
-  output: "standalone",
+  // output: "standalone",
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
 
   images: {
-    domains: [process.env.HOST],
-    // formats: ["image/avif", "image/webp"],
+    domains: [`${process.env.HOSTNAME}`],
     formats: ["image/webp"],
   },
   experimental: {
@@ -56,7 +55,7 @@ const nextConfig = withTM({
   // },
 
   sentry: {
-    hideSourceMaps: true,
+    hideSourceMaps: false,
   },
 });
 

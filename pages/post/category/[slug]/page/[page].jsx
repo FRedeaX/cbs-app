@@ -14,8 +14,8 @@ import {
 } from "../../../../../core/pagination";
 import { exceptionLog } from "../../../../../helpers";
 import { getMenu, plaiceholder } from "../../../../../helpers/backend";
+import { client } from "../../../../../lib/apollo/client";
 import { RKEY_POSTS_BY_CATEGORY } from "../../../../../lib/redis";
-import { client } from "../../../../../store/apollo-client";
 
 const Home = ({ menu, posts, pages, categoryName }) => {
   const {
