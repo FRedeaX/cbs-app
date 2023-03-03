@@ -1,0 +1,56 @@
+.placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.blur {
+  z-index: -1;
+  opacity: 0.95;
+  filter: blur(10px);
+}
+
+.skeleton,
+.blur {
+  position: absolute;
+  left: 0;
+}
+
+.placeholder .blur {
+  object-fit: cover;
+}
+
+.placeholder .skeleton {
+  position: absolute;
+  transform: none;
+  height: 100%;
+  background-color: transparent;
+}
+
+.image {
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font: 0 / 0 a;
+  visibility: hidden; /* Позволяет не показывать битые картинки при ошибках загрузки */
+  border: 0;
+}
+
+.image_loaded {
+  visibility: visible;
+}
+
+.image_loading {
+  opacity: 0;
+}
+
+.image_animated {
+  animation: image-fade-in 0.4s ease forwards;
+}
+
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
