@@ -4,6 +4,7 @@ import classNames from "classnames";
 // eslint-disable-next-line import/no-cycle
 import Blocks from "../../Blocks";
 import { galleryBlockGQL } from "../../Gallery/utils";
+import { headingBlockGQL } from "../../Heading/Heading";
 import { htmlBlockGQL } from "../../Html/Html";
 import { imageBlockGQL } from "../../Image/Figure";
 import { paragraphBlockGQL } from "../../Paragraph/Paragraph";
@@ -24,6 +25,7 @@ export const columnBlockGQL = {
         }
         name
         innerBlocks {
+          ...headingBlockGQL
           ...paragraphBlockGQL
           ...galleryBlockGQL
           ...imageBlockGQL
@@ -32,6 +34,7 @@ export const columnBlockGQL = {
         }
       }
     }
+    ${headingBlockGQL.fragments}
     ${paragraphBlockGQL.fragments}
     ${galleryBlockGQL.fragments}
     ${imageBlockGQL.fragments}
