@@ -30,7 +30,6 @@
 }
 
 .logo {
-  height: auto;
   margin: 10px 0;
 }
 
@@ -63,7 +62,6 @@
 
   .logo {
     width: calc(var(--header-desktop-height) - 20px);
-    min-width: calc(var(--header-desktop-height) - 20px);
   }
 
   .menu {
@@ -106,7 +104,6 @@
 
   .logo {
     width: calc(var(--header-mobile-height) - 20px);
-    min-width: calc(var(--header-mobile-height) - 20px);
   }
 
   .menu {
