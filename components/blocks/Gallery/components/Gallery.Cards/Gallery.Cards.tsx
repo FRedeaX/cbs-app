@@ -2,7 +2,11 @@ import { FC } from "react";
 
 import { Figure, FigureFigcaption } from "../../../../Figure";
 import { splitByLines } from "../../utils";
-import { GalleryRow, GalleryRowProps, Image } from "../Gallery.Row/Gallery.Row";
+import {
+  GalleryRow,
+  GalleryRowProps,
+  ImageData,
+} from "../Gallery.Row/Gallery.Row";
 import classes from "./Gallery.Cards.module.css";
 
 export type GalleryCardsProps = {
@@ -10,7 +14,9 @@ export type GalleryCardsProps = {
 } & GalleryRowProps;
 
 export const GalleryCards: FC<GalleryCardsProps> = ({ images, caption }) => {
-  const image = splitByLines<Image>(images);
+  const firstImageAspectRatio = images[0].width / images[0].height;
+
+  const image = splitByLines<ImageData>(images, firstImageAspectRatio);
   const moreCount = images.length - image.big.length - image.small.length;
 
   return (

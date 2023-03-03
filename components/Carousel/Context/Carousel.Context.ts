@@ -1,13 +1,9 @@
 import { MutableRefObject, createContext } from "react";
 
-import {
-  Maybe,
-  _NodeListOf as NodeListOf,
-  Nullable,
-} from "../../../helpers/typings/utility-types";
+import { Maybe, Nullable } from "../../../helpers/typings/utility-types";
 
 export type CarouselContextHTMLNode = Nullable<HTMLDivElement>;
-export type CarouselContextItemListRef = Maybe<NodeListOf<HTMLElement>>;
+export type CarouselContextItemListRef = Maybe<HTMLElement[]>;
 
 export type CarouselContextRefCallback = (
   node: CarouselContextHTMLNode,

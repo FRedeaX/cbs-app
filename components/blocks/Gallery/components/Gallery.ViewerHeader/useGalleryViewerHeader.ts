@@ -7,7 +7,9 @@ import { useCarouselContext } from "../../../../Carousel/context";
 export const useGalleryViewerHeader = () => {
   const { itemListRef } = useCarouselContext();
   const index = useRef<Nullable<number>>(null);
-  const [ref, { entry }] = useIntersectionObserver({ threshold: 0.1 });
+  const [ref, { entryList }] = useIntersectionObserver({
+    threshold: 0.45,
+  });
 
   useEffect(() => {
     if (itemListRef.current !== undefined) {
@@ -15,9 +17,13 @@ export const useGalleryViewerHeader = () => {
     }
   }, [itemListRef, ref]);
 
-  if (entry !== undefined && entry.isIntersecting) {
-    const target = entry.target as HTMLDivElement;
-    index.current = Math.round(target.offsetLeft / target.offsetWidth);
+  if (entryList !== undefined) {
+    entryList.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const target = entry.target as HTMLDivElement;
+        index.current = Math.round(target.offsetLeft / target.offsetWidth);
+      }
+    });
   }
 
   return index.current;

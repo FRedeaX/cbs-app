@@ -43,7 +43,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
   // console.log({ ...all });
 
   return (
-    <div className={classes.root}>
+    <div>
       {blocks.map((block, index) => {
         const key = `${block?.name}_${index}`;
         switch (block?.name) {
@@ -63,6 +63,7 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
                 key={key}
                 {...block.attributes}
                 images={block.attributes.images}
+                className={classes.block}
               />
             );
 

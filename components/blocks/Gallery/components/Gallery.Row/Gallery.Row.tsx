@@ -1,7 +1,11 @@
-import NextImage from "next/future/image";
 import { FC } from "react";
 
+import {
+  CSSProperties,
+  Nullable,
+} from "../../../../../helpers/typings/utility-types";
 import { Figure, FigureFigcaption } from "../../../../Figure";
+import { Image } from "../../../../Image/Image";
 import {
   VisuallyHidden,
   VisuallyHiddenProps,
@@ -10,17 +14,18 @@ import { GalleryButton } from "../Gallery.Button/Gallery.Button";
 import { GalleryMore } from "../Gallery.More/Gallery.More";
 import classes from "./Gallery.Row.module.css";
 
-export type Image = {
+export type ImageData = {
   id: string;
   alt: string;
   url: string;
   width: number;
   height: number;
   caption: string;
+  blurDataURL: Nullable<string>;
 };
 
 export type GalleryRowProps = {
-  images: Image[];
+  images: ImageData[];
 
   /**
    * Количество изображений доступных дополнительно в полноэкранном режиме.
@@ -48,24 +53,30 @@ export const GalleryRow: FC<GalleryRowProps> = ({
   <div className={classes.root}>
     {images.map((image, index) => {
       const aspectRatio = image.width / image.height;
+      const sizes = Math.max(100 / images.length, 25);
+
+      const style: CSSProperties = {};
+      if (images.length > 1) {
+        style.flex = `var(--gallery-image-flex, ${aspectRatio})`;
+      }
 
       return (
-        <Figure
-          key={image.id}
-          style={{ flex: `var(--gallery-image-flex, ${aspectRatio})` }}
-          className={classes.wrapper}>
+        <Figure key={image.id} style={style} className={classes.wrapper}>
           <GalleryButton className={classes.button} index={index + offset}>
             {!!moreCount && index === images.length - 1 && (
               <GalleryMore count={moreCount} />
             )}
-            <NextImage
+            <Image
               alt={image.alt}
               src={image.url}
               width={450}
               height={450 / aspectRatio}
-              sizes={`${100 / images.length}vw`}
+              sizes={`${sizes}vw`}
               className={classes.image}
+              classNamePlaceholder={classes.placeholder}
               loading="lazy"
+              placeholder="blur"
+              blurDataURL={image.blurDataURL ?? undefined}
             />
           </GalleryButton>
           {(image.caption || image.alt) && (

@@ -3,12 +3,12 @@ import { FC } from "react";
 
 import { ImageViewerHeader } from "../../../../ImageViewer";
 import { useGalleryContext } from "../../context";
-import { Image } from "../Gallery.Row/Gallery.Row";
+import { ImageData } from "../Gallery.Row/Gallery.Row";
 import classes from "./Gallery.ViewerHeader.module.css";
 import { useGalleryViewerHeader } from "./useGalleryViewerHeader";
 
 type GalleryViewerHeaderProps = {
-  images: Image[];
+  images: ImageData[];
 };
 
 export const GalleryViewerHeader: FC<GalleryViewerHeaderProps> = ({

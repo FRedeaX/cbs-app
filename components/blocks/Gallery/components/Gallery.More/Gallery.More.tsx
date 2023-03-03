@@ -10,7 +10,9 @@ type GalleryMoreProps = {
 export const GalleryMore: FC<GalleryMoreProps> = ({ count }) => (
   <div className={classes.root}>
     <Typography variant="overline" className={classes.text}>
-      еще {count}
+      <span className={classes.word}>еще </span>
+      <span className={classes.symbol}>+ </span>
+      {count}
     </Typography>
   </div>
 );

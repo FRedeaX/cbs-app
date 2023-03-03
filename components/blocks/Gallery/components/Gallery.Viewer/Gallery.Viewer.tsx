@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import NextImage from "next/future/image";
 import { FC, KeyboardEvent, useCallback } from "react";
 
 import { Carousel } from "../../../../Carousel/Carousel";
@@ -9,6 +8,7 @@ import {
 } from "../../../../Carousel/Carousel.utils/scrollTo";
 import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
 import { useCarouselContext } from "../../../../Carousel/context";
+import { Image } from "../../../../Image/Image";
 import {
   ImageViewer,
   ImageViewerBody,
@@ -16,14 +16,12 @@ import {
 } from "../../../../ImageViewer";
 import { useGalleryContext } from "../../context";
 import { useDrag } from "../../utils";
-import { Image } from "../Gallery.Row/Gallery.Row";
+import { ImageData } from "../Gallery.Row/Gallery.Row";
 import { GalleryViewerHeader } from "../Gallery.ViewerHeader/Gallery.ViewerHeader";
 import classes from "./Gallery.Viewer.module.css";
 
-// delay(150).then(() => {
-// });
 type GalleryViewerProps = {
-  images: Image[];
+  images: ImageData[];
 };
 
 type HandleOnKeyDown = (event: KeyboardEvent<HTMLDivElement>) => void;
@@ -112,14 +110,23 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
               key={image.id}
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
-              <NextImage
-                className={classes.image}
+              <Image
+                style={{
+                  width: `calc(
+                    (var(--image-viewer-height, 100vh) - var(--image-viewer-header-height))
+                    * ${image.width / image.height}
+                  )`,
+                }}
                 alt={image.alt}
                 src={image.url}
                 width={image.width}
                 height={image.height}
                 sizes="100vw"
+                className={classes.image}
+                classNamePlaceholder={classes.placeholder}
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL={image.blurDataURL ?? undefined}
               />
             </ImageViewerFigure>
           ))}

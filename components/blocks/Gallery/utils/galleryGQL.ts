@@ -9,7 +9,6 @@ export const galleryBlockGQL = {
           ... on CoreGalleryBlockAttributes {
             caption
             className
-            imageCrop
             images {
               alt
               caption

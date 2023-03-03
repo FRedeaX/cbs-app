@@ -3,6 +3,7 @@
 import https from "https";
 import sizeOf from "image-size";
 
+import { getPlaceholder } from "../../../core/placeholder";
 import removeBackslash from "../removeBackslash";
 
 const addAttributes = (block, attributes, args) => ({
@@ -20,7 +21,7 @@ const getSizeOf = (url) =>
       if (res.statusCode < 200 || res.statusCode >= 300) {
         reject(
           new Error({
-            message: `getSizeOf(urlImage) statusCode= ${res.statusCode}`,
+            message: `getSizeOf(urlImage) statusCode=${res.statusCode}`,
           }),
         );
       }
@@ -108,31 +109,27 @@ export const transformBlocks = async (blocks) => {
 
       case "core/gallery": {
         const images = [];
-        // const avgWidth = [];
-        // const avgHeight = [];
         block.attributes.images.forEach((image, indexImg) => {
           promise.push(
             getSizeOf(image.url)
-              .then((res) => {
+              .then(async (res) => {
+                const { blurDataURL } = await getPlaceholder(image.id);
+
                 images[indexImg] = {
                   ...image,
                   width: res.width,
                   height: res.height,
+                  blurDataURL,
                 };
-                // avgWidth.push(res.width);
-                // avgHeight.push(res.height);
               })
-              .catch(({ message }) => {
-                blockList[index] = { name: `error: ${block.name}`, message };
+              .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.error(error);
               }),
           );
         });
 
-        blockList[index] = addAttributes(block, {
-          images,
-          // avgWidth, //: avgWidth.reduce((acc, next) => acc + next) / avgWidth.length,
-          // avgHeight, //: avgHeight.reduce((acc, next) => acc + next) / avgHeight.length,
-        });
+        blockList[index] = addAttributes(block, { images });
         break;
       }
 

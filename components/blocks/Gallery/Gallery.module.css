@@ -1,7 +1,3 @@
-.root {
-  margin: var(--gallery-margin);
-}
-
 @supports (display: grid) {
   .root_imageCrop {
     --gallery-image-flex: 1;
