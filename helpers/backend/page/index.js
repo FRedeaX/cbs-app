@@ -18,7 +18,7 @@ export const getPage = async (id) => {
     })
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
-      if (data.page === null) throw new Error("data.page of null");
+      if (data.page === null) return null;
 
       return {
         ...data.page,

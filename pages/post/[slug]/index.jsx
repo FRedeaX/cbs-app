@@ -52,7 +52,10 @@ export async function getStaticPaths() {
     .then(({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
       if (data.posts.nodes.length === 0)
-        throw new Error("data.posts.nodes of null");
+        throw new Error(`
+          function: getStaticPaths, 
+          message: data.posts.nodes of null
+        `);
 
       return data.posts.nodes.map((post) => ({
         params: {
@@ -86,8 +89,7 @@ export async function getStaticProps({ params }) {
     // .then(({ data }) => transformBlocks(data.post))
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
-      if (data.post === null)
-        throw new Error(`{message: data.post of null, slug: ${params.slug} }`);
+      if (data.post === null) return null;
 
       return {
         ...data.post,
