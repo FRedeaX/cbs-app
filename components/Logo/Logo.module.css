@@ -1,4 +1,6 @@
 .root {
+  --image-filter-blur: 5px;
+
   line-height: 0;
 }
 

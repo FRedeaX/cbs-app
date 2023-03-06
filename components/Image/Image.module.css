@@ -6,7 +6,7 @@
 .blur {
   z-index: -1;
   opacity: 0.95;
-  filter: blur(10px);
+  filter: blur(var(--image-filter-blur, 10px));
 }
 
 .skeleton,
@@ -22,7 +22,6 @@
 .placeholder .skeleton {
   position: absolute;
   transform: none;
-  height: 100%;
   background-color: transparent;
 }
 

@@ -8,13 +8,6 @@ import classes from "./Image.module.css";
 
 const ANIMATION_DELAY_MS = 50;
 
-// const sxSkeleton: CSSProperties = {
-//   height: "100%",
-//   backgroundColor: "transparent",
-//   transform: "none",
-//   position: "absolute",
-// };
-
 type ImageProps = {
   /**
    * Дополнительный класс для обертки.
