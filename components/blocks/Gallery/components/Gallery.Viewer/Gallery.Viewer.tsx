@@ -112,7 +112,7 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
               figcaptionText={image.caption || image.alt}>
               <Image
                 style={{
-                  width: `calc(
+                  maxWidth: `calc(
                     (var(--image-viewer-height, 100vh) - var(--image-viewer-header-height))
                     * ${image.width / image.height}
                   )`,
