@@ -55,10 +55,11 @@ export const GalleryRow: FC<GalleryRowProps> = ({
       const aspectRatio = image.width / image.height;
       const sizes = Math.max(100 / images.length, 25);
 
-      const style: CSSProperties = {};
-      if (images.length > 1) {
-        style.flex = `var(--gallery-image-flex, ${aspectRatio})`;
-      }
+      const style: CSSProperties = {
+        flex: `var(--gallery-image-flex, ${
+          images.length > 1 ? aspectRatio : 1
+        })`,
+      };
 
       return (
         <Figure key={image.id} style={style} className={classes.wrapper}>
