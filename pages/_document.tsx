@@ -1,8 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-// import Script from "next/script";
-// import { scrollbarWidth } from "~/helpers";
-
 class _Document extends Document {
   render() {
     return (
@@ -56,6 +53,7 @@ class _Document extends Document {
         <body
           style={{
             backgroundColor: "var(--bg-white-95)",
+            "--is-header-fixed": 1,
           }}>
           <Main />
           <NextScript />

@@ -64,6 +64,11 @@
   .subMenu--lvl3 {
     top: 0;
     left: 250px;
+
+    overflow-y: auto;
+
+    max-height: 415px;
+
     border-radius: 0 var(--submenu-border-radius) var(--submenu-border-radius)
       var(--submenu-border-radius);
   }
@@ -74,12 +79,14 @@
  */
 @media screen and (max-width: 950px) {
   .subMenu {
+    z-index: 4;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 4;
+
     padding: 20px;
+
     background-color: var(--bg-white-95);
   }
 

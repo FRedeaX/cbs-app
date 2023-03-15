@@ -6,13 +6,13 @@ import { fileBlockGQL } from "../../../blocks/File/File";
 import { galleryBlockGQL } from "../../../blocks/Gallery/utils";
 import { headingBlockGQL } from "../../../blocks/Heading/Heading";
 import { htmlBlockGQL } from "../../../blocks/Html/Html";
-import { imageBlockGQL } from "../../../blocks/Image/Figure";
+import { imageBlockGQL } from "../../../blocks/Image/utils/imageGQL";
 import { listBlockGQL } from "../../../blocks/List/List";
 import { mediaTextBlockGQL } from "../../../blocks/MediaText/MediaText.utils/mediaTextBlockGQL";
 import { paragraphBlockGQL } from "../../../blocks/Paragraph/Paragraph";
 import { quoteBlockGQL } from "../../../blocks/Quote/Quote";
-import { separatorBlockGQL } from "../../../blocks/Separator/Separator";
-import { spacerBlockGQL } from "../../../blocks/Spacer/Spacer";
+import { separatorBlockGQL } from "../../../blocks/Separator/utils/separatorGQL";
+import { spacerBlockGQL } from "../../../blocks/Spacer/utils/spacerGQL";
 import { tableBlockGQL } from "../../../blocks/Table/Table";
 import { verseBlockGQL } from "../../../blocks/Verse/Verse";
 

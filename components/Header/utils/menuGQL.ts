@@ -14,16 +14,16 @@ const menuItemsGQL = {
 const MenuGQL = {
   fragments: gql`
     fragment MenuGQL on Menu {
-      menuItems(where: { parentId: "" }) {
+      menuItems(where: { parentDatabaseId: 0 }) {
         nodes {
           ...menuItemsGQL
-          childItems {
+          childItems(first: 100) {
             nodes {
               ...menuItemsGQL
-              childItems {
+              childItems(first: 100) {
                 nodes {
                   ...menuItemsGQL
-                  childItems {
+                  childItems(first: 100) {
                     nodes {
                       ...menuItemsGQL
                     }

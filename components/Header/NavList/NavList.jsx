@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import classNamesBind from "classnames/bind";
-import { memo } from "react";
 
 // eslint-disable-next-line import/no-cycle
 import NavItems from "../NavItems/NavItems";
@@ -77,4 +76,4 @@ const NavList = ({
   );
 };
 
-export default memo(NavList);
+export default NavList;
