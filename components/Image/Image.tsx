@@ -4,6 +4,7 @@ import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/future/image";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
+import { Nullable } from "../../helpers/typings/utility-types";
 import classes from "./Image.module.css";
 
 const ANIMATION_DELAY_MS = 50;
@@ -13,10 +14,10 @@ type ImageProps = {
    * Дополнительный класс для обертки.
    */
   classNamePlaceholder?: string;
-} & NextImageProps;
+  blurDataURL?: Nullable<string>;
+} & Omit<NextImageProps, "placeholder" | "blurDataURL">;
 
 export const Image: FC<ImageProps> = ({
-  placeholder,
   blurDataURL,
   alt,
   style,
@@ -94,7 +95,7 @@ export const Image: FC<ImageProps> = ({
     />
   );
 
-  if (placeholder === "blur" && blurDataURL !== undefined) {
+  if (typeof blurDataURL === "string") {
     return (
       <div
         style={style}

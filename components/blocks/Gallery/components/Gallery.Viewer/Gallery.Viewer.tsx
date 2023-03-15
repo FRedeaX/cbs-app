@@ -125,8 +125,7 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
                 className={classes.image}
                 classNamePlaceholder={classes.placeholder}
                 loading="lazy"
-                placeholder="blur"
-                blurDataURL={image.blurDataURL ?? undefined}
+                blurDataURL={image.blurDataURL}
               />
             </ImageViewerFigure>
           ))}
