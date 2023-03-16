@@ -1,17 +1,19 @@
 import { gql } from "@apollo/client";
 
+export type SpacerBlockAttributes = {
+  height: string;
+};
+
 export const spacerBlockGQL = {
   fragments: gql`
     fragment spacerBlockGQL on CoreSpacerBlock {
       ... on CoreSpacerBlock {
         attributes {
-          height
+          ... on CoreSpacerBlockAttributes {
+            height
+          }
         }
       }
     }
   `,
 };
-
-export const Spacer = ({ height }) => (
-  <div style={{ height: `${height}px` }} aria-hidden="true" />
-);

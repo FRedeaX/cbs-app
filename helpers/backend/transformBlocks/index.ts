@@ -1,12 +1,19 @@
 // const http = require("http");
 // const sizeOf = require("image-size");
-import https from "https";
-import sizeOf from "image-size";
-
-import { getPlaceholder } from "../../../core/placeholder";
+import { GalleryBlock } from "../../../components/blocks/Gallery/utils";
+import { Nullable } from "../../typings/utility-types";
 import removeBackslash from "../removeBackslash";
+import {
+  ImageTransformBlocksResult,
+  imageTransformBlocks,
+} from "./blocks/imageTransformBlocks";
+import { getSizeOf } from "./utils/getSizeOf";
 
-const addAttributes = (block, attributes, args) => ({
+const addAttributes = (
+  block: Record<string, any>,
+  attributes: object,
+  args?: [],
+) => ({
   ...block,
   attributes: {
     ...block.attributes,
@@ -15,49 +22,12 @@ const addAttributes = (block, attributes, args) => ({
   ...args,
 });
 
-const getSizeOf = (url) =>
-  new Promise((resolve, reject) => {
-    const req = https.get(url, (res) => {
-      if (res.statusCode < 200 || res.statusCode >= 300) {
-        reject(
-          new Error({
-            message: `getSizeOf(urlImage) statusCode=${res.statusCode}`,
-          }),
-        );
-      }
-      const chunks = [];
-      let size = {};
-      res
-        .on("data", (chunk) => {
-          chunks.push(chunk);
-        })
-        .on("end", () => {
-          try {
-            const buffer = Buffer.concat(chunks);
-            size = sizeOf(buffer);
-          } catch (e) {
-            reject(e);
-          }
-          resolve(size);
-        });
-    });
-    req.on("error", (e) => {
-      reject(e.message);
-    });
-    req.end();
-
-    // getPlaiceholder(url).then(({ base64, img }) => {
-    //   imageAttr.base64 = base64;
-    //   imageAttr.img = img;
-    //   resolve(imageAttr);
-    // });
-  });
-
-export const transformBlocks = async (blocks) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const transformBlocks = async (blocks: any) => {
   if (!blocks) throw new Error("blocks of null");
-  const blockList = [];
-  const video = [];
-  const promise = [];
+  const blockList: unknown[] = [];
+  const video: never[] = [];
+  const promise: unknown[] = [];
 
   blocks.forEach((block, index) => {
     switch (block.name) {
@@ -108,28 +78,30 @@ export const transformBlocks = async (blocks) => {
       }
 
       case "core/gallery": {
-        const images = [];
-        block.attributes.images.forEach((image, indexImg) => {
-          promise.push(
-            getSizeOf(image.url)
-              .then(async (res) => {
-                const { blurDataURL } = await getPlaceholder(image.id);
+        const galleryBlock: GalleryBlock = block;
+        const imagesBlock =
+          galleryBlock.attributes.images.length > 0
+            ? galleryBlock.attributes.images
+            : galleryBlock.innerBlocks.map((image) => image.attributes);
+        const imagePromise: Promise<Nullable<ImageTransformBlocksResult>>[] =
+          [];
 
-                images[indexImg] = {
-                  ...image,
-                  width: res.width,
-                  height: res.height,
-                  blurDataURL,
-                };
-              })
-              .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.error(error);
-              }),
-          );
+        imagesBlock.forEach((image) => {
+          imagePromise.push(imageTransformBlocks(image));
         });
 
-        blockList[index] = addAttributes(block, { images });
+        promise.push(
+          Promise.all(imagePromise).then((data) => {
+            blockList[index] = {
+              name: galleryBlock.name,
+              attributes: {
+                ...galleryBlock.attributes,
+                images: data.filter((image) => image !== null),
+              },
+            };
+          }),
+        );
+
         break;
       }
 
@@ -208,6 +180,10 @@ export const transformBlocks = async (blocks) => {
       }
     }
   });
+
+  // const t = await Promise.all(p);
+
+  // console.log(t);
 
   await Promise.all(promise);
   return { blocks: blockList, video };

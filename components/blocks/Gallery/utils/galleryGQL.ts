@@ -1,10 +1,27 @@
 import { gql } from "@apollo/client";
 
+import {
+  ImageBlock,
+  ImageBlockAttributes,
+  imageBlockGQL,
+} from "../../Image/utils/imageGQL";
+
+export type GalleryBlockAttributes = {
+  caption: string;
+  className: string;
+  images: ImageBlockAttributes[];
+};
+
+export type GalleryBlock = {
+  name: string;
+  attributes: GalleryBlockAttributes;
+  innerBlocks: ImageBlock[];
+};
+
 export const galleryBlockGQL = {
   fragments: gql`
     fragment galleryBlockGQL on CoreGalleryBlock {
       ... on CoreGalleryBlock {
-        name
         attributes {
           ... on CoreGalleryBlockAttributes {
             caption
@@ -17,7 +34,11 @@ export const galleryBlockGQL = {
             }
           }
         }
+        innerBlocks {
+          ...imageBlockGQL
+        }
       }
     }
+    ${imageBlockGQL.fragments}
   `,
 };

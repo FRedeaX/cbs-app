@@ -3,13 +3,13 @@ import { Nullable } from "../../helpers/typings/utility-types";
 import { IMAGE_PLAICEHOLDER_BLUR, clientRedis } from "../../lib/redis";
 import { createPlaceholder } from "./utils/createPlaceholder";
 
-type placeholder = {
+export type GetPlaceholderResult = {
   blurDataURL: Nullable<string>;
 };
 
 export const getPlaceholder = async (
   id: number | string,
-): Promise<placeholder> => {
+): Promise<GetPlaceholderResult> => {
   try {
     const blurDataURL = await clientRedis.get(
       `${IMAGE_PLAICEHOLDER_BLUR}${id}`,

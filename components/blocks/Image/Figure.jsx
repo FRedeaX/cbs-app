@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client";
 import { Backdrop } from "@mui/material";
 import classNames from "classnames";
 import { useCallback, useEffect, useRef } from "react";
@@ -11,26 +10,6 @@ import classes from "./Image.module.css";
 
 const sxBackdrop = {
   zIndex: "calc(var(--header-z-index) + 1)",
-};
-
-export const imageBlockGQL = {
-  fragments: gql`
-    fragment imageBlockGQL on CoreImageBlock {
-      ... on CoreImageBlock {
-        name
-        attributes {
-          ... on CoreImageBlockAttributes {
-            id
-            align
-            caption
-            alt
-            className
-            url
-          }
-        }
-      }
-    }
-  `,
 };
 
 export const Figure = ({

@@ -6,7 +6,7 @@ import Blocks from "../../Blocks";
 import { galleryBlockGQL } from "../../Gallery/utils";
 import { headingBlockGQL } from "../../Heading/Heading";
 import { htmlBlockGQL } from "../../Html/Html";
-import { imageBlockGQL } from "../../Image/Figure";
+import { imageBlockGQL } from "../../Image/utils/imageGQL";
 import { paragraphBlockGQL } from "../../Paragraph/Paragraph";
 import { verseBlockGQL } from "../../Verse/Verse";
 import classes from "./Column.module.css";
