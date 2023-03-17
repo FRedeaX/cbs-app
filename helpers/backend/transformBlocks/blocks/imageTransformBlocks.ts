@@ -1,4 +1,4 @@
-import { ImageBlockAttributes } from "../../../../components/blocks/Image/utils/imageGQL";
+import { ImageBlockGQLAttributes } from "../../../../components/blocks/Image/utils/imageGQL";
 import {
   GetPlaceholderResult,
   getPlaceholder,
@@ -10,10 +10,10 @@ export type ImageTransformBlocksResult = {
   width: number;
   height: number;
 } & GetPlaceholderResult &
-  ImageBlockAttributes;
+  ImageBlockGQLAttributes;
 
 export const imageTransformBlocks = async (
-  attributes: ImageBlockAttributes,
+  attributes: ImageBlockGQLAttributes,
 ): Promise<Nullable<ImageTransformBlocksResult>> => {
   try {
     const { width, height } = await getSizeOf(attributes.url);

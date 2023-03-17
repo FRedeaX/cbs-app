@@ -15,7 +15,7 @@ import { GalleryMore } from "../Gallery.More/Gallery.More";
 import classes from "./Gallery.Row.module.css";
 
 export type ImageData = {
-  id: string;
+  id: number;
   alt: string;
   url: string;
   width: number;

@@ -1,6 +1,6 @@
 // const http = require("http");
 // const sizeOf = require("image-size");
-import { GalleryBlock } from "../../../components/blocks/Gallery/utils";
+import { GalleryBlockGQL } from "../../../components/blocks/Gallery/utils";
 import { Nullable } from "../../typings/utility-types";
 import removeBackslash from "../removeBackslash";
 import {
@@ -8,6 +8,7 @@ import {
   imageTransformBlocks,
 } from "./blocks/imageTransformBlocks";
 import { getSizeOf } from "./utils/getSizeOf";
+import { TransformBlocks, TransformGalleryBlock } from "./utils/type";
 
 const addAttributes = (
   block: Record<string, any>,
@@ -23,13 +24,14 @@ const addAttributes = (
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformBlocks = async (blocks: any) => {
+export const transformBlocks = async (blocks: TransformBlocks[]) => {
   if (!blocks) throw new Error("blocks of null");
   const blockList: unknown[] = [];
   const video: never[] = [];
   const promise: unknown[] = [];
 
-  blocks.forEach((block, index) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  blocks.forEach((block, index: number) => {
     switch (block.name) {
       case "core/image": {
         promise.push(
@@ -48,27 +50,28 @@ export const transformBlocks = async (blocks: any) => {
       }
 
       case "core/media-text": {
-        promise.push(
-          new Promise(async (resolve) => {
-            try {
-              const { width, height } = await getSizeOf(
-                block.attributes.mediaUrl,
-              );
-              const { blocks: innerBlocks } = await transformBlocks(
-                block.innerBlocks,
-              );
+        const mediaTextBlock = block as TransformBlocks<GalleryBlockGQL>;
 
-              resolve(
-                (blockList[index] = {
-                  ...block,
-                  innerBlocks,
-                  attributes: {
-                    ...block.attributes,
-                    width,
-                    height,
-                  },
-                }),
-              );
+        promise.push(
+          new Promise(() => {
+            try {
+              console.log(mediaTextBlock);
+              // const { width, height } = await getSizeOf(
+              //   block.attributes.mediaUrl,
+              // );
+              // const { blocks: innerBlocks } = await transformBlocks(
+              //   block.innerBlocks,
+              // );
+
+              return (blockList[index] = {
+                ...block,
+                innerBlocks: null,
+                attributes: {
+                  ...block.attributes,
+                  // width,
+                  // height,
+                },
+              });
             } catch ({ message }) {
               blockList[index] = { name: `error: ${block.name}`, message };
             }
@@ -78,7 +81,7 @@ export const transformBlocks = async (blocks: any) => {
       }
 
       case "core/gallery": {
-        const galleryBlock: GalleryBlock = block;
+        const galleryBlock: TransformBlocks<GalleryBlockGQL> = block;
         const imagesBlock =
           galleryBlock.attributes.images.length > 0
             ? galleryBlock.attributes.images
@@ -92,11 +95,13 @@ export const transformBlocks = async (blocks: any) => {
 
         promise.push(
           Promise.all(imagePromise).then((data) => {
-            blockList[index] = {
+            (blockList[index] as TransformBlocks<TransformGalleryBlock>) = {
               name: galleryBlock.name,
               attributes: {
                 ...galleryBlock.attributes,
-                images: data.filter((image) => image !== null),
+                images: data.filter(
+                  (image) => image !== null,
+                ) as ImageTransformBlocksResult[],
               },
             };
           }),

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export type ImageBlockAttributes = {
+export type ImageBlockGQLAttributes = {
   id: number;
   align: string;
   caption: string;
@@ -9,7 +9,7 @@ export type ImageBlockAttributes = {
   url: string;
 };
 
-export type ImageBlock = { attributes: ImageBlockAttributes };
+export type ImageBlockGQL = { attributes: ImageBlockGQLAttributes };
 
 export const imageBlockGQL = {
   fragments: gql`

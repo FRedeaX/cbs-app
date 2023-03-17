@@ -4,6 +4,10 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 
+import {
+  TransformBlocks,
+  TransformGalleryBlock,
+} from "../../helpers/backend/transformBlocks/utils/type";
 import classes from "./Blocks.module.css";
 import { Columns } from "./Columns/Columns";
 import { Embed } from "./Embed/Embed";
@@ -24,20 +28,12 @@ import { Table } from "./Table/Table";
 import { Verse } from "./Verse/Verse";
 import { Video } from "./Video/Video";
 
-export type blocksType = {
-  name: string;
-  message: string;
-  attributes: any;
-  innerBlocks: blocksType;
-  saveContent: any;
+type BlocksProps = {
+  blocks: TransformBlocks[];
+  className?: { image: string };
 };
 
-interface IBlocks {
-  blocks: blocksType[];
-  className?: { image: string };
-}
-
-const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
+const Blocks: FC<BlocksProps> = ({ blocks, className, ...all }) => {
   const router = useRouter();
   // console.log(blocks);
   // console.log({ ...all });
@@ -57,15 +53,16 @@ const Blocks: FC<IBlocks> = ({ blocks, className, ...all }) => {
               />
             );
 
-          case "core/gallery":
+          case "core/gallery": {
+            const galleryBlock: TransformBlocks<TransformGalleryBlock> = block;
             return (
               <Gallery
                 key={key}
-                {...block.attributes}
-                images={block.attributes.images}
+                {...galleryBlock.attributes}
                 className={classes.block}
               />
             );
+          }
 
           case "core/image": {
             const { caption, align, alt, url, width, height } =
