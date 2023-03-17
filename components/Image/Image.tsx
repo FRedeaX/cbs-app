@@ -20,7 +20,6 @@ type ImageProps = {
 export const Image: FC<ImageProps> = ({
   blurDataURL,
   alt,
-  style,
   className,
   classNamePlaceholder,
   width,
@@ -97,9 +96,7 @@ export const Image: FC<ImageProps> = ({
 
   if (typeof blurDataURL === "string") {
     return (
-      <div
-        style={style}
-        className={classNames(classes.placeholder, classNamePlaceholder)}>
+      <div className={classNames(classes.placeholder, classNamePlaceholder)}>
         {needAnimation && !canRemovePlaceholder && (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}

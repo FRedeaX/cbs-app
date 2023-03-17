@@ -108,15 +108,10 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
           {images.map((image) => (
             <ImageViewerFigure
               key={image.id}
+              aspectRatio={image.width / image.height}
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
               <Image
-                style={{
-                  maxWidth: `calc(
-                    (var(--image-viewer-height, 100vh) - var(--image-viewer-header-height))
-                    * ${image.width / image.height}
-                  )`,
-                }}
                 alt={image.alt}
                 src={image.url}
                 width={image.width}
