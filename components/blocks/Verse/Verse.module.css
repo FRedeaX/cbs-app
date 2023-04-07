@@ -1,26 +1,7 @@
-.block {
-  margin: 6px 0 20px;
-  font-size: calc(16px + 3 * (100vw / 1600));
-  font-family: var(--font-R-S);
-  font-style: italic;
-}
-.block:first-child {
-  margin-top: 0;
-}
-.block:last-child {
-  margin-bottom: 0;
-}
+.root {
+  --paragraph-font-family: var(--font-r-s);
+  --paragraph-font-size: 19px;
+  --paragraph-line-height: max(28px, 1.374em);
 
-.align_center {
-  text-align: center;
-}
-
-.align_right {
-  text-align: right;
-}
-
-@media screen and (max-width: 767px) {
-  .block {
-    font-size: calc(16px + (3 + 3 * 0.7) * ((100vw - 320px) / 1600));
-  }
+  white-space: pre-line;
 }
