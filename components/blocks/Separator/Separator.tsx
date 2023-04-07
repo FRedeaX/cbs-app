@@ -1,38 +1,51 @@
+import classNames from "classnames";
 import { FC } from "react";
 
-import { CSSProperties } from "../../../helpers/typings/utility-types";
+import {
+  CSSProperties,
+  Nullable,
+} from "../../../helpers/typings/utility-types";
+import { parseBlockStyle } from "../utils/parseBlockStyle";
+import { Color, Gradient } from "../utils/types";
 import classes from "./Separator.module.css";
-import { SeparatorBlockAttributes, SeparatorStyle } from "./utils/separatorGQL";
+import { SeparatorVariant } from "./utils/separatorGQL";
 
-export const Separator: FC<SeparatorBlockAttributes> = ({
+type SeparatorProps = {
+  /**
+   * HTML-якорь.
+   */
+  anchor?: string;
+  /**
+   * @default 'is-style-default'
+   */
+  variant?: SeparatorVariant;
+  backgroundColor?: Color;
+  className?: string | classNames.ArgumentArray;
+  gradient?: Gradient;
+  style?: Nullable<string>;
+};
+
+export const Separator: FC<SeparatorProps> = ({
+  anchor,
+  variant = "is-style-default",
   className,
   backgroundColor,
   gradient,
   style,
 }) => {
-  const styleHR: CSSProperties = {};
-  const isDots = className === "is-style-dots";
+  const isDots = variant === "is-style-dots";
+  const styleHR: CSSProperties = parseBlockStyle({
+    backgroundColor,
+    gradient,
+    style,
+    styleBackground: isDots ? "color" : "backgroundColor",
+  });
 
-  if (backgroundColor) {
-    styleHR[
-      isDots ? "color" : "backgroundColor"
-    ] = `var(--wp--preset--color--${backgroundColor})`;
-  }
-  if (gradient && !isDots) {
-    styleHR.background = `var(--wp--preset--gradient--${gradient})`;
-  }
-
-  if (style !== null) {
-    const stypeParse: SeparatorStyle = JSON.parse(style);
-
-    if (stypeParse.color.background !== undefined) {
-      styleHR[isDots ? "color" : "backgroundColor"] =
-        stypeParse.color.background;
-    }
-    if (stypeParse.color.gradient !== undefined && !isDots) {
-      styleHR.background = stypeParse.color.gradient;
-    }
-  }
-
-  return <hr style={styleHR} className={classes[className]} />;
+  return (
+    <hr
+      id={anchor || undefined}
+      style={styleHR}
+      className={classNames(classes[variant], className)}
+    />
+  );
 };

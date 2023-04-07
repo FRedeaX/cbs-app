@@ -1,8 +1,8 @@
 .is-style-default,
 .is-style-wide {
   height: 1px;
-  margin: 16px auto 20px;
-  background-color: var(--cyan-bluish-gray);
+  /* stylelint-disable-next-line custom-property-pattern */
+  background-color: var(--wp--preset--color--cyan-bluish-gray);
   border: none;
 }
 
