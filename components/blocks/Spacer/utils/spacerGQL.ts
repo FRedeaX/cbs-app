@@ -1,7 +1,15 @@
 import { gql } from "@apollo/client";
 
-export type SpacerBlockAttributes = {
+type SpacerBlockGQLAttributes = {
+  /**
+   * HTML-якорь.
+   */
+  anchor: string;
   height: string;
+};
+
+export type SpacerBlockGQL = {
+  attributes: SpacerBlockGQLAttributes;
 };
 
 export const spacerBlockGQL = {
@@ -10,6 +18,7 @@ export const spacerBlockGQL = {
       ... on CoreSpacerBlock {
         attributes {
           ... on CoreSpacerBlockAttributes {
+            anchor
             height
           }
         }

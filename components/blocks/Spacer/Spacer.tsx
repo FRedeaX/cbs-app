@@ -1,7 +1,13 @@
 import { FC } from "react";
 
-import { SpacerBlockAttributes } from "./utils/spacerGQL";
+type SpacerProps = {
+  /**
+   * HTML-якорь.
+   */
+  anchor?: string;
+  height: string;
+};
 
-export const Spacer: FC<SpacerBlockAttributes> = ({ height }) => (
-  <div style={{ height }} aria-hidden="true" />
+export const Spacer: FC<SpacerProps> = ({ anchor, height }) => (
+  <div is={anchor || undefined} style={{ height }} aria-hidden="true" />
 );
