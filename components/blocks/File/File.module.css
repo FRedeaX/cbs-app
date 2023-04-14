@@ -1,53 +1,51 @@
-.block {
-  --button-text-padding: 0;
-  --button-border-width: 0;
-
-  margin: 6px 0 20px;
+.root {
+  --paragraph-font-weight: 400;
 }
 
-.block:first-child {
-  margin-top: 0;
-}
-.block:last-child {
-  margin-bottom: 0;
-}
-
-.header {
+.wrapper {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.link {
-  font-size: calc(16px + 3 * (100vw / 1600));
-  line-height: 28px;
-  white-space: pre-line;
-  text-align: left;
+.wrapper_align_left {
+  justify-content: start;
 }
 
-.link:hover {
-  text-decoration: underline;
+.wrapper_align_center {
+  justify-content: center;
 }
 
-@media screen and (max-width: 767px) {
-  .link {
-    font-size: calc(16px + (3 + 3 * 0.7) * ((100vw - 320px) / 1600));
-  }
+.wrapper_align_right {
+  justify-content: end;
 }
 
-.button_download {
-  margin-left: 8px;
+.buttonText {
+  --paragraph-color: var(--link-color);
+}
+
+.buttonFileSize {
+  --separation-dot-color: var(--black-70);
+  --paragraph-font-size: 11px;
+  --paragraph-color: var(--black-70);
+}
+
+.buttonDownload {
+  padding-left: 8px;
+}
+
+.buttonFileSize,
+.buttonDownload {
   opacity: 0;
-  transition: opacity 0.15s linear;
-
-  /* fill: var(--colorGrey); */
+  transition: opacity 0.15s var(--animation-ease-out);
 }
 
-.button_download:hover {
-  opacity: 0.8;
-}
-
-.link:hover + .button_download {
-  opacity: 0.4;
+.buttonDownload:hover,
+.buttonDownload:focus,
+.button:hover .buttonFileSize,
+.button:focus .buttonFileSize,
+.button:hover + .buttonDownload,
+.button:focus + .buttonDownload {
+  opacity: 1;
 }
 
 .preview {
