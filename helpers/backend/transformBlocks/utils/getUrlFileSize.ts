@@ -1,8 +1,6 @@
 import { partial } from "filesize";
 import ufs from "url-file-size";
 
-import { Nullable } from "../../../typings/utility-types";
-
 const size = partial({
   base: 2,
   standard: "jedec",
@@ -10,18 +8,14 @@ const size = partial({
 });
 
 export type GetUrlFileSizeResult = {
-  fileSize: Nullable<string>;
+  fileSize: string;
 };
 
 export const getUrlFileSize = async (
   url: string,
 ): Promise<GetUrlFileSizeResult> => {
-  try {
-    const bytesSize = await ufs(url);
-    const fileSize = size(bytesSize).toString();
+  const bytesSize = await ufs(url);
+  const fileSize = size(bytesSize).toString();
 
-    return { fileSize };
-  } catch (error) {
-    return { fileSize: null };
-  }
+  return { fileSize };
 };

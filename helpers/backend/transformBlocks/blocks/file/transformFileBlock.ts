@@ -2,6 +2,7 @@ import {
   FileBlockGQL,
   FileBlockGQLAttributes,
 } from "../../../../../components/blocks/File/utils/fileGQL";
+import { exceptionLog } from "../../../../exceptionLog";
 import {
   GetUrlFileSizeResult,
   getUrlFileSize,
@@ -26,9 +27,11 @@ export const transformFileBlock = async (
       },
     };
   } catch (error) {
+    exceptionLog(error);
+
     return {
       name: `error: ${fileBlock.name}`,
-      message: JSON.stringify(error),
+      message: (error as Error).message,
       attributes: null,
       innerBlocks: null,
     };
