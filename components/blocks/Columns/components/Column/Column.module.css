@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: var(--columns-gap);
+}
+
+@media screen and (width > 800px) {
+  .root_align_top {
+    justify-content: flex-start;
+  }
+
+  .root_align_center {
+    justify-content: center;
+  }
+
+  .root_align_bottom {
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (width <= 800px) {
+  .root {
+    align-items: center;
+  }
+}

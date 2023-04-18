@@ -1,16 +1,14 @@
-.wrapper {
-  display: flex;
-  margin: 6px 0 20px;
-}
-.wrapper:first-child {
-  margin-top: 0;
-}
-.wrapper:last-child {
-  margin-bottom: 0;
+.root {
+  --columns-gap: calc(var(--g-block-margin-bottom) / 2);
 }
 
-@media screen and (max-width: 768px) {
-  .wrapper {
-    flex-wrap: wrap;
+.wrapper {
+  display: flex;
+  margin: calc(var(--columns-gap) * -1);
+}
+
+@media screen and (width <= 800px) {
+  .wrapper_direction_column {
+    flex-direction: column;
   }
 }
