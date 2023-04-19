@@ -1,6 +1,8 @@
 import { gql } from "@apollo/client";
 
-import classes from "./Html.module.css";
+export type HtmlBlockGQL = {
+  saveContent: string;
+};
 
 export const htmlBlockGQL = {
   fragments: gql`
@@ -11,7 +13,3 @@ export const htmlBlockGQL = {
     }
   `,
 };
-
-export const Html = ({ html }) => (
-  <div className={classes.block} dangerouslySetInnerHTML={{ __html: html }} />
-);
