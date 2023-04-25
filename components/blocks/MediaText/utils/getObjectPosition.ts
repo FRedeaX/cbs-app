@@ -1,16 +1,17 @@
+import { Nullable } from "../../../../helpers/typings/utility-types";
+
 type focalPointType = { x: number; y: number };
 
 interface IObjectPosition {
-  focalPoint: string | null;
+  focalPoint?: Nullable<string>;
 }
 
-export const objectPosition = ({
+export const getObjectPosition = ({
   focalPoint,
 }: IObjectPosition): string | undefined => {
-  if (focalPoint !== null) {
+  if (focalPoint !== null && focalPoint !== undefined) {
     const { x, y }: focalPointType = JSON.parse(focalPoint);
     if (x && y) return `${x * 100}% ${y * 100}%`;
   }
-
   return undefined;
 };

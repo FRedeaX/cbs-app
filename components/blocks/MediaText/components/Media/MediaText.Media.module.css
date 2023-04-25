@@ -17,10 +17,12 @@
 
 @media screen and (width < 768px) {
   .mediaType_flex .root_mediaPosition_left {
+    align-self: center;
     padding-bottom: 20px;
   }
 
   .mediaType_flex .root_mediaPosition_right {
+    align-self: center;
     padding-top: 20px;
   }
 }
@@ -56,9 +58,6 @@
   }
 }
 
-/**
-  * Image border-radius
-  */
-.image {
-  border-radius: 12px;
+.image_objectFit_cover {
+  object-fit: cover;
 }

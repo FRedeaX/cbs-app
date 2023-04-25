@@ -1,16 +1,5 @@
-/**
- * Flext
- */
-.mediaType_flex .root {
-  align-self: center;
-}
-
-.mediaType_flex .root_aline_top {
-  align-self: start;
-}
-
-.mediaType_flex .root_aline_bottom {
-  align-self: end;
+.root {
+  padding: 0 var(--page-padding-sides);
 }
 
 /**

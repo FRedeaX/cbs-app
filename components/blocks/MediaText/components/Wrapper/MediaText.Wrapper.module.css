@@ -5,6 +5,18 @@
   display: flex;
 }
 
+.align_top {
+  align-items: flex-start;
+}
+
+.align_center {
+  align-items: center;
+}
+
+.align_bottom {
+  align-items: flex-end;
+}
+
 @media screen and (width >= 768px) {
   .mediaPosition_right {
     flex-direction: row-reverse;

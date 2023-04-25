@@ -1,93 +1,131 @@
 /* eslint-disable import/no-cycle */
 import classNames from "classnames";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 
-import { blocksType } from "../Blocks";
-import MediaTextMedia from "./MediaText.Media/MediaText.Media";
-import cnMedia from "./MediaText.Media/MediaText.Media.module.css";
-import MediaTextText from "./MediaText.Text/MediaText.Text";
-import cnText from "./MediaText.Text/MediaText.Text.module.css";
-import MediaTextWrapper from "./MediaText.Wrapper/MediaText.Wrapper";
-import classes from "./MediaText.module.css";
+import { Nullable } from "../../../helpers/typings/utility-types";
+import { parseBlockStyle } from "../utils/parseBlockStyle";
 import {
-  background as getBackground,
-  blockWidth as getBlockWidth,
-  color as getColor,
-  objectPosition as getObjectPosition,
-  mediaPositionType,
-  verticalAlignmentType,
-} from "./MediaText.utils";
+  Color,
+  FontSize,
+  Gradient,
+  HorizontalMediaAlign,
+  VerticalAlignment,
+} from "../utils/types";
+import classes from "./MediaText.module.css";
+import MediaTextMedia, { MediaProps } from "./components/Media/MediaText.Media";
+import cnMedia from "./components/Media/MediaText.Media.module.css";
+import MediaTextText, { TextProps } from "./components/Text/MediaText.Text";
+import cnText from "./components/Text/MediaText.Text.module.css";
+import MediaTextWrapper from "./components/Wrapper/MediaText.Wrapper";
+import { getBlockWidth, getObjectPosition } from "./utils";
 
-export interface IMediaTextProps {
-  backgroundColor: string;
-  gradient: string;
-  mediaPosition: mediaPositionType;
-  mediaWidth: number;
-  style: string | null;
-  textColor: string;
-  verticalAlignment: verticalAlignmentType;
-  imageFill: boolean;
+type MediaTextProps = {
+  /**
+   * HTML-якорь.
+   */
+  anchor?: string;
+
+  fontSize?: FontSize;
+  textColor?: Color;
+  backgroundColor?: Color;
+  gradient?: Gradient;
+  style?: Nullable<string>;
+
+  /**
+   * Свойство `object-fit`.
+   * @default false
+   */
+  imageFill?: boolean;
+  /**
+   * JSON
+   * @example
+   * {
+   *    x: number;
+   *    y: number
+   * }
+   */
+  focalPoint?: Nullable<string>;
   mediaAlt: string;
   mediaUrl: string;
-  width: number;
-  height: number;
-  focalPoint: string | null;
-  className: string;
-  innerBlocks: blocksType[];
-}
+  /**
+   * @default 50
+   */
+  mediaWidth?: number;
+  /**
+   * @default 'left'
+   */
+  mediaPosition?: HorizontalMediaAlign;
+  /**
+   * Вертикальное выравнивание (по оси `y`).
+   * @default 'center'
+   */
+  verticalAlignment?: VerticalAlignment;
+  /**
+   * @default false
+   */
+  isFloat?: boolean;
 
-export const MediaText: FC<IMediaTextProps> = ({
+  /**
+   * Дополнительный класс.
+   */
+  className?: string | classNames.ArgumentArray;
+} & Pick<MediaProps, "width" | "height" | "blurDataURL"> &
+  Pick<TextProps, "children">;
+
+export const MediaText: FC<MediaTextProps> = ({
+  anchor,
+
+  fontSize,
+  textColor,
   backgroundColor,
   gradient,
-  mediaPosition,
-  mediaWidth,
   style,
-  textColor,
-  verticalAlignment,
-  imageFill,
+
+  imageFill = false,
+  focalPoint,
   mediaAlt,
+  mediaPosition = "left",
   mediaUrl,
+  mediaWidth = 50,
+  verticalAlignment = "center",
+  isFloat = false,
   width,
   height,
-  focalPoint,
+  blurDataURL,
+
   className,
-  innerBlocks,
+  children,
 }) => {
-  const background = useMemo(
-    () => getBackground({ backgroundColor, gradient, style }),
-    [backgroundColor, gradient, style],
-  );
+  const styleDiv = parseBlockStyle({
+    textColor,
+    backgroundColor,
+    gradient,
+    fontSize,
+    style,
+  });
 
-  const color = useMemo(
-    () => getColor({ textColor, style }),
-    [textColor, style],
-  );
+  const objectPosition = getObjectPosition({ focalPoint });
 
-  const objectPosition = useMemo(
-    () => getObjectPosition({ focalPoint }),
-    [focalPoint],
-  );
+  const blockWidth = getBlockWidth({
+    mediaWidth,
+    isFloat,
+  });
 
-  const blockWidth = useMemo(
-    () =>
-      getBlockWidth({
-        mediaWidth,
-        isFloat: Boolean(className.split(" ").find((cn) => cn === "float")),
-      }),
-    [className, mediaWidth],
-  );
+  const background = !!styleDiv.backgroundColor;
 
   return (
     <div
-      style={{ background, color }}
-      className={classNames(classes.root, {
+      id={anchor || undefined}
+      style={styleDiv}
+      className={classNames(className, {
         [classes.root_borderRadius]: background,
         [cnMedia.background]: background,
         [cnText.background]: background,
       })}>
       <MediaTextWrapper
         mediaPosition={mediaPosition}
-        mediaType={blockWidth.mediaType}>
+        mediaType={blockWidth.mediaType}
+        verticalAlignment={verticalAlignment}>
         <MediaTextMedia
           mediaPosition={mediaPosition}
           blockWidth={blockWidth.media}
@@ -97,14 +135,13 @@ export const MediaText: FC<IMediaTextProps> = ({
           mediaUrl={mediaUrl}
           width={width}
           height={height}
+          blurDataURL={blurDataURL}
         />
         <MediaTextText
           mediaPosition={mediaPosition}
-          blockWidth={blockWidth.text}
-          verticalAlignment={verticalAlignment}
-          color={color}
-          innerBlocks={innerBlocks}
-        />
+          blockWidth={blockWidth.text}>
+          {children}
+        </MediaTextText>
       </MediaTextWrapper>
     </div>
   );

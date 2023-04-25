@@ -12,7 +12,7 @@ export interface IBlockWidthResult {
   mediaType: "flex" | "float";
 }
 
-export const blockWidth = ({
+export const getBlockWidth = ({
   mediaWidth,
   isFloat,
 }: IBlockWidth): IBlockWidthResult => {
