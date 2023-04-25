@@ -4,7 +4,7 @@
   box-sizing: content-box;
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 5px;
+  padding: 0 var(--g-article-padding-sides);
 }
 
 .header {
@@ -18,7 +18,7 @@
 }
 
 .category-link {
-  font-family: var(--font-R-S);
+  font-family: var(--font-family-roboto-slab);
   font-size: 14px;
   font-weight: 400;
 }
@@ -31,7 +31,13 @@
   --social-margin: 0 4px 0 0;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (width < 1000px) {
+  .Share {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (width >= 1000px) {
   .Share {
     --social-margin: 0 0 4px 0;
 
