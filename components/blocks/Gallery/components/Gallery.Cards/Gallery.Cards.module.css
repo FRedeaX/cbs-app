@@ -1,5 +1,26 @@
-.figure {
+.Figure {
+  --image-border-radius: var(--gallery-image-border-radius);
   --gallery-image-margin: 1px;
 
   margin: calc(var(--gallery-image-margin) * -1);
+}
+
+.GalleryRow_row_top:first-child {
+  --image-border-radius: 0 var(--gallery-image-border-radius)
+    var(--gallery-image-border-radius) var(--gallery-image-border-radius);
+}
+
+.GalleryRow_row_top:last-child {
+  --image-border-radius: var(--gallery-image-border-radius) 0
+    var(--gallery-image-border-radius) var(--gallery-image-border-radius);
+}
+
+.GalleryRow_row_bottom:first-child {
+  --image-border-radius: var(--gallery-image-border-radius)
+    var(--gallery-image-border-radius) var(--gallery-image-border-radius) 0;
+}
+
+.GalleryRow_row_bottom:last-child {
+  --image-border-radius: var(--gallery-image-border-radius)
+    var(--gallery-image-border-radius) 0 var(--gallery-image-border-radius);
 }

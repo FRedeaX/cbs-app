@@ -20,13 +20,17 @@ export const GalleryCards: FC<GalleryCardsProps> = ({ images, caption }) => {
   const moreCount = images.length - image.big.length - image.small.length;
 
   return (
-    <Figure className={classes.figure}>
-      <GalleryRow images={image.big} />
+    <Figure className={classes.Figure}>
+      <GalleryRow
+        images={image.big}
+        classNameWrapper={classes.GalleryRow_row_top}
+      />
       <GalleryRow
         images={image.small}
         moreCount={moreCount}
         offset={image.big.length}
         isHiddenFigcaption
+        classNameWrapper={classes.GalleryRow_row_bottom}
       />
       {caption && <FigureFigcaption text={caption} />}
     </Figure>

@@ -15,20 +15,15 @@ type GalleryProps = {
    * @default false
    */
   imageCrop?: boolean;
-  className: string;
-  __typename?: string;
+  className: string | classNames.ArgumentArray;
 } & GalleryCardsProps &
-  HTMLAttributes<HTMLDivElement>;
+  Omit<HTMLAttributes<HTMLDivElement>, "className">;
 
 export const Gallery: FC<GalleryProps> = ({
   caption,
   className,
   imageCrop = false,
   images,
-
-  // Извлекаем свойства, т.к. они не нужны на DOM узле
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  __typename,
   ...props
 }) => {
   if (images.length === 0) return null;

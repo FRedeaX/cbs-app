@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { FC } from "react";
 
 import {
@@ -26,22 +27,23 @@ export type ImageData = {
 
 export type GalleryRowProps = {
   images: ImageData[];
-
   /**
    * Количество изображений доступных дополнительно в полноэкранном режиме.
    */
   moreCount?: number;
-
   /**
    * Смещение `index` относительно предыдущей строки.
    * @default 0
    */
   offset?: number;
-
   /**
    * Визуально скрывает подпись к изображению.
    */
   isHiddenFigcaption?: VisuallyHiddenProps["isHidden"];
+  /**
+   * Дополнительный класс для обертки изображения.
+   */
+  classNameWrapper?: string | classNames.ArgumentArray;
 };
 
 export const GalleryRow: FC<GalleryRowProps> = ({
@@ -49,11 +51,13 @@ export const GalleryRow: FC<GalleryRowProps> = ({
   moreCount,
   offset = 0,
   isHiddenFigcaption,
+  classNameWrapper,
 }) => (
   <div className={classes.root}>
     {images.map((image, index) => {
       const aspectRatio = image.width / image.height;
       const sizes = Math.max(100 / images.length, 25);
+      const captionOrAlt = image.caption || image.alt;
 
       const style: CSSProperties = {
         flex: `var(--gallery-image-flex, ${
@@ -62,7 +66,10 @@ export const GalleryRow: FC<GalleryRowProps> = ({
       };
 
       return (
-        <Figure key={image.id} style={style} className={classes.wrapper}>
+        <Figure
+          key={image.id}
+          style={style}
+          className={classNames(classes.wrapper, classNameWrapper)}>
           <GalleryButton className={classes.button} index={index + offset}>
             {!!moreCount && index === images.length - 1 && (
               <GalleryMore count={moreCount} />
@@ -79,10 +86,10 @@ export const GalleryRow: FC<GalleryRowProps> = ({
               blurDataURL={image.blurDataURL}
             />
           </GalleryButton>
-          {(image.caption || image.alt) && (
+          {captionOrAlt && (
             <VisuallyHidden isHidden={isHiddenFigcaption}>
               <FigureFigcaption
-                text={image.caption || image.alt}
+                text={captionOrAlt}
                 className={classes.text_clamp}
                 position="inside"
                 isClamp

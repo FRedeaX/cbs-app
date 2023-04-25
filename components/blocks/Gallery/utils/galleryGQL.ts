@@ -21,6 +21,7 @@ export const galleryBlockGQL = {
   fragments: gql`
     fragment galleryBlockGQL on CoreGalleryBlock {
       ... on CoreGalleryBlock {
+        name
         attributes {
           ... on CoreGalleryBlockAttributes {
             caption
