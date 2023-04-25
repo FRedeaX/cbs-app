@@ -1,9 +1,9 @@
 .date {
   margin-right: 4px;
-  font-weight: 100;
 
-  /* font-family: var(--font-R-S); */
+  /* font-family: var(--font-family-roboto-slab); */
   font-size: 1.6em;
+  font-weight: 100;
 
   /* color: var(--dark-gray); */
 }

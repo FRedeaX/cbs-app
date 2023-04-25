@@ -2,9 +2,9 @@
   --button-border-width: 0;
   --button-link-color: rgba(30, 30, 30, 90%);
 
-  padding-left: 10px;
-  font-family: var(--font-R-S);
   cursor: default;
+  padding-left: 10px;
+  font-family: var(--font-family-roboto-slab);
 }
 
 .block:hover .link::before {

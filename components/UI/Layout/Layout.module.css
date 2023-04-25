@@ -1,16 +1,15 @@
 .main {
   flex: 1;
+
   width: 100%;
-  margin: 0 auto;
-  padding: 100px 10px 20px;
   min-height: calc(100vh - 84px);
+  margin: 0 auto;
+  padding: 100px var(--g-layout-padding-sides) 20px;
 }
 
 @media screen and (max-width: 950px) {
   .main {
-    padding: 81px 10px 20px;
-
-    /* padding: 81px var(--layout-padding-sides) 20px; */
+    padding: 81px var(--g-layout-padding-sides) 20px;
   }
 }
 

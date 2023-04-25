@@ -87,7 +87,7 @@
 
     padding: 20px;
 
-    background-color: var(--bg-white-95);
+    background-color: var(--background-color-white);
   }
 
   .subMenu-mobile--active {

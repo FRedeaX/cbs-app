@@ -52,7 +52,7 @@ class _Document extends Document {
         </Head>
         <body
           style={{
-            backgroundColor: "var(--bg-white-95)",
+            backgroundColor: "var(--background-color-white)",
             "--is-header-fixed": 1,
           }}>
           <Main />

@@ -7,7 +7,7 @@
 
   z-index: var(--header-z-index);
   font-size: 15px;
-  background-color: var(--bg-white-95);
+  background-color: var(--background-color-white);
   border-bottom: var(--header-border-height) solid #dbdbdb;
 }
 
@@ -67,7 +67,7 @@
 .secondary {
   display: flex;
   font-size: 13px;
-  color: var(--menuLink);
+  color: var(--menu-link);
 }
 
 /*
@@ -118,7 +118,7 @@
     width: 300px;
     padding: 20px;
 
-    background-color: var(--bg-white-95);
+    background-color: var(--background-color-white);
 
     transition: transform 0.25s ease-in;
   }

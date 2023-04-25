@@ -7,13 +7,14 @@ import smoothScroll from "smoothscroll-polyfill";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import "../styles.css";
 import { lightTheme } from "../styles/theme/lightTheme";
+import "../styles/variables/global.css";
+import "../styles/variables/wp.css";
 
 // interface AppProps extends NextAppProps {
 // emotionCache: EmotionCache;
 // }
 
 // const clientSideEmotionCache = createEmotionCache();
-// const theme = createTheme({}, ruRU);
 
 const App: FC<NextAppProps> = ({
   Component,
