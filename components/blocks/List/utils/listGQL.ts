@@ -5,9 +5,12 @@ import { Nullable } from "../../../../helpers/typings/utility-types";
 import { Color, FontSize, Gradient, ListType } from "../../utils/types";
 
 type ListItemBlockGQLAttributes = {
+  /**
+   * Содержание компонента.
+   */
   content: string;
 
-  fontSize: FontSize;
+  fontSize: "" | FontSize;
   style: Nullable<string>;
   /**
    * Дополнительный класс.
@@ -53,10 +56,10 @@ type ListBlockGQLAttributes = {
    * */
   type: Nullable<ListType>;
 
-  fontSize: FontSize;
-  textColor: Color;
-  backgroundColor: Color;
-  gradient: Gradient;
+  fontSize: "" | FontSize;
+  textColor: "" | Color;
+  backgroundColor: "" | Color;
+  gradient: "" | Gradient;
   style: Nullable<string>;
   /**
    * Дополнительный класс.

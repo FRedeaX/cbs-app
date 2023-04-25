@@ -1,17 +1,20 @@
 .link {
   margin: 0 -4px;
   padding: 1px 4px;
-  color: #0073aa;
+
   font-size: 16px;
+  color: #0073aa;
 
   /* background-color: hsla(199, 100%, 33%, 0.08); */
   text-decoration: none;
+
   border-radius: 4px;
+
   transition: background-color 0.15s linear;
 }
 
 .link:hover {
-  background-color: hsla(199, 100%, 33%, 0.18);
+  background-color: hsla(199deg, 100%, 33%, 18%);
 }
 
 .info {
@@ -39,11 +42,13 @@
 }
 
 .title {
+  --typography-font-family: var(--font-family-roboto-slab);
+  --typography-font-size: 20px;
+
   /* color: hsla(0, 3%, 33%, 1); */
 
   margin: 0 0 12px;
-  color: rgba(60, 60, 60, 0.9);
-  font-size: 20px;
+  color: rgba(60, 60, 60, 90%);
 
   /* border-bottom: 1px solid #dbdbdb; */
 }

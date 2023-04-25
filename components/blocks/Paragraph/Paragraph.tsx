@@ -1,54 +1,79 @@
-import { gql } from "@apollo/client";
+import { Typography } from "@mui/material";
 import classNames from "classnames";
-import { FC, ReactNode } from "react";
+import { ElementType, FC, HTMLAttributes } from "react";
 
 import { createMarkup } from "../../../helpers";
+import {
+  CSSProperties,
+  Nullable,
+} from "../../../helpers/typings/utility-types";
+import { parseBlockStyle } from "../utils/parseBlockStyle";
+import { Color, FontSize, Gradient, HorizontalAlign } from "../utils/types";
 import classes from "./Paragraph.module.css";
 
-export const paragraphBlockGQL = {
-  fragments: gql`
-    fragment paragraphBlockGQL on CoreParagraphBlock {
-      ... on CoreParagraphBlock {
-        name
-        attributes {
-          ... on CoreParagraphBlockAttributes {
-            align
-            anchor
-            className
-            content
-            textColor
-          }
-        }
-      }
-    }
-  `,
-};
+type ParagraphProps = {
+  /**
+   * Горизонтальное выравнивание содержимого.
+   * Свойство `text-align`
+   */
+  align?: HorizontalAlign;
+  /**
+   * HTML-якорь.
+   */
+  anchor?: string;
+  /**
+   * Содержание компонента или `children`.
+   */
+  content?: string;
+  fontSize?: FontSize;
+  textColor?: Color;
+  backgroundColor?: Color;
+  gradient?: Gradient;
+  style?: Nullable<string>;
+  /**
+   * Дополнительный класс.
+   */
+  className?: string | classNames.ArgumentArray;
+  /**
+   * Компонент, используемый для корневого узла.
+   * Либо строка для использования HTML-элемента, либо компонент.
+   * @default "p"
+   */
+  component?: ElementType;
+} & Omit<HTMLAttributes<HTMLParagraphElement>, "className" | "style">;
 
-interface IParagraph {
-  align?: "" | "left" | "center" | "right";
-  anchor?: "string";
-  className?: "string";
-  children: ReactNode;
-  content?: "string";
-}
-
-export const Paragraph: FC<IParagraph> = ({
+export const Paragraph: FC<ParagraphProps> = ({
   align,
   anchor,
   className,
-  children,
   content,
-}) => (
-  <p
-    className={classNames(
-      classes.block,
-      {
-        [classes[`align_${align}`]]:
-          align !== undefined && align !== "" && align !== "left",
-      },
-      className,
-    )}
-    id={anchor}
-    dangerouslySetInnerHTML={createMarkup(children || content)}
-  />
-);
+  fontSize,
+  textColor,
+  backgroundColor,
+  gradient,
+  style,
+  component = "p",
+  ...props
+}) => {
+  const styleTypography: CSSProperties = parseBlockStyle({
+    textColor,
+    backgroundColor,
+    gradient,
+    fontSize,
+    style,
+  });
+
+  return (
+    <Typography
+      id={anchor || undefined}
+      style={styleTypography}
+      align={align}
+      variant="responsiveText"
+      component={component}
+      className={classNames(classes.root, className)}
+      dangerouslySetInnerHTML={createMarkup(content)}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    />
+  );
+};

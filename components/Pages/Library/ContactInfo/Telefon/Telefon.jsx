@@ -1,7 +1,7 @@
+import { Typography } from "@mui/material";
 import classNames from "classnames";
 import React, { useState } from "react";
 
-import { Heading } from "../../../../blocks/Heading/Heading";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Telefon.module.css";
 
@@ -41,11 +41,11 @@ const Telefon = ({ telefon, cls }) => {
   return (
     <div className={classNames(classesInfo.info, classesInfo["info--mt"])}>
       {/* {console.log("Telefon")} */}
-      <Heading
-        level={4}
+      <Typography
+        component="h3"
         className={classNames(classesInfo.title, classes.title)}>
         Телефон
-      </Heading>
+      </Typography>
       <div className={classNames(classesInfo.list, classes.list)}>
         {renderTelefonItem(telefon)}
         {telefon.length > 1 && (

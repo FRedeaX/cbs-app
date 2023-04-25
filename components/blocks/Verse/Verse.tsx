@@ -13,9 +13,12 @@ type VerseProps = {
   anchor?: string;
   /**
    * Горизонтальное выравнивание содержимого.
-   * Атрибут `text-align`
+   * Свойство `text-align`
    */
   textAlign?: HorizontalAlign;
+  /**
+   * Содержание компонента.
+   */
   content: string;
   /**
    * Дополнительный класс.
@@ -41,7 +44,7 @@ export const Verse: FC<VerseProps> = ({
   style,
 }) => (
   <Paragraph
-    components="pre"
+    component="pre"
     align={textAlign}
     anchor={anchor}
     className={[classes.root, className]}

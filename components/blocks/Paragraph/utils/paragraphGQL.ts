@@ -3,16 +3,16 @@ import { gql } from "@apollo/client";
 import { Nullable } from "../../../../helpers/typings/utility-types";
 import { Color, FontSize, Gradient, HorizontalAlign } from "../../utils/types";
 
-export type VerseBlockGQLAttributes = {
-  /**
-   * HTML-якорь.
-   */
-  anchor: string;
+export type ParagraphBlockGQLAttributes = {
   /**
    * Горизонтальное выравнивание содержимого.
    * Свойство `text-align`
    */
-  textAlign: "" | HorizontalAlign;
+  align: "" | HorizontalAlign;
+  /**
+   * HTML-якорь.
+   */
+  anchor: string;
   /**
    * Содержание компонента.
    */
@@ -29,26 +29,24 @@ export type VerseBlockGQLAttributes = {
   style: Nullable<string>;
 };
 
-export type VerseBlockGQL = {
-  attributes: VerseBlockGQLAttributes;
-};
+export type ParagraphBlockGQL = { attributes: ParagraphBlockGQLAttributes };
 
-export const verseBlockGQL = {
+export const paragraphBlockGQL = {
   fragments: gql`
-    fragment verseBlockGQL on CoreVerseBlock {
-      ... on CoreVerseBlock {
+    fragment paragraphBlockGQL on CoreParagraphBlock {
+      ... on CoreParagraphBlock {
         name
         attributes {
-          ... on CoreVerseBlockAttributes {
+          ... on CoreParagraphBlockAttributes {
+            align
             anchor
-            textAlign
+            className
             content
             fontSize
             textColor
             backgroundColor
             gradient
             style
-            className
           }
         }
       }

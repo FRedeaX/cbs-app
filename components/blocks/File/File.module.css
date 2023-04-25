@@ -1,5 +1,5 @@
 .root {
-  --paragraph-font-weight: 400;
+  --typography-font-weight: 400;
 }
 
 .wrapper {
@@ -20,13 +20,13 @@
 }
 
 .buttonText {
-  --paragraph-color: var(--link-color);
+  --typography-color: var(--link-color);
 }
 
 .buttonFileSize {
   --separation-dot-color: var(--black-70);
-  --paragraph-font-size: 11px;
-  --paragraph-color: var(--black-70);
+  --typography-font-size: 0.9375rem;
+  --typography-color: var(--black-70);
 }
 
 .buttonDownload {

@@ -52,7 +52,7 @@ type FileProps = {
   /**
    * Дополнительный класс.
    */
-  className: string | classNames.ArgumentArray;
+  className?: string | classNames.ArgumentArray;
 };
 
 export const File: FC<FileProps> = ({
@@ -98,7 +98,10 @@ export const File: FC<FileProps> = ({
           </div>
         </Button>
         {showDownloadButton && (
-          <Tooltip title={`Скачать "${fileName}"${titleFileSize}`} arrow>
+          <Tooltip
+            title={`Скачать "${fileName}"${titleFileSize}`}
+            arrow
+            disableInteractive>
             <IconButton
               className={classes.buttonDownload}
               href={href}

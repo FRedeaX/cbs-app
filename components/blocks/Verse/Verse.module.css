@@ -1,7 +1,7 @@
 .root {
-  --paragraph-font-family: var(--font-r-s);
-  --paragraph-font-size: 19px;
-  --paragraph-line-height: max(28px, 1.374em);
+  --typography-font-family: var(--font-family-roboto-slab);
+  --typography-font-size: 1.4375rem;
+  --typography-line-height: max(28px, 1.374em);
 
   white-space: pre-line;
 }

@@ -7,9 +7,11 @@ import { FontSize } from "../../../utils/types";
 import classes from "./List.Item.module.css";
 
 type ListItemProps = {
+  /**
+   * Содержание компонента.
+   */
   content: string;
   fontSize?: FontSize;
-
   style?: Nullable<string>;
   /**
    * Дополнительный класс.
@@ -27,7 +29,7 @@ export const ListItem: FC<ListItemProps> = ({
 }) => (
   <li className={classNames(classes.root, className)}>
     <Paragraph
-      components="span"
+      component="span"
       content={content}
       fontSize={fontSize}
       style={style}
