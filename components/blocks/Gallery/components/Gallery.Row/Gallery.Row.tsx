@@ -59,9 +59,13 @@ export const GalleryRow: FC<GalleryRowProps> = ({
       const sizes = Math.max(100 / images.length, 25);
       const captionOrAlt = image.caption || image.alt;
 
+      /**
+       * Добавляем +1 к `aspectRatio`
+       * т.к. ширина 2-х изображений может быть меньше ширины контейнера.
+       */
       const style: CSSProperties = {
         flex: `var(--gallery-image-flex, ${
-          images.length > 1 ? aspectRatio : 1
+          images.length > 1 ? aspectRatio + 1 : 1
         })`,
       };
 
