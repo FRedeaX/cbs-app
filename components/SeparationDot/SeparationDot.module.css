@@ -1,0 +1,4 @@
+.root {
+  padding: var(--separation-dot-padding, 0 6px);
+  color: var(--separation-dot-color);
+}
