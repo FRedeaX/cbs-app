@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { ThemeProvider } from "@mui/material/styles";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
 import smoothScroll from "smoothscroll-polyfill";
@@ -10,18 +9,7 @@ import { lightTheme } from "../styles/theme/lightTheme";
 import "../styles/variables/global.css";
 import "../styles/variables/wp.css";
 
-// interface AppProps extends NextAppProps {
-// emotionCache: EmotionCache;
-// }
-
-// const clientSideEmotionCache = createEmotionCache();
-
-const App: FC<NextAppProps> = ({
-  Component,
-  // emotionCache = clientSideEmotionCache,
-  pageProps,
-  // eslint-disable-next-line arrow-body-style
-}) => {
+const App: FC<NextAppProps> = ({ Component, pageProps }) => {
   useEffect(() => {
     // eslint-disable-next-line no-underscore-dangle
     window.__forceSmoothScrollPolyfill__ = true;
@@ -30,11 +18,12 @@ const App: FC<NextAppProps> = ({
 
   return (
     <ErrorBoundary>
-      {/* <CacheProvider value={emotionCache}> */}
-      <ThemeProvider theme={lightTheme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-      {/* </CacheProvider> */}
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={lightTheme}>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </ErrorBoundary>
   );
 };

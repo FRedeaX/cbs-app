@@ -11,6 +11,7 @@
   --black-20: hsl(0deg, 0%, 0%, 20%);
   --black-14: hsl(0deg, 0%, 12%, 14%);
   --black-10: rgb(232, 232, 232);
+  --black-08: rgba(31, 31, 31, 8%);
   --gray: hsl(0deg, 0%, 43%);
   --dark-gray: hsl(0deg, 0%, 24%);
   --d-dark-gray: hsl(222deg, 13%, 28%, 100%);

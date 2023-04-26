@@ -13,7 +13,7 @@ import { paragraphBlockGQL } from "../../Paragraph/utils/paragraphGQL";
 import { pullquoteBlockGQL } from "../../Pullquote/utils/pullquoteGQL";
 import { separatorBlockGQL } from "../../Separator/utils/separatorGQL";
 import { spacerBlockGQL } from "../../Spacer/utils/spacerGQL";
-import { tableBlockGQL } from "../../Table/Table";
+import { tableBlockGQL } from "../../Table/utils/tableGQL";
 import { verseBlockGQL } from "../../Verse/utils/verseGQL";
 import { videoBlockGQL } from "../../Video/utils/videoGQL";
 import { HorizontalAlign } from "../../utils/types";
