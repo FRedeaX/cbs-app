@@ -5,6 +5,7 @@ import {
   SearchParams,
   SearchResponseFrontend,
 } from "../../../../core/elastic/search/type";
+import { exceptionLog } from "../../../../helpers";
 import { Nullable } from "../../../../helpers/typings/utility-types";
 import { FetchSearchData, fetchSearchData } from "../fetchSearchData";
 
@@ -15,9 +16,9 @@ export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
     .query as SearchParams;
   const textSearch = text?.trim();
 
-  const { data, isValidating } = useSWR<
+  const { data, isValidating, error } = useSWR<
     SearchResponseFrontend,
-    unknown,
+    string,
     Nullable<SWRKey>
   >(
     {
@@ -32,6 +33,10 @@ export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
       fallbackData: ssrData,
     },
   );
+
+  if (error !== undefined) {
+    exceptionLog(error);
+  }
 
   return {
     data,

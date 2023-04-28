@@ -15,5 +15,5 @@ export const createSearchLink = (searchParams: SearchParams, pathname = "") => {
     if (typeof value === "string") url.searchParams.append(key, value);
   });
 
-  return url;
+  return url.href;
 };
