@@ -5,29 +5,24 @@ import { useClientScroll } from "../../../helpers/frontend/hooks";
 export const useHeaderScroll = () => {
   const currentScroll = useClientScroll();
   const prevScrollYRef = useRef(0);
-  const isHeaderHiddenRef = useRef(false);
+  const isHeaderVisibleRef = useRef(false);
 
   useEffect(() => {
     if (currentScroll === undefined) return;
     const prevScrollY = prevScrollYRef.current;
-    const isHeaderHidden = isHeaderHiddenRef.current;
+    const isHeaderVisible = isHeaderVisibleRef.current;
 
-    if (
-      currentScroll > 80 &&
-      prevScrollY !== 0 &&
-      prevScrollY < currentScroll &&
-      !isHeaderHidden
-    ) {
+    if (currentScroll > 80 && prevScrollY < currentScroll && isHeaderVisible) {
       // Скрываем
       document.body.style.setProperty("--is-header-fixed", "0");
-      isHeaderHiddenRef.current = !isHeaderHidden;
+      isHeaderVisibleRef.current = false;
     } else if (
-      (currentScroll === 0 || prevScrollY > currentScroll) &&
-      isHeaderHiddenRef.current
+      currentScroll === 0 ||
+      (prevScrollY > currentScroll && !isHeaderVisible)
     ) {
       // Показываем
       document.body.style.setProperty("--is-header-fixed", "1");
-      isHeaderHiddenRef.current = !isHeaderHidden;
+      isHeaderVisibleRef.current = true;
     }
     prevScrollYRef.current = currentScroll;
   }, [currentScroll]);
