@@ -3,12 +3,9 @@ import { useRouter } from "next/router";
 
 import Head from "../../../components/Head/Head";
 import Layout from "../../../components/UI/Layout/Layout";
+import { transformBlocks } from "../../../core/backend/transformBlocks";
 import { exceptionLog } from "../../../helpers";
-import {
-  getMenu,
-  sortingCategories,
-  transformBlocks,
-} from "../../../helpers/backend";
+import { getMenu, sortingCategories } from "../../../helpers/backend";
 import { client } from "../../../lib/apollo/client";
 import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routes/Post/Post";
 

@@ -2,9 +2,9 @@ import {
   FETCH_CHILDREN_PAGE,
   FETCH_PAGE,
 } from "../../../components/Pages/Page/Page.utils";
+import { transformBlocks } from "../../../core/backend/transformBlocks";
 import { client } from "../../../lib/apollo/client";
 import { exceptionLog } from "../../exceptionLog";
-import { transformBlocks } from "../transformBlocks";
 
 export const getPage = async (id) => {
   const page = await client

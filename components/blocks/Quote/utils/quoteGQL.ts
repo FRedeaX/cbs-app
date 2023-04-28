@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { TransformBlocks } from "../../../../helpers/backend/transformBlocks/utils/type";
+import { TransformBlocks } from "../../../../core/backend/transformBlocks/utils/type";
 import { Nullable } from "../../../../helpers/typings/utility-types";
 import { embedBlockGQL } from "../../Embed/utils/embedGQL";
 import { fileBlockGQL } from "../../File/utils/fileGQL";

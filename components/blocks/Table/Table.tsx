@@ -16,6 +16,7 @@ import { FC } from "react";
 
 import { createMarkup } from "../../../helpers";
 import { Nullable } from "../../../helpers/typings/utility-types";
+import { Paragraph } from "../Paragraph/Paragraph";
 import { parseBlockStyle } from "../utils/parseBlockStyle";
 import { Color, FontSize, Gradient } from "../utils/types";
 import classes from "./Table.module.css";
@@ -91,8 +92,7 @@ export const Table: FC<TableProps> = ({
                   <TableCell
                     key={`hcell_${cellIndex}`}
                     align={cell.align || "center"}>
-                    <Typography
-                      variant="responsiveText"
+                    <Paragraph
                       component="span"
                       dangerouslySetInnerHTML={createMarkup(cell.content)}
                     />
@@ -111,8 +111,7 @@ export const Table: FC<TableProps> = ({
                   <TableCell
                     key={`cell_${cellIndex}`}
                     align={cell.align || undefined}>
-                    <Typography
-                      variant="responsiveText"
+                    <Paragraph
                       component="span"
                       dangerouslySetInnerHTML={createMarkup(cell.content)}
                     />

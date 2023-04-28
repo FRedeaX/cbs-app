@@ -17,7 +17,7 @@ type VerseProps = {
    */
   textAlign?: HorizontalAlign;
   /**
-   * Содержание компонента.
+   * Текст компонента.
    */
   content: string;
   /**

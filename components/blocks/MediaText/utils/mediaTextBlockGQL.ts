@@ -14,7 +14,7 @@ import { pullquoteBlockGQL } from "../../Pullquote/utils/pullquoteGQL";
 import { quoteBlockGQL } from "../../Quote/utils/quoteGQL";
 import { separatorBlockGQL } from "../../Separator/utils/separatorGQL";
 import { spacerBlockGQL } from "../../Spacer/utils/spacerGQL";
-import { tableBlockGQL } from "../../Table/Table";
+import { tableBlockGQL } from "../../Table/utils/tableGQL";
 import { verseBlockGQL } from "../../Verse/utils/verseGQL";
 import { videoBlockGQL } from "../../Video/utils/videoGQL";
 import {

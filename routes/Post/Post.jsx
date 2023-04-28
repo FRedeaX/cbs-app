@@ -3,21 +3,23 @@ import { useEffect } from "react";
 
 import Article from "../../components/Article/Article";
 import { postGQL } from "../../components/Posts/PostsRoot";
-import { columnsBlockGQL } from "../../components/blocks/Columns/Columns";
-import { embedBlockGQL } from "../../components/blocks/Embed/Embed";
-import { fileBlockGQL } from "../../components/blocks/File/File";
-import { galleryBlockGQL } from "../../components/blocks/Gallery/utils";
-import { headingBlockGQL } from "../../components/blocks/Heading/Heading";
-import { htmlBlockGQL } from "../../components/blocks/Html/Html";
+import { columnsBlockGQL } from "../../components/blocks/Columns/utils/columnsGQL";
+import { embedBlockGQL } from "../../components/blocks/Embed/utils/embedGQL";
+import { fileBlockGQL } from "../../components/blocks/File/utils/fileGQL";
+import { galleryBlockGQL } from "../../components/blocks/Gallery/utils/galleryGQL";
+import { headingBlockGQL } from "../../components/blocks/Heading/utils/headingGQL";
+import { htmlBlockGQL } from "../../components/blocks/Html/utils/htmlGQL";
 import { imageBlockGQL } from "../../components/blocks/Image/utils/imageGQL";
-import { listBlockGQL } from "../../components/blocks/List/List";
-import { mediaTextBlockGQL } from "../../components/blocks/MediaText/MediaText.utils/mediaTextBlockGQL";
-import { paragraphBlockGQL } from "../../components/blocks/Paragraph/Paragraph";
-import { quoteBlockGQL } from "../../components/blocks/Quote/Quote";
+import { listBlockGQL } from "../../components/blocks/List/utils/listGQL";
+import { mediaTextBlockGQL } from "../../components/blocks/MediaText/utils/mediaTextBlockGQL";
+import { paragraphBlockGQL } from "../../components/blocks/Paragraph/utils/paragraphGQL";
+import { pullquoteBlockGQL } from "../../components/blocks/Pullquote/utils/pullquoteGQL";
+import { quoteBlockGQL } from "../../components/blocks/Quote/utils/quoteGQL";
 import { separatorBlockGQL } from "../../components/blocks/Separator/utils/separatorGQL";
 import { spacerBlockGQL } from "../../components/blocks/Spacer/utils/spacerGQL";
-import { tableBlockGQL } from "../../components/blocks/Table/Table";
-import { verseBlockGQL } from "../../components/blocks/Verse/Verse";
+import { tableBlockGQL } from "../../components/blocks/Table/utils/tableGQL";
+import { verseBlockGQL } from "../../components/blocks/Verse/utils/verseGQL";
+import { videoBlockGQL } from "../../components/blocks/Video/utils/videoGQL";
 import classes from "./Post.module.css";
 import { getShortID, usePost } from "./Post.utils";
 import Offer from "./offer/Offer";
@@ -115,39 +117,43 @@ export const GET_POST_CONTENT_BY_BLOCKS = gql`
     post(id: $id, idType: $type, asPreview: $isPreview) {
       blocks {
         name
-        ...paragraphBlockGQL
-        ...galleryBlockGQL
-        ...imageBlockGQL
         ...columnsBlockGQL
-        ...htmlBlockGQL
         ...embedBlockGQL
-        ...separatorBlockGQL
-        ...quoteBlockGQL
+        ...fileBlockGQL
+        ...galleryBlockGQL
+        ...headingBlockGQL
+        ...htmlBlockGQL
+        ...imageBlockGQL
         ...listBlockGQL
         ...mediaTextBlockGQL
-        ...fileBlockGQL
+        ...paragraphBlockGQL
+        ...pullquoteBlockGQL
+        ...quoteBlockGQL
+        ...separatorBlockGQL
         ...spacerBlockGQL
-        ...headingBlockGQL
         ...tableBlockGQL
         ...verseBlockGQL
+        ...videoBlockGQL
       }
       ...postGQL
     }
   }
-  ${paragraphBlockGQL.fragments}
-  ${galleryBlockGQL.fragments}
-  ${imageBlockGQL.fragments}
   ${columnsBlockGQL.fragments}
   ${embedBlockGQL.fragments}
+  ${fileBlockGQL.fragments}
+  ${galleryBlockGQL.fragments}
+  ${headingBlockGQL.fragments}
   ${htmlBlockGQL.fragments}
-  ${separatorBlockGQL.fragments}
-  ${quoteBlockGQL.fragments}
+  ${imageBlockGQL.fragments}
   ${listBlockGQL.fragments}
   ${mediaTextBlockGQL.fragments}
-  ${fileBlockGQL.fragments}
+  ${paragraphBlockGQL.fragments}
+  ${pullquoteBlockGQL.fragments}
+  ${quoteBlockGQL.fragments}
+  ${separatorBlockGQL.fragments}
   ${spacerBlockGQL.fragments}
-  ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
+  ${videoBlockGQL.fragments}
   ${postGQL.fragments}
 `;

@@ -14,7 +14,7 @@ export type VerseBlockGQLAttributes = {
    */
   textAlign: "" | HorizontalAlign;
   /**
-   * Содержание компонента.
+   * Текст компонента.
    */
   content: string;
   /**

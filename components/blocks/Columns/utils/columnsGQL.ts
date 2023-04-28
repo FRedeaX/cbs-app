@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
-import { TransformBlocks } from "../../../../helpers/backend/transformBlocks/utils/type";
+import { TransformBlocks } from "../../../../core/backend/transformBlocks/utils/type";
 import { Nullable } from "../../../../helpers/typings/utility-types";
 import { embedBlockGQL } from "../../Embed/utils/embedGQL";
 import { fileBlockGQL } from "../../File/utils/fileGQL";
-import { galleryBlockGQL } from "../../Gallery/utils";
-import { headingBlockGQL } from "../../Heading/Heading";
-import { htmlBlockGQL } from "../../Html/Html";
+import { galleryBlockGQL } from "../../Gallery/utils/galleryGQL";
+import { headingBlockGQL } from "../../Heading/utils/headingGQL";
+import { htmlBlockGQL } from "../../Html/utils/htmlGQL";
 import { imageBlockGQL } from "../../Image/utils/imageGQL";
 import { listBlockGQL } from "../../List/utils/listGQL";
 import { paragraphBlockGQL } from "../../Paragraph/utils/paragraphGQL";
@@ -14,7 +14,7 @@ import { pullquoteBlockGQL } from "../../Pullquote/utils/pullquoteGQL";
 import { quoteBlockGQL } from "../../Quote/utils/quoteGQL";
 import { separatorBlockGQL } from "../../Separator/utils/separatorGQL";
 import { spacerBlockGQL } from "../../Spacer/utils/spacerGQL";
-import { tableBlockGQL } from "../../Table/Table";
+import { tableBlockGQL } from "../../Table/utils/tableGQL";
 import { verseBlockGQL } from "../../Verse/utils/verseGQL";
 import { videoBlockGQL } from "../../Video/utils/videoGQL";
 import {
@@ -72,7 +72,7 @@ export type СolumnsBlockGQLAttributes = {
 
 export type СolumnsBlockGQL = {
   attributes: СolumnsBlockGQLAttributes;
-  innerBlocks: СolumnBlockGQL[];
+  innerBlocks: TransformBlocks<СolumnBlockGQL>[];
 };
 
 export const columnBlockGQL = {
@@ -89,6 +89,7 @@ export const columnBlockGQL = {
           }
         }
         innerBlocks {
+          name
           ...embedBlockGQL
           ...fileBlockGQL
           ...galleryBlockGQL

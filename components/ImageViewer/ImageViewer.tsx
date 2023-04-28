@@ -24,6 +24,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({
       onOpen={noop}
       onClose={onClose}
       onKeyDown={onKeyDown}
+      swipeAreaWidth={0}
       ModalProps={{
         // Возможны проблемы в React 18.
         // see https://mui.com/material-ui/react-drawer/#keep-mounted

@@ -1,6 +1,6 @@
 import { delay, exceptionLog } from "../../helpers";
 import { Nullable } from "../../helpers/typings/utility-types";
-import { IMAGE_PLAICEHOLDER_BLUR, clientRedis } from "../../lib/redis";
+import { RKEY_IMAGE_PLAICEHOLDER_BLUR, clientRedis } from "../../lib/redis";
 import { createPlaceholder } from "./utils/createPlaceholder";
 
 export type GetPlaceholderResult = {
@@ -12,7 +12,7 @@ export const getPlaceholder = async (
 ): Promise<GetPlaceholderResult> => {
   try {
     const blurDataURL = await clientRedis.get(
-      `${IMAGE_PLAICEHOLDER_BLUR}${id}`,
+      `${RKEY_IMAGE_PLAICEHOLDER_BLUR}${id}`,
     );
 
     if (blurDataURL === null) {

@@ -1,4 +1,4 @@
-import { transformBlocks } from "../../helpers/backend";
+import { transformBlocks } from "../../core/backend/transformBlocks";
 
 export default async function transformBlocksAPI(req, res) {
   const body = JSON.parse(req.body);

@@ -2,7 +2,7 @@ import {
   EmbedBlockGQL,
   EmbedBlockGQLAttributes,
 } from "../../../../../components/blocks/Embed/utils/embedGQL";
-import { Nullable } from "../../../../typings/utility-types";
+import { Nullable } from "../../../../../helpers/typings/utility-types";
 import {
   TransformBlocks,
   TransformErrorBlock,

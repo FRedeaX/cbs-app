@@ -31,7 +31,7 @@
 } */
 
 /* .link:hover {
-  color: var(--accent-сolor);
+  color: var(--accent-color);
 } */
 
 .link {
@@ -45,6 +45,6 @@
   bottom: 6px;
   left: 1px;
   height: 1px;
-  background-color: var(--accent-сolor);
+  background-color: var(--accent-color);
   content: "";
 } */

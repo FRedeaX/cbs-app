@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
-import { TransformBlocks } from "../../../../helpers/backend/transformBlocks/utils/type";
+import { TransformBlocks } from "../../../../core/backend/transformBlocks/utils/type";
 import { Nullable } from "../../../../helpers/typings/utility-types";
 import { Color, FontSize, Gradient, ListType } from "../../utils/types";
 
 type ListItemBlockGQLAttributes = {
   /**
-   * Содержание компонента.
+   * Текст компонента.
    */
   content: string;
 

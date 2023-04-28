@@ -1,15 +1,23 @@
+.root {
+  margin: var(--figcaption-margin);
+  padding: var(--figcaption-padding);
+}
+
 .root_outside {
-  margin: var(--figcaption-margin, 4px);
+  --figcaption-padding: 4px 0 0 0;
+
+  caption-side: bottom;
+  display: var(--figcaption-display, block);
 }
 
 .root_inside {
+  --figcaption-margin: 0 3px 4px;
+  --figcaption-padding: 2px 6px;
+
   position: absolute;
   bottom: var(--figcaption-position-bottom, 0);
   left: var(--figcaption-position-left, 0);
   transform: var(--figcaption-translate-x);
-
-  margin: var(--figcaption-margin, 0 3px 4px);
-  padding: var(--figcaption-padding, 2px 6px);
 
   text-align: var(--figcaption-text-align, left);
 

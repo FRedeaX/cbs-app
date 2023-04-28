@@ -9,13 +9,24 @@ import classes from "./Image.module.css";
 
 const ANIMATION_DELAY_MS = 50;
 
-type ImageProps = {
+export type ImageProps = {
   /**
    * Дополнительный класс для обертки.
    */
   classNamePlaceholder?: string;
+  /**
+   * Заполнитель для отображения во время загрузки картинки.
+   */
   blurDataURL?: Nullable<string>;
-} & Omit<NextImageProps, "placeholder" | "blurDataURL">;
+  /**
+   * Ширина изображения.
+   */
+  width: number;
+  /**
+   * Высота изображения.
+   */
+  height: number;
+} & Omit<NextImageProps, "placeholder" | "blurDataURL" | "width" | "height">;
 
 export const Image: FC<ImageProps> = ({
   blurDataURL,

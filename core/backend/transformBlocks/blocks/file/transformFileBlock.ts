@@ -2,7 +2,7 @@ import {
   FileBlockGQL,
   FileBlockGQLAttributes,
 } from "../../../../../components/blocks/File/utils/fileGQL";
-import { exceptionLog } from "../../../../exceptionLog";
+import { exceptionLog } from "../../../../../helpers/exceptionLog";
 import {
   GetUrlFileSizeResult,
   getUrlFileSize,

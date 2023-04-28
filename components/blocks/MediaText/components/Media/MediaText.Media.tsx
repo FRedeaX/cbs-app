@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import { Image, ImageProps } from "../../../Image/Image";
 import { HorizontalMediaAlign } from "../../../utils/types";
-import { BlockWidthResult } from "../../utils";
+import { IBlockWidthResult } from "../../utils";
 import classes from "./MediaText.Media.module.css";
 
 export type MediaProps = {
@@ -32,7 +32,7 @@ export type MediaProps = {
   /**
    * Ширина блока с изображением.
    */
-  blockWidth?: BlockWidthResult["media"];
+  blockWidth?: IBlockWidthResult["media"];
 } & Pick<ImageProps, "width" | "height" | "blurDataURL">;
 
 const MediaTextMedia: FC<MediaProps> = ({

@@ -8,7 +8,7 @@ import classes from "./List.Item.module.css";
 
 type ListItemProps = {
   /**
-   * Содержание компонента.
+   * Текст компонента.
    */
   content: string;
   fontSize?: FontSize;

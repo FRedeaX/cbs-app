@@ -22,7 +22,7 @@ type ParagraphProps = {
    */
   anchor?: string;
   /**
-   * Содержание компонента или `children`.
+   * Текст компонента или `children`.
    */
   content?: string;
   fontSize?: FontSize;

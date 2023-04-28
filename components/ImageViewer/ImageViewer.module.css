@@ -1,4 +1,5 @@
 .root {
+  --image-border-radius: 0;
   --image-viewer-header-height: 40px;
 
   touch-action: none;

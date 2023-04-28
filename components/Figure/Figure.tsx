@@ -5,8 +5,8 @@ import classes from "./Figure.module.css";
 
 type FigureProps = {
   children: ReactNode;
-  className?: string;
-} & HTMLAttributes<HTMLElement>;
+  className?: string | classNames.ArgumentArray;
+} & Omit<HTMLAttributes<HTMLElement>, "className">;
 
 export const Figure: FC<FigureProps> = ({ children, className, ...props }) => (
   // eslint-disable-next-line react/jsx-props-no-spreading

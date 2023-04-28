@@ -7,7 +7,7 @@ import { Void } from "../../../../helpers/typings/utility-types";
 import classes from "./ImageViewer.Header.module.css";
 
 type ImageViewerHeaderProps = {
-  children: ReactNode;
+  children?: ReactNode;
   hrefDownload?: string;
   onClose: Void;
 };
@@ -27,7 +27,7 @@ export const ImageViewerHeader: FC<ImageViewerHeaderProps> = ({
           </IconButton>
         </Tooltip>
       )}
-      <Tooltip title="Закрыть галерею" arrow>
+      <Tooltip title="Закрыть" arrow>
         <IconButton onClick={onClose}>
           <CloseRoundedIcon />
         </IconButton>

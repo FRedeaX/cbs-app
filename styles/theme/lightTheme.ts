@@ -173,7 +173,7 @@ export const lightTheme = createTheme(
         )`, // от 16 до 20
         fontWeight: `var(--typography-font-weight, 400)`,
         fontStyle: `var(--typography-font-style, inherit)`,
-        lineHeight: `var(--typography-line-height, max(28px, 1.474em))`,
+        lineHeight: `var(--typography-line-height, max(28px, 1.5em))`,
         color: `var(--typography-color, var(--black))`,
         textDecoration: `var(--typography-text-decoration)`,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

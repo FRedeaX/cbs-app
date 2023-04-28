@@ -14,7 +14,7 @@ export type ParagraphBlockGQLAttributes = {
    */
   anchor: string;
   /**
-   * Содержание компонента.
+   * Текст компонента.
    */
   content: string;
   /**

@@ -9,7 +9,9 @@ type getSizeOfResult = {
 
 export const getSizeOf = (url: string): Promise<getSizeOfResult> =>
   new Promise((resolve, reject) => {
-    const httpsOrHttp = process.env.NODE_ENV === "production" ? https : http;
+    const protocol = url.split(":")[0];
+
+    const httpsOrHttp = protocol === "http" ? http : https;
 
     const req = httpsOrHttp.get(url, (res) => {
       if (res.statusCode && (res.statusCode < 200 || res.statusCode >= 300)) {
