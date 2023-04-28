@@ -10,6 +10,7 @@
   height: 100%;
 
   background-color: var(--black-50);
+  border-radius: var(--image-border-radius, var(--g-image-border-radius));
 }
 
 .text {
