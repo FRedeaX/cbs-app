@@ -3,18 +3,37 @@
   --button-text-align: left;
   --submenu-border-radius: 12px;
   --header-border-height: 1px;
+  --custome-scrollbar-max-height: 406px;
 
   z-index: var(--header-z-index);
   font-size: 15px;
-  background-color: var(--bg-white-95);
+  background-color: var(--background-color-white);
   border-bottom: var(--header-border-height) solid #dbdbdb;
 }
 
-.position {
+@media screen and (width > 950px) {
+  .block {
+    --header-height: var(--header-desktop-height);
+  }
+}
+
+@media screen and (width <= 950px) {
+  .block {
+    --header-height: var(--header-mobile-height);
+  }
+}
+
+.block_fixed {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
+  transform: translateY(
+    calc(
+      var(--header-height) * (-1 + var(--is-header-fixed)) -
+        var(--header-border-height)
+    )
+  );
 
   transition: transform 0.3s ease;
 }
@@ -30,7 +49,7 @@
 }
 
 .logo {
-  height: auto;
+  width: calc(var(--header-height) - 20px);
   margin: 10px 0;
 }
 
@@ -48,24 +67,13 @@
 .secondary {
   display: flex;
   font-size: 13px;
-  color: var(--menuLink);
+  color: var(--menu-link);
 }
 
 /*
  *  desktop
  */
 @media screen and (min-width: 951px) {
-  .position--hidden {
-    transform: translateY(
-      calc(var(--header-desktop-height) * -1 - var(--header-border-height))
-    );
-  }
-
-  .logo {
-    width: calc(var(--header-desktop-height) - 20px);
-    min-width: calc(var(--header-desktop-height) - 20px);
-  }
-
   .menu {
     --icon-display: none;
 
@@ -98,17 +106,6 @@
  *  mobile
  */
 @media screen and (max-width: 950px) {
-  .position--hidden {
-    transform: translateY(
-      calc(var(--header-mobile-height) * -1 - var(--header-border-height))
-    );
-  }
-
-  .logo {
-    width: calc(var(--header-mobile-height) - 20px);
-    min-width: calc(var(--header-mobile-height) - 20px);
-  }
-
   .menu {
     position: fixed;
     top: var(--header-mobile-height);
@@ -121,7 +118,7 @@
     width: 300px;
     padding: 20px;
 
-    background-color: var(--bg-white-95);
+    background-color: var(--background-color-white);
 
     transition: transform 0.25s ease-in;
   }

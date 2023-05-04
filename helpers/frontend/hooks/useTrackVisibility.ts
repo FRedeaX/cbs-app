@@ -20,7 +20,7 @@ export const useTrackVisibility = (
   args?: IntersectionObserverHookArgs,
 ): TrackVisibilityHookResult => {
   const [ref, result] = useIntersectionObserver(args);
-  const isVisible = result.entry?.isIntersecting;
+  const isVisible = result.entryList?.[0].isIntersecting;
   const [wasEverVisible, setWasEverVisible] = useState(isVisible);
 
   if (isVisible && !wasEverVisible) {

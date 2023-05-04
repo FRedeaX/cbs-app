@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { isDesktop } from "react-device-detect";
 
 import { useTrackVisibility } from "../../../helpers/frontend/hooks/useTrackVisibility";
-import { useCarouselContext } from "../Context";
+import { useCarouselContext } from "../context";
 
 export const useCarouselControls = () => {
   const { rootRef, itemListRef } = useCarouselContext();

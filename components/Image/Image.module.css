@@ -1,0 +1,76 @@
+.placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.blur {
+  opacity: 0.95;
+  filter: blur(var(--image-filter-blur, 10px));
+}
+
+.blur,
+.skeleton {
+  position: absolute;
+  left: 0;
+}
+
+.blur,
+.image {
+  max-width: 100%;
+  height: auto;
+}
+
+.placeholder .blur {
+  object-fit: cover;
+}
+
+.placeholder .skeleton {
+  position: absolute;
+  transform: none;
+  background-color: transparent;
+}
+
+.placeholder .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 8%),
+    transparent
+  );
+}
+
+.placeholder,
+.image {
+  border-radius: var(--image-border-radius, var(--g-image-border-radius));
+}
+
+.image {
+  display: flex;
+
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font: 0 / 0 a;
+  visibility: hidden; /* Позволяет не показывать битые картинки при ошибках загрузки */
+  border: 0;
+}
+
+.image_loaded {
+  visibility: visible;
+}
+
+.image_loading {
+  opacity: 0;
+}
+
+.image_animated {
+  animation: image-fade-in 0.4s ease forwards;
+}
+
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

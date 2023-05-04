@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { memo } from "react";
 
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
@@ -17,12 +16,11 @@ const Layout = ({
     <Header menus={menu} />
     <main
       style={{ paddingLeft: paddingSides, paddingRight: paddingSides }}
-      className={classNames(classes.main, classes[`main_size_${size}`])}
-    >
+      className={classNames(classes.main, classes[`main_size_${size}`])}>
       {loading ? <Loader isFullscreen /> : children}
     </main>
     <Footer />
   </>
 );
 
-export default memo(Layout);
+export default Layout;

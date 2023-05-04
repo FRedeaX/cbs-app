@@ -13,7 +13,7 @@ const Biblioteki = ({ menu, page }) => (
   </Layout>
 );
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const menu = await getMenu();
 
   const page = await client
@@ -43,7 +43,7 @@ export async function getServerSideProps() {
 
   return {
     props: { menu, page },
-    // revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
+    revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
   };
 }
 

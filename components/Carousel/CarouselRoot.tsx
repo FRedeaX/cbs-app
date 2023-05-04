@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { Carousel, CarouselProps } from "./Carousel";
-import { CarouselProvider, CarouselProviderProps } from "./Context";
+import { CarouselProvider, CarouselProviderProps } from "./context";
 
 export const CarouselRoot: FC<
   CarouselProps & Omit<CarouselProviderProps, "children">

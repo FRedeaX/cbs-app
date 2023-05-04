@@ -1,8 +1,8 @@
 .is-style-default,
 .is-style-wide {
-  height: 0.5px;
-  margin: 16px auto 20px;
-  background-color: var(--cyan-bluish-gray);
+  height: 1px;
+  /* stylelint-disable-next-line custom-property-pattern */
+  background-color: var(--wp--preset--color--cyan-bluish-gray);
   border: none;
 }
 
@@ -16,10 +16,13 @@
   text-align: center;
   border: none;
 }
+
 .is-style-dots::before {
-  padding-left: 2em;
-  font-size: 20px;
-  font-family: serif;
-  letter-spacing: 2em;
   content: "\00b7 \00b7 \00b7";
+
+  padding-left: 2em;
+
+  font-family: serif;
+  font-size: 20px;
+  letter-spacing: 2em;
 }

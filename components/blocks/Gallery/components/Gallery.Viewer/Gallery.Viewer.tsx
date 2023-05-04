@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import NextImage from "next/future/image";
 import { FC, KeyboardEvent, useCallback } from "react";
 
 import { Carousel } from "../../../../Carousel/Carousel";
@@ -8,7 +7,8 @@ import {
   scrollTo,
 } from "../../../../Carousel/Carousel.utils/scrollTo";
 import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
-import { useCarouselContext } from "../../../../Carousel/Context";
+import { useCarouselContext } from "../../../../Carousel/context";
+import { Image } from "../../../../Image/Image";
 import {
   ImageViewer,
   ImageViewerBody,
@@ -16,14 +16,12 @@ import {
 } from "../../../../ImageViewer";
 import { useGalleryContext } from "../../context";
 import { useDrag } from "../../utils";
-import { Image } from "../Gallery.Row/Gallery.Row";
+import { ImageData } from "../Gallery.Row/Gallery.Row";
 import { GalleryViewerHeader } from "../Gallery.ViewerHeader/Gallery.ViewerHeader";
 import classes from "./Gallery.Viewer.module.css";
 
-// delay(150).then(() => {
-// });
 type GalleryViewerProps = {
-  images: Image[];
+  images: ImageData[];
 };
 
 type HandleOnKeyDown = (event: KeyboardEvent<HTMLDivElement>) => void;
@@ -110,16 +108,18 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
           {images.map((image) => (
             <ImageViewerFigure
               key={image.id}
+              aspectRatio={image.width / image.height}
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
-              <NextImage
-                className={classes.image}
+              <Image
                 alt={image.alt}
                 src={image.url}
                 width={image.width}
                 height={image.height}
                 sizes="100vw"
+                classNamePlaceholder={classes.placeholder}
                 loading="lazy"
+                blurDataURL={image.blurDataURL}
               />
             </ImageViewerFigure>
           ))}

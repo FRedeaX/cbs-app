@@ -1,10 +1,10 @@
 .body {
   position: absolute;
+  z-index: 2;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
 }
 
 .fixed {
@@ -23,9 +23,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+
   width: 77px;
   height: 13px;
-  transform: translate(-50%, -50%);
 }
 
 .container div {
@@ -34,8 +35,10 @@
   /* top: 40%; */
   width: 13px;
   height: 13px;
-  background: var(--accent-сolor);
+
+  background: var(--accent-color);
   border-radius: 50%;
+
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 

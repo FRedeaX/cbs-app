@@ -1,0 +1,91 @@
+:root {
+  /* color */
+  --white: hsl(0deg, 0%, 97%);
+
+  /* hsl(0, 0%, 96%) */
+  --white-80: hsl(0deg, 0%, 100%, 80%);
+  --black: rgb(31, 31, 31);
+  --black-80: hsl(0deg, 0%, 12%, 80%);
+  --black-70: hsl(0deg, 0%, 0%, 70%);
+  --black-50: hsl(0deg, 0%, 0%, 50%);
+  --black-20: hsl(0deg, 0%, 0%, 20%);
+  --black-14: hsl(0deg, 0%, 12%, 14%);
+  --black-10: rgb(232, 232, 232);
+  --black-08: rgba(31, 31, 31, 8%);
+  --gray: hsl(0deg, 0%, 43%);
+  --dark-gray: hsl(0deg, 0%, 24%);
+  --d-dark-gray: hsl(222deg, 13%, 28%, 100%);
+  --blue-dark: hsl(218deg, 100%, 37%);
+  --blue-dark-05: hsl(218deg, 100%, 37%, 5%);
+  --header-z-index: 4;
+
+  /* не используется
+  --red: hsl(0deg, 98%, 60%);
+  --red-80: hsla(0, 98%, 60%, 0.8);
+  --blue: #0070f3; */
+
+  /* #495569 */
+
+  /* #293448 */
+
+  /* --secondaryWhite: hsl(0, 0%, 96%); */
+  --accent-color: hsl(0deg, 98%, 60%, 68.5%);
+
+  /* --menu-link: hsla(0, 0%, 8%, 0.85); */
+
+  --overlay-color: hsl(0deg, 0%, 19%);
+
+  /* Title SubTitle */
+  --subtitle-color: hsl(0deg, 0%, 45%);
+
+  /* table */
+  --subtle-pale-gray: #f3f4f5;
+  --subtle-pale-green: #e9fbe5;
+  --subtle-pale-blue: #e7f5fe;
+  --subtle-pale-pink: #fcf0ef;
+
+  /* customs */
+  --font-family-roboto: "Roboto", "Helvetica", "Arial", sans-serif;
+  --font-family-roboto-slab: "Roboto-Slab", serif;
+  --downgrading-font-size: 4;
+  --background-color-white: #f7f7f7;
+  --scrollbar-width: 17px;
+  --color-grey: #929daf;
+  --bg-controls: var(--white);
+  --menu-link: var(--black);
+  --border-link: var(--accent-color);
+  --secondary-color: var(--gray);
+  --g-layout-padding-sides: 10px;
+  --g-article-padding-sides: 5px;
+  --g-image-border-radius: 12px;
+  --g-block-margin-top: 6px;
+  --g-block-margin-bottom: 20px;
+
+  /* component color */
+  --link-color: var(--blue-dark);
+  --link-background-color-hover: var(--blue-dark-05);
+
+  /*
+   * Header
+   */
+  --header-desktop-height: 100px;
+  --header-mobile-height: 80px;
+
+  /*
+   * Animation
+   */
+  --animation-ease-out: cubic-bezier(0.18, 0.24, 0.18, 0.71);
+}
+
+/* TOP_LIMIT_FONT_SIZE */
+@media screen and (width <= 1600px) {
+  :root {
+    --is-font-size-adaptive: 1;
+  }
+}
+
+@media screen and (width > 1600px) {
+  :root {
+    --is-font-size-adaptive: 0;
+  }
+}

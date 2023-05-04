@@ -1,7 +1,12 @@
-import NextImage from "next/future/image";
+import classNames from "classnames";
 import { FC } from "react";
 
+import {
+  CSSProperties,
+  Nullable,
+} from "../../../../../helpers/typings/utility-types";
 import { Figure, FigureFigcaption } from "../../../../Figure";
+import { Image } from "../../../../Image/Image";
 import {
   VisuallyHidden,
   VisuallyHiddenProps,
@@ -10,33 +15,35 @@ import { GalleryButton } from "../Gallery.Button/Gallery.Button";
 import { GalleryMore } from "../Gallery.More/Gallery.More";
 import classes from "./Gallery.Row.module.css";
 
-export type Image = {
-  id: string;
+export type ImageData = {
+  id: number;
   alt: string;
   url: string;
   width: number;
   height: number;
   caption: string;
+  blurDataURL: Nullable<string>;
 };
 
 export type GalleryRowProps = {
-  images: Image[];
-
+  images: ImageData[];
   /**
    * Количество изображений доступных дополнительно в полноэкранном режиме.
    */
   moreCount?: number;
-
   /**
    * Смещение `index` относительно предыдущей строки.
    * @default 0
    */
   offset?: number;
-
   /**
    * Визуально скрывает подпись к изображению.
    */
   isHiddenFigcaption?: VisuallyHiddenProps["isHidden"];
+  /**
+   * Дополнительный класс для обертки изображения.
+   */
+  classNameWrapper?: string | classNames.ArgumentArray;
 };
 
 export const GalleryRow: FC<GalleryRowProps> = ({
@@ -44,34 +51,43 @@ export const GalleryRow: FC<GalleryRowProps> = ({
   moreCount,
   offset = 0,
   isHiddenFigcaption,
+  classNameWrapper,
 }) => (
   <div className={classes.root}>
     {images.map((image, index) => {
       const aspectRatio = image.width / image.height;
+      const sizes = Math.max(100 / images.length, 25);
+      const captionOrAlt = image.caption || image.alt;
+
+      const style: CSSProperties = {
+        flex: images.length > 1 ? aspectRatio : 1,
+      };
 
       return (
         <Figure
           key={image.id}
-          style={{ flex: `var(--gallery-image-flex, ${aspectRatio})` }}
-          className={classes.wrapper}>
+          style={style}
+          className={classNames(classes.wrapper, classNameWrapper)}>
           <GalleryButton className={classes.button} index={index + offset}>
             {!!moreCount && index === images.length - 1 && (
               <GalleryMore count={moreCount} />
             )}
-            <NextImage
+            <Image
               alt={image.alt}
               src={image.url}
               width={450}
               height={450 / aspectRatio}
-              sizes={`${100 / images.length}vw`}
+              sizes={`${sizes}vw`}
               className={classes.image}
+              classNamePlaceholder={classes.placeholder}
               loading="lazy"
+              blurDataURL={image.blurDataURL}
             />
           </GalleryButton>
-          {(image.caption || image.alt) && (
+          {captionOrAlt && (
             <VisuallyHidden isHidden={isHiddenFigcaption}>
               <FigureFigcaption
-                text={image.caption || image.alt}
+                text={captionOrAlt}
                 className={classes.text_clamp}
                 position="inside"
                 isClamp

@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { memo } from "react";
 
 import Social from "../../Social/Social";
 import classes from "./Header-social.module.css";
@@ -27,4 +26,4 @@ const HeaderSocial = ({ className }) => (
   </div>
 );
 
-export default memo(HeaderSocial);
+export default HeaderSocial;

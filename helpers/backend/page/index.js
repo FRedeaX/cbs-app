@@ -2,9 +2,9 @@ import {
   FETCH_CHILDREN_PAGE,
   FETCH_PAGE,
 } from "../../../components/Pages/Page/Page.utils";
+import { transformBlocks } from "../../../core/backend/transformBlocks";
 import { client } from "../../../lib/apollo/client";
 import { exceptionLog } from "../../exceptionLog";
-import { transformBlocks } from "../transformBlocks";
 
 export const getPage = async (id) => {
   const page = await client
@@ -18,7 +18,7 @@ export const getPage = async (id) => {
     })
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
-      if (data.page === null) throw new Error("data.page of null");
+      if (data.page === null) return null;
 
       return {
         ...data.page,

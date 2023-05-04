@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Figure, FigureFigcaption } from "../../../../Figure";
 import { splitByLines } from "../../utils";
-import { GalleryRow, GalleryRowProps, Image } from "../Gallery.Row/Gallery.Row";
+import { GalleryRow, GalleryRowProps } from "../Gallery.Row/Gallery.Row";
 import classes from "./Gallery.Cards.module.css";
 
 export type GalleryCardsProps = {
@@ -10,17 +10,21 @@ export type GalleryCardsProps = {
 } & GalleryRowProps;
 
 export const GalleryCards: FC<GalleryCardsProps> = ({ images, caption }) => {
-  const image = splitByLines<Image>(images);
-  const moreCount = images.length - image.big.length - image.small.length;
+  const image = splitByLines(images.slice(0, 10));
+  const moreCount = images.length - image.first.length - image.last.length;
 
   return (
-    <Figure className={classes.figure}>
-      <GalleryRow images={image.big} />
+    <Figure className={classes.Figure}>
       <GalleryRow
-        images={image.small}
+        images={image.first}
+        classNameWrapper={classes.GalleryRow_row_top}
+      />
+      <GalleryRow
+        images={image.last}
         moreCount={moreCount}
-        offset={image.big.length}
+        offset={image.first.length}
         isHiddenFigcaption
+        classNameWrapper={classes.GalleryRow_row_bottom}
       />
       {caption && <FigureFigcaption text={caption} />}
     </Figure>

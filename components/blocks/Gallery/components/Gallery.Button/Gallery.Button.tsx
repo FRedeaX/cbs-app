@@ -1,16 +1,15 @@
-import { ButtonBase } from "@mui/material";
-import classNames from "classnames";
-import { FC, ReactNode, useCallback } from "react";
+import { FC, useCallback } from "react";
 
 import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
+import {
+  ImageViewerButton,
+  ImageViewerButtonProps,
+} from "../../../../ImageViewer/components/Button/ImageViewer.Button";
 import { useGalleryContext } from "../../context";
-import classes from "./Gallery.Button.module.css";
 
 type GalleryButtonProps = {
-  children: ReactNode;
-  className: string;
   index: number;
-};
+} & ImageViewerButtonProps;
 
 export const GalleryButton: FC<GalleryButtonProps> = ({
   children,
@@ -20,17 +19,17 @@ export const GalleryButton: FC<GalleryButtonProps> = ({
   const { setToggle } = useGalleryContext();
   const { scrollToIndex } = useCarousel();
 
-  const hendleSetID = useCallback(() => {
+  const handleOnClick = useCallback(() => {
     setToggle();
     scrollToIndex(index);
   }, [index, scrollToIndex, setToggle]);
 
   return (
-    <ButtonBase
-      className={classNames(classes.root, className)}
-      onClick={hendleSetID}
+    <ImageViewerButton
+      className={className}
+      onClick={handleOnClick}
       aria-label="Открыть изображение">
       {children}
-    </ButtonBase>
+    </ImageViewerButton>
   );
 };

@@ -18,14 +18,14 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 const nextConfig = withTM({
-  // output: "standalone",
+  output: "standalone",
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
 
   images: {
-    domains: [`${process.env.HOSTNAME}`],
+    domains: [`${process.env.DOMAIN}`, "cbsbaikonur.ru"],
     formats: ["image/webp"],
   },
   experimental: {
@@ -54,9 +54,9 @@ const nextConfig = withTM({
   //   return redirect([...redirectRoutes], "/");
   // },
 
-  sentry: {
-    hideSourceMaps: false,
-  },
+  // sentry: {
+  //   hideSourceMaps: false,
+  // },
 });
 
 const sentryWebpackPluginOptions = {

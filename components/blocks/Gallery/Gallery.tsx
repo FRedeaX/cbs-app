@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { FC, HTMLAttributes } from "react";
 
-import { CarouselProvider } from "../../Carousel/Context";
+import { CarouselProvider } from "../../Carousel/context";
 import classes from "./Gallery.module.css";
 import {
   GalleryCards,
@@ -15,38 +15,37 @@ type GalleryProps = {
    * @default false
    */
   imageCrop?: boolean;
-  className: string;
-  __typename?: string;
+  className: string | classNames.ArgumentArray;
 } & GalleryCardsProps &
-  HTMLAttributes<HTMLDivElement>;
+  Omit<HTMLAttributes<HTMLDivElement>, "className">;
 
 export const Gallery: FC<GalleryProps> = ({
   caption,
   className,
   imageCrop = false,
   images,
-
-  // Извлекаем свойства, т.к. они не нужны на DOM узле
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  __typename,
   ...props
-}) => (
-  <div
-    className={classNames(
-      classes.root,
-      { [classes.root_imageCrop]: imageCrop },
-      className,
-    )}
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...props}>
-    <GalleryProvider>
-      <CarouselProvider
-        itemMargin={-10}
-        typeMovement="transform"
-        isResponsiveWidthsChildren>
-        <GalleryViewer images={images} />
-        <GalleryCards images={images} caption={caption} />
-      </CarouselProvider>
-    </GalleryProvider>
-  </div>
-);
+}) => {
+  if (images.length === 0) return null;
+
+  return (
+    <div
+      className={classNames(
+        classes.root,
+        { [classes.root_imageCrop]: imageCrop },
+        className,
+      )}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}>
+      <GalleryProvider>
+        <CarouselProvider
+          itemMargin={-10}
+          typeMovement="transform"
+          isResponsiveWidthsChildren>
+          <GalleryViewer images={images} />
+          <GalleryCards images={images} caption={caption} />
+        </CarouselProvider>
+      </GalleryProvider>
+    </div>
+  );
+};

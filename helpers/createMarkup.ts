@@ -1,11 +1,13 @@
-import { ReactNode } from "react";
+import { DOMAttributes } from "react";
 
-type createMarkupResult = { __html: string } | undefined;
+import { Maybe, Nullable } from "./typings/utility-types";
 
-function createMarkup(text: string | ReactNode | null): createMarkupResult {
-  if (text === null || typeof text !== "string") return undefined;
+type CreateMarkupResult = DOMAttributes<unknown>["dangerouslySetInnerHTML"];
 
-  return { __html: text };
+function createMarkup(text: Maybe<Nullable<string>>): CreateMarkupResult {
+  if (typeof text === "string") return { __html: text };
+
+  return undefined;
 }
 
 export default createMarkup;

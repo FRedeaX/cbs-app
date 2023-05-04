@@ -1,7 +1,6 @@
 // import { useQuery } from "@apollo/client";
 import classnames from "classnames";
 import type { NextPage } from "next";
-import { memo } from "react";
 
 import { _pageInfo } from "../../../helpers/backend";
 import { Nullable } from "../../../helpers/typings/utility-types";
@@ -79,4 +78,4 @@ const HomePage: NextPage<IHomePageProps> = ({
     </Alert> */}
   </div>
 );
-export default memo(HomePage);
+export default HomePage;

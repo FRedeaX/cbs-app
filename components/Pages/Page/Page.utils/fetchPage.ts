@@ -1,20 +1,22 @@
 import { gql } from "@apollo/client";
 
-import { columnsBlockGQL } from "../../../blocks/Columns/Columns";
-import { embedBlockGQL } from "../../../blocks/Embed/Embed";
-import { fileBlockGQL } from "../../../blocks/File/File";
-import { galleryBlockGQL } from "../../../blocks/Gallery/utils";
-import { headingBlockGQL } from "../../../blocks/Heading/Heading";
-import { htmlBlockGQL } from "../../../blocks/Html/Html";
-import { imageBlockGQL } from "../../../blocks/Image/Figure";
-import { listBlockGQL } from "../../../blocks/List/List";
-import { mediaTextBlockGQL } from "../../../blocks/MediaText/MediaText.utils/mediaTextBlockGQL";
-import { paragraphBlockGQL } from "../../../blocks/Paragraph/Paragraph";
-import { quoteBlockGQL } from "../../../blocks/Quote/Quote";
-import { separatorBlockGQL } from "../../../blocks/Separator/Separator";
-import { spacerBlockGQL } from "../../../blocks/Spacer/Spacer";
-import { tableBlockGQL } from "../../../blocks/Table/Table";
-import { verseBlockGQL } from "../../../blocks/Verse/Verse";
+import { columnsBlockGQL } from "../../../blocks/Columns/utils/columnsGQL";
+import { embedBlockGQL } from "../../../blocks/Embed/utils/embedGQL";
+import { fileBlockGQL } from "../../../blocks/File/utils/fileGQL";
+import { galleryBlockGQL } from "../../../blocks/Gallery/utils/galleryGQL";
+import { headingBlockGQL } from "../../../blocks/Heading/utils/headingGQL";
+import { htmlBlockGQL } from "../../../blocks/Html/utils/htmlGQL";
+import { imageBlockGQL } from "../../../blocks/Image/utils/imageGQL";
+import { listBlockGQL } from "../../../blocks/List/utils/listGQL";
+import { mediaTextBlockGQL } from "../../../blocks/MediaText/utils/mediaTextBlockGQL";
+import { paragraphBlockGQL } from "../../../blocks/Paragraph/utils/paragraphGQL";
+import { pullquoteBlockGQL } from "../../../blocks/Pullquote/utils/pullquoteGQL";
+import { quoteBlockGQL } from "../../../blocks/Quote/utils/quoteGQL";
+import { separatorBlockGQL } from "../../../blocks/Separator/utils/separatorGQL";
+import { spacerBlockGQL } from "../../../blocks/Spacer/utils/spacerGQL";
+import { tableBlockGQL } from "../../../blocks/Table/utils/tableGQL";
+import { verseBlockGQL } from "../../../blocks/Verse/utils/verseGQL";
+import { videoBlockGQL } from "../../../blocks/Video/utils/videoGQL";
 
 export const FETCH_PAGE = gql`
   query FetchPage($id: ID!, $idType: PageIdType, $isPreview: Boolean) {
@@ -39,39 +41,43 @@ export const FETCH_PAGE = gql`
       }
       blocks {
         name
-        ...paragraphBlockGQL
-        ...galleryBlockGQL
-        ...imageBlockGQL
         ...columnsBlockGQL
-        ...htmlBlockGQL
         ...embedBlockGQL
-        ...separatorBlockGQL
-        ...quoteBlockGQL
+        ...fileBlockGQL
+        ...galleryBlockGQL
+        ...headingBlockGQL
+        ...htmlBlockGQL
+        ...imageBlockGQL
         ...listBlockGQL
         ...mediaTextBlockGQL
-        ...fileBlockGQL
+        ...paragraphBlockGQL
+        ...pullquoteBlockGQL
+        ...quoteBlockGQL
+        ...separatorBlockGQL
         ...spacerBlockGQL
-        ...headingBlockGQL
         ...tableBlockGQL
         ...verseBlockGQL
+        ...videoBlockGQL
       }
     }
   }
-  ${paragraphBlockGQL.fragments}
-  ${galleryBlockGQL.fragments}
-  ${imageBlockGQL.fragments}
   ${columnsBlockGQL.fragments}
   ${embedBlockGQL.fragments}
+  ${fileBlockGQL.fragments}
+  ${galleryBlockGQL.fragments}
+  ${headingBlockGQL.fragments}
   ${htmlBlockGQL.fragments}
-  ${separatorBlockGQL.fragments}
-  ${quoteBlockGQL.fragments}
+  ${imageBlockGQL.fragments}
   ${listBlockGQL.fragments}
   ${mediaTextBlockGQL.fragments}
-  ${fileBlockGQL.fragments}
+  ${paragraphBlockGQL.fragments}
+  ${pullquoteBlockGQL.fragments}
+  ${quoteBlockGQL.fragments}
+  ${separatorBlockGQL.fragments}
   ${spacerBlockGQL.fragments}
-  ${headingBlockGQL.fragments}
   ${tableBlockGQL.fragments}
   ${verseBlockGQL.fragments}
+  ${videoBlockGQL.fragments}
 `;
 
 export const FETCH_CHILDREN_PAGE = gql`

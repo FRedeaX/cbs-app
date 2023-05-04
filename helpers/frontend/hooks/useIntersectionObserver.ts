@@ -31,7 +31,7 @@ export type IntersectionObserverHookRootRefCallback = (
 export type IntersectionObserverHookResult = [
   IntersectionObserverHookRefCallback,
   {
-    entry: IntersectionObserverEntry | undefined;
+    entryList: IntersectionObserverEntry[] | undefined;
     // rootRef: IntersectionObserverHookRootRefNode;
     rootRef: IntersectionObserverHookRootRefCallback;
   },
@@ -48,7 +48,7 @@ function useIntersectionObserver(
   const rootRef = useRef<IntersectionObserverHookRootRefNode>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const [entry, setEntry] = useState<IntersectionObserverEntry>();
+  const [entryList, setEntryList] = useState<IntersectionObserverEntry[]>();
 
   const unobserve = useCallback(() => {
     // Disconnect the current observer (if there is one)
@@ -63,8 +63,8 @@ function useIntersectionObserver(
       const root = rootRef.current;
       const options = { root, rootMargin, threshold };
 
-      const observer = new IntersectionObserver(([newEntry]) => {
-        setEntry(newEntry);
+      const observer = new IntersectionObserver((newEntry) => {
+        setEntryList(newEntry);
       }, options);
 
       if (Array.isArray(node)) {
@@ -108,7 +108,7 @@ function useIntersectionObserver(
     };
   }, [initializeObserver, unobserve]);
 
-  return [refCallback, { entry, rootRef: rootRefCallback }];
+  return [refCallback, { entryList, rootRef: rootRefCallback }];
 }
 
 export default useIntersectionObserver;

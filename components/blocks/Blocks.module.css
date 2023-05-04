@@ -1,11 +1,38 @@
-.root {
-  --gallery-margin: 6px 0 20px;
+.block {
+  margin-top: var(--block-margin-top, var(--g-block-margin-top));
+  margin-bottom: var(--block-margin-bottom, var(--g-block-margin-bottom));
 }
 
-.root:first-child {
-  --gallery-margin: 0 0 20px;
+.block:first-child {
+  margin-top: 0;
 }
 
-.root:last-child {
-  --gallery-margin: 6px 0 0;
+.block:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (width <= 800px) {
+  .media {
+    --image-border-radius: 0;
+    --gallery-border-radius: 0;
+    --page-padding-sides: calc(
+      var(--g-article-padding-sides) + var(--g-layout-padding-sides)
+    );
+
+    margin-right: calc(var(--page-padding-sides) * -1);
+    margin-left: calc(var(--page-padding-sides) * -1);
+  }
+}
+
+/* .Heading {
+  --block-margin-bottom: 0;
+} */
+
+.File + .File,
+.Heading + .Heading,
+.Heading + .Paragraph,
+.Heading + .List {
+  --block-margin-top: calc(
+    var(--g-block-margin-top) - var(--g-block-margin-bottom)
+  );
 }

@@ -14,8 +14,6 @@
   justify-content: center;
 
   width: 100vw;
-  height: calc(
-    var(--image-viewer-height, 100vh) - var(--image-viewer-header-height)
-  );
+  height: var(--image-viewer-body);
   margin: 0;
 }

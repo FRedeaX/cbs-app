@@ -9,7 +9,7 @@ import {
 } from "./Carousel.Controls/Carousel.Controls";
 import classes from "./Carousel.module.css";
 import { useCarousel } from "./Carousel.utils/useCarousel";
-import { useCarouselContext } from "./Context";
+import { useCarouselContext } from "./context";
 
 export type CarouselProps = {
   children: ReactElement[];

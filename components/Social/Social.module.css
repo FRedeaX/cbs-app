@@ -1,8 +1,11 @@
 .link {
   display: inline-block;
+
   margin: var(--social-margin);
   padding: 2px;
+
   line-height: 0;
+
   transition: background-color, transform 0.2s linear;
 }
 
@@ -11,17 +14,16 @@
 }
 
 .link:hover {
-  border-radius: 8px;
-
   /* background-color: var(--hoverColor); */
   transform: translateY(-2px);
+  border-radius: 8px;
 
   /* transition: background-color, transform 0.2s linear; */
   transition: transform 0.2s linear;
 }
 
 .svg {
-  /* fill: var(--colorGrey); */
+  /* fill: var(--color-grey); */
   width: 36px;
   height: 36px;
 }

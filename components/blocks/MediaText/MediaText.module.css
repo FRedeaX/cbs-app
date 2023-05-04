@@ -1,16 +1,4 @@
-.root {
-  margin: 6px 0 20px;
-}
-
-.root:first-child {
-  margin-top: 0;
-}
-
-.root:last-child {
-  margin-bottom: 0;
-}
-
 .root_borderRadius {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: var(--g-image-border-radius);
 }

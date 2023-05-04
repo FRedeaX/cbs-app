@@ -5,7 +5,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import classNames from "classnames";
 import classNamesBind from "classnames/bind";
-import { memo } from "react";
 
 import { createMarkup } from "../../../helpers";
 import ActiveLink from "../../UI/ActiveLink/ActiveLink";
@@ -144,4 +143,4 @@ const NavItems = ({
   );
 };
 
-export default memo(NavItems);
+export default NavItems;

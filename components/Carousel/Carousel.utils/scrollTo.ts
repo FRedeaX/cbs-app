@@ -1,4 +1,4 @@
-import { CarouselContextProps } from "../Context/Carousel.Context";
+import { CarouselContextProps } from "../context/Carousel.Context";
 
 type ScrollBehavior = "auto" | "smooth";
 

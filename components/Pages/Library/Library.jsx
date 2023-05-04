@@ -1,10 +1,10 @@
 import { gql } from "@apollo/client";
+import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
 import Title, { SUBTITLE } from "../../Title/Title";
-import { Heading } from "../../blocks/Heading/Heading";
 import ButtonList from "./ButtonList/ButtonList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
@@ -104,11 +104,11 @@ export const Library = ({ filialList }) => {
   return (
     <div className={classes.body}>
       <div className={classes.header}>
-        <Heading level={1} className={classes.title}>
+        <Typography align="center" variant="h1" className={classes.title}>
           {filial.name}
-        </Heading>
+        </Typography>
       </div>
-      <Title type={SUBTITLE} HtmlTeg="h3" cls={classes.subtitle}>
+      <Title type={SUBTITLE} HtmlTeg="h2" cls={classes.subtitle}>
         {filial.address}
       </Title>
       {filialList.length > 1 && (

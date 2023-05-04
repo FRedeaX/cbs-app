@@ -1,20 +1,17 @@
 import FocusTrap from "@mui/base/FocusTrap";
 import { Backdrop } from "@mui/material";
 import classNames from "classnames";
-import { FC, useEffect, useRef } from "react";
+import { FC } from "react";
 
 import { KeyDownAwayListener } from "../../base";
-import {
-  useClientScroll,
-  usePreventScroll,
-  useToggle,
-} from "../../helpers/frontend/hooks";
+import { usePreventScroll, useToggle } from "../../helpers/frontend/hooks";
 import { CSSProperties, Maybe } from "../../helpers/typings/utility-types";
 import Logo from "../Logo/Logo";
 import { HeaderSearch } from "./Header.Search/Header.Search";
 import classes from "./Header.module.css";
 import HeaderSocial from "./HeaderSocial/HeaderSocial";
 import NavList from "./NavList/NavList";
+import { HeaderScroll } from "./components/Header.Scroll/Header.Scroll";
 import { HeaderToggle } from "./components/Header.Toggle/Header.Toggle";
 
 const sxBackdrop: CSSProperties = { zIndex: "calc(var(--header-z-index) - 1)" };
@@ -43,28 +40,6 @@ const Header: FC<HeaderProps> = ({ menus }) => {
   const [isOpen, setIsOpen, { setFalse: setClose }] = useToggle();
   usePreventScroll({ enabled: isOpen });
 
-  const currentScroll = useClientScroll();
-  const prevScrollYRef = useRef(0);
-  const [isHeaderHidden, setIsHeaderHidden] = useToggle();
-  useEffect(() => {
-    if (
-      currentScroll > 80 &&
-      prevScrollYRef.current !== 0 &&
-      prevScrollYRef.current < currentScroll &&
-      !isHeaderHidden
-    ) {
-      // Скрываем
-      setIsHeaderHidden();
-    } else if (
-      (currentScroll === 0 || prevScrollYRef.current > currentScroll) &&
-      isHeaderHidden
-    ) {
-      // Показываем
-      setIsHeaderHidden();
-    }
-    prevScrollYRef.current = currentScroll;
-  }, [currentScroll, isHeaderHidden, setIsHeaderHidden]);
-
   if (!menus) return null;
   return (
     <>
@@ -72,9 +47,8 @@ const Header: FC<HeaderProps> = ({ menus }) => {
         style={{
           paddingRight: isOpen ? `var(--scrollbar-width)` : "0",
         }}
-        className={classNames(classes.block, classes.position, {
-          [classes["position--hidden"]]: isHeaderHidden,
-        })}>
+        className={classNames(classes.block, classes.block_fixed)}>
+        <HeaderScroll />
         <KeyDownAwayListener onKeyDownAway={setClose} keyboardCode={["Escape"]}>
           <FocusTrap open={isOpen}>
             <div className={classes.wrapper}>

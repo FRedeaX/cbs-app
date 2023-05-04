@@ -24,22 +24,26 @@
 }
 
 .text::after {
+  content: "";
+
   position: absolute;
+  z-index: 1;
   right: 6px;
   bottom: 4px;
   left: 7px;
-  z-index: 1;
-  height: 1px;
-  background-color: var(--borderLink);
-  transform: scaleX(0);
   transform-origin: left;
+  transform: scaleX(0);
+
+  height: 1px;
+
+  background-color: var(--border-link);
+
   transition: transform 0.2s, transform-origin 0.25s;
-  content: "";
 }
 
 .link_active > .text::after {
-  transform: scaleX(1);
   transform-origin: right;
+  transform: scaleX(1);
 }
 
 /*
@@ -55,17 +59,20 @@
   }
 
   .li_overlay::after {
+    content: "";
+
     position: absolute;
+    z-index: -1;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: -1;
-    background-color: var(--black-50);
+
     visibility: hidden;
     opacity: 0;
+    background-color: var(--black-50);
+
     transition: opacity 0.15s ease-out;
-    content: "";
   }
 
   /**
@@ -86,21 +93,26 @@
   .li-right_lvl_0:hover {
     border-radius: var(--submenu-border-radius) var(--submenu-border-radius) 0 0;
   }
+
   .li-left_lvl_1:nth-child(2):hover,
   .li-left_lvl_3:nth-child(2):hover {
     border-radius: 0 var(--submenu-border-radius) 0 0;
   }
+
   .li-left_lvl_1:last-child:hover,
   .li-left_lvl_3:last-child:hover,
   .li-right_lvl_2:last-child:hover {
     border-radius: 0 0 var(--submenu-border-radius) var(--submenu-border-radius);
   }
+
   .li-left_lvl_2:last-child:hover {
     border-radius: 0 0 0 var(--submenu-border-radius);
   }
+
   .li-left_length_1:last-child:hover {
     border-radius: 0 var(--submenu-border-radius) var(--submenu-border-radius);
   }
+
   .li-left_lvl_1::after {
     border-radius: 0 var(--submenu-border-radius) var(--submenu-border-radius)
       var(--submenu-border-radius);
@@ -109,9 +121,11 @@
   .li-right_lvl_1:nth-child(2):hover {
     border-radius: var(--submenu-border-radius) 0 0 0;
   }
+
   .li-right_lvl_1:last-child:hover {
     border-radius: 0 0 var(--submenu-border-radius) 0;
   }
+
   .li-right_lvl_1::after {
     border-radius: var(--submenu-border-radius) 0 var(--submenu-border-radius)
       var(--submenu-border-radius);
@@ -120,10 +134,12 @@
   .li_overlay:hover::after {
     transition-delay: 0.08s;
   }
+
   .li:hover > ul,
   .li_overlay:hover::after {
     visibility: visible;
     opacity: 1;
+
     transition-timing-function: ease-out;
     transition-duration: 0.175s;
     transition-property: opacity;
@@ -132,8 +148,8 @@
   .li:hover > .text::after,
   .li:hover > .link .text::after,
   .li:hover > .button .text::after {
-    transform: scaleX(1);
     transform-origin: right;
+    transform: scaleX(1);
   }
 
   .li_right .button {

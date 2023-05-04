@@ -1,6 +1,6 @@
 import { WheelEvent, useCallback } from "react";
 
-import { useCarouselContext } from "../Context";
+import { useCarouselContext } from "../context";
 import { getNextScroll } from "./getNextScroll";
 import { getPrevScroll } from "./getPrevScroll";
 import { offsetSides } from "./offsetSides";

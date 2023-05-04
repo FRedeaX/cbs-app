@@ -49,12 +49,12 @@ export const CarouselControls: FC<CarouselControlsProps> = ({
       <div>
         <CarouselShadowWrapper>
           <CarouselShadow
-            isShadow={isShadow || isIntersection}
+            isShadow={isShadow && isIntersection}
             direction="prev"
             isActive={isPrev}
           />
           <CarouselShadow
-            isShadow={isShadow || isIntersection}
+            isShadow={isShadow && isIntersection}
             direction="next"
             isActive={isNext}
           />

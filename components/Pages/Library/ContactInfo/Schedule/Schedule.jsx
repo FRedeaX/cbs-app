@@ -1,7 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
+import { Typography } from "@mui/material";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { Heading } from "../../../../blocks/Heading/Heading";
+
 import LibraryButton from "../../LibraryButton/LibraryButton";
 import classesInfo from "../Contact-info.module.css";
 import classes from "./Schedule.module.css";
@@ -11,7 +12,6 @@ const FILIAL_DEFAULT = "cgb";
 const SCHEDULE_DEFAULT = "default";
 const SCHEDULE_AUP = "aup";
 
-// eslint-disable-next-line no-unused-vars
 const Schedule = (props) => {
   const {
     query: { lib, schedule, holiday },
@@ -21,11 +21,11 @@ const Schedule = (props) => {
     <div className={classesInfo.info}>
       <div className={classes.header}>
         <div style={{ display: "flex" }}>
-          <Heading
-            level={4}
+          <Typography
+            component="h3"
             className={classNames(classesInfo.title, classes.title)}>
             График работы
-          </Heading>
+          </Typography>
           {(props.scheduleSecondary.schedule ||
             props.scheduleSecondary.scheduleAup) && (
             <div className={classes.controls}>

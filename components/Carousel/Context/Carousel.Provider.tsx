@@ -1,13 +1,13 @@
 import { FC, ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { exceptionLog } from "../../../helpers";
-import { Maybe } from "../../../helpers/typings/utility-types";
 import { fillOffsetArray } from "../Carousel.utils/fillOffsetArray";
 import { offsetSides } from "../Carousel.utils/offsetSides";
 import { scrollTo } from "../Carousel.utils/scrollTo";
 import {
   CarouselContext,
   CarouselContextHTMLNode,
+  CarouselContextItemListRef,
   CarouselContextProps,
   CarouselContextRefCallback,
 } from "./Carousel.Context";
@@ -34,7 +34,7 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
   skip,
 }) => {
   const rootRef = useRef<CarouselContextHTMLNode>(null);
-  const itemListRef = useRef<Maybe<HTMLElement[]>>(undefined);
+  const itemListRef = useRef<CarouselContextItemListRef>(undefined);
 
   const scroll = useRef(0);
   const indexOfVisibleElement = useRef(skip ?? 0);
@@ -58,7 +58,7 @@ export const CarouselProvider: FC<CarouselProviderProps> = ({
 
     const root = rootRef.current;
     const itemWidthAccASC = itemWidthAccumulatedASC.current;
-    scroll.current = itemWidthAccASC[indexOfVisibleElement.current];
+    scroll.current = itemWidthAccASC[indexOfVisibleElement.current] ?? 0;
 
     if (root) {
       scrollTo(root, { left: scroll.current, behavior: "auto", typeMovement });

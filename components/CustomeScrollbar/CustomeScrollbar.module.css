@@ -10,18 +10,18 @@
 
   .root::-webkit-scrollbar-thumb {
     background-color: #ccc;
-    border: 3px solid var(--bg-white-95);
+    border: 3px solid var(--background-color-white);
     border-radius: 12px;
   }
 
   .root::-webkit-scrollbar-thumb:hover {
     background-color: #babac0;
-    border: 0 solid var(--bg-white-95);
+    border: 0 solid var(--background-color-white);
     border-radius: 24px;
   }
 
   .root {
-    scrollbar-color: #ccc var(--bg-white-95);
+    scrollbar-color: #ccc var(--background-color-white);
     scrollbar-width: thin;
   }
 }

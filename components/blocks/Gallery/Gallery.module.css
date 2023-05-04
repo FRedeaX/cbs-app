@@ -1,8 +1,11 @@
 .root {
-  margin: var(--gallery-margin);
+  --gallery-image-border-radius: calc(var(--g-image-border-radius) / 2);
+
+  overflow: hidden;
+  border-radius: var(--gallery-border-radius, var(--g-image-border-radius));
 }
 
-@supports (object-fit: cover) {
+@supports (display: grid) {
   .root_imageCrop {
     --gallery-image-flex: 1;
   }
