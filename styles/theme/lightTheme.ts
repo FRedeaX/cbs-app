@@ -56,6 +56,7 @@ export const lightTheme = createTheme(
             ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
             var(--is-font-size-adaptive)
         )`, // от 22 до 30
+        fontWeight: `var(--typography-font-weight, 400)`,
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
       },
