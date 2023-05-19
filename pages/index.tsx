@@ -14,10 +14,11 @@ import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
 import { getLastPageNumber, paginationLoad } from "../core/pagination";
 import { exceptionLog } from "../helpers";
 import {
-  _pageInfo,
+  PageInfo,
   getMenu,
   plaiceholder,
   removeDuplicateTag,
+  staticNotFound,
 } from "../helpers/backend";
 import { dateConversion, filter, sort } from "../helpers/backend/poster";
 import { client } from "../lib/apollo/client";
@@ -44,7 +45,7 @@ const Home: NextPage<IHomeProps> = ({ menu, posters, posts, pages }) => (
   </Layout>
 );
 
-export const getPageInfoPosts = (data: IPostData): _pageInfo =>
+export const getPageInfoPosts = (data: IPostData): PageInfo =>
   data.posts.pageInfo;
 
 export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
@@ -71,9 +72,7 @@ export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
     });
 
   if (dataPosts === null) {
-    return {
-      notFound: true,
-    };
+    return staticNotFound;
   }
 
   const posts = await removeDuplicateTag(dataPosts?.posts.nodes)

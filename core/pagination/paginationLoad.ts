@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-
-/* eslint-disable @typescript-eslint/no-empty-interface */
 import { exceptionLog } from "../../helpers";
 import { initialPagination } from "./pagination.const";
 import {
@@ -12,6 +9,13 @@ import {
   saveByRedis,
 } from "./pagination.utils";
 
+/**
+ * Возвращает пагинацию, соответствующую следующему набору записей на странице:
+ * - 1 - 10
+ * - 2 - 20
+ * - 3 - 20
+ * - n - 20
+ */
 export async function paginationLoad<TData>({
   key,
   endCursor,

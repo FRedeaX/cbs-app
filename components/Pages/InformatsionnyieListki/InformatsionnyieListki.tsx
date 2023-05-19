@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { FC } from "react";
 
-import { _pageInfo } from "../../../helpers/backend";
+import { PageInfo } from "../../../helpers/backend";
 import Pagination from "../../UI/Pagination/Pagination";
 import { IData } from "../../Widget/Card/Card";
 import CardListUngrouped from "../../Widget/Card/CardListUngrouped/CardListUngrouped";
@@ -12,7 +12,7 @@ export type InformatsionnyieListkiPage = {
   excerpt: string;
   children: {
     nodes: IData[];
-    pageInfo: _pageInfo;
+    pageInfo: PageInfo;
   };
 };
 
