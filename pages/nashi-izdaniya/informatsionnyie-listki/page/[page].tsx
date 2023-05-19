@@ -19,15 +19,28 @@ import { RKEY_IL } from "../../../../lib/redis";
 interface IProps {
   menu: Array<object>;
   page: InformatsionnyieListkiPage;
+  pageNumber: number;
   pagination: number;
 }
 
-const Page: NextPage<IProps> = ({ menu, page, pagination }: IProps) => (
+const Page: NextPage<IProps> = ({
+  menu,
+  page,
+  pageNumber,
+  pagination,
+}: IProps) => (
   <Layout menu={menu} size="m">
     {page.children.nodes.length > 0 && (
       <>
-        <Head title={page.title} description={page.excerpt} />
-        <InformatsionnyieListki page={page} pagination={pagination} />
+        <Head
+          title={`${page.title} — Страница ${pageNumber}`}
+          description={page.excerpt}
+        />
+        <InformatsionnyieListki
+          page={page}
+          pageNumber={pageNumber}
+          pagination={pagination}
+        />
       </>
     )}
   </Layout>
@@ -64,6 +77,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       menu,
       page,
+      pageNumber,
       pagination: getLastPageNumber(pagesInfo),
     },
     revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),

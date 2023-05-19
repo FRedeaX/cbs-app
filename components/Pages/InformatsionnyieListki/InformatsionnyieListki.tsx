@@ -18,18 +18,25 @@ export type InformatsionnyieListkiPage = {
 
 interface IInformatsionnyieListki {
   page: InformatsionnyieListkiPage;
+  pageNumber?: number;
   pagination: number;
 }
 
 export const InformatsionnyieListki: FC<IInformatsionnyieListki> = ({
   page,
+  pageNumber,
   pagination,
 }) => (
   <>
     <div className={classes.header}>
-      <Typography align="center" variant="h1">
+      <Typography align="center" variant="h1" gutterBottom={!!pageNumber}>
         {page.title}
       </Typography>
+      {pageNumber && (
+        <Typography align="center" variant="overline">
+          {pageNumber} страница
+        </Typography>
+      )}
     </div>
     <div className={classes.container}>
       <CardListUngrouped nodes={page.children.nodes} isHorizontal />

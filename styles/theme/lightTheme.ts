@@ -143,6 +143,7 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
       caption: {
+        display: "block",
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `var(--typography-font-size, 0.75rem)`,
         fontWeight: `var(--typography-font-weight, 400)`,
@@ -153,6 +154,7 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, initial)`,
       },
       overline: {
+        display: "block",
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `var(--typography-font-size, 0.75rem)`,
         fontWeight: `var(--typography-font-weight, 400)`,
