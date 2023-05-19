@@ -12,7 +12,7 @@ import { getLastPageNumber, paginationLoad } from "../../../../core/pagination";
 import {
   getChildrenPage,
   getMenu,
-  pageNotFound,
+  staticNotFound,
 } from "../../../../helpers/backend";
 import { RKEY_IL } from "../../../../lib/redis";
 
@@ -50,14 +50,15 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   const carrentPage = pagesInfo[pageNumber - 1];
-  if (carrentPage === undefined) return pageNotFound;
+  if (carrentPage === undefined) return staticNotFound;
 
   const page = await getChildrenPage({
     id: `nashi-izdaniya/informatsionnyie-listki`,
     cursor: carrentPage.cursor,
+    first: 20,
   });
 
-  if (!page) return pageNotFound;
+  if (!page) return staticNotFound;
 
   return {
     props: {

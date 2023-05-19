@@ -2,7 +2,7 @@
 import classnames from "classnames";
 import type { NextPage } from "next";
 
-import { _pageInfo } from "../../../helpers/backend";
+import { PageInfo } from "../../../helpers/backend";
 import { Nullable } from "../../../helpers/typings/utility-types";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import Pagination from "../../UI/Pagination/Pagination";
@@ -15,7 +15,7 @@ import classes from "./Home-Page.module.css";
 export interface IPostData {
   posts: {
     nodes: IData[];
-    pageInfo: _pageInfo;
+    pageInfo: PageInfo;
   };
 }
 
