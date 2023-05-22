@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import { FocusEvent, KeyboardEvent, MouseEvent, useCallback } from "react";
 
-import { SEARCH_PATHNAME } from "../../../../../constant";
+import { SEARCH_PATHNAME } from "../../../../../constants";
 import { createSearchLink } from "../../../utils/createSearchLink";
 import { useSuggestionContext } from "../context";
 import { clampLoop } from "./clampLoop";

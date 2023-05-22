@@ -1,40 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const POSTS_PAGINATION_GQL = gql`
-  query GetPostsPagination($cursor: String, $first: Int!, $tagNotIn: [ID]) {
-    posts(after: $cursor, first: $first, where: { tagNotIn: $tagNotIn }) {
-      nodes {
-        id
-        tags {
-          nodes {
-            tagId
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`;
-
-export const POSTS_PAGINATION_BY_CATEGORY_GQL = gql`
-  query GetPostsPaginationByCategory($id: ID!, $cursor: String, $first: Int!) {
-    category(id: $id, idType: SLUG) {
-      posts(after: $cursor, first: $first) {
-        nodes {
-          id
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-      }
-    }
-  }
-`;
-
 export const postGQL = {
   fragments: gql`
     fragment postGQL on Post {

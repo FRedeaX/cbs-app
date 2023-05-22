@@ -13,6 +13,8 @@ type FirstVariable = number;
 
 type criticalVariables = {
   /**
+   * Курсор, используется вместе с аргументом `first`
+   * для указания места в наборе данных для получения данных.
    * @default ""
    */
   cursor?: string;

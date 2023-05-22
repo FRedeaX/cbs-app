@@ -1,11 +1,11 @@
-import { exceptionLog } from "../../../helpers";
-import { clientRedis } from "../../../lib/redis";
+import { exceptionLog } from "../../../../helpers";
+import { clientRedis } from "../../../../lib/redis";
 import { ILoadByRedis } from "./loadByRedis";
-import { pageInfo } from "./type";
+import { Pagination } from "./type";
 
 export const saveByRedis = async (
   key: ILoadByRedis["key"],
-  paginationRedis: pageInfo[],
+  paginationRedis: Pagination[],
 ): Promise<void> => {
   try {
     clientRedis.set(key, JSON.stringify(paginationRedis));

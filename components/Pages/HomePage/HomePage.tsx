@@ -20,7 +20,7 @@ export interface IPostData {
 }
 
 export interface IHomePageProps {
-  posters: Nullable<IPoster[]>;
+  posters?: Nullable<IPoster[]>;
   posts: IPostData["posts"]["nodes"];
   pages: number;
   paginationURI: string;

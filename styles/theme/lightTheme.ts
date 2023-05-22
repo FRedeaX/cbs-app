@@ -1,7 +1,7 @@
 import { ruRU } from "@mui/material/locale";
 import { createTheme } from "@mui/material/styles";
 
-import { BOTTOM_LIMIT_FONT_SIZE, TOP_LIMIT_FONT_SIZE } from "../../constant";
+import { BOTTOM_LIMIT_FONT_SIZE, TOP_LIMIT_FONT_SIZE } from "../../constants";
 
 const fontSizeMultiplier =
   BOTTOM_LIMIT_FONT_SIZE / (TOP_LIMIT_FONT_SIZE - BOTTOM_LIMIT_FONT_SIZE);

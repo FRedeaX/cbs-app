@@ -1,5 +1,4 @@
 export * from "./getUA";
-export * from "./menu";
 export * from "./page";
 export * from "./plaiceholder";
 export * from "./post";

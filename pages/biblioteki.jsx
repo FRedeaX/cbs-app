@@ -43,7 +43,7 @@ export async function getStaticProps() {
 
   return {
     props: { menu, page },
-    revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
+    revalidate: parseInt(process.env.PAGE_REVALIDATE ?? "60", 10),
   };
 }
 

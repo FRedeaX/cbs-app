@@ -1,18 +1,16 @@
 import { Typography } from "@mui/material";
 import { FC } from "react";
 
-import { PageInfo } from "../../../helpers/backend";
 import Pagination from "../../UI/Pagination/Pagination";
 import { IData } from "../../Widget/Card/Card";
 import CardListUngrouped from "../../Widget/Card/CardListUngrouped/CardListUngrouped";
 import classes from "./InformatsionnyieListki.module.css";
 
-export type InformatsionnyieListkiPage = {
+type InformatsionnyieListkiPage = {
   title: string;
   excerpt: string;
   children: {
     nodes: IData[];
-    pageInfo: PageInfo;
   };
 };
 

@@ -1,11 +1,11 @@
-import { removeDuplicateTag } from "../../../helpers/backend";
-import { pageInfo } from "./type";
+import { removeDuplicateTag } from "../../../../helpers/backend";
+import { Pagination } from "./type";
 
 export const tagsOnPage = async (
-  pagination: pageInfo[],
+  pagination: Pagination[],
   data: any,
 ): Promise<number[]> => {
-  const { tags: lastPageTags } = pagination.at(-1) as pageInfo;
+  const { tags: lastPageTags } = pagination.at(-1) as Pagination;
 
   const tags = await removeDuplicateTag(data.posts.nodes).then((response) =>
     response.arrTags.length ? [...response.arrTags, ...lastPageTags] : [],

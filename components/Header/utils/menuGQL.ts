@@ -1,5 +1,27 @@
 import { gql } from "@apollo/client";
 
+export type MenuItemsGQL = {
+  menuItems: {
+    nodes: [
+      {
+        childItems: {
+          nodes: MenuItemsGQL[];
+        };
+        id: string;
+        label: string;
+        path: string;
+        parentId: boolean;
+      },
+    ];
+  };
+};
+
+export type MenuGQL = {
+  menus: {
+    nodes: MenuItemsGQL;
+  };
+};
+
 const menuItemsGQL = {
   fragments: gql`
     fragment menuItemsGQL on MenuItem {
@@ -11,7 +33,7 @@ const menuItemsGQL = {
   `,
 };
 
-const MenuGQL = {
+const menuGQL = {
   fragments: gql`
     fragment MenuGQL on Menu {
       menuItems(where: { parentDatabaseId: 0 }) {
@@ -43,9 +65,9 @@ export const FETCH_MENU = gql`
   query FetchMenu {
     menus {
       nodes {
-        ...MenuGQL
+        ...menuGQL
       }
     }
   }
-  ${MenuGQL.fragments}
+  ${menuGQL.fragments}
 `;

@@ -1,13 +1,12 @@
-import { exceptionLog } from "../../helpers";
-import { initialPagination } from "./pagination.const";
+import { exceptionLog } from "../../../helpers";
+import { Pagination, initialPagination } from "./constant";
 import {
   ILoadByGraphQL,
   ILoadByRedis,
   loadByGraphQL,
   loadByRedis,
-  pageInfo,
   saveByRedis,
-} from "./pagination.utils";
+} from "./utils";
 
 /**
  * Возвращает пагинацию, соответствующую следующему набору записей на странице:
@@ -16,16 +15,16 @@ import {
  * - 3 - 20
  * - n - 20
  */
-export async function paginationLoad<TData>({
+export async function load<TData>({
   key,
   endCursor,
   query,
   id,
   isTags,
   pageInfoCallback,
-}: ILoadByRedis & ILoadByGraphQL<TData>): Promise<pageInfo[]> {
+}: ILoadByRedis & ILoadByGraphQL<TData>): Promise<Pagination[]> {
   try {
-    const paginationRedis: pageInfo[] | null = await loadByRedis({
+    const paginationRedis: Pagination[] | null = await loadByRedis({
       key,
       endCursor,
     });
@@ -33,7 +32,7 @@ export async function paginationLoad<TData>({
       return paginationRedis;
     }
 
-    const paginationGraphQL: pageInfo[] = await loadByGraphQL<TData>({
+    const paginationGraphQL: Pagination[] = await loadByGraphQL<TData>({
       query,
       id,
       isTags,

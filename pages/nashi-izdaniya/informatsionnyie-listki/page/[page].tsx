@@ -1,87 +1,101 @@
-import { GetStaticProps, NextPage } from "next";
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 import { getChildrenPageInfo } from "..";
 import Head from "../../../../components/Head/Head";
-import {
-  InformatsionnyieListki,
-  InformatsionnyieListkiPage,
-} from "../../../../components/Pages/InformatsionnyieListki/InformatsionnyieListki";
-import { FETCH_CHILDREN_PAGE_PAGINATION } from "../../../../components/Pages/Page/Page.utils";
+import { InformatsionnyieListki } from "../../../../components/Pages/InformatsionnyieListki/InformatsionnyieListki";
 import Layout from "../../../../components/UI/Layout/Layout";
-import { getLastPageNumber, paginationLoad } from "../../../../core/pagination";
-import {
-  getChildrenPage,
-  getMenu,
-  staticNotFound,
-} from "../../../../helpers/backend";
+import { getChildrenPage, getMenu, pagination } from "../../../../core/backend";
+import { exceptionLog } from "../../../../helpers";
+import { staticNotFound } from "../../../../helpers/backend";
 import { RKEY_IL } from "../../../../lib/redis";
-
-interface IProps {
-  menu: Array<object>;
-  page: InformatsionnyieListkiPage;
-  pageNumber: number;
-  pagination: number;
-}
-
-const Page: NextPage<IProps> = ({
-  menu,
-  page,
-  pageNumber,
-  pagination,
-}: IProps) => (
-  <Layout menu={menu} size="m">
-    {page.children.nodes.length > 0 && (
-      <>
-        <Head
-          title={`${page.title} — Страница ${pageNumber}`}
-          description={page.excerpt}
-        />
-        <InformatsionnyieListki
-          page={page}
-          pageNumber={pageNumber}
-          pagination={pagination}
-        />
-      </>
-    )}
-  </Layout>
-);
 
 export const getStaticPaths = () => ({
   paths: [{ params: { page: "2" } }],
   fallback: "blocking",
 });
 
-export const getStaticProps: GetStaticProps = async ({
-  params: { page: pageNumber },
-}) => {
-  const menu = await getMenu();
-  const pagesInfo = await paginationLoad<InformatsionnyieListkiPage>({
-    key: RKEY_IL,
-    query: FETCH_CHILDREN_PAGE_PAGINATION,
-    id: `nashi-izdaniya/informatsionnyie-listki`,
-    pageInfoCallback: getChildrenPageInfo,
-  });
-
-  const carrentPage = pagesInfo[pageNumber - 1];
-  if (carrentPage === undefined) return staticNotFound;
-
-  const page = await getChildrenPage({
-    id: `nashi-izdaniya/informatsionnyie-listki`,
-    cursor: carrentPage.cursor,
-    first: 20,
-  });
-
-  if (!page) return staticNotFound;
-
-  return {
-    props: {
-      menu,
-      page,
-      pageNumber,
-      pagination: getLastPageNumber(pagesInfo),
-    },
-    revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
-  };
+type GetStaticPropsResult = {
+  menu: Awaited<ReturnType<typeof getMenu>>;
+  page: Awaited<ReturnType<typeof getChildrenPage>>;
+  pageNumber: number;
+  lastPageNumber: ReturnType<typeof pagination.getLastPageNumber>;
 };
+
+interface Params extends ParsedUrlQuery {
+  page: string;
+}
+
+type PaginationData = pagination.gql.ChildrenPagePaginationGQL;
+
+export const getStaticProps: GetStaticProps<
+  GetStaticPropsResult,
+  Params
+> = async ({ params }) => {
+  try {
+    if (typeof params?.page !== "string") {
+      throw new Error("params page is not string");
+    }
+    const pageNumber = parseInt(params.page, 10);
+    if (Number.isNaN(pageNumber)) {
+      throw new Error("pageNumber is NaN");
+    }
+
+    const menu = await getMenu();
+    const paginationList = await pagination.load<PaginationData>({
+      key: RKEY_IL,
+      query: pagination.gql.CHILDREN_PAGE_PAGINATION,
+      id: `nashi-izdaniya/informatsionnyie-listki`,
+      pageInfoCallback: getChildrenPageInfo,
+    });
+
+    const carrentPage = paginationList[pageNumber - 1];
+    if (carrentPage === undefined) throw new Error("carrentPage of undefined");
+
+    const page = await getChildrenPage({
+      id: `nashi-izdaniya/informatsionnyie-listki`,
+      cursor: carrentPage.cursor,
+      first: 20,
+    });
+
+    return {
+      props: {
+        menu,
+        page,
+        pageNumber,
+        lastPageNumber: pagination.getLastPageNumber(paginationList),
+      },
+      revalidate: parseInt(process.env.PAGE_REVALIDATE ?? "60", 10),
+    };
+  } catch (error) {
+    exceptionLog(error);
+    return staticNotFound;
+  }
+};
+
+type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+const Page: NextPage<PageProps> = ({
+  menu,
+  page,
+  pageNumber,
+  lastPageNumber,
+}) => (
+  <Layout menu={menu} size="m">
+    {page.children.nodes.length > 0 && (
+      <>
+        <Head
+          title={`${page.title} — Cтраница ${pageNumber}`}
+          description={page.excerpt}
+        />
+        <InformatsionnyieListki
+          page={page}
+          pageNumber={pageNumber}
+          pagination={lastPageNumber}
+        />
+      </>
+    )}
+  </Layout>
+);
 
 export default Page;
