@@ -1,14 +1,8 @@
 import * as Vibrant from "node-vibrant";
 
-import { exceptionLog } from "../../../helpers";
-import { client } from "../../../lib/apollo/client";
-import { GET_SOURCE_THUMBNAIL_URL } from "../../../routes/Post/Post";
-
-// interface IVec3 extends Array<number> {
-//   0: number;
-//   1: number;
-//   2: number;
-// }
+import { client } from "@/lib/apollo/client";
+import { exceptionLog } from "@/helpers";
+import { GET_SOURCE_THUMBNAIL_URL } from "@/routes/Post/Post";
 
 export default async function extractColors(req, res) {
   const { ids } = req.query || null;

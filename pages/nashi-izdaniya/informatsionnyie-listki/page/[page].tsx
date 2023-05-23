@@ -1,14 +1,16 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+
+import { RKEY_IL } from "@/lib/redis";
+import { getChildrenPage, getMenu, pagination } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import { staticNotFound } from "@/helpers/backend";
+import Head from "@/components/Head/Head";
+import { InformatsionnyieListki } from "@/components/Pages/InformatsionnyieListki/InformatsionnyieListki";
+import Layout from "@/components/UI/Layout/Layout";
+
 import { getChildrenPageInfo } from "..";
-import Head from "../../../../components/Head/Head";
-import { InformatsionnyieListki } from "../../../../components/Pages/InformatsionnyieListki/InformatsionnyieListki";
-import Layout from "../../../../components/UI/Layout/Layout";
-import { getChildrenPage, getMenu, pagination } from "../../../../core/backend";
-import { exceptionLog } from "../../../../helpers";
-import { staticNotFound } from "../../../../helpers/backend";
-import { RKEY_IL } from "../../../../lib/redis";
 
 export const getStaticPaths = () => ({
   paths: [{ params: { page: "2" } }],
@@ -36,6 +38,7 @@ export const getStaticProps: GetStaticProps<
     if (typeof params?.page !== "string") {
       throw new Error("params page is not string");
     }
+
     const pageNumber = parseInt(params.page, 10);
     if (Number.isNaN(pageNumber)) {
       throw new Error("pageNumber is NaN");
@@ -50,7 +53,9 @@ export const getStaticProps: GetStaticProps<
     });
 
     const carrentPage = paginationList[pageNumber - 1];
-    if (carrentPage === undefined) throw new Error("carrentPage of undefined");
+    if (carrentPage === undefined) {
+      throw new Error("carrentPage of undefined");
+    }
 
     const page = await getChildrenPage({
       id: `nashi-izdaniya/informatsionnyie-listki`,

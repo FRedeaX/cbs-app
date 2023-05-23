@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
-import Error from "../components/Error/Error";
-import Head from "../components/Head/Head";
-import Layout from "../components/UI/Layout/Layout";
-import { getMenu } from "../helpers/backend";
+import { getMenu } from "@/core/backend";
+import Error from "@/components/Error/Error";
+import Head from "@/components/Head/Head";
+import Layout from "@/components/UI/Layout/Layout";
 
 export async function getStaticProps() {
   const menu = await getMenu(false);

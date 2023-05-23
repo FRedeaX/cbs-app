@@ -1,26 +1,26 @@
 // import HomePage from "~/components/Pages/HomePage/HomePage";
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 
-import { getPageInfoPosts } from "../..";
-import Head from "../../../components/Head/Head";
-import HomePage, {
-  IHomePageProps,
-} from "../../../components/Pages/HomePage/HomePage";
-import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
-import Layout from "../../../components/UI/Layout/Layout";
-import { FETCH_POSTER } from "../../../components/poster/PosterRoot/PosterRoot";
-import { getMenu, pagination } from "../../../core/backend";
-import { exceptionLog } from "../../../helpers";
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import { useRouter } from "next/router";
+
+import { client } from "@/lib/apollo/client";
+import { RKEY_POSTS } from "@/lib/redis";
+import { getMenu, pagination } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
 import {
   plaiceholder,
   removeDuplicateTag,
   staticNotFound,
-} from "../../../helpers/backend";
-import { dateConversion, filter, sort } from "../../../helpers/backend/poster";
-import { client } from "../../../lib/apollo/client";
-import { RKEY_POSTS } from "../../../lib/redis";
+} from "@/helpers/backend";
+import { dateConversion, filter, sort } from "@/helpers/backend/poster";
+import Head from "@/components/Head/Head";
+import HomePage, { IHomePageProps } from "@/components/Pages/HomePage/HomePage";
+import { FETCH_ARTICLES } from "@/components/Posts/PostsRoot";
+import Layout from "@/components/UI/Layout/Layout";
+import { FETCH_POSTER } from "@/components/poster/PosterRoot/PosterRoot";
+
+import { getPageInfoPosts } from "../..";
 
 export const getStaticPaths = () => ({
   paths: [{ params: { page: "2" } }],

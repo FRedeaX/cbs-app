@@ -1,8 +1,8 @@
-import { FETCH_ARTICLES } from "../../../components/Posts/PostsRoot";
-import { exceptionLog } from "../../../helpers";
-import { plaiceholder } from "../../../helpers/backend";
-import { client } from "../../../lib/apollo/client";
-import { GET_MINIMUM_DATA_FOR_OFFER } from "../../../routes/Post/Post";
+import { client } from "@/lib/apollo/client";
+import { exceptionLog } from "@/helpers";
+import { plaiceholder } from "@/helpers/backend";
+import { GET_MINIMUM_DATA_FOR_OFFER } from "@/routes/Post/Post";
+import { FETCH_ARTICLES } from "@/components/Posts/PostsRoot";
 
 export default async function offers(req, res) {
   const { id } = req.query || null;

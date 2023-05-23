@@ -1,9 +1,10 @@
-import { PageRoot } from "../../components/Pages/Page";
-import { FETCH_CHILDREN_URI_PAGES } from "../../components/Pages/Page/Page.utils";
-import Layout from "../../components/UI/Layout/Layout";
-import { exceptionLog } from "../../helpers";
-import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
-import { client } from "../../lib/apollo/client";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import { getPage, preparingPaths } from "@/helpers/backend";
+import { PageRoot } from "@/components/Pages/Page";
+import { FETCH_CHILDREN_URI_PAGES } from "@/components/Pages/Page/Page.utils";
+import Layout from "@/components/UI/Layout/Layout";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">

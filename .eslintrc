@@ -52,7 +52,84 @@
 
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
-    "react/jsx-no-duplicate-props": [1, { "ignoreCase": false }]
+    "react/jsx-no-duplicate-props": [1, { "ignoreCase": false }],
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc"
+        },
+        "pathGroups": [
+          {
+            "pattern": "@/lib/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/core/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/helpers",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/helpers/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/constants/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/base/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/routes/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/components/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/public/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/styles/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "distinctGroup": false,
+        "groups": [
+          "builtin",
+          "external",
+          "unknown",
+          ["internal", "sibling"],
+          "parent",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ]
   },
   "env": {
     "browser": true,

@@ -1,12 +1,13 @@
-import Head from "../../components/Head/Head";
-import { PageRoot } from "../../components/Pages/Page";
-import { FETCH_CHILDREN_URI_PAGES } from "../../components/Pages/Page/Page.utils";
-import Layout from "../../components/UI/Layout/Layout";
-import СardListUngrouped from "../../components/Widget/Card/CardListUngrouped/CardListUngrouped";
-import { Heading } from "../../components/blocks/Heading/Heading";
-import { exceptionLog } from "../../helpers";
-import { getMenu, getPage, preparingPaths } from "../../helpers/backend";
-import { client } from "../../lib/apollo/client";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import { getPage, preparingPaths } from "@/helpers/backend";
+import Head from "@/components/Head/Head";
+import { PageRoot } from "@/components/Pages/Page";
+import { FETCH_CHILDREN_URI_PAGES } from "@/components/Pages/Page/Page.utils";
+import Layout from "@/components/UI/Layout/Layout";
+import СardListUngrouped from "@/components/Widget/Card/CardListUngrouped/CardListUngrouped";
+import { Heading } from "@/components/blocks/Heading/Heading";
 
 const Page = ({ menu, page }) => (
   <Layout menu={menu} size="m">

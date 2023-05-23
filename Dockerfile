@@ -39,7 +39,6 @@ COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/pages ./pages
 COPY --from=builder /app/routes ./routers
 COPY --from=builder /app/styles ./styles
-COPY --from=builder /app/utility ./utility
 
 COPY --from=builder /app/.env ./
 COPY --from=builder /app/.env.production ./

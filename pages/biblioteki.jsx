@@ -1,10 +1,10 @@
-import Head from "../components/Head/Head";
-import { FETCH_LIBRARY, Library } from "../components/Pages/Library/Library";
-import Layout from "../components/UI/Layout/Layout";
-import { exceptionLog } from "../helpers";
-import { getMenu } from "../helpers/backend";
-import transformObject from "../helpers/backend/biblioteki";
-import { client } from "../lib/apollo/client";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import transformObject from "@/helpers/backend/biblioteki";
+import Head from "@/components/Head/Head";
+import { FETCH_LIBRARY, Library } from "@/components/Pages/Library/Library";
+import Layout from "@/components/UI/Layout/Layout";
 
 const Biblioteki = ({ menu, page }) => (
   <Layout menu={menu}>

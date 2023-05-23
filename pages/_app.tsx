@@ -3,11 +3,11 @@ import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
 import smoothScroll from "smoothscroll-polyfill";
 
-import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
-import "../styles.css";
-import { lightTheme } from "../styles/theme/lightTheme";
-import "../styles/variables/global.css";
-import "../styles/variables/wp.css";
+import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
+import { lightTheme } from "@/styles/theme/lightTheme";
+import "@/styles/styles.css";
+import "@/styles/variables/global.css";
+import "@/styles/variables/wp.css";
 
 const App: FC<NextAppProps> = ({ Component, pageProps }) => {
   useEffect(() => {

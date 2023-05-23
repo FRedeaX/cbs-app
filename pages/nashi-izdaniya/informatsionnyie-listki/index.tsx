@@ -1,12 +1,12 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import Head from "../../../components/Head/Head";
-import { InformatsionnyieListki } from "../../../components/Pages/InformatsionnyieListki/InformatsionnyieListki";
-import Layout from "../../../components/UI/Layout/Layout";
-import { getChildrenPage, getMenu, pagination } from "../../../core/backend";
-import { exceptionLog } from "../../../helpers";
-import { staticNotFound } from "../../../helpers/backend";
-import { RKEY_IL } from "../../../lib/redis";
+import { RKEY_IL } from "@/lib/redis";
+import { getChildrenPage, getMenu, pagination } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import { staticNotFound } from "@/helpers/backend";
+import Head from "@/components/Head/Head";
+import { InformatsionnyieListki } from "@/components/Pages/InformatsionnyieListki/InformatsionnyieListki";
+import Layout from "@/components/UI/Layout/Layout";
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;

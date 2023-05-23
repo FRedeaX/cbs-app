@@ -1,16 +1,18 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import { useRouter } from "next/router";
+
+import { client } from "@/lib/apollo/client";
+import { RKEY_POSTS_BY_CATEGORY } from "@/lib/redis";
+import { getMenu, pagination } from "@/core/backend";
+import { plaiceholder, staticNotFound } from "@/helpers/backend";
+import Head from "@/components/Head/Head";
+import HomePage from "@/components/Pages/HomePage/HomePage";
+import { fetchArticlesByCategory } from "@/components/Posts/PostsRoot";
+import Layout from "@/components/UI/Layout/Layout";
+
 import { getPageInfoCategory } from "..";
-import Head from "../../../../../components/Head/Head";
-import HomePage from "../../../../../components/Pages/HomePage/HomePage";
-import { fetchArticlesByCategory } from "../../../../../components/Posts/PostsRoot";
-import Layout from "../../../../../components/UI/Layout/Layout";
-import { getMenu, pagination } from "../../../../../core/backend";
-import { plaiceholder, staticNotFound } from "../../../../../helpers/backend";
-import { client } from "../../../../../lib/apollo/client";
-import { RKEY_POSTS_BY_CATEGORY } from "../../../../../lib/redis";
 
 export async function getStaticPaths() {
   return {

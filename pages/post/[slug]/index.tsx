@@ -1,16 +1,17 @@
+import { ParsedUrlQuery } from "querystring";
+
 import { gql } from "@apollo/client";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 
-import Head from "../../../components/Head/Head";
-import Layout from "../../../components/UI/Layout/Layout";
-import { getMenu } from "../../../core/backend";
-import { transformBlocks } from "../../../core/backend/transformBlocks";
-import { exceptionLog } from "../../../helpers";
-import { sortingCategories, staticNotFound } from "../../../helpers/backend";
-import { client } from "../../../lib/apollo/client";
-import { GET_POST_CONTENT_BY_BLOCKS, Post } from "../../../routes/Post/Post";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { transformBlocks } from "@/core/backend/transformBlocks";
+import { exceptionLog } from "@/helpers";
+import { sortingCategories, staticNotFound } from "@/helpers/backend";
+import { GET_POST_CONTENT_BY_BLOCKS, Post } from "@/routes/Post/Post";
+import Head from "@/components/Head/Head";
+import Layout from "@/components/UI/Layout/Layout";
 
 export async function getStaticPaths() {
   const paths = await client
@@ -34,7 +35,7 @@ export async function getStaticPaths() {
           message: data.posts.nodes of null
         `);
 
-      return data.posts.nodes.map((post) => ({
+      return data.posts.nodes.map((post: any) => ({
         params: {
           slug: post.slug,
           // slug: [post.slug],
@@ -66,7 +67,7 @@ export const getStaticProps: GetStaticProps<
   Params
 > = async ({ params }) => {
   try {
-    if (typeof params?.page !== "string") {
+    if (typeof params?.slug !== "string") {
       throw new Error("params page is not string");
     }
 
