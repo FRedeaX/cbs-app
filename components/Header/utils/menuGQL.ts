@@ -35,7 +35,7 @@ const menuItemsGQL = {
 
 const menuGQL = {
   fragments: gql`
-    fragment MenuGQL on Menu {
+    fragment menuGQL on Menu {
       menuItems(where: { parentDatabaseId: 0 }) {
         nodes {
           ...menuItemsGQL
