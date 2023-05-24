@@ -1,13 +1,13 @@
-import Head from "../components/Head/Head";
-import SectionHeader from "../components/SectionHeader/SectionHeader";
-import Layout from "../components/UI/Layout/Layout";
-import PosterItem from "../components/poster/PosterItem/PosterItem";
-import PosterList from "../components/poster/PosterList/PosterList";
-import { FETCH_POSTER } from "../components/poster/PosterRoot/PosterRoot";
-import { exceptionLog } from "../helpers";
-import { getMenu } from "../helpers/backend";
-import { dateConversion, sort } from "../helpers/backend/poster";
-import { client } from "../lib/apollo/client";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import { dateConversion, sort } from "@/helpers/backend/poster";
+import Head from "@/components/Head/Head";
+import SectionHeader from "@/components/SectionHeader/SectionHeader";
+import Layout from "@/components/UI/Layout/Layout";
+import PosterItem from "@/components/poster/PosterItem/PosterItem";
+import PosterList from "@/components/poster/PosterList/PosterList";
+import { FETCH_POSTER } from "@/components/poster/PosterRoot/PosterRoot";
 
 const Poster = ({ menu, posters }) => (
   <>

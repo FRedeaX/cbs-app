@@ -1,6 +1,6 @@
-import { exceptionLog } from "../../../helpers";
-import { clientRedis } from "../../../lib/redis";
-import { pageInfo } from "./type";
+import { exceptionLog } from "../../../../helpers";
+import { clientRedis } from "../../../../lib/redis";
+import { Pagination } from "./type";
 
 export interface ILoadByRedis {
   /**
@@ -17,7 +17,7 @@ export interface ILoadByRedis {
 export const loadByRedis = async ({
   key,
   endCursor,
-}: ILoadByRedis): Promise<pageInfo[] | null> => {
+}: ILoadByRedis): Promise<Pagination[] | null> => {
   try {
     const response = (await clientRedis?.get(key)) as string | null;
     if (response === null) return null;

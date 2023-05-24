@@ -7,13 +7,5 @@
   "trailingComma": "all",
   "singleQuote": false,
   "jsxBracketSameLine": true,
-  "semi": true,
-  "importOrder": [
-    "^components/(.*)$",
-    "^helpers/(.*)$",
-    "^store/(.*)$",
-    "^[./]"
-  ],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "semi": true
 }

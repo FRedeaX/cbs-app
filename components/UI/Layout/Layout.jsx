@@ -9,7 +9,7 @@ const Layout = ({
   menu,
   loading = false,
   size = "l",
-  paddingSides,
+  paddingSides = false,
   children,
 }) => (
   <>

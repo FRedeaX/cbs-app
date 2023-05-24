@@ -1,10 +1,10 @@
-import Head from "../components/Head/Head";
-import { FETCH_LIBRARY, Library } from "../components/Pages/Library/Library";
-import Layout from "../components/UI/Layout/Layout";
-import { exceptionLog } from "../helpers";
-import { getMenu } from "../helpers/backend";
-import transformObject from "../helpers/backend/biblioteki";
-import { client } from "../lib/apollo/client";
+import { client } from "@/lib/apollo/client";
+import { getMenu } from "@/core/backend";
+import { exceptionLog } from "@/helpers";
+import transformObject from "@/helpers/backend/biblioteki";
+import Head from "@/components/Head/Head";
+import { FETCH_LIBRARY, Library } from "@/components/Pages/Library/Library";
+import Layout from "@/components/UI/Layout/Layout";
 
 const Biblioteki = ({ menu, page }) => (
   <Layout menu={menu}>
@@ -43,7 +43,7 @@ export async function getStaticProps() {
 
   return {
     props: { menu, page },
-    revalidate: parseInt(process.env.PAGE_REVALIDATE || "60", 10),
+    revalidate: parseInt(process.env.PAGE_REVALIDATE ?? "60", 10),
   };
 }
 

@@ -1,13 +1,14 @@
 import { GetServerSideProps, NextPage } from "next";
 import { ApiError } from "next/dist/server/api-utils";
 
-import Head from "../../components/Head/Head";
-import Layout from "../../components/UI/Layout/Layout";
-import { searchQuery } from "../../core/elastic/search/searchQuery";
-import { exceptionLog } from "../../helpers";
-import { getMenu, getUAPlatform } from "../../helpers/backend";
-import { UA } from "../../helpers/backend/getUA/const";
-import { RouteSearch, RouteSearchProps } from "../../routes";
+import { getMenu } from "@/core/backend";
+import { searchQuery } from "@/core/elastic/search/searchQuery";
+import { exceptionLog } from "@/helpers";
+import { getUAPlatform } from "@/helpers/backend";
+import { UA } from "@/helpers/backend/getUA/const";
+import { RouteSearch, RouteSearchProps } from "@/routes/Search";
+import Head from "@/components/Head/Head";
+import Layout from "@/components/UI/Layout/Layout";
 
 type ISearchProps = {
   menu: Array<object>;

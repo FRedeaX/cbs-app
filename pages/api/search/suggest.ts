@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiError } from "next/dist/server/api-utils";
 
-import { suggestQuery } from "../../../core/elastic";
+import { suggestQuery } from "@/core/elastic";
 
 export default async function suggest(
   req: NextApiRequest,

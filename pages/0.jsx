@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 
-import Layout from "../components/UI/Layout/Layout";
-import { getMenu } from "../helpers/backend";
+import { getMenu } from "@/core/backend";
+import Layout from "@/components/UI/Layout/Layout";
 
 const PreviewRender = dynamic(
   () =>

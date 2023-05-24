@@ -1,6 +1,6 @@
 import { SearchRequest } from "@elastic/elasticsearch/api/types";
 
-import { SEARCH_HIT_SIZE } from "../../../constant";
+import { SEARCH_HIT_SIZE } from "../../../constants";
 import { Nullable } from "../../../helpers/typings/utility-types";
 import * as aggs from "./queryBlock/aggs";
 import { highlight } from "./queryBlock/highlight";

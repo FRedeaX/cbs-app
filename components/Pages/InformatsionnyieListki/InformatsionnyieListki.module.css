@@ -1,4 +1,6 @@
 .header {
+  --typography-line-height: 1;
+
   margin: 2em 0 1.3em;
 }
 

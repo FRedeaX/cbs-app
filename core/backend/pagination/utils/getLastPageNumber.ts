@@ -1,10 +1,9 @@
-import { exceptionLog } from "../../../helpers";
-import { initialPagination } from "../pagination.const";
-import { pageInfo } from "./type";
+import { exceptionLog } from "../../../../helpers";
+import { Pagination, initialPagination } from "../constant";
 
 export const getLastPageNumber = (
-  pagesInfo: pageInfo[],
-): pageInfo["number"] => {
+  pagesInfo: Pagination[],
+): Pagination["number"] => {
   const page = pagesInfo?.at(-1);
 
   if (page === undefined) {

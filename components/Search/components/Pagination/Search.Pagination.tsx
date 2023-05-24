@@ -1,7 +1,7 @@
 import { Pagination } from "@mui/material";
 import { FC } from "react";
 
-import { SEARCH_HIT_SIZE } from "../../../../constant";
+import { SEARCH_HIT_SIZE } from "../../../../constants";
 import { usePagination } from "./utils/usePagination";
 
 type SearchPaginationProps = {

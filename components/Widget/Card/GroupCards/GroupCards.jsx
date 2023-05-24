@@ -1,7 +1,7 @@
+import { Typography } from "@mui/material";
 import classNames from "classnames";
 
 import { CarouselRoot } from "../../../Carousel/CarouselRoot";
-import { Heading } from "../../../blocks/Heading/Heading";
 import { Card } from "../Card";
 import classes from "./Group-cards.module.css";
 import { concatenationID } from "./GroupCards.utils";
@@ -18,12 +18,14 @@ const GroupCards = ({
     {(title || description) && (
       <div className={classes.head}>
         {title && (
-          <Heading level="3" className={classes.title}>
+          <Typography variant="h3" className={classes.title}>
             {title}
-          </Heading>
+          </Typography>
         )}
         {description && (
-          <span className={classes.description}>{description}</span>
+          <Typography variant="caption" className={classes.description}>
+            {description}
+          </Typography>
         )}
       </div>
     )}

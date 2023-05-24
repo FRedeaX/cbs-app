@@ -5,57 +5,63 @@ import delay from "../delay";
 import { exceptionLog } from "../exceptionLog";
 
 export type queryNode = DocumentNode;
+/**
+ * Количество элементов, возвращаемых после курсора
+ * @default 10
+ */
+type FirstVariable = number;
+
 type criticalVariables = {
   /**
+   * Курсор, используется вместе с аргументом `first`
+   * для указания места в наборе данных для получения данных.
    * @default ""
    */
   cursor?: string;
 
-  /**
-   * Количество элементов, возвращаемых после указываемого курсора
-   * @default 10
-   */
-  first?: number;
+  first?: FirstVariable;
 };
-type _callbackFn<TData> = (data: TData) => Promise<void>;
-export type _pageInfo = {
+type CallbackFn<TData> = (data: TData) => Promise<void>;
+export type PageInfo = {
   hasNextPage: boolean;
   endCursor: string;
 };
-export type _pageInfoCallback<TData> = (data: TData) => _pageInfo;
-type _updatedVariablesCallback<TVariables> = () => TVariables;
+type PageInfoCallback<TData> = (data: TData) => PageInfo;
+type UpdatedVariablesCallback<TVariables> = () => TVariables;
 
-export interface IRecursiveLoadParties<TData, TVariables = criticalVariables> {
+export interface IRecursiveLoadParties<TData, TVariables> {
   /**
-   * GraphQL запрос
+   * `GraphQL` запрос должен принимать переменные `cursor`, `first`.
    */
   query: queryNode;
 
   /**
    * Переменные передаваемые в GraphQL запрос
    */
-  variables?: TVariables;
+  variables?: TVariables & criticalVariables;
 
   /**
    * Асинхронная функция, выполняемая для каждой партии
    *
    * @param data
    */
-  callbackFn: _callbackFn<TData>;
+  callbackFn: CallbackFn<TData>;
 
   /**
    * Функция, возвращающая объект pageInfo из GraphQL
    *
    * @param data
    */
-  pageInfoCallback: _pageInfoCallback<TData>;
+  pageInfoCallback: PageInfoCallback<TData>;
 
   /**
    * Функция, возвращающая объект
    * обновленных и/или дополнительных переменных
    * для следующего GraphQL запроса
    */
-  updatedVariablesCallback?: _updatedVariablesCallback<TVariables>;
+  updatedVariablesCallback?: UpdatedVariablesCallback<
+    Partial<TVariables> & Pick<criticalVariables, "first">
+  >;
 
   /**
    * Задержка в (ms) перед запросом следующей партии
@@ -76,10 +82,12 @@ export async function recursiveLoadParties<
     updatedVariablesCallback,
     delayMS = 0,
   } = args;
+  // Присваеваем default значение
+  const first = args.variables?.first ?? 10;
   const variables = {
     cursor: "",
-    first: 10,
     ...args.variables,
+    first,
   };
 
   try {
@@ -98,7 +106,7 @@ export async function recursiveLoadParties<
         ...variables,
         cursor: pageInfo.endCursor,
         ...updatedVariablesCallback?.(),
-      } as TVariables;
+      } as TVariables & criticalVariables;
 
       await delay(delayMS).then(async () => {
         await recursiveLoadParties({ ...args, variables: newVariables });

@@ -1,7 +1,7 @@
 import { ruRU } from "@mui/material/locale";
 import { createTheme } from "@mui/material/styles";
 
-import { BOTTOM_LIMIT_FONT_SIZE, TOP_LIMIT_FONT_SIZE } from "../../constant";
+import { BOTTOM_LIMIT_FONT_SIZE, TOP_LIMIT_FONT_SIZE } from "../../constants";
 
 const fontSizeMultiplier =
   BOTTOM_LIMIT_FONT_SIZE / (TOP_LIMIT_FONT_SIZE - BOTTOM_LIMIT_FONT_SIZE);
@@ -56,6 +56,7 @@ export const lightTheme = createTheme(
             ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
             var(--is-font-size-adaptive)
         )`, // от 22 до 30
+        fontWeight: `var(--typography-font-weight, 400)`,
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
       },
@@ -142,6 +143,7 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
       caption: {
+        display: "block",
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `var(--typography-font-size, 0.75rem)`,
         fontWeight: `var(--typography-font-weight, 400)`,
@@ -152,6 +154,7 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, initial)`,
       },
       overline: {
+        display: "block",
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `var(--typography-font-size, 0.75rem)`,
         fontWeight: `var(--typography-font-weight, 400)`,

@@ -5,7 +5,7 @@ import { FC } from "react";
 
 import { KeyDownAwayListener } from "../../base";
 import { usePreventScroll, useToggle } from "../../helpers/frontend/hooks";
-import { CSSProperties, Maybe } from "../../helpers/typings/utility-types";
+import { CSSProperties, Nullable } from "../../helpers/typings/utility-types";
 import Logo from "../Logo/Logo";
 import { HeaderSearch } from "./Header.Search/Header.Search";
 import classes from "./Header.module.css";
@@ -13,27 +13,12 @@ import HeaderSocial from "./HeaderSocial/HeaderSocial";
 import NavList from "./NavList/NavList";
 import { HeaderScroll } from "./components/Header.Scroll/Header.Scroll";
 import { HeaderToggle } from "./components/Header.Toggle/Header.Toggle";
+import { MenuItemsGQL } from "./utils/menuGQL";
 
 const sxBackdrop: CSSProperties = { zIndex: "calc(var(--header-z-index) - 1)" };
 
-type MenuItems = {
-  menuItems: {
-    nodes: [
-      {
-        childItems: {
-          nodes: MenuItems[];
-        };
-        id: string;
-        label: string;
-        path: string;
-        parentId: boolean;
-      },
-    ];
-  };
-};
-
 type HeaderProps = {
-  menus: Maybe<MenuItems[]>;
+  menus: Nullable<MenuItemsGQL[]>;
 };
 
 const Header: FC<HeaderProps> = ({ menus }) => {

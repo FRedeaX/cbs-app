@@ -1,7 +1,4 @@
-import {
-  FETCH_CHILDREN_PAGE,
-  FETCH_PAGE,
-} from "../../../components/Pages/Page/Page.utils";
+import { FETCH_PAGE } from "../../../components/Pages/Page/Page.utils";
 import { transformBlocks } from "../../../core/backend/transformBlocks";
 import { client } from "../../../lib/apollo/client";
 import { exceptionLog } from "../../exceptionLog";
@@ -31,30 +28,3 @@ export const getPage = async (id) => {
     });
   return page;
 };
-
-export async function getChildrenPage({ id, cursor = "", first = 10 }) {
-  const page = await client
-    .query({
-      query: FETCH_CHILDREN_PAGE,
-      variables: {
-        id,
-        idType: "URI",
-        cursor,
-        first,
-      },
-      fetchPolicy: "network-only",
-    })
-    .then(async ({ data, error }) => {
-      if (error !== undefined) throw new Error(error.message);
-      if (data.page === null) throw new Error("data.page of null");
-      if (data.page.children.nodes.length === 0)
-        throw new Error("children.length of null");
-
-      return data.page;
-    })
-    .catch((error) => {
-      exceptionLog(error);
-      return null;
-    });
-  return page;
-}

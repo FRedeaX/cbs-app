@@ -1,14 +1,19 @@
 import {
-  _pageInfoCallback,
+  IRecursiveLoadParties,
   queryNode,
   recursiveLoadParties,
-} from "../../../helpers/backend";
+} from "../../../../helpers/backend";
+import { Pagination, initialPagination } from "../constant";
 import { tagsOnPage as getTagsOnPage } from "./tagsOnPage";
-import { pageInfo } from "./type";
 
-export interface ILoadByGraphQL<TData> {
+type Variables = {
+  id: string;
+  tagNotIn?: number[];
+};
+
+export type ILoadByGraphQL<TData> = {
   /**
-   * GraphQl запрос
+   * `GraphQL` запрос должен принимать переменные `cursor`, `first`, `id?`.
    */
   query: queryNode;
 
@@ -18,14 +23,7 @@ export interface ILoadByGraphQL<TData> {
   id?: string;
 
   isTags?: boolean;
-
-  pageInfoCallback: _pageInfoCallback<TData>;
-}
-
-interface IUpdatedVariables {
-  id: string;
-  tagNotIn: number[] | undefined;
-}
+} & Pick<IRecursiveLoadParties<TData, Variables>, "pageInfoCallback">;
 
 export async function loadByGraphQL<TData>({
   query,
@@ -33,7 +31,7 @@ export async function loadByGraphQL<TData>({
   isTags = false,
   pageInfoCallback,
 }: ILoadByGraphQL<TData>) {
-  const pagination: pageInfo[] = [{ number: 1, cursor: "", tags: [] }];
+  const pagination: Pagination[] = [initialPagination];
 
   const callbackFn = async (data: TData) => {
     pagination.push({
@@ -43,19 +41,22 @@ export async function loadByGraphQL<TData>({
     });
   };
   const updatedVariablesCallback = () => {
-    const { tags: tagNotIn } = pagination.at(-1) as pageInfo;
-    return {
-      id,
-      first: 20,
-      tagNotIn,
-    };
+    const paginationItem = pagination.at(-1);
+
+    if (paginationItem) {
+      return {
+        first: 20,
+        tagNotIn: paginationItem.tags,
+      };
+    }
+
+    return {};
   };
 
-  await recursiveLoadParties<TData, IUpdatedVariables>({
+  await recursiveLoadParties<TData, Variables>({
     query,
     variables: {
       id,
-      tagNotIn: [],
     },
     callbackFn,
     pageInfoCallback,

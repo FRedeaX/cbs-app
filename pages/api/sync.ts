@@ -2,12 +2,12 @@
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { esClient } from "@/lib/elastic/client";
 import {
-  _pageInfo,
+  PageInfo,
   recursiveLoadParties,
   splitDepartmentAndCategories,
-} from "../../helpers/backend";
-import { esClient } from "../../lib/elastic/client";
+} from "@/helpers/backend";
 
 const GET_POSTS = gql`
   query GET_POSTS($cursor: String, $first: Int) {
@@ -60,7 +60,7 @@ interface IPost {
 interface IPosts {
   posts: {
     nodes: IPost[];
-    pageInfo: _pageInfo;
+    pageInfo: PageInfo;
   };
 }
 
@@ -96,7 +96,7 @@ const callbackFn = async ({ posts: postList }: IPosts): Promise<void> => {
   await esClient.bulk({ refresh: true, body: operations });
 };
 
-const pageInfoCallback = ({ posts }: IPosts): _pageInfo => posts.pageInfo;
+const pageInfoCallback = ({ posts }: IPosts): PageInfo => posts.pageInfo;
 
 export default function sync(req: NextApiRequest, res: NextApiResponse) {
   const { key } = req.query;

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiError } from "next/dist/server/api-utils";
 
-import { searchQuery } from "../../../core/elastic";
-import { SearchParams } from "../../../core/elastic/type";
+import { searchQuery } from "@/core/elastic";
+import { SearchParams } from "@/core/elastic/type";
 
 type SearchApiRequest = NextApiRequest & {
   query: SearchParams;

@@ -32,14 +32,13 @@ COPY --from=builder /app/package.json ./package.json
 
 COPY --from=builder /app/base ./base
 COPY --from=builder /app/components ./components
-COPY --from=builder /app/constant ./constant
+COPY --from=builder /app/constants ./constants
 COPY --from=builder /app/core ./core
 COPY --from=builder /app/helpers ./helpers
 COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/pages ./pages
 COPY --from=builder /app/routes ./routers
 COPY --from=builder /app/styles ./styles
-COPY --from=builder /app/utility ./utility
 
 COPY --from=builder /app/.env ./
 COPY --from=builder /app/.env.production ./
@@ -53,7 +52,6 @@ COPY --from=builder /app/next-env.d.ts ./
 COPY --from=builder /app/sentry.client.config.js ./
 COPY --from=builder /app/sentry.properties ./
 COPY --from=builder /app/sentry.server.config.js ./
-COPY --from=builder /app/styles.css ./
 COPY --from=builder /app/tsconfig.json ./
 
 # Automatically leverage output traces to reduce image size
