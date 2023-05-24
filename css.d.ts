@@ -1,12 +1,12 @@
 import csstype from "csstype";
 
-import { CSSProperties } from "./helpers/typings/utility-types";
+import { CSSProperties } from "@/helpers/typings/utility-types";
 
 declare module "csstype" {
   interface Properties extends CSSProperties {
     "--scrollbar-width"?: string;
     "--image-viewer-height"?: string;
-    "--is-header-fixed"?: 0 | 1;
+    "--has-header-hidden"?: 1;
     "--typography-font-size"?: csstype.Properties["fontSize"];
     "--typography-font-style"?: csstype.Properties["fontStyle"];
     "--typography-font-weight"?: csstype.Properties["fontWeight"];
