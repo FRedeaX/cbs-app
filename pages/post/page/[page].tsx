@@ -71,8 +71,8 @@ export const getStaticProps: GetStaticProps<
         },
         fetchPolicy: "network-only",
       })
-      .then(async ({ data, error }) => {
-        if (error !== undefined) throw error;
+      .then(async ({ data, errors }) => {
+        if (errors !== undefined) throw errors;
         if (data.posts.nodes.length === 0)
           throw new Error("data.posts.nodes of null");
 
@@ -88,8 +88,8 @@ export const getStaticProps: GetStaticProps<
       .query({
         query: FETCH_POSTER,
       })
-      .then(async ({ data, error }) => {
-        if (error !== undefined) throw new Error(error.message);
+      .then(async ({ data, errors }) => {
+        if (errors !== undefined) throw errors;
         if (data.posters.nodes.length === 0)
           throw new Error("data.posters.nodes of null");
 

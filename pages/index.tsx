@@ -31,78 +31,70 @@ export const getPageInfoPosts = (data: PaginationData): PageInfo =>
 export const getStaticProps: GetStaticProps<
   GetStaticPropsResult
 > = async () => {
-  const menu = await getMenu(false);
-  const dataPosts = await client
-    .query({
+  try {
+    const menu = await getMenu(false);
+    const { data: dataPosts, errors } = await client.query({
       query: FETCH_ARTICLES,
       variables: {
         first: 10,
         cursor: "",
       },
       fetchPolicy: "network-only",
-    })
-    .then(({ data, error }) => {
-      if (error !== undefined) throw new Error(error.message);
-      if (data.posts.nodes.length === 0)
-        throw new Error("data.posts.nodes of null");
-
-      return data;
-    })
-    .catch((error) => {
-      exceptionLog(error);
-      return null;
     });
+    if (errors !== undefined) throw errors;
+    if (dataPosts.posts.nodes.length === 0)
+      throw new Error("data.posts.nodes of null");
 
-  if (dataPosts.posts === null) {
+    const posts = await removeDuplicateTag(dataPosts.posts.nodes)
+      .then((nodes) => plaiceholder(nodes.result).then((p) => p))
+      .catch((error) => {
+        exceptionLog(error);
+        return null;
+      });
+
+    const lastPageNumber = await pagination
+      .load<PaginationData>({
+        key: RKEY_POSTS,
+        query: pagination.gql.POSTS_PAGINATION_GQL,
+        endCursor: dataPosts.posts.pageInfo.endCursor,
+        isTags: true,
+        pageInfoCallback: getPageInfoPosts,
+      })
+      .then(pagination.getLastPageNumber);
+
+    const posters = await client
+      .query({
+        query: FETCH_POSTER,
+        fetchPolicy: "network-only",
+      })
+      .then(async ({ data, errors: errorPostersQuery }) => {
+        if (errorPostersQuery !== undefined) throw errorPostersQuery;
+        if (data.posters.nodes.length === 0)
+          throw new Error("data.posters.nodes of null");
+
+        const dateRes = await dateConversion(data.posters.nodes);
+        const sortRes = await sort(dateRes);
+        const filterRes = await filter(sortRes);
+        return filterRes;
+      })
+      .catch((error) => {
+        exceptionLog(error);
+        return null;
+      });
+
+    return {
+      props: {
+        menu,
+        posters,
+        posts,
+        lastPageNumber,
+      },
+      revalidate: parseInt(process.env.POST_REVALIDATE ?? "60", 10),
+    };
+  } catch (error) {
+    exceptionLog(error);
     return staticNotFound;
   }
-
-  const posts = await removeDuplicateTag(dataPosts.posts.nodes)
-    .then((nodes) => plaiceholder(nodes.result).then((p) => p))
-    .catch((error) => {
-      exceptionLog(error);
-      return null;
-    });
-
-  const lastPageNumber = await pagination
-    .load<PaginationData>({
-      key: RKEY_POSTS,
-      query: pagination.gql.POSTS_PAGINATION_GQL,
-      endCursor: dataPosts.posts.pageInfo.endCursor,
-      isTags: true,
-      pageInfoCallback: getPageInfoPosts,
-    })
-    .then(pagination.getLastPageNumber);
-
-  const posters = await client
-    .query({
-      query: FETCH_POSTER,
-      fetchPolicy: "network-only",
-    })
-    .then(async ({ data, error }) => {
-      if (error !== undefined) throw error;
-      if (data.posters.nodes.length === 0)
-        throw new Error("data.posters.nodes of null");
-
-      const dateRes = await dateConversion(data.posters.nodes);
-      const sortRes = await sort(dateRes);
-      const filterRes = await filter(sortRes);
-      return filterRes;
-    })
-    .catch((error) => {
-      exceptionLog(error);
-      return null;
-    });
-
-  return {
-    props: {
-      menu,
-      posters,
-      posts,
-      lastPageNumber,
-    },
-    revalidate: parseInt(process.env.POST_REVALIDATE ?? "60", 10),
-  };
 };
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
