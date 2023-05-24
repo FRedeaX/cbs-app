@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps<
     const page = await getChildrenPage({
       id: `nashi-izdaniya/informatsionnyie-listki`,
       cursor: carrentPage.cursor,
-      first: 20,
+      first: carrentPage.cursor === "" ? 10 : 20,
     });
 
     return {
