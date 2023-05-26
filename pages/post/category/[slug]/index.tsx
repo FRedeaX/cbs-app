@@ -51,31 +51,25 @@ export const getStaticProps: GetStaticProps<
   Params
 > = async ({ params }) => {
   try {
-    if (typeof params?.page !== "string")
-      throw new Error("params page is not string");
+    if (params === undefined) {
+      throw new Error("params undefined");
+    }
     const { slug } = params;
 
     const menu = await getMenu();
-    const postsByCategory = await client
-      .query({
-        query: fetchArticlesByCategory,
-        variables: {
-          id: slug,
-          first: 10,
-          cursor: "",
-        },
-        fetchPolicy: "network-only",
-      })
-      .then(({ data, error }) => {
-        if (error !== undefined) throw new Error(error.message);
-        if (data.category?.posts.nodes.length === 0)
-          throw new Error("data.category.posts.nodes of null");
-
-        return data;
-      })
-      .catch((error) => {
-        throw error;
-      });
+    const { data: postsByCategory, errors } = await client.query({
+      query: fetchArticlesByCategory,
+      variables: {
+        id: slug,
+        first: 10,
+        cursor: "",
+      },
+      fetchPolicy: "network-only",
+    });
+    if (errors !== undefined) throw errors;
+    if (postsByCategory.category?.posts.nodes.length === 0) {
+      throw new Error("data.category.posts.nodes of null");
+    }
 
     const posts = await plaiceholder(
       postsByCategory.category.posts.nodes,
