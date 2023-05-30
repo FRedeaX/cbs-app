@@ -235,7 +235,6 @@ export const Questionnaire: FC = () => {
     async (event) => {
       event.preventDefault();
       seLIsLoading(true);
-      setIsSent(true);
 
       const form = new FormData(event.currentTarget);
       const data: Record<string, unknown[]> = {};
@@ -251,7 +250,9 @@ export const Questionnaire: FC = () => {
 
       if (res.status === 200) {
         setIsThanks(true);
+        setIsSent(true);
         seLIsLoading(false);
+        setSubmitText("Отправить");
       } else {
         setSubmitText("Ошибка, попробовать отправить еще раз");
         setIsSent(false);
