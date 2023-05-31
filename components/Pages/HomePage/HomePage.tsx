@@ -1,16 +1,18 @@
 // import { useQuery } from "@apollo/client";
 import classnames from "classnames";
-import type { NextPage } from "next";
+
+import classes from "./Home-Page.module.css";
 
 import { PageInfo } from "../../../helpers/backend";
 import { Nullable } from "../../../helpers/typings/utility-types";
 import SectionHeader from "../../SectionHeader/SectionHeader";
 import Pagination from "../../UI/Pagination/Pagination";
-import { IData } from "../../Widget/Card/Card";
+import { Card, IData } from "../../Widget/Card/Card";
 import CardList from "../../Widget/Card/CardList";
 import { IPoster } from "../../poster/PosterItem/PosterItem";
 import PosterRoot from "../../poster/PosterRoot/PosterRoot";
-import classes from "./Home-Page.module.css";
+
+import type { NextPage } from "next";
 
 export interface IPostData {
   posts: {
@@ -26,6 +28,10 @@ export interface IHomePageProps {
   paginationURI: string;
   categoryName?: string;
   isGroupCards?: boolean;
+  /**
+   * @default false
+   */
+  isSticky?: boolean;
 }
 
 const HomePage: NextPage<IHomePageProps> = ({
@@ -35,6 +41,7 @@ const HomePage: NextPage<IHomePageProps> = ({
   paginationURI,
   categoryName,
   isGroupCards = true,
+  isSticky = false,
 }: IHomePageProps) => (
   <div className={classes.wrapper}>
     {posters && posters.length > 0 && (
@@ -59,6 +66,23 @@ const HomePage: NextPage<IHomePageProps> = ({
               : `Категория: ${categoryName}`}
           </SectionHeader>
           <div className={classes.container}>
+            {isSticky && (
+              <Card
+                isHorizontal
+                data={{
+                  title: "Анкета пользователя Библиотеки Модельного стандарта",
+                  excerpt:
+                    "Просим ответить на вопросы — это не займет у Вас много времени.",
+                  uri: "/questionnaire",
+                  featuredImage: {
+                    node: {
+                      sourceUrl:
+                        "https://cbsbaikonur.ru/wp-content/uploads/2022/10/logo-cbs@720.jpg",
+                    },
+                  },
+                }}
+              />
+            )}
             <CardList
               nodes={posts}
               isGroupCards={isGroupCards}

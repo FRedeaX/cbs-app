@@ -111,6 +111,7 @@ const Home: NextPage<HomeProps> = ({
       posters={posters}
       posts={posts}
       pages={lastPageNumber}
+      isSticky
       paginationURI="/post"
     />
   </Layout>
