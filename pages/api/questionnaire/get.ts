@@ -11,6 +11,7 @@ type GetApiRequest = NextApiRequest & {
 
 const get = async (req: GetApiRequest, res: NextApiResponse) => {
   try {
+    const findResult: unknown[] = [];
     const { apikey } = req.query;
     if (
       !(typeof apikey === "string" && apikey === process.env.MONGO_PASSWORD)
@@ -22,7 +23,17 @@ const get = async (req: GetApiRequest, res: NextApiResponse) => {
     const db = clientMongo.db(dbName);
     const collection = db.collection("documents");
 
-    const findResult = await collection.find({}).toArray();
+    const cursor = collection.find({});
+
+    if ((await collection.countDocuments({})) === 0) {
+      res.status(200).end("Документы не найдены.");
+    }
+
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const doc of cursor) {
+      findResult.push(doc);
+    }
+
     res.status(200).json(findResult);
   } catch (err) {
     exceptionLog(err);
