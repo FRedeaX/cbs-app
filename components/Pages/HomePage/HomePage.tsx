@@ -57,42 +57,46 @@ const HomePage: NextPage<IHomePageProps> = ({
         />
       </aside>
     )}
-    <section className={classnames(classes.section, classes.post)}>
-      {posts && posts[0] && (
-        <>
-          <SectionHeader>
-            {categoryName === undefined
-              ? "Мероприятия"
-              : `Категория: ${categoryName}`}
-          </SectionHeader>
-          <div className={classes.container}>
-            {isSticky && (
-              <Card
-                isHorizontal
-                data={{
-                  title: "Анкета пользователя Библиотеки Модельного стандарта",
-                  excerpt:
-                    "Просим ответить на вопросы — это не займет у Вас много времени.",
-                  uri: "/questionnaire",
-                  featuredImage: {
-                    node: {
-                      sourceUrl:
-                        "https://cbsbaikonur.ru/wp-content/uploads/2022/10/logo-cbs@720.jpg",
-                    },
-                  },
-                }}
+    <div>
+      <section className={classnames(classes.section, classes.questionnaire)}>
+        {isSticky && (
+          <Card
+            isHorizontal
+            data={{
+              title: "Анкета пользователя Библиотеки Модельного стандарта",
+              excerpt:
+                "Просим ответить на вопросы — это не займет у Вас много времени.",
+              uri: "/questionnaire",
+              featuredImage: {
+                node: {
+                  sourceUrl:
+                    "https://cbsbaikonur.ru/wp-content/uploads/2022/10/logo-cbs@720.jpg",
+                },
+              },
+            }}
+          />
+        )}
+      </section>
+      <section className={classnames(classes.section, classes.post)}>
+        {posts && posts[0] && (
+          <>
+            <SectionHeader>
+              {categoryName === undefined
+                ? "Мероприятия"
+                : `Категория: ${categoryName}`}
+            </SectionHeader>
+            <div className={classes.container}>
+              <CardList
+                nodes={posts}
+                isGroupCards={isGroupCards}
+                isHorizontal={categoryName !== undefined}
               />
-            )}
-            <CardList
-              nodes={posts}
-              isGroupCards={isGroupCards}
-              isHorizontal={categoryName !== undefined}
-            />
-          </div>
-        </>
-      )}
-      {pages && <Pagination pages={pages} paginationURI={paginationURI} />}
-    </section>
+            </div>
+          </>
+        )}
+        {pages && <Pagination pages={pages} paginationURI={paginationURI} />}
+      </section>
+    </div>
     {/* <Alert>
       <Link href="/biblioteki?schedule=default&holiday=true">
         <a className={classes["alert-link"]}>
