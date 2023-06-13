@@ -15,6 +15,7 @@ type QuestionnaireData = {
     | string
     | {
         text: string;
+        required?: boolean;
       }
   )[];
 };
@@ -48,7 +49,7 @@ const questionnaireData: QuestionnaireData[] = [
       "Раз в неделю",
       "Раз в две недели",
       "Раз в месяц",
-      { text: "Другое" },
+      { text: "Другое", required: true },
     ],
   },
   {
@@ -61,7 +62,7 @@ const questionnaireData: QuestionnaireData[] = [
       "Будние с 17:00 до 21:00",
       "Выходные с 9:00 до 17:00",
       "Выходные с 17:00 до 19:00",
-      { text: "Другое" },
+      { text: "Другое", required: true },
     ],
   },
   {
@@ -96,7 +97,7 @@ const questionnaireData: QuestionnaireData[] = [
       "Веду домашнее хозяйство",
       "Безработный, временно не работающий",
       "ИП",
-      { text: "Другое" },
+      { text: "Другое", required: true },
     ],
   },
   {
@@ -112,7 +113,7 @@ const questionnaireData: QuestionnaireData[] = [
       "Документальная",
       "Мемуарная",
       "Детская",
-      { text: "Другое" },
+      { text: "Другое", required: true },
     ],
   },
   {
@@ -151,7 +152,7 @@ const questionnaireData: QuestionnaireData[] = [
       "ЗОЖ и спорт",
       "Литература. Искусство. Творчество",
       "Музыка и кино",
-      { text: "Свой вариант" },
+      { text: "Свой вариант", required: true },
     ],
   },
   {
@@ -187,7 +188,7 @@ const questionnaireData: QuestionnaireData[] = [
       "Фотопечать",
       "Виртуальная справочная служба",
       "Доступ в Интернет, электронная почта",
-      { text: "Свой вариант" },
+      { text: "Свой вариант", required: true },
     ],
   },
   {

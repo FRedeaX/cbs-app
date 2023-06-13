@@ -9,7 +9,10 @@ export const RouteQuestionnaire: FC = () => (
   <RouteContainer className={classes.root}>
     <div className={classes.header}>
       <Typography align="center" variant="h1">
-        Анкета пользователя Библиотеки Модельного стандарта
+        Анкета пользователя{" "}
+        <span className={classes.subtitle}>
+          Библиотеки Модельного стандарта
+        </span>
       </Typography>
     </div>
     <Questionnaire />

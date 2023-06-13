@@ -18,6 +18,7 @@ type ControlRadioGroupProps = {
     | string
     | {
         text: string;
+        required?: boolean;
       }
   )[];
 };
@@ -33,7 +34,6 @@ export const ControlRadioGroup: FC<ControlRadioGroupProps> = ({
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {
       const value = event.target.value.trim();
-      if (value === "") setRadioChecked("");
       setAnother(value);
     },
     [],
@@ -77,6 +77,7 @@ export const ControlRadioGroup: FC<ControlRadioGroupProps> = ({
                 label={answer.text}
               />
               <TextField
+                required={answer.required && radioChecked === `${id}_${index}`}
                 variant="standard"
                 size="small"
                 onChange={handleOnChange}
