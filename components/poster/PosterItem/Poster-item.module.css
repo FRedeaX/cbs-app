@@ -113,33 +113,6 @@
   color: var(--secondary-color);
 }
 
-.link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
-/* .info {
-  padding-left: 8px;
-
-  padding-left: 0;
-} */
-
-.info::before {
-  content: url("~/public/icons/phone.svg");
-
-  display: inline-block;
-
-  width: 10px;
-  height: 10px;
-  margin-right: 4px;
-
-  opacity: 0.5;
-}
-
 /*
  * width >= 480
  */
@@ -176,6 +149,8 @@
 
     display: flex;
     flex-direction: column;
+
+    max-width: 85px;
   }
 }
 

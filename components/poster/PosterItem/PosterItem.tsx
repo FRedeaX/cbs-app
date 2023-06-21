@@ -1,11 +1,12 @@
 import { gql } from "@apollo/client";
 import classNames from "classnames";
-import Link from "next/link";
 import { FC, LegacyRef, forwardRef } from "react";
 
-import { createMarkup } from "../../../helpers";
 import classes from "./Poster-item.module.css";
 import PosterDate from "./PosterHeader/PosterDate";
+import { createMarkup } from "@/helpers";
+import { Nullable } from "@/helpers/typings/utility-types";
+import { PosterItemVenue } from "@/components/poster/PosterItem/components/PosterItem.Venue/PosterItem.Venue";
 
 export const posterItemGQL = {
   fragments: gql`
@@ -23,6 +24,13 @@ export const posterItemGQL = {
         date
         dataend
         time
+      }
+      posterLocations {
+        nodes {
+          name
+          description
+          slug
+        }
       }
       formOfEvent {
         value
@@ -45,7 +53,14 @@ export interface IPoster {
   posterDepartments: {
     nodes: Array<{
       name: string;
-      description: string;
+      description: Nullable<string>;
+      slug: string;
+    }>;
+  };
+  posterLocations: {
+    nodes: Array<{
+      name: string;
+      description: Nullable<string>;
       slug: string;
     }>;
   };
@@ -83,6 +98,7 @@ const PosterItem: FC<PosterItemProps> = forwardRef(
         content,
         excerpt,
         posterDepartments,
+        posterLocations,
       },
       count,
       className,
@@ -113,21 +129,12 @@ const PosterItem: FC<PosterItemProps> = forwardRef(
         />
         <div className={classes.description}>{excerpt}</div>
       </div>
-      {posterDepartments.nodes[0] && (
+      {(posterDepartments.nodes[0] || posterLocations.nodes[0]) && (
         <div className={classes.footer}>
-          <Link
-            href={`/biblioteki/?lib=${posterDepartments.nodes[0].slug}`}
-            prefetch={false}>
-            <a className={classes.link}>{posterDepartments.nodes[0].name}</a>
-          </Link>
-          <a
-            href={`tel:833622${posterDepartments.nodes[0].description
-              .split("-")
-              .join("")}`}
-            className={classNames(classes.info, classes.link)}
-            title="Cправки по телефону">
-            {posterDepartments.nodes[0].description}
-          </a>
+          <PosterItemVenue
+            department={posterDepartments.nodes[0]}
+            locations={posterLocations.nodes[0]}
+          />
         </div>
       )}
       {formOfEvent.value === "online" && (

@@ -1,0 +1,24 @@
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.info {
+  flex-shrink: 0;
+}
+
+.info::before {
+  content: url("~/public/icons/phone.svg");
+
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+
+  opacity: 0.5;
+}
