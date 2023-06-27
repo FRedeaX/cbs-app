@@ -12,18 +12,7 @@
 #__next {
   display: flex;
   flex-direction: column;
-}
-
-@media screen and (max-width: 950px) {
-  .main {
-    margin-top: 80px;
-  }
-}
-
-@media screen and (min-width: 951px) {
-  .main {
-    margin-top: 100px;
-  }
+  min-height: 100vh;
 }
 
 body {

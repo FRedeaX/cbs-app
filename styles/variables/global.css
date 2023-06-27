@@ -55,7 +55,6 @@
   --menu-link: var(--black);
   --border-link: var(--accent-color);
   --secondary-color: var(--gray);
-  --g-layout-padding-sides: 10px;
   --g-article-padding-sides: 5px;
   --g-image-border-radius: 12px;
   --g-block-margin-top: 6px;
@@ -87,5 +86,18 @@
 @media screen and (width > 1600px) {
   :root {
     --is-font-size-adaptive: 0;
+  }
+}
+
+/* HEADER_HEIGHT */
+@media screen and (width <= 950px) {
+  :root {
+    --header-height: var(--header-mobile-height);
+  }
+}
+
+@media screen and (width > 950px) {
+  :root {
+    --header-height: var(--header-desktop-height);
   }
 }
