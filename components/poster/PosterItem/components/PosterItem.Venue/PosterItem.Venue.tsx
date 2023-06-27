@@ -1,3 +1,5 @@
+import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
+import { Link as MUILink } from "@mui/material";
 import classNames from "classnames";
 import Link from "next/link";
 import { FC } from "react";
@@ -24,34 +26,30 @@ export const PosterItemVenue: FC<PosterItemVenueProps> = ({
 
   if (venue === undefined) return null;
 
-  if (department) {
-    return (
-      <>
-        <Link href={`/biblioteki/?lib=${venue.slug}`} prefetch={false}>
-          <a className={classes.link}>{venue.name}</a>
-        </Link>
-        {venue.description && (
-          <a
-            href={`tel:833622${venue.description.split("-").join("")}`}
-            className={classNames(classes.info, classes.link)}
-            title="Cправки по телефону">
-            {venue.description}
-          </a>
-        )}
-      </>
-    );
-  }
-
   return (
     <>
-      <span>{venue.name}</span>
+      {department ? (
+        <Link href={`/biblioteki/?lib=${venue.slug}`} prefetch={false} passHref>
+          <MUILink underline="hover" color="inherit">
+            {venue.name}
+          </MUILink>
+        </Link>
+      ) : (
+        <span>{venue.name}</span>
+      )}
+
       {venue.description && (
-        <a
+        <MUILink
           href={`tel:833622${venue.description.split("-").join("")}`}
-          className={classNames(classes.info, classes.link)}
-          title="Cправки по телефону">
+          title="Cправки по телефону"
+          className={classNames(classes.phone)}
+          underline="hover"
+          color="inherit">
+          <span className={classes.icon}>
+            <PhoneRoundedIcon fontSize="inherit" />
+          </span>
           {venue.description}
-        </a>
+        </MUILink>
       )}
     </>
   );

@@ -32,3 +32,10 @@ export type Void = () => void;
  * Возвращает тип в котором есть типизированные `custom properties`
  */
 export type { Properties as CSSProperties } from "csstype";
+
+/**
+ * Возвращает Т в котором все свойства могут быть null.
+ */
+export type NullableAll<T> = {
+  [P in keyof T]: Nullable<T[P]>;
+};

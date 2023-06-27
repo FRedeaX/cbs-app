@@ -1,0 +1,12 @@
+@media screen and (width < 480px) {
+  .root {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (width >= 480px) {
+  .root {
+    --separation-dot-display: none;
+  }
+}

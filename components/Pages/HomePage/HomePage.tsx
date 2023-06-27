@@ -10,7 +10,7 @@ import Pagination from "../../UI/Pagination/Pagination";
 import { Card, IData } from "../../Widget/Card/Card";
 import CardList from "../../Widget/Card/CardList";
 import { IPoster } from "../../poster/PosterItem/PosterItem";
-import PosterRoot from "../../poster/PosterRoot/PosterRoot";
+import { PosterRoot } from "../../poster/PosterRoot/PosterRoot";
 
 import type { NextPage } from "next";
 

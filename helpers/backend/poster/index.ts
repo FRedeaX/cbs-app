@@ -1,27 +1,37 @@
-import { Nullable } from "../../typings/utility-types";
+import { PosterGQL } from "@/components/poster/gql/posterGQL";
+
+import { Nullable, NullableAll } from "../../typings/utility-types";
+
+type Venue = {
+  name: string;
+  description: Nullable<string>;
+  slug: string;
+};
+
+type DateStart = {
+  day: string;
+  month: number;
+  monthText: string;
+};
 
 interface IPoster {
-  content: string;
+  id: string;
+  title: string;
   excerpt: string;
+  content: string;
   posterDepartments: {
-    nodes: [];
+    nodes: Venue[];
+  };
+  posterLocations: {
+    nodes: Venue[];
   };
   posterDate: {
-    dateStart: {
-      day: string;
-      month: number;
-      monthText: string;
+    dateStart: DateStart & {
       year: number;
     };
-    dateEnd: {
-      day: string | null;
-      month: number | null;
-      monthText: string | null;
-    };
+    dateEnd: NullableAll<DateStart>;
     time: string | null;
   };
-  title: string;
-  id: string;
 }
 
 type Date = {
@@ -31,35 +41,37 @@ type Date = {
   hours: number;
 };
 
-/* eslint-disable prefer-destructuring */
-const getStringMonth = (month: number | null) => {
-  switch (String(month)) {
-    case "1":
+const getStringMonth = (month: number) => {
+  switch (month) {
+    case 1:
       return "Января";
-    case "2":
+    case 2:
       return "Февраля";
-    case "3":
+    case 3:
       return "Марта";
-    case "4":
+    case 4:
       return "Апреля";
-    case "5":
+    case 5:
       return "Мая";
-    case "6":
+    case 6:
       return "Июня";
-    case "7":
+    case 7:
       return "Июля";
-    case "8":
+    case 8:
       return "Августа";
-    case "9":
+    case 9:
       return "Сентября";
-    case "10":
+    case 10:
       return "Октября";
-    case "11":
+    case 11:
       return "Ноября";
-    case "12":
+    case 12:
       return "Декабря";
-    default:
-      return null;
+    default: {
+      throw new Error(
+        `month=${month}. Переменная "month" меньше 1 или больше 12.`,
+      );
+    }
   }
 };
 
@@ -99,7 +111,7 @@ const isPush = (
  * @returns posterList
  */
 export const dateConversion = async (
-  posterList: any,
+  posterList: PosterGQL["posters"]["nodes"],
 ): Promise<IPoster[] | null> => {
   if (!posterList) return null;
   const result: IPoster[] = [];
@@ -109,9 +121,9 @@ export const dateConversion = async (
   let dayEnd;
   let monthEnd;
 
-  posterList.forEach((poster: any) => {
+  posterList.forEach((poster) => {
     const dateStartSplit = poster.posterDate.date.split("/");
-    dayStart = dateStartSplit[0];
+    [dayStart] = dateStartSplit;
     monthStart = parseInt(dateStartSplit[1], 10);
     yearStart = parseInt(dateStartSplit[2], 10);
 
@@ -119,7 +131,7 @@ export const dateConversion = async (
     monthEnd = null;
     if (poster.posterDate.dataend !== null) {
       const dateEndSplit = poster.posterDate.dataend.split("/");
-      dayEnd = dateEndSplit[0];
+      [dayEnd] = dateEndSplit;
       monthEnd = parseInt(dateEndSplit[1], 10);
     }
 
@@ -135,7 +147,7 @@ export const dateConversion = async (
         dateEnd: {
           day: dayEnd,
           month: monthEnd,
-          monthText: getStringMonth(monthEnd),
+          monthText: monthEnd ? getStringMonth(monthEnd) : null,
         },
         time: poster.posterDate.time,
       },
@@ -182,23 +194,6 @@ export const filter = async (posterList: Nullable<IPoster[]>) => {
   };
 
   return posterList.filter((poster) => isPush(poster, currentDate));
-  // posterList.forEach((poster, index) => {
-  //   const { posterDate } = poster;
-  //   const posterDay = posterDate.dateStart.day;
-  //   const posterMonth = posterDate.dateStart.month;
-  //   const posterDayEnd = posterDate.dateEnd.day;
-
-  //   if (posterMonth === currentDate.month) {
-  //     if (
-  //       posterDay < currentDate.day ||
-  //       (posterDay === currentDate.day && currentDate.hours >= 18)
-  //     ) {
-  //       skip = index + 1;
-  //     }
-  //   }
-  // });
-
-  // return { posterList, skip };
 };
 
 // пропускаем анонс если (месяц равен текущему и

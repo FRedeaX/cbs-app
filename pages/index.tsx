@@ -15,7 +15,7 @@ import Head from "@/components/Head/Head";
 import HomePage, { IHomePageProps } from "@/components/Pages/HomePage/HomePage";
 import { FETCH_ARTICLES } from "@/components/Posts/PostsRoot";
 import Layout from "@/components/UI/Layout/Layout";
-import { FETCH_POSTER } from "@/components/poster/PosterRoot/PosterRoot";
+import { FETCH_POSTER } from "@/components/poster/gql/posterGQL";
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;

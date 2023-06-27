@@ -5,9 +5,9 @@ import { dateConversion, sort } from "@/helpers/backend/poster";
 import Head from "@/components/Head/Head";
 import SectionHeader from "@/components/SectionHeader/SectionHeader";
 import Layout from "@/components/UI/Layout/Layout";
-import PosterItem from "@/components/poster/PosterItem/PosterItem";
-import PosterList from "@/components/poster/PosterList/PosterList";
-import { FETCH_POSTER } from "@/components/poster/PosterRoot/PosterRoot";
+import { PosterItem } from "@/components/poster/PosterItem/PosterItem";
+import { PosterList } from "@/components/poster/PosterList/PosterList";
+import { FETCH_POSTER } from "@/components/poster/gql/posterGQL";
 
 const Poster = ({ menu, posters }) => (
   <>
