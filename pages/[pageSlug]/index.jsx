@@ -14,7 +14,7 @@ const Page = ({ menu, page }) => (
 
 export async function getStaticPaths() {
   const paths = await client
-    .query({ query: FETCH_PARENT_URI_PAGES, fetchPolicy: "network-only" })
+    .query({ query: FETCH_PARENT_URI_PAGES })
     .then(({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
       if (data.pages.edges.length === 0)

@@ -25,7 +25,6 @@ export async function getStaticPaths() {
           }
         }
       `,
-      fetchPolicy: "network-only",
     })
     .then(({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);
@@ -79,7 +78,6 @@ export const getStaticProps: GetStaticProps<
           id: params.slug, // params.slug[0],
           type: "SLUG",
         },
-        fetchPolicy: "network-only",
       })
       // .then(({ data }) => transformBlocks(data.post))
       .then(async ({ data, error }) => {

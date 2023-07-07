@@ -69,7 +69,6 @@ export const getStaticProps: GetStaticProps<
           cursor,
           tagNotIn: tags,
         },
-        fetchPolicy: "network-only",
       })
       .then(async ({ data, errors }) => {
         if (errors !== undefined) throw errors;

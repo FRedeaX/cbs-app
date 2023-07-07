@@ -18,7 +18,6 @@ export default async function offers(req, res) {
       //           id: nextID,
       //           type: "ID",
       //         },
-      //         fetchPolicy: "network-only",
       //       })
       //       .then(({ data }) => transformBlocks(data.post))
       //       .catch((error) => {

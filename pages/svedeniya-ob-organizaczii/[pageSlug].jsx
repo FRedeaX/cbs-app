@@ -17,7 +17,6 @@ export async function getStaticPaths() {
     .query({
       query: FETCH_CHILDREN_URI_PAGES,
       variables: { pathname: "svedeniya-ob-organizaczii" },
-      fetchPolicy: "network-only",
     })
     .then(({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);

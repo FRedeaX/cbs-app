@@ -32,7 +32,6 @@ export async function getStaticProps() {
   const posters = await client
     .query({
       query: FETCH_POSTER,
-      fetchPolicy: "network-only",
     })
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);

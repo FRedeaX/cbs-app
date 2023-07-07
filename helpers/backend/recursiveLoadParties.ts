@@ -94,7 +94,6 @@ export async function recursiveLoadParties<
     const { data } = await client.query({
       query,
       variables,
-      fetchPolicy: "network-only",
     });
 
     await callbackFn(data);

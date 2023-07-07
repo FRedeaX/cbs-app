@@ -13,7 +13,6 @@ export const getMenu = async (isCache = true): Promise<GetMenuResult> => {
   try {
     const { data, error } = await client.query<MenuGQL>({
       query: FETCH_MENU,
-      fetchPolicy: isCache ? "cache-first" : "network-only",
     });
 
     if (error !== undefined) throw error;

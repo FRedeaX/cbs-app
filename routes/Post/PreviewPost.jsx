@@ -12,7 +12,6 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
       type,
       isPreview: true,
     },
-    fetchPolicy: "network-only",
   });
 
   const [post, setPost] = useState();

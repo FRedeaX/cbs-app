@@ -64,7 +64,6 @@ export const getStaticProps: GetStaticProps<
         first: 10,
         cursor: "",
       },
-      fetchPolicy: "network-only",
     });
     if (errors !== undefined) throw errors;
     if (postsByCategory.category?.posts.nodes.length === 0) {

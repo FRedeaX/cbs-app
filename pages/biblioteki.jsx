@@ -22,7 +22,6 @@ export async function getStaticProps() {
       variables: {
         id: "grafik-raboty-bibliotek",
       },
-      fetchPolicy: "network-only",
     })
     .then(async ({ data, error }) => {
       if (error !== undefined) throw new Error(error.message);

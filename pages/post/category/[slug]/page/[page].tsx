@@ -83,7 +83,6 @@ export const getStaticProps: GetStaticProps<
           first: cursor === "" ? 10 : 20,
           cursor,
         },
-        fetchPolicy: "network-only",
       })
       .then(async ({ data, error }) => {
         if (error !== undefined) throw new Error(error.message);

@@ -39,7 +39,6 @@ export const getStaticProps: GetStaticProps<
         first: 10,
         cursor: "",
       },
-      fetchPolicy: "network-only",
     });
     if (errors !== undefined) throw errors;
     if (dataPosts.posts.nodes.length === 0)
@@ -65,7 +64,6 @@ export const getStaticProps: GetStaticProps<
     const posters = await client
       .query({
         query: FETCH_POSTER,
-        fetchPolicy: "network-only",
       })
       .then(async ({ data, errors: errorPostersQuery }) => {
         if (errorPostersQuery !== undefined) throw errorPostersQuery;

@@ -12,7 +12,6 @@ const PreviewPage = ({ id, type = "DATABASE_ID" }) => {
       idType: type,
       isPreview: true,
     },
-    fetchPolicy: "network-only",
   });
 
   const [page, setPage] = useState();
