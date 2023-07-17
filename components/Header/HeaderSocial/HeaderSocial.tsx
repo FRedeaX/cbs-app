@@ -1,9 +1,15 @@
 import classNames from "classnames";
+import { FC } from "react";
 
 import Social from "../../Social/Social";
+
 import classes from "./Header-social.module.css";
 
-const HeaderSocial = ({ className }) => (
+type HeaderSocialProps = {
+  className?: string;
+};
+
+const HeaderSocial: FC<HeaderSocialProps> = ({ className }) => (
   <div className={classNames(classes.wrapper, className)}>
     <Social
       type="vk"

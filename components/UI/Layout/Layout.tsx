@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import { Footer } from "@/components/Footer/Footer";
-import Header, { HeaderProps } from "@/components/Header/Header";
+import { Header, HeaderProps } from "@/components/Header/Header";
 
 import classes from "./Layout.module.css";
 

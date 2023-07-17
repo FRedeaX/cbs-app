@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
 
-import { SEARCH_PATHNAME } from "../../../constants";
+import { SEARCH_PATHNAME } from "@/constants";
+
 import classes from "./Header.Search.module.css";
 
 export const HeaderSearch: FC = () => {

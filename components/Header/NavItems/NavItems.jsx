@@ -1,17 +1,14 @@
 /* eslint-disable no-nested-ternary */
-
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import classNames from "classnames";
 import classNamesBind from "classnames/bind";
 
 import { createMarkup } from "../../../helpers";
-import ActiveLink from "../../UI/ActiveLink/ActiveLink";
+import { ActiveLink } from "../../UI/ActiveLink/ActiveLink";
 import Button from "../../UI/Button/Button";
 import Icon from "../../UI/Icon/Icon";
 // eslint-disable-next-line import/no-cycle
 import NavList from "../NavList/NavList";
+
 import classes from "./Nav-item.module.css";
 
 const NavItems = ({
@@ -26,7 +23,7 @@ const NavItems = ({
 }) => {
   const cx = classNamesBind.bind(classes);
   const liLvl = subLvl;
-  // console.log("I_Render");
+
   return (
     <>
       {headerLabel && (
@@ -41,7 +38,6 @@ const NavItems = ({
                 side="left"
                 direction="left"
                 weight="small"
-                // className={classes["icon_width"]}
               />
             }
             onClick={(event) => onClick(event, true)}>
