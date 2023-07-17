@@ -1,8 +1,25 @@
 import classNames from "classnames";
+import { FC } from "react";
 
 import classes from "./Social.module.css";
 
-const Social = ({ type, url, cls, clsLink, clsSVG, ariaLabel }) => (
+type SocialProps = {
+  type: "youtube" | "vk" | "ok" | "fb";
+  url: string;
+  cls?: string;
+  clsLink?: string;
+  clsSVG?: string;
+  ariaLabel: string;
+};
+
+const Social: FC<SocialProps> = ({
+  type,
+  url,
+  cls,
+  clsLink,
+  clsSVG,
+  ariaLabel,
+}) => (
   <a
     className={classNames(classes.link, cls, clsLink)}
     href={url}
