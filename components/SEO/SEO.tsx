@@ -1,6 +1,20 @@
 import Head from "next/head";
+import { FC } from "react";
 
-const SEO = ({ title, description, image, video, url }) => {
+type Video = {
+  id: string;
+  href: string;
+};
+
+type SEOProp = {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  video?: Video[];
+};
+
+export const SEO: FC<SEOProp> = ({ title, description, url, image, video }) => {
   const fullTitle = title
     ? `${title} | Библиотеки города Байконур`
     : "Библиотеки города Байконур";
@@ -26,16 +40,3 @@ const SEO = ({ title, description, image, video, url }) => {
     </Head>
   );
 };
-
-export default SEO;
-
-/* <meta property="twitter:description" content={description} /> */
-/* <Head>
-  <title>{`${title} | ${siteTitle}`}</title>
-  <meta name="description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content={siteTitle} />
-  <meta property="twitter:card" content="summary" />
-  <meta property="twitter:creator" content={config.social.twitter} />
-  <meta property="twitter:title" content={title} />
-</Head>; */
