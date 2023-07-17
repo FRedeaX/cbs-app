@@ -39,3 +39,5 @@ export type { Properties as CSSProperties } from "csstype";
 export type NullableAll<T> = {
   [P in keyof T]: Nullable<T[P]>;
 };
+
+export type { DeepMergeTwoTypes } from "./DeepMergeTwoTypes/DeepMergeTwoTypes";

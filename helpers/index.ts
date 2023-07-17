@@ -7,6 +7,7 @@ import verticalAlignToFlext from "./verticalAlignToFlext";
 
 export * from "./declOfNum";
 export * from "./exceptionLog";
+export * from "./flatPromise";
 export * from "./hasAppendPathname";
 export * from "./isEmptyArray";
 export * from "./isFront";

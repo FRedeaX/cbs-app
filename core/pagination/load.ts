@@ -1,5 +1,6 @@
-import { exceptionLog } from "../../../helpers";
-import { Pagination, initialPagination } from "./constant";
+import { exceptionLog } from "@/helpers";
+
+import { initialPagination } from "./constant";
 import {
   ILoadByGraphQL,
   ILoadByRedis,
@@ -7,6 +8,8 @@ import {
   loadByRedis,
   saveByRedis,
 } from "./utils";
+
+type Pagination = typeof initialPagination;
 
 /**
  * Возвращает пагинацию, соответствующую следующему набору записей на странице:

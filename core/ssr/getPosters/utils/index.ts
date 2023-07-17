@@ -1,6 +1,6 @@
-import { PosterGQL } from "@/components/poster/gql/posterGQL";
+import { Nullable, NullableAll } from "@/helpers/typings/utility-types";
 
-import { Nullable, NullableAll } from "../../typings/utility-types";
+import { PosterGQL } from "../gql/posterGQL";
 
 type Venue = {
   name: string;
@@ -31,6 +31,9 @@ interface IPoster {
     };
     dateEnd: NullableAll<DateStart>;
     time: string | null;
+  };
+  formOfEvent: {
+    value: "offline" | "online";
   };
 }
 
@@ -106,13 +109,11 @@ const isPush = (
 };
 
 /**
- * преобразует объект posterDate
- * @param {*} posterList
- * @returns posterList
+ * Преобразует объект posterDate.
  */
-export const dateConversion = async (
+export const dateConversion = (
   posterList: PosterGQL["posters"]["nodes"],
-): Promise<IPoster[] | null> => {
+): Nullable<IPoster[]> => {
   if (!posterList) return null;
   const result: IPoster[] = [];
   let dayStart;
@@ -165,7 +166,7 @@ export const dateConversion = async (
  * ставим мероприятия с указанным временем в начало сортируя по возрастанию
  * мероприятия без указанного времени получают время равное 24 часам
  */
-export const sort = async (posterList: Nullable<IPoster[]>) => {
+export const sort = (posterList: Nullable<IPoster[]>) => {
   if (!posterList) return null;
 
   return posterList.sort(
@@ -182,7 +183,7 @@ export const sort = async (posterList: Nullable<IPoster[]>) => {
   );
 };
 
-export const filter = async (posterList: Nullable<IPoster[]>) => {
+export const filter = (posterList: Nullable<IPoster[]>) => {
   if (!posterList) return null;
 
   const date = new Date();

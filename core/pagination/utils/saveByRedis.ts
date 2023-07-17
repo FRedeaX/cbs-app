@@ -1,7 +1,11 @@
-import { exceptionLog } from "../../../../helpers";
-import { clientRedis } from "../../../../lib/redis";
+import { clientRedis } from "@/lib/redis";
+import { exceptionLog } from "@/helpers";
+
+import { initialPagination } from "../constant";
+
 import { ILoadByRedis } from "./loadByRedis";
-import { Pagination } from "./type";
+
+type Pagination = typeof initialPagination;
 
 export const saveByRedis = async (
   key: ILoadByRedis["key"],

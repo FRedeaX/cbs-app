@@ -75,35 +75,6 @@ export const FETCH_ARTICLES = gql`
   ${postGQL.fragments}
 `;
 
-export const postSlugByID = gql`
-  query postSlugByID($cursor: String, $first: Int) {
-    posts(after: $cursor, first: $first) {
-      nodes {
-        ...postGQL
-        tags {
-          nodes {
-            count
-            description
-            id
-            name
-            slug
-            posts {
-              nodes {
-                ...postGQL
-              }
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-  ${postGQL.fragments}
-`;
-
 export const fetchArticlesByCategory = gql`
   query FetchArticlesByCategory($id: ID!, $cursor: String, $first: Int!) {
     category(id: $id, idType: SLUG) {

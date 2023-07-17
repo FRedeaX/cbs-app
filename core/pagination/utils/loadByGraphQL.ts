@@ -2,9 +2,13 @@ import {
   IRecursiveLoadParties,
   queryNode,
   recursiveLoadParties,
-} from "../../../../helpers/backend";
-import { Pagination, initialPagination } from "../constant";
+} from "@/helpers/backend/recursiveLoadParties";
+
+import { initialPagination } from "../constant";
+
 import { tagsOnPage as getTagsOnPage } from "./tagsOnPage";
+
+type Pagination = typeof initialPagination;
 
 type Variables = {
   id: string;
@@ -37,7 +41,7 @@ export async function loadByGraphQL<TData>({
     pagination.push({
       number: pagination.length + 1,
       cursor: pageInfoCallback(data).endCursor,
-      tags: isTags ? await getTagsOnPage(pagination, data) : [],
+      tags: isTags ? getTagsOnPage(pagination, data) : [],
     });
   };
   const updatedVariablesCallback = () => {

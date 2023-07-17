@@ -1,6 +1,9 @@
-import { exceptionLog } from "../../../../helpers";
-import { clientRedis } from "../../../../lib/redis";
-import { Pagination } from "./type";
+import { clientRedis } from "@/lib/redis";
+import { exceptionLog } from "@/helpers";
+
+import { initialPagination } from "../constant";
+
+type Pagination = typeof initialPagination;
 
 export interface ILoadByRedis {
   /**
