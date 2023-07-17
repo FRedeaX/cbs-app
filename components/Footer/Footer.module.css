@@ -1,6 +1,5 @@
-.body{
-  /* height: 60px; */
-  padding: 40px 15px 10px;
+.root {
   display: flex;
   justify-content: space-between;
+  padding: 40px 15px 10px;
 }

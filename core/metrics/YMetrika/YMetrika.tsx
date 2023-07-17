@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Script from "next/script";
+import { FC } from "react";
 
-export const YMetrika = () =>
-  process.env.NODE_ENV === "production" && (
+export const YMetrika: FC = () =>
+  process.env.NODE_ENV === "production" ? (
     <>
       <Script id="sym">
         {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -39,4 +40,4 @@ export const YMetrika = () =>
         />
       </a>
     </>
-  );
+  ) : null;

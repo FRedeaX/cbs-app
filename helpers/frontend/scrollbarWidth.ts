@@ -1,5 +1,6 @@
-function scrollbarWidth(): string {
-  if (typeof window === "undefined") return "";
+export const scrollbarWidth = (): void => {
+  if (typeof window === "undefined") return;
+
   const outer = document.createElement("div");
   outer.style.visibility = "hidden";
   outer.style.overflow = "scroll";
@@ -12,7 +13,4 @@ function scrollbarWidth(): string {
     "--scrollbar-width",
     `${carrentScrollbarWidth}px`,
   );
-  return "";
-}
-
-export default scrollbarWidth;
+};
