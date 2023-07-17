@@ -1,5 +1,5 @@
 .root {
-  display: var(--separation-dot-display, block);
+  display: var(--separation-dot-display);
   padding: var(--separation-dot-padding, 0 6px);
   color: var(--separation-dot-color);
 }
