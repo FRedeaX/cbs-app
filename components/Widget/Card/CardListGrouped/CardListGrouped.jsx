@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { memo } from "react";
 
 import { Card } from "../Card";
@@ -8,9 +7,9 @@ const CardListGrouped = ({ data }) => {
   let column = 0;
 
   return data.map((post, index) => {
-    const { tags } = post;
+    const tags = post.tags?.nodes[0];
 
-    if (tags.__typename === "Tag") {
+    if (tags !== undefined) {
       column = 0;
       return (
         <GroupCards
@@ -28,7 +27,8 @@ const CardListGrouped = ({ data }) => {
     const nextPost = data[nextIndex];
     const isBig =
       isNewRow &&
-      (nextPost === undefined || nextPost.tags.__typename === "Tag");
+      (nextPost === undefined || nextPost.tags?.nodes[0] !== undefined);
+
     column += 1;
     if (isBig) column = 0;
     return (

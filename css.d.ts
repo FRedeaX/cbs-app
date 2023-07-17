@@ -4,6 +4,7 @@ import { CSSProperties } from "@/helpers/typings/utility-types";
 
 declare module "csstype" {
   interface Properties extends CSSProperties {
+    "--gap"?: string;
     "--scrollbar-width"?: string;
     "--image-viewer-height"?: string;
     "--has-header-hidden"?: 1;
@@ -13,7 +14,9 @@ declare module "csstype" {
     "--typography-text-decoration"?: csstype.Properties["textDecoration"];
     "--typography-text-transform"?: csstype.Properties["textTransform"];
     "--typography-letter-spacing"?: csstype.Properties["letterSpacing"];
+    "--is-font-size-adaptive"?: 0 | 1;
     // "--is-search-input-focussed"?: 0 | 1;
     // "--search-suggestion-visibility"?: "hidden" | "visible";
+    "--carousel-shadow-display"?: csstype.Properties["display"];
   }
 }

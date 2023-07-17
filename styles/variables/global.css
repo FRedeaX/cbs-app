@@ -45,7 +45,8 @@
   --subtle-pale-pink: #fcf0ef;
 
   /* customs */
-  --font-family-roboto: "Roboto", "Helvetica", "Arial", sans-serif;
+  --font-family-roboto: "Roboto", "Helvetica", "Arial", "-apple-system",
+    "BlinkMacSystemFont", sans-serif;
   --font-family-roboto-slab: "Roboto-Slab", serif;
   --downgrading-font-size: 4;
   --background-color-white: #f7f7f7;

@@ -6,21 +6,16 @@ import { PosterList } from "../PosterList/PosterList";
 
 interface PosterRootProps {
   posters: Array<IPoster>;
-  className?: {
-    item?: string;
-    list?: string;
-    group?: string;
-  };
 }
 
-export const PosterRoot: FC<PosterRootProps> = ({ posters, className }) => (
-  <PosterList className={className?.list}>
+export const PosterRoot: FC<PosterRootProps> = ({ posters }) => (
+  <PosterList>
     <CarouselRoot
       itemMargin={5}
       isButtonsOnSides={false}
       isResponsiveWidthsChildren>
       {posters.map((poster) => (
-        <PosterItem key={poster.id} data={poster} className={className?.item} />
+        <PosterItem key={poster.id} data={poster} />
       ))}
     </CarouselRoot>
   </PosterList>

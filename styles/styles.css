@@ -20,8 +20,7 @@ body {
 
   margin: 0;
 
-  font-family: Roboto, Helvetica, Arial, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  font-family: var(--font-family-roboto);
   word-break: break-word;
 
   background-color: var(--background-color-white);

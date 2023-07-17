@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, LegacyRef, forwardRef } from "react";
 
+import { Nullable } from "@/helpers/typings/utility-types";
+
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
 import Category from "../../Posts/Category/Category";
+
 import classes from "./Card.module.css";
 
 export interface IData {
@@ -13,14 +16,20 @@ export interface IData {
   isSticky?: boolean;
   title: string;
   uri: string;
-  categories?: { nodes: Array<object> };
+  categories?: {
+    nodes: {
+      termTaxonomyId: number;
+      name: string;
+      uri: string;
+    }[];
+  };
   excerpt?: string;
-  featuredImage?: {
+  featuredImage?: Nullable<{
     node: {
       sourceUrl: string;
       blurDataURL?: string;
     };
-  };
+  }>;
 }
 
 export interface ICardProps {
@@ -79,8 +88,8 @@ export const Card: FC<ICardProps> = forwardRef(
                 [classes["img--horizontal"]]: isHorizontal,
                 [classes.img_big]: isBig,
               })}
-              width={720}
-              height={405}
+              width={355}
+              height={200}
               blurDataURL={featuredImage.node.blurDataURL || ""}
               // automatically
               // provided

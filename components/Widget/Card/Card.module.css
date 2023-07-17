@@ -1,14 +1,17 @@
 .item {
+  --margin-x: var(--card-margin-x, 10px);
+  --margin-y: var(--card-margin-y, 10px);
+
   position: relative;
 
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
-  width: calc(var(--card-width, 50%) - 20px);
+  width: calc(var(--card-width, 50%) - var(--margin-x) * 2);
   max-width: var(--card-max-width);
   height: auto;
-  margin: var(--card-margin, 10px);
+  margin: var(--margin-y) var(--margin-x) var(--margin-y) var(--margin-x);
 
   background-color: #fff;
   border-radius: 16px;
@@ -37,11 +40,12 @@
 
   .item--horizontal {
     flex-direction: row;
-    width: calc(100% - 20px);
+    width: 100%;
 
     /* min-height: 160px; */
   }
 }
+
 @media screen and (width >= 653px) and (width <= 768px) {
   .item_big {
     flex-direction: row;
@@ -50,11 +54,11 @@
   }
 }
 
-@media screen and (max-width: 652px) {
+@media screen and (width <= 652px) {
   .item {
-    width: calc(100% - 20px);
+    width: calc(100% - var(--margin-x) * 2);
     max-width: 400px;
-    margin: 10px auto;
+    margin: var(--margin-y) auto;
   }
 }
 
@@ -70,13 +74,9 @@
 
 .link::after {
   content: "";
-
   position: absolute;
   z-index: 1;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .image {
@@ -98,6 +98,7 @@
 .image_wrapper span {
   height: 100% !important;
 }
+
 @media screen and (width < 768px) {
   .image_wrapper_horizontal_true {
     position: absolute;
@@ -150,6 +151,7 @@
     border-radius: 12px 0 0 12px;
   }
 }
+
 @media screen and (width >= 653px) and (width <= 768px) {
   .img_big {
     border-radius: 12px;
@@ -218,6 +220,7 @@
   z-index: 1;
   margin-top: 2px;
 }
+
 @media screen and (width >= 653px) and (width <= 768px) {
   .footer_big {
     position: absolute;

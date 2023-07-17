@@ -7,7 +7,8 @@
   flex: 1 0 auto;
   flex-direction: column;
 
-  width: 280px;
+  width: var(--poster-item-width, 280px);
+  height: var(--poster-item-height);
   margin: 10px 5px;
   padding: 12px;
 
@@ -18,39 +19,38 @@
   border-radius: 16px;
   box-shadow: rgba(30, 30, 30, 10%) 0 2px 6px;
 }
+
 @media screen and (width >= 480px) {
   .root {
     flex-direction: row;
     min-width: 330px;
     padding: 14px 12px 6px;
   }
-
-  .root:first-child {
-    margin-left: 0;
-  }
-
-  .root:last-child {
-    margin-right: 0;
-  }
 }
 
 .header {
   font-weight: 300;
 }
+
 @media screen and (width < 480px) {
   .header {
     padding: 0 24px 10px;
     border-bottom: 1px solid var(--black-10);
   }
 }
+
 @media screen and (width >= 480px) {
   .header {
+    --poster-header-width: 88px;
+    --poster-header-padding-right: 14px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    min-width: 88px;
-    padding: 0 14px 0 5px;
+    min-width: var(--poster-header-width);
+    padding-right: var(--poster-header-padding-right);
+    padding-left: 5px;
 
     border-right: 1px solid var(--black-10);
   }
@@ -61,27 +61,33 @@
   font-size: 0.8125em;
   color: var(--secondary-color);
 }
+
 @media screen and (width < 480px) {
   .venue {
     display: none;
   }
 }
+
 @media screen and (width >= 480px) {
   .venue {
     display: flex;
     flex-direction: column;
-    max-width: 110px;
+    max-width: calc(
+      var(--poster-header-width) - var(--poster-header-padding-right)
+    );
   }
 }
 
 .body {
   flex: 1;
 }
+
 @media screen and (width < 480px) {
   .body {
     padding: 8px 0 12px;
   }
 }
+
 @media screen and (width >= 480px) {
   .body {
     padding-left: 10px;
@@ -116,6 +122,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 @media screen and (width >= 480px) {
   .footer {
     display: none;

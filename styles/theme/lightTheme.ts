@@ -12,6 +12,7 @@ export const lightTheme = createTheme(
       mode: "light",
     },
     typography: {
+      fontFamily: `var(--font-family-roboto)`,
       h1: {
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
@@ -164,6 +165,17 @@ export const lightTheme = createTheme(
         // @ts-ignore
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
+      sectionTitle: {
+        fontFamily: `var(--font-family-roboto-slab)`,
+        fontSize: `1.25rem`,
+        fontWeight: `400`,
+        cursor: "default",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        textWrap: `balance`,
+        color: `rgba(30, 30, 30, 0.9)`,
+        paddingLeft: `calc(var(--gap) * 2)`,
+      },
       responsiveText: {
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `calc(
@@ -185,12 +197,34 @@ export const lightTheme = createTheme(
         letterSpacing: `var(--typography-letter-spacing)`,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 800,
+        md: 960,
+        lg: 1310,
+        xl: 1500,
+      },
+    },
     components: {
       MuiTypography: {
         defaultProps: {
           variantMapping: {
+            sectionTitle: "h2",
             responsiveText: "p",
           },
+        },
+      },
+      MuiContainer: {
+        styleOverrides: {
+          root: ({ ownerState, theme }) => ({
+            ...(!ownerState.disableGutters && {
+              [theme.breakpoints.up("sm")]: {
+                paddingLeft: `var(--g-layout-padding-sides)`,
+                paddingRight: `var(--g-layout-padding-sides)`,
+              },
+            }),
+          }),
         },
       },
     },
