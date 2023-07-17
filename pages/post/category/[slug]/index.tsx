@@ -3,15 +3,13 @@ import { ParsedUrlQuery } from "querystring";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { client } from "@/lib/apollo/client";
-import { RKEY_POSTS_BY_CATEGORY } from "@/lib/redis";
-import { getMenu, pagination } from "@/core/backend";
+import { getMenu, getPosters, getPostsByCategory } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
-import { plaiceholder, staticNotFound } from "@/helpers/backend";
-import Head from "@/components/Head/Head";
-import HomePage from "@/components/Pages/HomePage/HomePage";
-import { fetchArticlesByCategory } from "@/components/Posts/PostsRoot";
-import Layout from "@/components/UI/Layout/Layout";
+import { staticNotFound } from "@/helpers/backend";
+import { HomeLayout, HomePage } from "@/routes/Home";
+import { SEO } from "@/components/SEO/SEO";
+import { Layout } from "@/components/UI/Layout/Layout";
+import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 
 export async function getStaticPaths() {
   return {
@@ -32,8 +30,8 @@ export async function getStaticPaths() {
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
-  posts: any;
-  lastPageNumber: ReturnType<typeof pagination.getLastPageNumber>;
+  posts: Awaited<ReturnType<typeof getPostsByCategory>>;
+  posters: Awaited<ReturnType<typeof getPosters.load>>;
   name: string;
 };
 
@@ -41,65 +39,39 @@ interface Params extends ParsedUrlQuery {
   slug: string;
 }
 
-type PaginationData = pagination.gql.PostsPaginationByCategoryGQL;
-
-export const getPageInfoCategory = (data: PaginationData) =>
-  data.category.posts.pageInfo;
-
 export const getStaticProps: GetStaticProps<
   GetStaticPropsResult,
   Params
 > = async ({ params }) => {
   try {
     if (params === undefined) {
-      throw new Error("params undefined");
+      throw new Error(ERROR_MESSAGE.PAGE_PARAMS_UNDEFINED);
     }
     const { slug } = params;
 
-    const menu = await getMenu();
-    const { data: postsByCategory, errors } = await client.query({
-      query: fetchArticlesByCategory,
-      variables: {
-        id: slug,
-        first: 10,
-        cursor: "",
-      },
-    });
-    if (errors !== undefined) throw errors;
-    if (postsByCategory.category?.posts.nodes.length === 0) {
-      throw new Error("data.category.posts.nodes of null");
-    }
+    const menuData = getMenu();
+    const postsData = getPostsByCategory({ slug });
+    const postersData = getPosters.load().then(getPosters.filter);
 
-    const posts = await plaiceholder(
-      postsByCategory.category.posts.nodes,
-    ).catch((error) => {
-      exceptionLog(error);
-      return null;
-    });
+    const [menu, posts, posters] = await Promise.all([
+      menuData,
+      postsData,
+      postersData,
+    ]);
 
-    const lastPageNumber = await pagination
-      .load<PaginationData>({
-        key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
-        query: pagination.gql.POSTS_PAGINATION_BY_CATEGORY_GQL,
-        endCursor: postsByCategory.category?.posts.pageInfo.endCursor,
-        id: slug,
-        pageInfoCallback: getPageInfoCategory,
-      })
-      .then(pagination.getLastPageNumber);
-
-    const name =
-      postsByCategory.category.posts.nodes[0].categories.nodes.filter(
-        (node: any) => node.slug === slug,
-      )?.[0]?.name;
+    const name = posts.data?.[0].categories.nodes.find(
+      (node) => node.slug === slug,
+    )?.name;
+    if (name === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
 
     return {
       props: {
         menu,
         name,
         posts,
-        lastPageNumber,
+        posters,
       },
-      revalidate: parseInt(process.env.POST_REVALIDATE ?? "60", 10),
+      revalidate: REVALIDATE.POST,
     };
   } catch (error) {
     exceptionLog(error);
@@ -109,24 +81,24 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, posts, lastPageNumber, name }) => {
+const Home: NextPage<HomeProps> = ({ menu, name, posters, posts }) => {
   const {
     isFallback,
     query: { slug },
   } = useRouter();
   return (
-    <Layout menu={menu} loading={isFallback}>
-      <Head
+    <Layout menu={menu} pageLoading={isFallback}>
+      <SEO
         title={`Категория: ${name}`}
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />
-      <HomePage
-        posts={posts}
-        pages={lastPageNumber}
-        paginationURI={`/post/category/${slug}`}
-        categoryName={name}
-        isGroupCards={false}
-      />
+      <HomeLayout posters={posters}>
+        <HomePage
+          posts={posts.data}
+          pagination={{ count: posts.pageCount, uri: `/post/category/${slug}` }}
+          categoryName={name}
+        />
+      </HomeLayout>
     </Layout>
   );
 };
