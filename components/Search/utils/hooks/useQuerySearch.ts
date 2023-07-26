@@ -4,12 +4,11 @@ import useSWR from "swr";
 import {
   SearchParams,
   SearchResponseFrontend,
-} from "../../../../core/elastic/search/type";
-import { exceptionLog } from "../../../../helpers";
-import { Nullable } from "../../../../helpers/typings/utility-types";
-import { FetchSearchData, fetchSearchData } from "../fetchSearchData";
+} from "@/core/elastic/search/type";
+import { exceptionLog, FetcherData, fetcherData } from "@/helpers";
+import { Nullable } from "@/helpers/typings/utility-types";
 
-type SWRKey = FetchSearchData & SearchParams;
+type SWRKey = FetcherData & SearchParams;
 
 export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
   const { text, categories, departments, page } = useRouter()
@@ -22,13 +21,13 @@ export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
     Nullable<SWRKey>
   >(
     {
-      pathname: "",
+      url: process.env.NEXT_PUBLIC_API_ES_URL,
       text: textSearch,
       departments,
       categories,
       page,
     },
-    fetchSearchData,
+    fetcherData,
     {
       fallbackData: ssrData,
     },
