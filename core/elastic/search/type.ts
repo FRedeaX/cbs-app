@@ -10,8 +10,10 @@ export type SearchParams = {
 };
 
 type SearchCategoryNode = {
+  id: string;
   name: string;
   slug: string;
+  uri: string;
 };
 
 export type SearchSource = {
