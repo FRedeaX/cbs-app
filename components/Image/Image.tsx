@@ -5,6 +5,7 @@ import NextImage, { ImageProps as NextImageProps } from "next/future/image";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { Nullable } from "../../helpers/typings/utility-types";
+
 import classes from "./Image.module.css";
 
 const ANIMATION_DELAY_MS = 50;
@@ -39,7 +40,6 @@ export const Image: FC<ImageProps> = ({
   ...prop
 }) => {
   const [isLoaded, setLoaded] = useState(false);
-  const [isFailed, setFailed] = useState(false);
   const [needAnimation, setNeedAnimation] = useState(false);
   const [canRemovePlaceholder, setCanRemovePlaceholder] = useState(false);
 
@@ -80,11 +80,7 @@ export const Image: FC<ImageProps> = ({
     setLoaded(true);
   }, []);
 
-  const handleOnError = useCallback(() => {
-    setFailed(true);
-  }, []);
-
-  const imageClassNames = classNames(className, classes.image, {
+  const imageClassNames = classNames(classes.image, className, {
     [classes.image_loaded]: isLoaded,
     [classes.image_loading]: needAnimation,
     [classes.image_animated]: needAnimation && isLoaded,
@@ -93,19 +89,18 @@ export const Image: FC<ImageProps> = ({
   const image = (
     <NextImage
       alt={alt}
-      aria-hidden={alt ? "false" : "true"}
-      src={isFailed ? "" : src}
+      aria-hidden={!alt}
+      src={src}
       className={imageClassNames}
       width={width}
       height={height}
       onAnimationEnd={handleOnAnimationEnd}
-      onError={handleOnError}
-      onLoad={handleOnLoad}
+      onLoadingComplete={handleOnLoad}
       {...prop}
     />
   );
 
-  if (typeof blurDataURL === "string") {
+  if (blurDataURL) {
     return (
       <div className={classNames(classes.placeholder, classNamePlaceholder)}>
         {needAnimation && !canRemovePlaceholder && (
@@ -113,18 +108,17 @@ export const Image: FC<ImageProps> = ({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt=""
-              aria-hidden="true"
+              aria-hidden
               src={blurDataURL}
               className={classNames(className, classes.blur)}
               width={width}
               height={height}
             />
             <Skeleton
-              // sx={sxSkeleton}
               className={classNames(className, classes.skeleton)}
               animation="wave"
-              width={width}
-              height={height}
+              width="100%"
+              height="100%"
             />
           </>
         )}
