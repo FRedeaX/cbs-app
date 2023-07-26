@@ -95,7 +95,7 @@ export type SearchResponseBackend = {
   aggregations: Aggregations<BucketsAggregations, BucketsAggregations>;
 } & SearchResponse<SearchHits>;
 
-export type SearchResponseFrontend = {
+export type SearchResponseFrontend = SearchResponse<SearchSource> & {
   aggregations: Aggregations<ListBucketsAggregations, BucketsAggregations>;
   hits: SearchHits;
-} & SearchResponse<SearchHits>;
+};

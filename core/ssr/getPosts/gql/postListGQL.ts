@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 import { Nullable } from "@/helpers/typings/utility-types";
 
 type Category = {
-  termTaxonomyId: number;
+  id: string;
   name: string;
   uri: string;
 };
@@ -17,11 +17,9 @@ type Image = {
 
 export type PostFieldsGQL = {
   id: string;
-  databaseId: number;
   isSticky: boolean;
   title: string;
   uri: string;
-  link: string;
   categories: {
     nodes: Category[];
   };
@@ -56,14 +54,12 @@ export const postFieldsGQL = {
   fragments: gql`
     fragment postFieldsGQL on Post {
       id
-      databaseId
       isSticky
       title
       uri
-      link
       categories {
         nodes {
-          termTaxonomyId
+          id
           name
           uri
         }

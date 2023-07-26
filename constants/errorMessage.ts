@@ -3,3 +3,13 @@ export const PAGE_PARAMS_UNDEFINED = "Параметры страницы не �
 export const IS_NOT_STRING = "не является строкой";
 export const IS_NOT_NUMBER = "не является числом";
 export const URL_IS_UNDEFINED = "url-адрес не определен";
+
+/**
+ * API
+ * @example
+ * `"key" ${ERROR_MESSAGE.API_QUERY_PARAM_UNDEFINED}`
+ *
+ * @returns `"key" запроса не может быть нулевым или неопределенным`
+ */
+export const API_QUERY_KEY_UNDEFINED =
+  "запроса не может быть нулевым или неопределенным";
