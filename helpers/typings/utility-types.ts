@@ -41,3 +41,11 @@ export type NullableAll<T> = {
 };
 
 export type { DeepMergeTwoTypes } from "./DeepMergeTwoTypes/DeepMergeTwoTypes";
+
+/**
+ * Возвращает тип в котором (рекурсивно)
+ * все ключи являются обязательными.
+ */
+export type DeepRequired<T> = {
+  [K in keyof T]: Required<DeepRequired<T[K]>>;
+};
