@@ -1,22 +1,34 @@
-/* eslint-disable no-console */
-import { Component } from "react";
+import { Button } from "@mui/material";
+import { Component, ReactNode, ErrorInfo } from "react";
 
-import { exceptionLog } from "../../helpers";
-import Button from "../UI/Button/Button";
+import { exceptionLog } from "@/helpers";
 
-class ErrorBoundary extends Component {
-  constructor(props) {
+type ErrorBoundaryProps = {
+  children: ReactNode;
+};
+
+type ErrorBoundaryState = {
+  /**
+   * @default false
+   */
+  hasError: boolean;
+};
+
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
-    console.error({ error });
+  static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     exceptionLog({ error, errorInfo });
   }
 
@@ -41,7 +53,7 @@ class ErrorBoundary extends Component {
             <br />
             Попробуйте обновить страницу.
           </h1>
-          <Button theme="gray" onClick={() => window.location.reload()}>
+          <Button variant="outlined" onClick={() => window.location.reload()}>
             Обновить
           </Button>
         </div>
@@ -51,5 +63,3 @@ class ErrorBoundary extends Component {
     return children;
   }
 }
-
-export default ErrorBoundary;
