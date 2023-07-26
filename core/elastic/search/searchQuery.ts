@@ -26,6 +26,7 @@ export const searchQuery = async (
     lt: typeof query.ltDate === "string" ? query.ltDate : undefined,
     lte: typeof query.lteDate === "string" ? query.lteDate : undefined,
   };
+  const excludedId = query.excludedId?.split(",") ?? null;
 
   const data = await esClient.search<SearchHits>({
     index: process.env.ES_INDEX_NAME,
@@ -36,6 +37,7 @@ export const searchQuery = async (
       categories,
       page,
       rangeDate,
+      excludedId,
     ),
   });
 

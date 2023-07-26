@@ -24,6 +24,7 @@ export type SearchParams = {
    * Меньше или равно.
    */
   lteDate?: string;
+  excludedId?: string;
 };
 
 type SearchCategoryNode = {

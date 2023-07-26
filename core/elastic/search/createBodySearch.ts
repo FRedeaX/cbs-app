@@ -16,6 +16,7 @@ export const createBodySearch = (
   categories: Nullable<string[]>,
   page: number,
   rangeDate: RangeDate,
+  excludedId: Nullable<string[]>,
 ): SearchRequest["body"] => {
   const isSize = !!(text || departments || categories);
   const isDate = rangeDate.gt || rangeDate.gte || rangeDate.lt || rangeDate.lte;
@@ -31,6 +32,11 @@ export const createBodySearch = (
     filter.push(rangeDateFn(rangeDate));
   }
 
+  const mustNot = [];
+  if (excludedId) {
+    mustNot.push({ ids: { values: excludedId } });
+  }
+
   return {
     from: page * SEARCH_HIT_SIZE,
     size: isSize ? SEARCH_HIT_SIZE : 0,
@@ -41,6 +47,9 @@ export const createBodySearch = (
             textSearch(text, "query_rus"),
             textSearch(reverseLanguageText, "query_eng"),
           ],
+        }),
+        ...(mustNot.length > 0 && {
+          must_not: mustNot,
         }),
         ...(filter.length > 0 && {
           filter,
