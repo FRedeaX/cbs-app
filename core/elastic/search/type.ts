@@ -1,12 +1,29 @@
+// eslint-disable-next-line import/no-unresolved
 import { SearchResponse } from "@elastic/elasticsearch/api/types";
 
-import { Nullable } from "../../../helpers/typings/utility-types";
+import { Nullable } from "@/helpers/typings/utility-types";
 
 export type SearchParams = {
   text?: string;
   categories?: string;
   departments?: string;
   page?: string;
+  /**
+   * Больше.
+   */
+  gtDate?: string;
+  /**
+   * Больше или равно.
+   */
+  gteDate?: string;
+  /**
+   * Меньше.
+   */
+  ltDate?: string;
+  /**
+   * Меньше или равно.
+   */
+  lteDate?: string;
 };
 
 type SearchCategoryNode = {

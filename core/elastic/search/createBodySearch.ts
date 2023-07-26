@@ -1,9 +1,12 @@
+// eslint-disable-next-line import/no-unresolved
 import { SearchRequest } from "@elastic/elasticsearch/api/types";
 
 import { SEARCH_HIT_SIZE } from "../../../constants";
 import { Nullable } from "../../../helpers/typings/utility-types";
+
 import * as aggs from "./queryBlock/aggs";
 import { highlight } from "./queryBlock/highlight";
+import { rangeDate as rangeDateFn, RangeDate } from "./queryBlock/rangeDate";
 import { textSearch } from "./queryBlock/textSearch";
 
 export const createBodySearch = (
@@ -12,13 +15,21 @@ export const createBodySearch = (
   departments: Nullable<string[]>,
   categories: Nullable<string[]>,
   page: number,
+  rangeDate: RangeDate,
 ): SearchRequest["body"] => {
   const isSize = !!(text || departments || categories);
+  const isDate = rangeDate.gt || rangeDate.gte || rangeDate.lt || rangeDate.lte;
 
   const filter = [];
-  if (departments)
+  if (departments) {
     filter.push({ terms: { "departments.name.raw": departments } });
-  if (categories) filter.push({ terms: { "categories.name.raw": categories } });
+  }
+  if (categories) {
+    filter.push({ terms: { "categories.name.raw": categories } });
+  }
+  if (isDate) {
+    filter.push(rangeDateFn(rangeDate));
+  }
 
   return {
     from: page * SEARCH_HIT_SIZE,

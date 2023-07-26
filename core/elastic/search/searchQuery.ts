@@ -2,6 +2,7 @@ import { ApiError } from "next/dist/server/api-utils";
 
 import { esClient } from "../../../lib/elastic/client";
 import { reverseKeyboard } from "../../reverseKeyboard";
+
 import { createBodySearch } from "./createBodySearch";
 import {
   SearchHits,
@@ -19,6 +20,12 @@ export const searchQuery = async (
   const departments = query.departments?.split(",") ?? null;
   const categories = query.categories?.split(",") ?? null;
   const page = parseInt(query.page ?? "1", 10) - 1;
+  const rangeDate = {
+    gt: typeof query.gtDate === "string" ? query.gtDate : undefined,
+    gte: typeof query.gteDate === "string" ? query.gteDate : undefined,
+    lt: typeof query.ltDate === "string" ? query.ltDate : undefined,
+    lte: typeof query.lteDate === "string" ? query.lteDate : undefined,
+  };
 
   const data = await esClient.search<SearchHits>({
     index: process.env.ES_INDEX_NAME,
@@ -28,6 +35,7 @@ export const searchQuery = async (
       departments,
       categories,
       page,
+      rangeDate,
     ),
   });
 
