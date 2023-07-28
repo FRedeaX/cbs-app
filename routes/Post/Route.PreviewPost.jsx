@@ -2,11 +2,13 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 
-import Head from "../../components/Head/Head";
-import { GET_POST_CONTENT_BY_BLOCKS, Post } from "./Post";
+import { getPostDocument } from "@/core/ssr/getPost/gql/getPostGQL";
+import { SEO } from "@/components/SEO/SEO";
 
-const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
-  const { data, loading, error } = useQuery(GET_POST_CONTENT_BY_BLOCKS, {
+import { RoutePost } from "./Route.Post";
+
+export const RoutePreviewPost = ({ id, type = "DATABASE_ID" }) => {
+  const { data, loading, error } = useQuery(getPostDocument, {
     variables: {
       id,
       type,
@@ -43,15 +45,13 @@ const PreviewPost = ({ id, type = "DATABASE_ID" }) => {
 
   return (
     <>
-      <Head title={post.title} description={post.excerpt} />
-      <Post
+      <SEO title={post.title} description={post.excerpt} />
+      <RoutePost
         title={post.title}
-        categories={post.categories}
+        categories={post.categories.nodes}
         blocks={post.blocks}
         isPreview
       />
     </>
   );
 };
-
-export default PreviewPost;
