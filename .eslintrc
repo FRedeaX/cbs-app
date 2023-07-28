@@ -47,6 +47,7 @@
 
     "react/no-danger": "off",
     "react/no-underscore-dangle": "off",
+    "no-underscore-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "@next/next/no-document-import-in-page": "off",
 

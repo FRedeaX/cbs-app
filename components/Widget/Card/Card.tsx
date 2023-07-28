@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import classNames from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import { FC, LegacyRef, forwardRef } from "react";
 
-import { Nullable } from "@/helpers/typings/utility-types";
+import { Nullable, Void } from "@/helpers/typings/utility-types";
+import { Image } from "@/components/Image/Image";
 
 import { createMarkup, lineClamp as getLineClamp } from "../../../helpers";
-import Category from "../../Posts/Category/Category";
+import { Category, CategoryProps } from "../../Posts/Category/Category";
 
 import classes from "./Card.module.css";
 
@@ -17,11 +17,7 @@ export interface IData {
   title: string;
   uri: string;
   categories?: {
-    nodes: {
-      termTaxonomyId: number;
-      name: string;
-      uri: string;
-    }[];
+    nodes: CategoryProps["data"];
   };
   excerpt?: string;
   featuredImage?: Nullable<{
@@ -42,6 +38,7 @@ export interface ICardProps {
   lineClamp?: number;
   isBig?: boolean;
   isSmall?: boolean;
+  onClick?: Void;
 }
 
 export const Card: FC<ICardProps> = forwardRef(
@@ -56,6 +53,7 @@ export const Card: FC<ICardProps> = forwardRef(
       lineClamp = isClamp ? getLineClamp(title, 32, 3) : undefined,
       isBig,
       isSmall,
+      onClick,
     },
     ref: LegacyRef<HTMLElement>,
   ) => (
@@ -88,15 +86,12 @@ export const Card: FC<ICardProps> = forwardRef(
                 [classes["img--horizontal"]]: isHorizontal,
                 [classes.img_big]: isBig,
               })}
+              classNamePlaceholder={classes.image_placeholder}
               width={355}
               height={200}
-              blurDataURL={featuredImage.node.blurDataURL || ""}
-              // automatically
-              // provided
+              blurDataURL={featuredImage.node.blurDataURL || null}
               priority={imagePriority}
-              placeholder={featuredImage.node.blurDataURL ? "blur" : undefined}
               alt=""
-              aria-hidden
             />
           </div>
         </div>
@@ -104,12 +99,14 @@ export const Card: FC<ICardProps> = forwardRef(
       <div className={classes.info}>
         <div className={classes.text}>
           <h3 className={classes.title}>
-            <Link href={uri} prefetch={prefetch}>
-              <a
-                className={classes.link}
-                dangerouslySetInnerHTML={createMarkup(title)}
-              />
-            </Link>
+            <Link
+              href={uri}
+              prefetch={prefetch}
+              onClick={onClick}
+              legacyBehavior={false}
+              className={classes.link}
+              dangerouslySetInnerHTML={createMarkup(title)}
+            />
           </h3>
           {excerpt && (
             <div
@@ -128,7 +125,7 @@ export const Card: FC<ICardProps> = forwardRef(
             className={classNames(classes.footer, {
               [classes.footer_big]: isBig,
             })}>
-            <Category data={categories.nodes} cls={undefined} />
+            <Category data={categories.nodes} />
           </div>
         )}
       </div>

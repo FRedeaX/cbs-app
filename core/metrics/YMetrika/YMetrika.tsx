@@ -2,6 +2,8 @@
 import Script from "next/script";
 import { FC } from "react";
 
+import { YM_ID } from "./constant";
+
 export const YMetrika: FC = () =>
   process.env.NODE_ENV === "production" ? (
     <>
@@ -10,7 +12,7 @@ export const YMetrika: FC = () =>
             m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-          ym(33186213, "init", {
+          ym(${YM_ID}, "init", {
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,

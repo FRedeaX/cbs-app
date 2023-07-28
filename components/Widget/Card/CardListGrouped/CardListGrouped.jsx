@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 import { Card } from "../Card";
-import GroupCards from "../GroupCards/GroupCards";
+import { GroupCards } from "../GroupCards/GroupCards";
 
 const CardListGrouped = ({ data }) => {
   let column = 0;
@@ -17,7 +17,6 @@ const CardListGrouped = ({ data }) => {
           data={tags.posts.nodes}
           title={tags.name}
           description={tags.description}
-          length={tags.count}
         />
       );
     }
