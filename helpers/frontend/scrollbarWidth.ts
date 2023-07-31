@@ -7,10 +7,10 @@ export const scrollbarWidth = (): void => {
   document.body.appendChild(outer);
   const inner = document.createElement("div");
   outer.appendChild(inner);
-  const carrentScrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+  const currentScrollbarWidth = outer.offsetWidth - inner.offsetWidth;
   outer.parentNode?.removeChild(outer);
   document.body.style.setProperty(
     "--scrollbar-width",
-    `${carrentScrollbarWidth}px`,
+    `${currentScrollbarWidth}px`,
   );
 };

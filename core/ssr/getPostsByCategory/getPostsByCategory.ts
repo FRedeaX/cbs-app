@@ -24,9 +24,9 @@ export const getPostsByCategory = async ({
 
   if (page) {
     paginationList = await fetchPaginations({ slug });
-    const carrentPage = paginationList[page - 1];
-    if (carrentPage === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
-    const { cursor } = carrentPage;
+    const currentPage = paginationList[page - 1];
+    if (currentPage === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    const { cursor } = currentPage;
 
     variables = {
       slug,
