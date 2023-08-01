@@ -30,7 +30,7 @@ export const Article: FC<ArticleProps> = ({
   imageUrl,
 }) => (
   <article className={classes.container}>
-    <div className={classes.header}>
+    <header className={classes.header}>
       <Typography align="center" variant="h1">
         {title}
       </Typography>
@@ -39,13 +39,13 @@ export const Article: FC<ArticleProps> = ({
           <Category data={categories} className={classes["category-link"]} />
         </div>
       )}
-    </div>
+    </header>
     {blocks && (
       <div className={classes.body}>
         <div>
           <Blocks blocks={blocks} />
         </div>
-        {!isPreview && href && (
+        {!isPreview && href && blocks.length > 0 && (
           <Share
             cls={classes.Share}
             clsLink={classes.link}

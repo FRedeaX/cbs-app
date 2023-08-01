@@ -1,13 +1,13 @@
 @media screen and (max-width: 960px) {
   .container {
-    width: 100%;
-    margin: 10px 0;
+    width: calc(100% + (var(--group-cards-container-margin-x, 0) * 2 * -1));
+    margin: 10px var(--group-cards-container-margin-x, 0);
   }
 }
 @media screen and (min-width: 961px) {
   .container {
-    width: calc(100% - (var(--group-cards-container-margin, 10px) * 2));
-    margin: var(--group-cards-container-margin, 10px);
+    width: calc(100%);
+    margin: 10px var(--group-cards-container-margin-x, 0);
   }
 }
 

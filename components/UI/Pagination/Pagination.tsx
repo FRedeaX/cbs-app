@@ -11,13 +11,18 @@ import { Link } from "../Link/Link";
 
 export type PaginationProps = {
   uri: string;
-} & Omit<MUIPaginationProps, "page" | "renderItem">;
+} & Omit<MUIPaginationProps, "renderItem">;
 
-export const Pagination: FC<PaginationProps> = ({ count, uri, ...props }) => {
-  const {
-    query: { page },
-  } = useRouter();
-  const currentPage = (typeof page === "string" && parseInt(page, 10)) || 1;
+export const Pagination: FC<PaginationProps> = ({
+  count,
+  uri,
+  page,
+  ...props
+}) => {
+  const { query } = useRouter();
+
+  const currentPage =
+    page ?? ((typeof query.page === "string" && parseInt(query.page, 10)) || 1);
 
   return (
     <MUIPagination
