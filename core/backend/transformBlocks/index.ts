@@ -6,7 +6,14 @@ import { transformImageBlock } from "./blocks/image/transformImageBlock";
 import { transformMediaTextBlock } from "./blocks/mediaText/transformMediaTextBlock";
 import { TransformBlocks, VideoByBloks } from "./utils/type";
 
-export const transformBlocks = async (blocks: TransformBlocks[]) => {
+type Result = {
+  blocks: TransformBlocks[];
+  video: VideoByBloks[];
+};
+
+export const transformBlocks = async (
+  blocks: TransformBlocks[],
+): Promise<Result> => {
   const blockList: unknown[] = [];
   const video: VideoByBloks[] = [];
   const promise: unknown[] = [];
@@ -97,5 +104,5 @@ export const transformBlocks = async (blocks: TransformBlocks[]) => {
     }
   });
   await Promise.all(promise);
-  return { blocks: blockList, video };
+  return { blocks: blockList as TransformBlocks[], video };
 };

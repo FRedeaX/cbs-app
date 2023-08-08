@@ -1,6 +1,5 @@
 import { client } from "@/lib/apollo/client";
 import { transformBlocks } from "@/core/backend/transformBlocks";
-import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
 import { splitDepartmentAndCategories } from "@/helpers/backend";
 import { ERROR_MESSAGE } from "@/constants";
 
@@ -36,7 +35,7 @@ export const getPost = async ({ slug: id }: GetPost) => {
 
   return {
     ...post,
-    blocks: blocks as TransformBlocks[],
+    blocks,
     categories,
     video,
   };

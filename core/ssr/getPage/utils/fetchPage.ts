@@ -1,6 +1,5 @@
 import { client } from "@/lib/apollo/client";
 import { transformBlocks } from "@/core/backend/transformBlocks";
-import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { ERROR_MESSAGE } from "@/constants";
 
@@ -66,7 +65,7 @@ export const fetchPage = async ({
   return {
     page: {
       ...page,
-      blocks: blocks as TransformBlocks[],
+      blocks,
       video,
     },
     children: childrenData,
