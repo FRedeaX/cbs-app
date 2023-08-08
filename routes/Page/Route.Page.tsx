@@ -25,6 +25,7 @@ type RoutePageProps = {
   }>;
   pagination?: Nullable<PaginationProps>;
   pageNumber?: number;
+  isPreview?: boolean;
 };
 
 export const RoutePage: FC<RoutePageProps> = ({
@@ -32,9 +33,15 @@ export const RoutePage: FC<RoutePageProps> = ({
   childrenPage,
   pagination,
   pageNumber,
+  isPreview,
 }) =>
   childrenPage === null ? (
-    <Article title={page.title} blocks={page.blocks} href={page.href} />
+    <Article
+      title={page.title}
+      blocks={page.blocks}
+      href={page.href}
+      isPreview={isPreview}
+    />
   ) : (
     <Container
       sx={sxContainer}

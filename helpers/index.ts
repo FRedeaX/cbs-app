@@ -9,6 +9,7 @@ export * from "./createQueryLink";
 export * from "./declOfNum";
 export * from "./exceptionLog";
 export * from "./fetcherData";
+export * from "./fetcherGQLData";
 export * from "./flatPromise";
 export * from "./hasAppendPathname";
 export * from "./isEmptyArray";

@@ -1,6 +1,9 @@
-import { gql } from "@apollo/client";
+import { QueryOptions, gql } from "@apollo/client";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
+import { client } from "@/lib/apollo/client";
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
+import { FetcherGQLData, fetcherGQLData } from "@/helpers";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { columnsBlockGQL } from "@/components/blocks/Columns/utils/columnsGQL";
 import { embedBlockGQL } from "@/components/blocks/Embed/utils/embedGQL";
@@ -19,6 +22,14 @@ import { spacerBlockGQL } from "@/components/blocks/Spacer/utils/spacerGQL";
 import { tableBlockGQL } from "@/components/blocks/Table/utils/tableGQL";
 import { verseBlockGQL } from "@/components/blocks/Verse/utils/verseGQL";
 import { videoBlockGQL } from "@/components/blocks/Video/utils/videoGQL";
+
+type GetPageQueryVariables = {
+  id: string | number;
+  idType: "DATABASE_ID" | "ID" | "SLUG" | "URI";
+  isPreview?: boolean;
+  cursor?: string;
+  first?: number;
+};
 
 type PageFieldsGQL = {
   id: string;
@@ -45,7 +56,7 @@ type ChildrenPageFieldsGQL = {
   featuredImage: Nullable<Image>;
 };
 
-export type GetPageQuery = {
+type GetPageQuery = {
   page: Nullable<
     PageFieldsGQL &
       PageSareComponentsFieldsGQL & {
@@ -81,7 +92,7 @@ const pageSareComponentsFieldsGQL = {
   `,
 };
 
-export const getPageDocument = gql`
+const getPageDocument = gql`
   query GetPageDocument(
     $id: ID!
     $idType: PageIdType
@@ -151,3 +162,24 @@ export const getPageDocument = gql`
   ${verseBlockGQL.fragments}
   ${videoBlockGQL.fragments}
 `;
+
+export const clientGetPageQuery = (
+  baseOptions: Omit<QueryOptions<GetPageQueryVariables, GetPageQuery>, "query">,
+) => {
+  const options = { query: getPageDocument, ...baseOptions };
+  return client.query<GetPageQuery, GetPageQueryVariables>(options);
+};
+
+export const useGetPageQuery = (
+  variables: GetPageQueryVariables,
+  config?: SWRConfiguration<
+    GetPageQuery,
+    Error,
+    Fetcher<GetPageQuery, FetcherGQLData<GetPageQueryVariables>>
+  >,
+) =>
+  useSWR<GetPageQuery, Error, FetcherGQLData<GetPageQueryVariables>>(
+    { query: getPageDocument, variables },
+    fetcherGQLData,
+    { refreshInterval: 10000, ...config },
+  );

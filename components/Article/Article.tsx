@@ -17,7 +17,7 @@ export type ArticleProps = {
    * @default false
    */
   isPreview?: boolean;
-  href: string;
+  href?: string;
   imageUrl?: string;
 };
 
@@ -40,21 +40,19 @@ export const Article: FC<ArticleProps> = ({
         </div>
       )}
     </header>
-    {blocks && (
-      <div className={classes.body}>
-        <div>
-          <Blocks blocks={blocks} />
-        </div>
-        {!isPreview && href && blocks.length > 0 && (
-          <Share
-            cls={classes.Share}
-            clsLink={classes.link}
-            title={title}
-            href={href}
-            image={imageUrl}
-          />
-        )}
+    <div className={classes.body}>
+      <div>
+        <Blocks blocks={blocks} />
       </div>
-    )}
+      {!isPreview && href && blocks.length > 0 && (
+        <Share
+          cls={classes.Share}
+          clsLink={classes.link}
+          title={title}
+          href={href}
+          image={imageUrl}
+        />
+      )}
+    </div>
   </article>
 );

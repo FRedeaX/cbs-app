@@ -1,11 +1,10 @@
-import { client } from "@/lib/apollo/client";
 import { transformBlocks } from "@/core/backend/transformBlocks";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { ERROR_MESSAGE } from "@/constants";
 
 import { addsFeaturesToPage } from "../../utils/addsFeaturesToPage";
 import { isSkipPage } from "../../utils/isSkipPage";
-import { getPageDocument, GetPageQuery } from "../gql/getPageGQL";
+import { clientGetPageQuery } from "../gql/getPageGQL";
 
 export type FetchPage = {
   /**
@@ -30,8 +29,7 @@ export const fetchPage = async ({
   first = 10,
   cursor = "",
 }: FetchPage) => {
-  const { data, error, errors } = await client.query<GetPageQuery>({
-    query: getPageDocument,
+  const { data, error, errors } = await clientGetPageQuery({
     variables: {
       id,
       idType: "URI",
@@ -39,6 +37,7 @@ export const fetchPage = async ({
       cursor,
     },
   });
+
   if (error !== undefined) throw error;
   if (data === undefined) throw errors;
   if (data.page === null || isSkipPage(data.page)) {

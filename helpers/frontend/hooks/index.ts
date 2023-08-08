@@ -7,3 +7,4 @@ export * from "./useForkRef";
 export * from "./useIntersectionObserver";
 export * from "./usePreventScroll";
 export * from "./useToggle";
+export * from "./useInterval";

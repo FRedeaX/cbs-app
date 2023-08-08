@@ -1,9 +1,8 @@
-import { client } from "@/lib/apollo/client";
 import { transformBlocks } from "@/core/backend/transformBlocks";
 import { splitDepartmentAndCategories } from "@/helpers/backend";
 import { ERROR_MESSAGE } from "@/constants";
 
-import { GetPostQuery, getPostDocument } from "./gql/getPostGQL";
+import { clientGetPostQuery } from "./gql/getPostGQL";
 
 export type GetPost = {
   /**
@@ -13,8 +12,7 @@ export type GetPost = {
 };
 
 export const getPost = async ({ slug: id }: GetPost) => {
-  const { data, error, errors } = await client.query<GetPostQuery>({
-    query: getPostDocument,
+  const { data, error, errors } = await clientGetPostQuery({
     variables: { id, type: "SLUG" },
   });
 

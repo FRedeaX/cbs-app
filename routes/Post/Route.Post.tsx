@@ -15,7 +15,7 @@ export const RoutePost: FC<PostProps> = ({
   imageUrl,
   blocks,
   categories,
-  isPreview = false,
+  isPreview,
 }) => (
   <div className={classes.root}>
     <Article

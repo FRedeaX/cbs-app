@@ -1,6 +1,9 @@
-import { gql } from "@apollo/client";
+import { QueryOptions, gql } from "@apollo/client";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
+import { client } from "@/lib/apollo/client";
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
+import { FetcherGQLData, fetcherGQLData } from "@/helpers";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { columnsBlockGQL } from "@/components/blocks/Columns/utils/columnsGQL";
 import { embedBlockGQL } from "@/components/blocks/Embed/utils/embedGQL";
@@ -22,11 +25,17 @@ import { videoBlockGQL } from "@/components/blocks/Video/utils/videoGQL";
 
 import { PostFieldsGQL, postFieldsGQL } from "../../getPosts/gql/postListGQL";
 
+type GetPostQueryVariables = {
+  id: string | number;
+  type: "DATABASE_ID" | "ID" | "SLUG" | "URI";
+  isPreview?: boolean;
+};
+
 type PostSareComponentsFieldsGQL = {
   link: string;
 };
 
-export type GetPostQuery = {
+type GetPostQuery = {
   post: Nullable<
     PostSareComponentsFieldsGQL & PostFieldsGQL & { blocks: TransformBlocks[] }
   >;
@@ -40,7 +49,7 @@ const postSareComponentsFieldsGQL = {
   `,
 };
 
-export const getPostDocument = gql`
+const getPostDocument = gql`
   query GetPostDocument($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {
       ...postSareComponentsFieldsGQL
@@ -87,3 +96,24 @@ export const getPostDocument = gql`
   ${verseBlockGQL.fragments}
   ${videoBlockGQL.fragments}
 `;
+
+export const clientGetPostQuery = (
+  baseOptions: Omit<QueryOptions<GetPostQueryVariables, GetPostQuery>, "query">,
+) => {
+  const options = { query: getPostDocument, ...baseOptions };
+  return client.query<GetPostQuery, GetPostQueryVariables>(options);
+};
+
+export const useGetPostQuery = (
+  variables: GetPostQueryVariables,
+  config?: SWRConfiguration<
+    GetPostQuery,
+    Error,
+    Fetcher<GetPostQuery, FetcherGQLData<GetPostQueryVariables>>
+  >,
+) =>
+  useSWR<GetPostQuery, Error, FetcherGQLData<GetPostQueryVariables>>(
+    { query: getPostDocument, variables },
+    fetcherGQLData,
+    { refreshInterval: 10000, ...config },
+  );
