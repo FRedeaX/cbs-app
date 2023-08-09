@@ -37,7 +37,7 @@ export async function loadByGraphQL<TData>({
 }: ILoadByGraphQL<TData>) {
   const pagination: Pagination[] = [initialPagination];
 
-  const callbackFn = async (data: TData) => {
+  const callbackFn = (data: TData) => {
     pagination.push({
       number: pagination.length + 1,
       cursor: pageInfoCallback(data).endCursor,

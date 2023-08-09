@@ -7,7 +7,7 @@ import {
   NextPage,
 } from "next";
 
-import { getMenu, getPage } from "@/core/ssr";
+import { getMenu, getPage, getPath } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RoutePage } from "@/routes/Page/Route.Page";
@@ -15,14 +15,21 @@ import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 
-type Path = { pageSlug: string };
+type Path = { pageSlug: string[] };
 
-export const getStaticPaths = async (): Promise<
-  GetStaticPathsResult<Path>
-> => ({
-  paths: [],
-  fallback: "blocking",
-});
+export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
+  try {
+    const paths = await getPath();
+
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    exceptionLog(error);
+    return { paths: [], fallback: "blocking" };
+  }
+};
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
