@@ -1,10 +1,9 @@
-import classNames from "classnames";
 import { FC, ReactNode } from "react";
 
 import classes from "./Poster-list.module.css";
 
-type PosterListProps = { children: ReactNode; className?: string };
+type PosterListProps = { children: ReactNode };
 
-export const PosterList: FC<PosterListProps> = ({ children, className }) => (
-  <div className={classNames(classes.block, className)}>{children}</div>
+export const PosterList: FC<PosterListProps> = ({ children }) => (
+  <div className={classes.block}>{children}</div>
 );

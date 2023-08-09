@@ -1,5 +1,6 @@
-import { gql } from "@apollo/client";
+import { QueryOptions, gql } from "@apollo/client";
 
+import { client } from "@/lib/apollo/client";
 import { Nullable } from "@/helpers/typings/utility-types";
 
 type Venue = {
@@ -8,7 +9,7 @@ type Venue = {
   slug: string;
 };
 
-type PosterItemGQL = {
+type PosterItemFieldsGQL = {
   id: string;
   title: string;
   excerpt: string;
@@ -29,13 +30,13 @@ type PosterItemGQL = {
   };
 };
 
-export type PosterGQL = {
-  posters: { nodes: PosterItemGQL[] };
+type GetPosterQuery = {
+  posters: { nodes: PosterItemFieldsGQL[] };
 };
 
-const posterItemGQL = {
+const posterItemFieldsGQL = {
   fragments: gql`
-    fragment posterItem on Poster {
+    fragment posterItemFieldsGQL on Poster {
       id
       title
       excerpt
@@ -66,13 +67,20 @@ const posterItemGQL = {
   `,
 };
 
-export const FETCH_POSTER = gql`
-  query FetchPoster {
+const getPosterDocument = gql`
+  query GetPosterDocument {
     posters(first: 50) {
       nodes {
-        ...posterItem
+        ...posterItemFieldsGQL
       }
     }
   }
-  ${posterItemGQL.fragments}
+  ${posterItemFieldsGQL.fragments}
 `;
+
+export const clientGetPosterQuery = (
+  baseOptions?: Omit<QueryOptions<undefined, GetPosterQuery>, "query">,
+) => {
+  const options = { query: getPosterDocument, ...baseOptions };
+  return client.query<GetPosterQuery>(options);
+};
