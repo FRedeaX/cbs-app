@@ -36,10 +36,15 @@ export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({ id }) => {
       : null,
   );
 
+  if (blocks.error) {
+    console.error(blocks.error);
+  }
+
   if (error) {
     console.error(error);
-    return null;
+    return <>Ошибка в загрузке данных.</>;
   }
+
   if (!data?.post) return null;
 
   return (
@@ -56,6 +61,7 @@ export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({ id }) => {
         blocks={blocks.data.blocks}
         isPreview
       />
+      {blocks.error && <>Ошибка в обработке блоков: {blocks.error?.message}.</>}
     </>
   );
 };

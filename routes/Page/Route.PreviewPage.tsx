@@ -36,12 +36,20 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({ id }) => {
       : null,
   );
 
+  if (blocks.error) {
+    console.error(blocks.error);
+  }
+
   if (error) {
     console.error(error);
-    return null;
+    return <>Ошибка в загрузке данных.</>;
   }
 
   if (!data?.page) return null;
+
+  const childrenPage = data.page.children.nodes.length
+    ? data.page.children
+    : null;
 
   return (
     <>
@@ -51,7 +59,15 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({ id }) => {
         description={data.page.excerpt}
         video={blocks.data.video}
       />
-      <RoutePage page={data.page} childrenPage={data.page.children} isPreview />
+      <RoutePage
+        page={{
+          title: data.page.title,
+          blocks: blocks.data.blocks,
+          isPreview: true,
+        }}
+        childrenPage={childrenPage}
+      />
+      {blocks.error && <>Ошибка в обработке блоков: {blocks.error?.message}.</>}
     </>
   );
 };
