@@ -60,6 +60,7 @@
   --g-image-border-radius: 12px;
   --g-block-margin-top: 6px;
   --g-block-margin-bottom: 20px;
+  --g-layout-padding-sides: 15px;
 
   /* component color */
   --link-color: var(--blue-dark);
