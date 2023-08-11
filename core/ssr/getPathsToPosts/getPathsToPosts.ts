@@ -1,30 +1,25 @@
-import { client } from "@/lib/apollo/client";
-import { ERROR_MESSAGE } from "@/constants";
+import { GetPathsToPosts } from "./types";
+import { getPathByMetrika } from "./utils/getPathByMetrika/getPathByMetrika";
+import { getPathByWP } from "./utils/getPathByWP/getPathByWP";
 
-import {
-  GetPathsToPostsGQL,
-  getPathsToPostsQuery,
-} from "./gql/getPathsToPostsGQL";
+export const getPathsToPosts = async (): Promise<GetPathsToPosts> => {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return [];
+  }
 
-type PathToPost = {
-  params: {
-    slug: string;
-  };
-};
+  const wpData = getPathByWP();
+  const metrikaData = getPathByMetrika();
 
-type GetPathsToPostsResult = PathToPost[];
+  const [wp, metrika] = await Promise.all([wpData, metrikaData]);
+  if (wp.length === 0) return metrika;
+  if (metrika.length === 0) return wp;
 
-export const getPathsToPosts = async (): Promise<GetPathsToPostsResult> => {
-  const { data, error } = await client.query<GetPathsToPostsGQL>({
-    query: getPathsToPostsQuery,
-  });
-  if (error !== undefined) throw error;
-  const { nodes } = data.posts;
-  if (nodes.length === 0) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+  return wp.reduce<GetPathsToPosts>((acc, w) => {
+    if (metrika.findIndex((m) => m.params.slug === w.params.slug) > 0) {
+      return acc;
+    }
 
-  return nodes.map((post) => ({
-    params: {
-      slug: post.slug,
-    },
-  }));
+    acc.push(w);
+    return acc;
+  }, metrika);
 };

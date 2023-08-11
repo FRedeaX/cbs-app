@@ -1,6 +1,11 @@
 import { ParsedUrlQuery } from "querystring";
 
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import {
+  GetStaticPathsResult,
+  GetStaticProps,
+  InferGetStaticPropsType,
+  NextPage,
+} from "next";
 
 import { getMenu, getPathsToPosts, getPost } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
@@ -10,18 +15,21 @@ import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 
-export async function getStaticPaths() {
+type Path = { slug: string };
+
+export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
   try {
     const paths = await getPathsToPosts();
+
     return {
       paths,
       fallback: "blocking",
     };
   } catch (error) {
     exceptionLog(error);
-    return [];
+    return { paths: [], fallback: "blocking" };
   }
-}
+};
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;

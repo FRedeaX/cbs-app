@@ -1,10 +1,12 @@
-import { gql } from "@apollo/client";
+import { QueryOptions, gql } from "@apollo/client";
 
-export type GetPathsToPostsGQL = {
+import { client } from "@/lib/apollo/client";
+
+type GetPathsToPostsQuery = {
   posts: { nodes: { slug: string }[] };
 };
 
-export const getPathsToPostsQuery = gql`
+const getPathsToPostsDocument = gql`
   query GetPathsToPostsQuery {
     posts {
       nodes {
@@ -13,3 +15,10 @@ export const getPathsToPostsQuery = gql`
     }
   }
 `;
+
+export const clientGetPathsToPostsQuery = (
+  baseOptions?: Omit<QueryOptions<never, GetPathsToPostsQuery>, "query">,
+) => {
+  const options = { query: getPathsToPostsDocument, ...baseOptions };
+  return client.query<GetPathsToPostsQuery>(options);
+};
