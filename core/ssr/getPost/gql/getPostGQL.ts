@@ -3,7 +3,7 @@ import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
 import { client } from "@/lib/apollo/client";
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
-import { FetcherGQLData, fetcherGQLData } from "@/helpers";
+import { FetcherGQLData, fetcherGQLData } from "@/helpers/fetcherGQLData";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { columnsBlockGQL } from "@/components/blocks/Columns/utils/columnsGQL";
 import { embedBlockGQL } from "@/components/blocks/Embed/utils/embedGQL";
@@ -113,7 +113,7 @@ export const useGetPostQuery = (
   >,
 ) =>
   useSWR<GetPostQuery, Error, FetcherGQLData<GetPostQueryVariables>>(
-    { query: getPostDocument, variables },
+    { document: getPostDocument, variables },
     fetcherGQLData,
     { refreshInterval: 10000, ...config },
   );
