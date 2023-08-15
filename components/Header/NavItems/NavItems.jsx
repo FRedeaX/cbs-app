@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import classNames from "classnames";
-import classNamesBind from "classnames/bind";
 
 import { createMarkup } from "../../../helpers";
 import { ActiveLink } from "../../UI/ActiveLink/ActiveLink";
@@ -21,7 +20,6 @@ const NavItems = ({
   headerLabel,
   onClick,
 }) => {
-  const cx = classNamesBind.bind(classes);
   const liLvl = subLvl;
 
   return (
@@ -106,14 +104,12 @@ const NavItems = ({
             ) : (
               <ActiveLink
                 href={path}
-                className={cx({
-                  link: true,
-                  "link--cursor": !!childItems?.nodes.length,
-                })}
+                className={classNames(classes.link)}
+                sx={{ color: "inherit" }}
                 activeClassName={classes.link_active}
                 prefetch={false}>
                 <span
-                  className={cx({ text: true, text_mb: subItem })}
+                  className={classNames(classes.text, { text_mb: subItem })}
                   dangerouslySetInnerHTML={createMarkup(label)}
                 />
               </ActiveLink>

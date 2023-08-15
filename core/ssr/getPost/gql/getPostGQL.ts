@@ -22,6 +22,7 @@ import { spacerBlockGQL } from "@/components/blocks/Spacer/utils/spacerGQL";
 import { tableBlockGQL } from "@/components/blocks/Table/utils/tableGQL";
 import { verseBlockGQL } from "@/components/blocks/Verse/utils/verseGQL";
 import { videoBlockGQL } from "@/components/blocks/Video/utils/videoGQL";
+import { REVALIDATE } from "@/constants";
 
 import { PostFieldsGQL, postFieldsGQL } from "../../getPosts/gql/postListGQL";
 
@@ -115,5 +116,5 @@ export const useGetPostQuery = (
   useSWR<GetPostQuery, Error, FetcherGQLData<GetPostQueryVariables>>(
     { document: getPostDocument, variables },
     fetcherGQLData,
-    { refreshInterval: 10000, ...config },
+    { refreshInterval: REVALIDATE.PREVIEW_POLL_INTERVAL, ...config },
   );

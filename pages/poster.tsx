@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps<
         menu,
         posters,
       },
-      revalidate: REVALIDATE.POST,
+      revalidate: REVALIDATE.PAGE,
     };
   } catch (error) {
     exceptionLog(error);

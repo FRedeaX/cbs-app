@@ -1,6 +1,3 @@
-/**
- * Инкрементная статическая регенерация (ISR)
- */
 export * as REVALIDATE from "./revalidate";
 
 /**

@@ -1,14 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from "classnames";
-import { LinkProps } from "next/link";
 import { useRouter } from "next/router";
-import { Children, FC, ReactElement, cloneElement } from "react";
+import { Children, FC, cloneElement, ReactElement } from "react";
 
-import { Link } from "../Link/Link";
+import { Link, LinkProps } from "../Link/Link";
 
 type ActiveLinkProps = Omit<LinkProps, "passHref"> & {
   children: ReactElement;
-  className?: string;
   activeClassName: string;
   disableHref?: boolean;
 };

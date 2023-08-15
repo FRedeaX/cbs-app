@@ -25,7 +25,7 @@ export default async function offerHandler(
   try {
     const { id } = req.query;
     if (typeof id !== "string") {
-      throw new ApiError(400, `"id" ${ERROR_MESSAGE.API_QUERY_KEY_UNDEFINED}`);
+      throw new ApiError(400, `${ERROR_MESSAGE.API_QUERY_KEY_UNDEFINED} "id"`);
     }
 
     const { keywords, categories, departments, lteDate } =
