@@ -7,9 +7,8 @@ export const URL_IS_UNDEFINED = "url-адрес не определен";
 /**
  * API
  * @example
- * `"key" ${ERROR_MESSAGE.API_QUERY_PARAM_UNDEFINED}`
+ * `${ERROR_MESSAGE.API_QUERY_PARAM_UNDEFINED} "key"`
  *
- * @returns `"key" запроса не может быть нулевым или неопределенным`
+ * @returns `Отсутствует обязательный параметр "key"`
  */
-export const API_QUERY_KEY_UNDEFINED =
-  "запроса не может быть нулевым или неопределенным";
+export const API_QUERY_KEY_UNDEFINED = "Отсутствует обязательный параметр";

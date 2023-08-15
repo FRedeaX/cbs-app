@@ -37,32 +37,27 @@ export const fetchPosts = async ({
   const { nodes } = data.posts;
   if (nodes.length === 0) return { data: null, pageInfo: null };
 
-  const uniquePosts = removeDuplicateTag<(typeof nodes)[0]>(nodes).data;
+  const uniquePosts = removeDuplicateTag<typeof nodes[0]>(nodes).data;
 
-  const postsList = await flatPromise(
-    uniquePosts,
-    async (element: (typeof nodes)[0]) => {
-      const tag = element.tags.nodes[0];
-      if (tag) {
-        return flatPromise(tag.posts.nodes, addsFeaturesToPost).then(
-          (item) => ({
-            ...element,
-            tags: {
-              nodes: [
-                {
-                  ...element.tags.nodes[0],
-                  posts: {
-                    nodes: item,
-                  },
-                },
-              ],
+  const postsList = await flatPromise(uniquePosts, async (element) => {
+    const tag = element.tags.nodes[0];
+    if (tag) {
+      return flatPromise(tag.posts.nodes, addsFeaturesToPost).then((item) => ({
+        ...element,
+        tags: {
+          nodes: [
+            {
+              ...element.tags.nodes[0],
+              posts: {
+                nodes: item,
+              },
             },
-          }),
-        );
-      }
-      return addsFeaturesToPost(element);
-    },
-  );
+          ],
+        },
+      }));
+    }
+    return addsFeaturesToPost(element);
+  });
 
   return { data: postsList, pageInfo: data.posts.pageInfo };
 };

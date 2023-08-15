@@ -22,6 +22,7 @@ import { spacerBlockGQL } from "@/components/blocks/Spacer/utils/spacerGQL";
 import { tableBlockGQL } from "@/components/blocks/Table/utils/tableGQL";
 import { verseBlockGQL } from "@/components/blocks/Verse/utils/verseGQL";
 import { videoBlockGQL } from "@/components/blocks/Video/utils/videoGQL";
+import { REVALIDATE } from "@/constants";
 
 type GetPageQueryVariables = {
   id: string | number;
@@ -181,5 +182,5 @@ export const useGetPageQuery = (
   useSWR<GetPageQuery, Error, FetcherGQLData<GetPageQueryVariables>>(
     { document: getPageDocument, variables },
     fetcherGQLData,
-    { refreshInterval: 10000, ...config },
+    { refreshInterval: REVALIDATE.PREVIEW_POLL_INTERVAL, ...config },
   );

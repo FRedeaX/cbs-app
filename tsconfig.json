@@ -16,9 +16,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/base/*": ["base/*"],
+      "@/base": ["base"],
       "@/components/*": ["components/*"],
-      "@/constants/*": ["constants/*"],
+      "@/constants": ["constants"],
       "@/core/*": ["core/*"],
       "@/helpers": ["helpers"],
       "@/helpers/*": ["helpers/*"],

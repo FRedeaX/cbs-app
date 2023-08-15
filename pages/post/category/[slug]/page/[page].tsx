@@ -11,6 +11,10 @@ import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 
 export async function getStaticPaths() {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return { paths: [], fallback: "blocking" };
+  }
+
   return {
     paths: [
       { params: { slug: "meropriyatie", page: "2" } },
