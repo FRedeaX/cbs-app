@@ -7,23 +7,25 @@ export const sxContainer: ContainerProps["sx"] = {
   display: "flex",
   paddingY: "var(--gap)",
 
-  "@media (width < 1340px)": {
+  "@media (max-width: 1339px)": {
     flexDirection: "column",
   },
 };
 
 export const sxAside: BoxProps["sx"] = {
-  "@media (width >= 480px) and (width < 1340px)": {
+  "@media (min-width: 480px) and (max-width: 1339px)": {
     "--poster-item-width": "440px",
   },
-  "@media (width < 1340px)": {
+  "@media (max-width: 1339px)": {
     maxWidth: "960px",
     width: "100%",
     margin: "auto",
   },
-  "@media (width >= 1340px)": {
+  "@media (min-width: 1340px)": {
     "--carousel-shadow-display": "none",
-    "--poster-item-height": "max-content",
+    "@supports(display: grid)": {
+      "--poster-item-height": "max-content",
+    },
 
     position: "sticky",
     top: "10px",

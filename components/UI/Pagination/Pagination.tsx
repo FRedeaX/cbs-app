@@ -11,11 +11,16 @@ import { Link } from "../Link/Link";
 
 export type PaginationProps = {
   uri: string;
+  /**
+   * Альтернативный путь к 1 странице.
+   */
+  firstPageLink?: string;
 } & Omit<MUIPaginationProps, "renderItem">;
 
 export const Pagination: FC<PaginationProps> = ({
   count,
   uri,
+  firstPageLink,
   page,
   ...props
 }) => {
@@ -34,7 +39,11 @@ export const Pagination: FC<PaginationProps> = ({
       renderItem={(item) => (
         <PaginationItem
           component={Link}
-          href={item.page === 1 ? `${uri}` : `${uri}/page/${item.page}`}
+          href={
+            item.page === 1
+              ? `${firstPageLink ?? uri}`
+              : `${uri}/page/${item.page}`
+          }
           {...item}
         />
       )}

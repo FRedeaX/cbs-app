@@ -39,6 +39,7 @@ export const HomePage: FC<HomePageProps> = ({
           sx={sxPagination}
           count={pagination.count}
           uri={pagination.uri}
+          firstPageLink="/"
         />
       )}
     </Box>

@@ -8,7 +8,7 @@ export const sxSection: ContainerProps["sx"] = {
   "--group-cards-container-margin-x": "calc(var(--gap) / 2 * -1)",
   "--card-margin-x": "calc(var(--gap) / 2)",
   "--card-margin-y": "calc(var(--gap) / 2)",
-  "@media (width > 1012px)": {
+  "@media (min-width: 1013px)": {
     "--carousel-button-left": "-28px",
     "--carousel-button-right": "-28px",
   },

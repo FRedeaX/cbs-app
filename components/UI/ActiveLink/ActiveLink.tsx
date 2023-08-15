@@ -1,39 +1,38 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import classNames from "classnames";
-import Link, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 import { Children, FC, ReactElement, cloneElement } from "react";
 
-type ActiveLinkProps = LinkProps & {
+import { Link } from "../Link/Link";
+
+type ActiveLinkProps = Omit<LinkProps, "passHref"> & {
   children: ReactElement;
   className?: string;
   activeClassName: string;
-  /**
-   * @default false
-   */
-  isLink?: boolean;
+  disableHref?: boolean;
 };
 
 export const ActiveLink: FC<ActiveLinkProps> = ({
   children,
   className,
   activeClassName,
-  isLink = true,
+  disableHref,
   ...props
 }) => {
   const { asPath } = useRouter();
+  const child = Children.only(children);
+
   const href =
     typeof props.href === "string" ? props.href : props.href.href ?? "";
   const isActive = `${asPath}/`.indexOf(href) !== -1;
   const linkClassName = classNames(className, { [activeClassName]: isActive });
 
-  return isLink ? (
-    <Link
-      className={linkClassName}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}>
+  return disableHref ? (
+    cloneElement(child, { className: linkClassName })
+  ) : (
+    <Link className={linkClassName} {...props}>
       {children}
     </Link>
-  ) : (
-    cloneElement(Children.only(children), { className: linkClassName })
   );
 };

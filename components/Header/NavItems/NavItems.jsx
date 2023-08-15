@@ -73,9 +73,10 @@ const NavItems = ({
             })}>
             {childItems?.nodes.length > 0 ? (
               <ActiveLink
-                activeClassName={classes.link_active}
                 href={path}
-                isLink={false}>
+                className={classes.button}
+                activeClassName={classes.link_active}
+                disableHref>
                 <Button
                   width="max"
                   iconRight={
@@ -87,7 +88,6 @@ const NavItems = ({
                       weight="small"
                     />
                   }
-                  className={classes.button}
                   onClick={onClick}>
                   <span
                     className={classes.text}
@@ -105,19 +105,17 @@ const NavItems = ({
               </a>
             ) : (
               <ActiveLink
-                activeClassName={classes.link_active}
                 href={path}
+                className={cx({
+                  link: true,
+                  "link--cursor": !!childItems?.nodes.length,
+                })}
+                activeClassName={classes.link_active}
                 prefetch={false}>
-                <a
-                  className={cx({
-                    link: true,
-                    "link--cursor": !!childItems?.nodes.length,
-                  })}>
-                  <span
-                    className={cx({ text: true, text_mb: subItem })}
-                    dangerouslySetInnerHTML={createMarkup(label)}
-                  />
-                </a>
+                <span
+                  className={cx({ text: true, text_mb: subItem })}
+                  dangerouslySetInnerHTML={createMarkup(label)}
+                />
               </ActiveLink>
             )}
             {!!childItems?.nodes.length && (

@@ -31,7 +31,7 @@ export const transformFileBlock = async (
 
     return {
       name: `error: ${fileBlock.name}`,
-      message: (error as Error).message,
+      message: JSON.stringify(error),
       attributes: null,
       innerBlocks: null,
     };
