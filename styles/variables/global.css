@@ -45,7 +45,8 @@
   --subtle-pale-pink: #fcf0ef;
 
   /* customs */
-  --font-family-roboto: "Roboto", "Helvetica", "Arial", sans-serif;
+  --font-family-roboto: "Roboto", "Helvetica", "Arial", "-apple-system",
+    "BlinkMacSystemFont", sans-serif;
   --font-family-roboto-slab: "Roboto-Slab", serif;
   --downgrading-font-size: 4;
   --background-color-white: #f7f7f7;
@@ -55,11 +56,11 @@
   --menu-link: var(--black);
   --border-link: var(--accent-color);
   --secondary-color: var(--gray);
-  --g-layout-padding-sides: 10px;
   --g-article-padding-sides: 5px;
   --g-image-border-radius: 12px;
   --g-block-margin-top: 6px;
   --g-block-margin-bottom: 20px;
+  --g-layout-padding-sides: 15px;
 
   /* component color */
   --link-color: var(--blue-dark);
@@ -87,5 +88,18 @@
 @media screen and (width > 1600px) {
   :root {
     --is-font-size-adaptive: 0;
+  }
+}
+
+/* HEADER_HEIGHT */
+@media screen and (width <= 950px) {
+  :root {
+    --header-height: var(--header-mobile-height);
+  }
+}
+
+@media screen and (width > 950px) {
+  :root {
+    --header-height: var(--header-desktop-height);
   }
 }

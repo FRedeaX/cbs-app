@@ -11,16 +11,15 @@ const departments = [
 
 interface Node {
   name: string;
-  [key: string]: unknown;
 }
 
-interface Result {
-  categories: { nodes: Node[] };
-  departments: { nodes: Node[] };
+interface Result<T> {
+  categories: { nodes: (T & Node)[] };
+  departments: { nodes: (T & Node)[] };
 }
 
-export const splitDepartmentAndCategories = (nodes: Node[]) => {
-  const initState: Result = {
+export const splitDepartmentAndCategories = <T>(nodes: (T & Node)[]) => {
+  const initState: Result<T> = {
     categories: { nodes: [] },
     departments: { nodes: [] },
   };

@@ -3,11 +3,11 @@ import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { esClient } from "@/lib/elastic/client";
+import { splitDepartmentAndCategories } from "@/helpers/backend";
 import {
   PageInfo,
   recursiveLoadParties,
-  splitDepartmentAndCategories,
-} from "@/helpers/backend";
+} from "@/helpers/backend/recursiveLoadParties";
 
 const GET_POSTS = gql`
   query GET_POSTS($cursor: String, $first: Int) {
@@ -18,6 +18,7 @@ const GET_POSTS = gql`
         title
         excerpt
         content
+        date
         featuredImage {
           node {
             sourceUrl(size: THUMBNAIL)
@@ -25,8 +26,10 @@ const GET_POSTS = gql`
         }
         categories {
           nodes {
+            id
             name
             slug
+            uri
           }
         }
       }
@@ -44,6 +47,7 @@ interface IPost {
   title: string;
   excerpt: string;
   content: string;
+  date: string;
   featuredImage: {
     node: {
       sourceUrl: string;
@@ -51,8 +55,10 @@ interface IPost {
   };
   categories: {
     nodes: {
+      id: string;
       name: string;
       slug: string;
+      uri: string;
     }[];
   };
 }
@@ -82,12 +88,13 @@ const callbackFn = async ({ posts: postList }: IPosts): Promise<void> => {
         // title_suggest,
         excerpt: post.excerpt,
         content: post.content.replaceAll(/<[^>]*>?/gm, ""),
+        date: post.date,
         thumbnail: { url: post.featuredImage?.node.sourceUrl || "" },
-        categories: categories.nodes.flatMap((category) => [
-          { name: category.name, slug: category.slug },
+        categories: categories.nodes.flatMap(({ id, name, slug, uri }) => [
+          { id, name, slug, uri },
         ]),
-        departments: departments.nodes.flatMap((department) => [
-          { name: department.name, slug: department.slug },
+        departments: departments.nodes.flatMap(({ id, name, slug, uri }) => [
+          { id, name, slug, uri },
         ]),
       },
     ];
@@ -100,8 +107,10 @@ const pageInfoCallback = ({ posts }: IPosts): PageInfo => posts.pageInfo;
 
 export default function sync(req: NextApiRequest, res: NextApiResponse) {
   const { key } = req.query;
-  if (!(typeof key === "string" && key === process.env.ES_SYNC_KEY))
+
+  if (typeof key !== "string" || key !== process.env.API_ES_KEY) {
     res.status(403).end();
+  }
 
   try {
     recursiveLoadParties<IPosts>({

@@ -1,24 +1,22 @@
 import { gql } from "@apollo/client";
 
-export type MenuItemsGQL = {
+type MenuItemsGQL = {
   menuItems: {
-    nodes: [
-      {
-        childItems: {
-          nodes: MenuItemsGQL[];
-        };
-        id: string;
-        label: string;
-        path: string;
-        parentId: boolean;
-      },
-    ];
+    nodes: {
+      childItems: {
+        nodes: MenuItemsGQL[];
+      };
+      id: string;
+      label: string;
+      path: string;
+      parentId: boolean;
+    }[];
   };
 };
 
 export type MenuGQL = {
   menus: {
-    nodes: MenuItemsGQL;
+    nodes: MenuItemsGQL[];
   };
 };
 

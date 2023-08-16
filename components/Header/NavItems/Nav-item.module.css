@@ -12,11 +12,6 @@
   text-decoration: none;
 }
 
-/* .link--cursor {
-  cursor: default;
-  pointer-events: none;
-} */
-
 .text {
   position: relative;
   display: inline-block;

@@ -11,18 +11,6 @@
   border-bottom: var(--header-border-height) solid #dbdbdb;
 }
 
-@media screen and (width > 950px) {
-  .block {
-    --header-height: var(--header-desktop-height);
-  }
-}
-
-@media screen and (width <= 950px) {
-  .block {
-    --header-height: var(--header-mobile-height);
-  }
-}
-
 .block_fixed {
   position: fixed;
   top: 0;

@@ -50,11 +50,7 @@ class _Document extends Document {
           <meta name="theme-color" content="#f2f2f2" />
           <meta name="yandex-verification" content="b761a7a26da38d4e" />
         </Head>
-        <body
-          style={{
-            backgroundColor: "var(--background-color-white)",
-            "--is-header-fixed": 1,
-          }}>
+        <body style={{ backgroundColor: "var(--background-color-white)" }}>
           <Main />
           <NextScript />
         </body>

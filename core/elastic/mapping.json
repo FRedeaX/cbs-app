@@ -43,6 +43,10 @@
     "properties": {
       "categories": {
         "properties": {
+          "id": {
+            "type": "keyword",
+            "index": false
+          },
           "name": {
             "type": "text",
             "fields": {
@@ -54,11 +58,19 @@
           "slug": {
             "type": "keyword",
             "index": false
+          },
+          "uri": {
+            "type": "keyword",
+            "index": false
           }
         }
       },
       "departments": {
         "properties": {
+          "id": {
+            "type": "keyword",
+            "index": false
+          },
           "name": {
             "type": "text",
             "fields": {
@@ -68,6 +80,10 @@
             }
           },
           "slug": {
+            "type": "keyword",
+            "index": false
+          },
+          "uri": {
             "type": "keyword",
             "index": false
           }
@@ -76,6 +92,9 @@
       "content": {
         "type": "text",
         "analyzer": "wp_html"
+      },
+      "date": {
+        "type": "date"
       },
       "excerpt": {
         "type": "text",

@@ -53,14 +53,30 @@ const nextConfig = withTM({
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },
-
-  // sentry: {
-  //   hideSourceMaps: false,
-  // },
 });
 
-const sentryWebpackPluginOptions = {
+const userSentryWebpackPluginOptions = {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
   silent: true,
+  org: "cbs-ai",
+  project: "nextjs",
 };
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+const sentryOptions = {
+  // For all available options, see:
+  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+  widenClientFileUpload: true,
+  transpileClientSDK: true,
+  tunnelRoute: "/monitoring",
+  hideSourceMaps: false,
+  disableLogger: true,
+};
+
+module.exports = withSentryConfig(
+  nextConfig,
+  userSentryWebpackPluginOptions,
+  sentryOptions,
+);

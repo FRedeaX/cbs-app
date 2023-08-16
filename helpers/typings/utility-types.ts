@@ -32,3 +32,20 @@ export type Void = () => void;
  * Возвращает тип в котором есть типизированные `custom properties`
  */
 export type { Properties as CSSProperties } from "csstype";
+
+/**
+ * Возвращает Т в котором все свойства могут быть null.
+ */
+export type NullableAll<T> = {
+  [P in keyof T]: Nullable<T[P]>;
+};
+
+export type { DeepMergeTwoTypes } from "./DeepMergeTwoTypes/DeepMergeTwoTypes";
+
+/**
+ * Возвращает тип в котором (рекурсивно)
+ * все ключи являются обязательными.
+ */
+export type DeepRequired<T> = {
+  [K in keyof T]: Required<DeepRequired<T[K]>>;
+};

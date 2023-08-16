@@ -1,19 +1,19 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Container, useMediaQuery } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
-import { RouteContainer } from "../../components/RouteContainer/RouteContainer";
+import { SearchResponseFrontend } from "@/core/elastic/search/type";
 import {
   SearchFilters,
   SearchForm,
   SearchInput,
   SearchSuggestion,
-} from "../../components/Search/components";
-import { InputProvider } from "../../components/Search/components/Input/context";
-import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
-import { SuggestionProvider } from "../../components/Search/components/Suggestion/context";
-import { useQuerySearch } from "../../components/Search/utils/hooks";
-import { SearchResponseFrontend } from "../../core/elastic/search/type";
+} from "@/components/Search/components";
+import { InputProvider } from "@/components/Search/components/Input/context";
+import { SearchPagination } from "@/components/Search/components/Pagination/Search.Pagination";
+import { SuggestionProvider } from "@/components/Search/components/Suggestion/context";
+import { useQuerySearch } from "@/components/Search/utils/hooks";
+
 import { SearchAside, SearchAsideUAPlatform } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
@@ -22,13 +22,12 @@ export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
 } & SearchAsideUAPlatform;
 
-// eslint-disable-next-line arrow-body-style
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
   const { data, isLoading } = useQuerySearch(ssrData);
   const isHorizontal = useMediaQuery("(min-width: 1100px)");
 
   return (
-    <RouteContainer className={classes.root}>
+    <Container maxWidth="xl" sx={{ marginTop: "2em" }}>
       <InputProvider>
         <SuggestionProvider>
           <SearchForm>
@@ -72,6 +71,6 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
           )}
         </Box>
       </Box>
-    </RouteContainer>
+    </Container>
   );
 };

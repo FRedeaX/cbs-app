@@ -1,16 +1,14 @@
-import { gql } from "@apollo/client";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
 import Title, { SUBTITLE } from "../../Title/Title";
+
 import ButtonList from "./ButtonList/ButtonList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import classes from "./Library.module.css";
 import LibraryInfo from "./LibraryInfo/LibraryInfo";
-
-let map;
 
 export const Library = ({ filialList }) => {
   const router = useRouter();
@@ -18,6 +16,7 @@ export const Library = ({ filialList }) => {
     query: { lib, schedule, holiday },
   } = router;
 
+  const mapRef = useRef(null);
   const [isMap, setIsMap] = useState(false);
   const [filial, setFilial] = useState(
     filialList[filialList.findIndex((f) => f.id === lib)] || filialList,
@@ -26,7 +25,7 @@ export const Library = ({ filialList }) => {
   const selectPlacemark = useCallback(() => {
     if (isMap === false) return;
 
-    const geoObjects = window.ymaps.geoQuery(map?.geoObjects);
+    const geoObjects = window.ymaps.geoQuery(mapRef.current?.geoObjects);
     const selected = geoObjects
       .search(`properties.id = '${filial.id}'`)
       .setOptions("preset", "islands#redIcon");
@@ -34,9 +33,9 @@ export const Library = ({ filialList }) => {
   }, [filial.id, isMap]);
 
   useEffect(() => {
-    if (isMap === true) return;
-
     function init() {
+      if (mapRef.current !== null) return;
+
       let zoom = 14;
       let center = [45.6246, 63.308];
       const FOCUS_ZOOM = 17;
@@ -44,7 +43,7 @@ export const Library = ({ filialList }) => {
         zoom = 13;
         center = [45.626, 63.308];
       }
-      map = new window.ymaps.Map("map", {
+      mapRef.current = new window.ymaps.Map("map", {
         center,
         zoom,
         controls: ["zoomControl"],
@@ -62,7 +61,7 @@ export const Library = ({ filialList }) => {
             preset: "twirl#greenStretchyIcon",
           },
         );
-        map.geoObjects.add(placemark);
+        mapRef.current.geoObjects.add(placemark);
         placemark.events.add("click", (e) => {
           const id = placemark.properties.get("id");
 
@@ -77,13 +76,16 @@ export const Library = ({ filialList }) => {
 
           const targetObject = e.get("target");
           if (targetObject.geometry.getType() === "Point") {
-            // map.panTo(targetObject.geometry.getCoordinates(), FOCUS_ZOOM);
-            map.setCenter(targetObject.geometry.getCoordinates(), FOCUS_ZOOM);
+            // mapRef.current.panTo(targetObject.geometry.getCoordinates(), FOCUS_ZOOM);
+            mapRef.current.setCenter(
+              targetObject.geometry.getCoordinates(),
+              FOCUS_ZOOM,
+            );
           }
         });
         placemark.events.add("balloonclose", () => {
-          map.setZoom(zoom);
-          map.setCenter([45.6246, 63.308]);
+          mapRef.current.setZoom(zoom);
+          mapRef.current.setCenter([45.6246, 63.308]);
         });
       });
       setIsMap(true);
@@ -92,7 +94,8 @@ export const Library = ({ filialList }) => {
     asyncLoadScript(process.env.NEXT_PUBLIC_YMAP_API, window.ymaps).then(() =>
       window.ymaps.ready(init),
     );
-  }, [filialList, router, schedule, isMap]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setFilial(
@@ -138,54 +141,3 @@ export const Library = ({ filialList }) => {
     </div>
   );
 };
-
-export const FETCH_LIBRARY = gql`
-  query FETCH_LIBRARY($id: ID!) {
-    page(id: $id, idType: URI) {
-      title
-      excerpt
-      children {
-        nodes {
-          ... on Page {
-            menuOrder
-            bibliotekiBase {
-              address
-              email
-              name
-              point
-              shortname
-              id
-              telefon
-            }
-            bibliotekiSchedule {
-              cleanupday
-              friday
-              holiday
-              isholiday
-              lunchbreak
-              monday
-              saturday
-              sunday
-              thursday
-              tuesday
-              wednesday
-            }
-            bibliotekiScheduleAup {
-              cleanupdayaup
-              fridayaup
-              holidayaup
-              isholidayaup
-              lunchbreakaup
-              mondayaup
-              saturdayaup
-              sundayaup
-              thursdayaup
-              tuesdayaup
-              wednesdayaup
-            }
-          }
-        }
-      }
-    }
-  }
-`;

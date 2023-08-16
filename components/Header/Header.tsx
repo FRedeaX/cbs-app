@@ -3,25 +3,26 @@ import { Backdrop } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
-import { KeyDownAwayListener } from "../../base";
-import { usePreventScroll, useToggle } from "../../helpers/frontend/hooks";
-import { CSSProperties, Nullable } from "../../helpers/typings/utility-types";
-import Logo from "../Logo/Logo";
+import { usePreventScroll, useToggle } from "@/helpers/frontend/hooks";
+import { CSSProperties, Nullable } from "@/helpers/typings/utility-types";
+import Logo from "@/components/Logo/Logo";
+import { KeyDownAwayListener } from "@/base";
+
 import { HeaderSearch } from "./Header.Search/Header.Search";
 import classes from "./Header.module.css";
 import HeaderSocial from "./HeaderSocial/HeaderSocial";
 import NavList from "./NavList/NavList";
 import { HeaderScroll } from "./components/Header.Scroll/Header.Scroll";
 import { HeaderToggle } from "./components/Header.Toggle/Header.Toggle";
-import { MenuItemsGQL } from "./utils/menuGQL";
+import { MenuGQL } from "./utils/menuGQL";
 
 const sxBackdrop: CSSProperties = { zIndex: "calc(var(--header-z-index) - 1)" };
 
-type HeaderProps = {
-  menus: Nullable<MenuItemsGQL[]>;
+export type HeaderProps = {
+  menus: Nullable<MenuGQL["menus"]["nodes"]>;
 };
 
-const Header: FC<HeaderProps> = ({ menus }) => {
+export const Header: FC<HeaderProps> = ({ menus }) => {
   const [isOpen, setIsOpen, { setFalse: setClose }] = useToggle();
   usePreventScroll({ enabled: isOpen });
 
@@ -73,19 +74,3 @@ const Header: FC<HeaderProps> = ({ menus }) => {
     </>
   );
 };
-
-// function areEqual(prevProps, nextProps) {
-//   // console.log(prevProps.location, nextProps.location);
-//   console.log(prevProps.isHeaderHidden);
-//   if (prevProps.isHeaderHidden !== nextProps.isHeaderHidden) {
-//     console.log("changeProps");
-//     return false;
-//   } else return true;
-//   /*
-//   возвращает true, если nextProps рендерит
-//   тот же результат что и prevProps,
-//   иначе возвращает false
-//   */
-// }
-
-export default Header;

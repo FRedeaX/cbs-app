@@ -21,7 +21,7 @@ type criticalVariables = {
 
   first?: FirstVariable;
 };
-type CallbackFn<TData> = (data: TData) => Promise<void>;
+type CallbackFn<TData> = (data: TData) => Promise<void> | void;
 export type PageInfo = {
   hasNextPage: boolean;
   endCursor: string;
@@ -41,7 +41,7 @@ export interface IRecursiveLoadParties<TData, TVariables> {
   variables?: TVariables & criticalVariables;
 
   /**
-   * Асинхронная функция, выполняемая для каждой партии
+   * Функция или асинхронная функция, выполняемая для каждой партии
    *
    * @param data
    */
@@ -94,7 +94,6 @@ export async function recursiveLoadParties<
     const { data } = await client.query({
       query,
       variables,
-      fetchPolicy: "network-only",
     });
 
     await callbackFn(data);

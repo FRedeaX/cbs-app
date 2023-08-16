@@ -1,10 +1,12 @@
-/* eslint-disable no-underscore-dangle */
 import { useRouter } from "next/router";
 import { FocusEvent, KeyboardEvent, MouseEvent, useCallback } from "react";
 
-import { SEARCH_PATHNAME } from "../../../../../constants";
-import { createSearchLink } from "../../../utils/createSearchLink";
+import { SearchParams } from "@/core/elastic/type";
+import { createQueryLink } from "@/helpers";
+import { SEARCH_PATHNAME } from "@/constants";
+
 import { useSuggestionContext } from "../context";
+
 import { clampLoop } from "./clampLoop";
 
 type OnClickLink = (event: MouseEvent<HTMLAnchorElement>) => void;
@@ -28,9 +30,9 @@ export const useSuggestion = () => {
   const onClickLink = useCallback<OnClickLink>(
     ({ currentTarget }) => {
       routerPush(
-        createSearchLink(
-          { text: currentTarget.innerText },
+        createQueryLink<SearchParams>(
           `${window.location.origin}/${SEARCH_PATHNAME}`,
+          { text: currentTarget.innerText },
         ),
         undefined,
         {
@@ -83,10 +85,9 @@ export const useSuggestion = () => {
 
           const { _source } = suggestionList[highlightedIndex];
           routerPush(
-            createSearchLink(
-              { text: _source.title },
-              `${window.location.origin}/${SEARCH_PATHNAME}`,
-            ),
+            createQueryLink(`${window.location.origin}/${SEARCH_PATHNAME}`, {
+              text: _source.title,
+            }),
             undefined,
             {
               shallow: true,
