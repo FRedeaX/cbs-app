@@ -15,9 +15,7 @@
   .media {
     --image-border-radius: 0;
     --gallery-border-radius: 0;
-    --page-padding-sides: calc(
-      var(--g-article-padding-sides) + var(--g-layout-padding-sides)
-    );
+    --page-padding-sides: var(--g-article-padding-sides);
 
     margin-right: calc(var(--page-padding-sides) * -1);
     margin-left: calc(var(--page-padding-sides) * -1);

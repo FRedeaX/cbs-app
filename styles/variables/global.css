@@ -56,7 +56,7 @@
   --menu-link: var(--black);
   --border-link: var(--accent-color);
   --secondary-color: var(--gray);
-  --g-article-padding-sides: 5px;
+  --g-article-padding-sides: 15px;
   --g-image-border-radius: 12px;
   --g-block-margin-top: 6px;
   --g-block-margin-bottom: 20px;
