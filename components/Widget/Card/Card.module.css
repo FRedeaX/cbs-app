@@ -56,9 +56,9 @@
 
 @media screen and (width <= 652px) {
   .item {
-    width: calc(100% - var(--margin-x) * 2);
+    width: calc(var(--card-width, 100%) - var(--margin-x) * 2);
     max-width: 400px;
-    margin: var(--margin-y) auto;
+    margin: var(--margin-y) var(--margin-x);
   }
 }
 
