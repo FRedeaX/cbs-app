@@ -175,7 +175,7 @@ export const lightTheme = createTheme(
         // @ts-ignore
         textWrap: `balance`,
         color: `rgba(30, 30, 30, 0.9)`,
-        paddingLeft: `calc(var(--gap) * 2)`,
+        paddingLeft: `calc(var(--gap) * 2.5)`,
       },
       responsiveText: {
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,

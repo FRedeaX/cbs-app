@@ -23,6 +23,8 @@ export const sxSection: ContainerProps["sx"] = {
 
 export const sxTitle: TypographyProps["sx"] = {
   width: "100%",
+  marginLeft: "calc(var(--gap) * -1)",
+  paddingBottom: "calc(var(--gap) / 2)",
 };
 
 export const sxPagination: PaginationProps["sx"] = {

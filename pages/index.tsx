@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { getMenu, getPosts, getPosters } from "@/core/ssr";
+import { getMenu, getPosts, getPosters, getResources } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { HomeLayout, HomePage } from "@/routes/Home";
@@ -12,6 +12,7 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPosts>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  resources: Awaited<ReturnType<typeof getResources>>;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -21,11 +22,13 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPosts();
     const postersData = getPosters.load().then(getPosters.filter);
+    const resourcesData = getResources();
 
-    const [menu, posts, posters] = await Promise.all([
+    const [menu, posts, posters, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      resourcesData,
     ]);
 
     return {
@@ -33,6 +36,7 @@ export const getStaticProps: GetStaticProps<
         menu,
         posters,
         posts,
+        resources,
       },
       revalidate: REVALIDATE.POST,
     };
@@ -44,10 +48,10 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, posters, posts }) => (
+const Home: NextPage<HomeProps> = ({ menu, posters, resources, posts }) => (
   <Layout menu={menu}>
     <SEO description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
-    <HomeLayout posters={posters}>
+    <HomeLayout posters={posters} resources={resources}>
       <HomePage
         posts={posts.data}
         pagination={{ count: posts.pageCount, uri: "/post" }}
