@@ -9,10 +9,6 @@ export const sxSection: ContainerProps["sx"] = {
   "--card-margin-x": "calc(var(--gap) / 2)",
   "--card-margin-y": "calc(var(--gap) / 2)",
 
-  "@media (max-width: 652px)": {
-    "--card-margin-x": "auto",
-  },
-
   "@media (min-width: 1013px)": {
     "--carousel-button-left": "-28px",
     "--carousel-button-right": "-28px",
@@ -20,14 +16,17 @@ export const sxSection: ContainerProps["sx"] = {
 
   display: "flex",
   flexWrap: "wrap",
+  justifyContent: "center",
   paddingY: "var(--gap)",
   paddingX: "calc(var(--gap) / 2)",
 };
 
 export const sxTitle: TypographyProps["sx"] = {
   width: "100%",
+  marginLeft: "calc(var(--gap) * -1)",
+  paddingBottom: "calc(var(--gap) / 2)",
 };
 
 export const sxPagination: PaginationProps["sx"] = {
-  padding: "var(--gap)",
+  margin: "calc(var(--gap) * 1.5) var(--gap)",
 };
