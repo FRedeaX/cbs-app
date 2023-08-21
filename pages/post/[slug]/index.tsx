@@ -33,7 +33,7 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
-  post: Awaited<ReturnType<typeof getPost>>;
+  post: NonNullable<Awaited<ReturnType<typeof getPost>>>;
 };
 
 interface Params extends ParsedUrlQuery {
@@ -52,7 +52,12 @@ export const getStaticProps: GetStaticProps<
 
     const menuData = getMenu();
     const postData = getPost({ slug });
+
     const [menu, post] = await Promise.all([menuData, postData]);
+
+    if (post === null) {
+      return staticNotFound;
+    }
 
     return {
       props: {

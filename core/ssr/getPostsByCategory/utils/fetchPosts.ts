@@ -1,6 +1,7 @@
 import { client } from "@/lib/apollo/client";
 
 import { addsFeaturesToPost } from "../../utils/addsFeaturesToPost";
+import { SSRError } from "../../utils/ssrEror";
 import {
   PostsByCategoryQuery,
   postsByCategoryQuery,
@@ -29,11 +30,14 @@ export const fetchPosts = async ({
   first = 10,
   cursor = "",
 }: FetchPosts) => {
-  const { data, error } = await client.query<PostsByCategoryQuery>({
+  const { data, error, errors } = await client.query<PostsByCategoryQuery>({
     query: postsByCategoryQuery,
     variables: { id, first, cursor },
   });
-  if (error !== undefined) throw error;
+  if (error !== undefined) {
+    throw new SSRError(error.message, { error, slug: id, first, cursor });
+  }
+  if (data === undefined) throw errors;
   const { nodes } = data.category.posts;
   if (nodes.length === 0) return { data: null, pageInfo: null };
 

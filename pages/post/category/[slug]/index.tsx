@@ -4,6 +4,7 @@ import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { getMenu, getPosters, getPostsByCategory } from "@/core/ssr";
+import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { HomeLayout, HomePage } from "@/routes/Home";
@@ -66,7 +67,9 @@ export const getStaticProps: GetStaticProps<
     const name = posts.data?.[0].categories.nodes.find(
       (node) => node.slug === slug,
     )?.name;
-    if (name === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    if (name === undefined) {
+      throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { slug });
+    }
 
     return {
       props: {

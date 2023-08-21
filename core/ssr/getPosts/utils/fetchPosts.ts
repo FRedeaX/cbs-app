@@ -3,6 +3,7 @@ import { removeDuplicateTag } from "@/core/post";
 import { flatPromise } from "@/helpers";
 
 import { addsFeaturesToPost } from "../../utils/addsFeaturesToPost";
+import { SSRError } from "../../utils/ssrEror";
 import { PostListQuery, postListQuery } from "../gql/postListGQL";
 
 export type FetchPosts = {
@@ -29,11 +30,14 @@ export const fetchPosts = async ({
   cursor = "",
   tagNotIn,
 }: FetchPosts = {}) => {
-  const { data, error } = await client.query<PostListQuery>({
+  const { data, error, errors } = await client.query<PostListQuery>({
     query: postListQuery,
     variables: { first, cursor, tagNotIn },
   });
-  if (error !== undefined) throw error;
+  if (error !== undefined) {
+    throw new SSRError(error.message, { error, first, cursor, tagNotIn });
+  }
+  if (data === undefined) throw errors;
   const { nodes } = data.posts;
   if (nodes.length === 0) return { data: null, pageInfo: null };
 

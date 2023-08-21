@@ -1,9 +1,9 @@
 import { transformBlocks } from "@/core/backend/transformBlocks";
 import { Nullable } from "@/helpers/typings/utility-types";
-import { ERROR_MESSAGE } from "@/constants";
 
 import { addsFeaturesToPage } from "../../utils/addsFeaturesToPage";
 import { isSkipPage } from "../../utils/isSkipPage";
+import { SSRError } from "../../utils/ssrEror";
 import { clientGetPageQuery } from "../gql/getPageGQL";
 
 export type FetchPage = {
@@ -38,10 +38,12 @@ export const fetchPage = async ({
     },
   });
 
-  if (error !== undefined) throw error;
+  if (error !== undefined) {
+    throw new SSRError(error.message, { error, uri: id, first, cursor });
+  }
   if (data === undefined) throw errors;
   if (data.page === null || isSkipPage(data.page)) {
-    throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    return { page: null, children: null };
   }
 
   const { children, ...page } = data.page;
@@ -51,7 +53,7 @@ export const fetchPage = async ({
     blocks.length === 0 ? { nodes: [], pageInfo: children.pageInfo } : null;
 
   if (childrenData !== null) {
-    type ChildrenList = Promise<(typeof children)["nodes"][0]>[];
+    type ChildrenList = Promise<typeof children["nodes"][0]>[];
     const childrenList = children.nodes.reduce<ChildrenList>((acc, element) => {
       if (isSkipPage(element)) return acc;
       acc.push(addsFeaturesToPage(element));

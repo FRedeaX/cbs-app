@@ -2,6 +2,7 @@ import { getLastPageNumber } from "@/core/pagination";
 import { ERROR_MESSAGE } from "@/constants";
 
 import { getPageNumberFromPath } from "../utils/getPageNumberFromPath";
+import { SSRError } from "../utils/ssrEror";
 
 import { FetchPage, fetchPage } from "./utils/fetchPage";
 import { fetchPaginations } from "./utils/fetchPaginations";
@@ -18,7 +19,9 @@ export const getPage = async (pathname: string[]) => {
   if (pageNumber) {
     paginationList = await fetchPaginations({ uri });
     const currentPage = paginationList[pageNumber - 1];
-    if (currentPage === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    if (currentPage === undefined) {
+      throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { pathname });
+    }
     const { cursor } = currentPage;
 
     variables = {
