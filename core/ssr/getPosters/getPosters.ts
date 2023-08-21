@@ -5,9 +5,10 @@ import { dateConversion, sort } from "./utils";
 
 export const getPosters = async () => {
   try {
-    const { data, error } = await clientGetPosterQuery();
+    const { data, error, errors } = await clientGetPosterQuery();
 
     if (error !== undefined) throw error;
+    if (data === undefined) throw errors;
     if (data.posters.nodes.length === 0) return null;
 
     const convert = dateConversion(data.posters.nodes);

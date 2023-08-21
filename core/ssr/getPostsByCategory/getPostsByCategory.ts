@@ -1,6 +1,8 @@
 import { getLastPageNumber } from "@/core/pagination";
 import { ERROR_MESSAGE } from "@/constants";
 
+import { SSRError } from "../utils/ssrEror";
+
 import { fetchPaginations } from "./utils/fetchPaginations";
 import { FetchPosts, fetchPosts } from "./utils/fetchPosts";
 
@@ -25,7 +27,9 @@ export const getPostsByCategory = async ({
   if (page) {
     paginationList = await fetchPaginations({ slug });
     const currentPage = paginationList[page - 1];
-    if (currentPage === undefined) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    if (currentPage === undefined) {
+      throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { slug, page });
+    }
     const { cursor } = currentPage;
 
     variables = {

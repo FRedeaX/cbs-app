@@ -24,6 +24,14 @@ export type Defaultize<TSource, TKeys extends keyof TSource> = TSource & {
 };
 
 /**
+ * Возвращает тип в котором переданные ключи не являются null или undefined.
+ */
+export type NonNullableKey<TSource, TKeys extends keyof TSource> = TSource & {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [P in TKeys]: TSource[P] & {};
+};
+
+/**
  * Возвращает тип функции которая ничего не возвращает.
  */
 export type Void = () => void;

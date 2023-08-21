@@ -1,6 +1,7 @@
 import { transformBlocks } from "@/core/backend/transformBlocks";
 import { splitDepartmentAndCategories } from "@/helpers/backend";
-import { ERROR_MESSAGE } from "@/constants";
+
+import { SSRError } from "../utils/ssrEror";
 
 import { clientGetPostQuery } from "./gql/getPostGQL";
 
@@ -16,10 +17,12 @@ export const getPost = async ({ slug: id }: GetPost) => {
     variables: { id, type: "SLUG" },
   });
 
-  if (error !== undefined) throw error;
+  if (error !== undefined) {
+    throw new SSRError(error.message, { error, slug: id });
+  }
   if (data === undefined) throw errors;
   const { post } = data;
-  if (post === null) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+  if (post === null) return null;
 
   const { blocks, video } = await transformBlocks(post.blocks);
 
