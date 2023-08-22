@@ -21,7 +21,7 @@ type HomeLayoutProps = {
     title: string;
     uri: string;
     children: {
-      nodes: ResourceProps[];
+      nodes: (ResourceProps & { id: string })[];
     };
   }>;
 };
@@ -31,7 +31,11 @@ export const HomeLayout: FC<HomeLayoutProps> = ({
   posters,
   resources,
 }) => {
-  const isTabs = !!posters && !!resources;
+  const isTabs =
+    posters &&
+    posters.length > 0 &&
+    resources &&
+    resources.children.nodes.length > 0;
 
   return (
     <Container sx={sxContainer} maxWidth="lg" disableGutters>

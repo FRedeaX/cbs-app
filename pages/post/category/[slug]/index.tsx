@@ -3,7 +3,12 @@ import { ParsedUrlQuery } from "querystring";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { getMenu, getPosters, getPostsByCategory } from "@/core/ssr";
+import {
+  getMenu,
+  getPosters,
+  getPostsByCategory,
+  getResources,
+} from "@/core/ssr";
 import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
@@ -37,6 +42,7 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPostsByCategory>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  resources: Awaited<ReturnType<typeof getResources>>;
   name: string;
 };
 
@@ -57,11 +63,13 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPostsByCategory({ slug });
     const postersData = getPosters.load().then(getPosters.filter);
+    const resourcesData = getResources();
 
-    const [menu, posts, posters] = await Promise.all([
+    const [menu, posts, posters, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      resourcesData,
     ]);
 
     const name = posts.data?.[0].categories.nodes.find(
@@ -77,6 +85,7 @@ export const getStaticProps: GetStaticProps<
         name,
         posts,
         posters,
+        resources,
       },
       revalidate: REVALIDATE.POST,
     };
@@ -88,7 +97,13 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, name, posters, posts }) => {
+const Home: NextPage<HomeProps> = ({
+  menu,
+  name,
+  posts,
+  posters,
+  resources,
+}) => {
   const {
     isFallback,
     query: { slug },
@@ -99,7 +114,7 @@ const Home: NextPage<HomeProps> = ({ menu, name, posters, posts }) => {
         title={`Категория: ${name}`}
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />
-      <HomeLayout posters={posters}>
+      <HomeLayout posters={posters} resources={resources}>
         <HomePage
           posts={posts.data}
           pagination={{ count: posts.pageCount, uri: `/post/category/${slug}` }}
