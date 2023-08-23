@@ -1,5 +1,4 @@
 import { exceptionLog } from "@/helpers";
-import { ERROR_MESSAGE } from "@/constants";
 
 import { clientGetResourcesQuery } from "./gql/getResourcesGQL";
 
@@ -12,7 +11,7 @@ export const getResources = async () => {
     if (error !== undefined) throw error;
     if (data === undefined) throw errors;
     const { page } = data;
-    if (page === null) throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
+    if (page === null) return null;
 
     const { length } = page.children.nodes;
     const nodes = page.children.nodes.sort((a, b) => {
