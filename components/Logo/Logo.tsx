@@ -13,7 +13,7 @@ export const Logo = () => (
         src={logo}
         width={75}
         height={75}
-        // className={classes.image}
+        className={classes.image}
         // classNamePlaceholder={classes.placeholder}
       />
     </a>
