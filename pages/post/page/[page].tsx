@@ -3,7 +3,7 @@ import { ParsedUrlQuery } from "querystring";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { getMenu, getPosters, getPosts } from "@/core/ssr";
+import { getMenu, getPosters, getPosts, getResources } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { HomeLayout, HomePage } from "@/routes/Home";
@@ -20,7 +20,9 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPosts>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  resources: Awaited<ReturnType<typeof getResources>>;
 };
+
 interface Params extends ParsedUrlQuery {
   page: string;
 }
@@ -42,11 +44,13 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPosts({ page });
     const postersData = getPosters.load().then(getPosters.filter);
+    const resourcesData = getResources();
 
-    const [menu, posts, posters] = await Promise.all([
+    const [menu, posts, posters, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      resourcesData,
     ]);
 
     return {
@@ -54,6 +58,7 @@ export const getStaticProps: GetStaticProps<
         menu,
         posts,
         posters,
+        resources,
       },
       revalidate: REVALIDATE.POST,
     };
@@ -65,7 +70,7 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, posts, posters }) => {
+const Home: NextPage<HomeProps> = ({ menu, posts, posters, resources }) => {
   const {
     isFallback,
     query: { page },
@@ -77,7 +82,7 @@ const Home: NextPage<HomeProps> = ({ menu, posts, posters }) => {
         title={`Страница ${page}`}
         description={`Мероприятия библиотек города Байконур, страница №${page}`}
       />
-      <HomeLayout posters={posters}>
+      <HomeLayout posters={posters} resources={resources}>
         <HomePage
           posts={posts.data}
           pagination={{ count: posts.pageCount, uri: "/post" }}

@@ -5,7 +5,7 @@ import { FC } from "react";
 
 import { usePreventScroll, useToggle } from "@/helpers/frontend/hooks";
 import { CSSProperties, Nullable } from "@/helpers/typings/utility-types";
-import Logo from "@/components/Logo/Logo";
+import { Logo } from "@/components/Logo/Logo";
 import { KeyDownAwayListener } from "@/base";
 
 import { HeaderSearch } from "./Header.Search/Header.Search";
