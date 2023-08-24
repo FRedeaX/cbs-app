@@ -14,7 +14,7 @@ const fetcher = (
     typeof fetcherData<SearchResponseFrontend, SearchParams>
   >[0],
 ) =>
-  fetcherData<SearchResponseFrontend, SearchParams>({ ...arggs }).then((data) =>
+  fetcherData<SearchResponseFrontend, SearchParams>(arggs).then((data) =>
     convertData(data.hits.hits),
   );
 
