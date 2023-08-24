@@ -1,7 +1,5 @@
 import { ApiError } from "next/dist/server/api-utils";
 
-import { isEmptyString } from "@/helpers";
-
 import { esClient } from "../../../lib/elastic/client";
 import { reverseKeyboard } from "../../reverseKeyboard";
 
@@ -19,17 +17,8 @@ export const searchQuery = async (
 ): Promise<SearchResponseFrontend> => {
   const text = typeof query.text === "string" ? query.text.trim() : null;
   const reverseLanguageText = text ? reverseKeyboard(text, "EngToRus") : "";
-
-  const departmentsData = query.departments ?? "";
-  const departments = isEmptyString(departmentsData)
-    ? null
-    : departmentsData.split(",");
-
-  const categoriesData = query.categories ?? "";
-  const categories = isEmptyString(categoriesData)
-    ? null
-    : categoriesData.split(",");
-
+  const departments = query.departments?.split(",") ?? null;
+  const categories = query.categories?.split(",") ?? null;
   const page = parseInt(query.page ?? "1", 10) - 1;
   const rangeDate = {
     gt: typeof query.gtDate === "string" ? query.gtDate : undefined,
