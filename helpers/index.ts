@@ -12,6 +12,7 @@ export * from "./fetcherData";
 export * from "./flatPromise";
 export * from "./hasAppendPathname";
 export * from "./isEmptyArray";
+export * from "./isEmptyString";
 export * from "./isFront";
 export * as localStorage from "./localStorage";
 export * from "./noop";
