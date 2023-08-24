@@ -1,10 +1,16 @@
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
+import dynamic from "next/dynamic";
 import { FC, ReactNode } from "react";
 
-import { Void } from "../../../../helpers/typings/utility-types";
+import { Void } from "@/helpers/typings/utility-types";
+
 import classes from "./ImageViewer.Header.module.css";
+
+const DynamicTooltip = dynamic(() => import("@mui/material/Tooltip"), {
+  ssr: true,
+});
 
 type ImageViewerHeaderProps = {
   children?: ReactNode;
@@ -21,17 +27,17 @@ export const ImageViewerHeader: FC<ImageViewerHeaderProps> = ({
     {children}
     <div className={classes.controls}>
       {hrefDownload && (
-        <Tooltip title="Скачать изображение" arrow>
+        <DynamicTooltip title="Скачать изображение" arrow>
           <IconButton href={hrefDownload} download target="_blank">
             <ArrowDownwardRoundedIcon />
           </IconButton>
-        </Tooltip>
+        </DynamicTooltip>
       )}
-      <Tooltip title="Закрыть" arrow>
+      <DynamicTooltip title="Закрыть" arrow>
         <IconButton onClick={onClose}>
           <CloseRoundedIcon />
         </IconButton>
-      </Tooltip>
+      </DynamicTooltip>
     </div>
   </div>
 );

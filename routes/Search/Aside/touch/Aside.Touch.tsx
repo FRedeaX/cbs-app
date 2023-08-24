@@ -1,26 +1,27 @@
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
-import {
-  Box,
-  Button,
-  Container,
-  SwipeableDrawer,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import { FC, ReactNode, useState } from "react";
 
-import { FilterCleare } from "../../../../components/Search/components/Filter/components/Filter.Cleare/Filter.Cleare";
-import { declOfNum } from "../../../../helpers";
-import {
-  CSSProperties,
-  Maybe,
-} from "../../../../helpers/typings/utility-types";
+import { declOfNum } from "@/helpers";
+import { CSSProperties, Maybe } from "@/helpers/typings/utility-types";
+import { FilterCleare } from "@/components/Search/components/Filter/components/Filter.Cleare/Filter.Cleare";
+
 import {
   sxAsideFilterButton,
   sxAsideHeader,
   sxAsidePaper,
   sxAsideTypography,
 } from "../../style";
+
 import classes from "./Aside.Touch.module.css";
+
+const DynamicSwipeableDrawer = dynamic(
+  () => import("@mui/material/SwipeableDrawer"),
+  {
+    ssr: true,
+  },
+);
 
 type AsideTouchProps = {
   children: ReactNode;
@@ -50,7 +51,7 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
         onClick={() => setOpen(true)}>
         Фильтры
       </Button>
-      <SwipeableDrawer
+      <DynamicSwipeableDrawer
         anchor="bottom"
         disableSwipeToOpen
         onClose={() => setOpen(false)}
@@ -76,7 +77,7 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
             </Typography>
           </Button>
         </Container>
-      </SwipeableDrawer>
+      </DynamicSwipeableDrawer>
     </>
   );
 };
