@@ -20,15 +20,16 @@ export const searchQuery = async (
   const text = typeof query.text === "string" ? query.text.trim() : null;
   const reverseLanguageText = text ? reverseKeyboard(text, "EngToRus") : "";
 
-  const departmentsData = query.departments ?? "";
-  const departments = isEmptyString(departmentsData)
-    ? null
-    : departmentsData.split(",");
+  const departmentsData = query.departments;
+  const isEmptyDepartments =
+    !!departmentsData && isEmptyString(departmentsData);
+  const departments =
+    isEmptyDepartments || !departmentsData ? null : departmentsData.split(",");
 
-  const categoriesData = query.categories ?? "";
-  const categories = isEmptyString(categoriesData)
-    ? null
-    : categoriesData.split(",");
+  const categoriesData = query.categories;
+  const isEmptyCategories = !!categoriesData && isEmptyString(categoriesData);
+  const categories =
+    isEmptyCategories || !categoriesData ? null : categoriesData.split(",");
 
   const page = parseInt(query.page ?? "1", 10) - 1;
   const rangeDate = {

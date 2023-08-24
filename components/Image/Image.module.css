@@ -55,14 +55,11 @@
 
 .image_loaded {
   visibility: visible;
+  animation: image-fade-in 0.4s ease forwards;
 }
 
 .image_loading {
   opacity: 0;
-}
-
-.image_animated {
-  animation: image-fade-in 0.4s ease forwards;
 }
 
 @keyframes image-fade-in {
