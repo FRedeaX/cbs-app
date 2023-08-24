@@ -46,9 +46,9 @@
 }
 
 .logo {
-  width: calc(var(--header-height) - 20px);
-  height: calc(var(--header-height) - 20px);
-  margin: 10px 0;
+  min-width: calc(var(--header-height) - 25px);
+  height: calc(var(--header-height) - 25px);
+  margin: 12.5px 0;
 }
 
 .menu {
