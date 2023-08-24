@@ -46,6 +46,7 @@
 }
 
 .logo {
+  width: calc(var(--header-height) - 25px);
   min-width: calc(var(--header-height) - 25px);
   height: calc(var(--header-height) - 25px);
   margin: 12.5px 0;
