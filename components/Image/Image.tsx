@@ -2,13 +2,11 @@
 import { Skeleton } from "@mui/material";
 import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/future/image";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 import { Nullable } from "../../helpers/typings/utility-types";
 
 import classes from "./Image.module.css";
-
-const ANIMATION_DELAY_MS = 50;
 
 export type ImageProps = {
   /**
@@ -40,37 +38,7 @@ export const Image: FC<ImageProps> = ({
   ...prop
 }) => {
   const [isLoaded, setLoaded] = useState(false);
-  const [needAnimation, setNeedAnimation] = useState(false);
   const [canRemovePlaceholder, setCanRemovePlaceholder] = useState(false);
-
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  const isRendered = useCallback(() => {
-    if (!imageRef.current) {
-      return false;
-    }
-    const { naturalWidth, naturalHeight } = imageRef.current;
-
-    return naturalWidth > 0 && naturalHeight > 0;
-  }, [imageRef]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isLoaded && !isRendered()) {
-        setNeedAnimation(true);
-      }
-    }, ANIMATION_DELAY_MS);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isLoaded, isRendered, setNeedAnimation]);
-
-  useEffect(() => {
-    if (!isLoaded && imageRef.current && imageRef.current.complete) {
-      setLoaded(true);
-    }
-  }, [isLoaded]);
 
   const handleOnAnimationEnd = useCallback(() => {
     setCanRemovePlaceholder(true);
@@ -82,8 +50,7 @@ export const Image: FC<ImageProps> = ({
 
   const imageClassNames = classNames(classes.image, className, {
     [classes.image_loaded]: isLoaded,
-    [classes.image_loading]: needAnimation,
-    [classes.image_animated]: needAnimation && isLoaded,
+    [classes.image_loading]: !isLoaded,
   });
 
   const image = (
@@ -103,7 +70,7 @@ export const Image: FC<ImageProps> = ({
   if (blurDataURL) {
     return (
       <div className={classNames(classes.placeholder, classNamePlaceholder)}>
-        {needAnimation && !canRemovePlaceholder && (
+        {!canRemovePlaceholder && (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
