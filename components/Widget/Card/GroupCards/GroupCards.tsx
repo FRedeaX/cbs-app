@@ -15,6 +15,10 @@ type GroupCardsProps = {
    * @default false
    */
   isClamp?: boolean;
+  /**
+   * @default false
+   */
+  isImagePriority: boolean;
 };
 
 export const GroupCards: FC<GroupCardsProps> = ({
@@ -22,6 +26,7 @@ export const GroupCards: FC<GroupCardsProps> = ({
   title,
   description,
   isClamp = false,
+  isImagePriority = false,
 }) => {
   const { length } = data;
 
@@ -54,7 +59,7 @@ export const GroupCards: FC<GroupCardsProps> = ({
             className={classNames(classes.article, {
               [classes.article_size_l]: length === 2,
             })}
-            imagePriority={index < 3}
+            imagePriority={isImagePriority && index < 3}
           />
         ))}
       </CarouselRoot>

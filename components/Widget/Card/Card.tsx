@@ -90,7 +90,7 @@ export const Card: FC<ICardProps> = forwardRef(
               width={355}
               height={200}
               blurDataURL={featuredImage.node.blurDataURL || null}
-              priority={imagePriority}
+              loading={imagePriority ? "eager" : "lazy"}
               alt=""
             />
           </div>

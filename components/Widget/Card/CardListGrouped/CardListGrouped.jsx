@@ -17,6 +17,7 @@ const CardListGrouped = ({ data }) => {
           data={tags.posts.nodes}
           title={tags.name}
           description={tags.description}
+          isImagePriority={index === 0}
         />
       );
     }
@@ -36,7 +37,7 @@ const CardListGrouped = ({ data }) => {
         data={post}
         isHorizontal
         isBig={isBig}
-        index={index}
+        imagePriority={index < 3}
       />
     );
   });
