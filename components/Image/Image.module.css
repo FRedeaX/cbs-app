@@ -1,6 +1,39 @@
-.placeholder {
+.root {
   position: relative;
   overflow: hidden;
+  border-radius: var(--image-border-radius, var(--g-image-border-radius));
+}
+
+.image {
+  display: flex;
+
+  max-width: 100%;
+  height: auto;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font: 0 / 0 a;
+
+  border: 0;
+}
+
+.placeholder_animated {
+  animation: placeholder-fade-out 0.4s ease forwards;
+}
+
+@keyframes placeholder-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.backdrop {
+  background-color: var(
+    --image-background-color,
+    var(--background-color-white)
+  );
 }
 
 .blur {
@@ -8,66 +41,27 @@
   filter: blur(var(--image-filter-blur, 10px));
 }
 
+.placeholder,
+.backdrop,
 .blur,
 .skeleton {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
 }
 
-.blur,
-.image {
-  max-width: 100%;
-  height: auto;
-}
-
-.placeholder .blur {
-  object-fit: cover;
-}
-
-.placeholder .skeleton {
-  position: absolute;
+.skeleton {
   transform: none;
   background-color: transparent;
 }
 
-.placeholder .skeleton::after {
+.skeleton::after {
   background: linear-gradient(
     90deg,
     transparent,
     rgba(0, 0, 0, 8%),
     transparent
   );
-}
-
-.placeholder,
-.image {
-  border-radius: var(--image-border-radius, var(--g-image-border-radius));
-}
-
-.image {
-  display: flex;
-
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font: 0 / 0 a;
-  visibility: hidden; /* Позволяет не показывать битые картинки при ошибках загрузки */
-  border: 0;
-}
-
-.image_loaded {
-  visibility: visible;
-  animation: image-fade-in 0.4s ease forwards;
-}
-
-.image_loading {
-  opacity: 0;
-}
-
-@keyframes image-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }

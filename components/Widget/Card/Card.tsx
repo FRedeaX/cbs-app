@@ -86,7 +86,7 @@ export const Card: FC<ICardProps> = forwardRef(
                 [classes["img--horizontal"]]: isHorizontal,
                 [classes.img_big]: isBig,
               })}
-              classNamePlaceholder={classes.image_placeholder}
+              classNameRoot={classes.image_placeholder}
               width={355}
               height={200}
               blurDataURL={featuredImage.node.blurDataURL || null}

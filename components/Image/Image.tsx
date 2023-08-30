@@ -1,18 +1,22 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Skeleton } from "@mui/material";
+import { Fade, Skeleton } from "@mui/material";
 import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/future/image";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useState, useRef, useEffect } from "react";
 
 import { Nullable } from "../../helpers/typings/utility-types";
 
 import classes from "./Image.module.css";
+import { getImageBlurSvg } from "./utils/getImageBlurSvg";
+
+const ANIMATION_DELAY_MS = 50;
 
 export type ImageProps = {
   /**
    * Дополнительный класс для обертки.
    */
-  classNamePlaceholder?: string;
+  classNameRoot?: string;
   /**
    * Заполнитель для отображения во время загрузки картинки.
    */
@@ -27,18 +31,46 @@ export type ImageProps = {
   height: number;
 } & Omit<NextImageProps, "placeholder" | "blurDataURL" | "width" | "height">;
 
+type ImageRef = HTMLDivElement & {
+  children: [HTMLImageElement];
+};
+
 export const Image: FC<ImageProps> = ({
   blurDataURL,
   alt,
   className,
-  classNamePlaceholder,
+  classNameRoot,
   width,
   height,
   src,
-  ...prop
+  ...props
 }) => {
   const [isLoaded, setLoaded] = useState(false);
+  const [needAnimation, setNeedAnimation] = useState(false);
   const [canRemovePlaceholder, setCanRemovePlaceholder] = useState(false);
+
+  const imageRef = useRef<Nullable<ImageRef>>(null);
+
+  const isRendered = useCallback(() => {
+    if (!imageRef.current) {
+      return false;
+    }
+    const { naturalWidth, naturalHeight } = imageRef.current.children[0];
+
+    return naturalWidth > 0 && naturalHeight > 0;
+  }, [imageRef]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isLoaded && !isRendered()) {
+        setNeedAnimation(true);
+      }
+    }, ANIMATION_DELAY_MS);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isLoaded, isRendered, setNeedAnimation]);
 
   const handleOnAnimationEnd = useCallback(() => {
     setCanRemovePlaceholder(true);
@@ -48,51 +80,42 @@ export const Image: FC<ImageProps> = ({
     setLoaded(true);
   }, []);
 
-  const imageClassNames = classNames(classes.image, className, {
-    [classes.image_loaded]: isLoaded,
-    [classes.image_loading]: !isLoaded,
+  const cnPlaceholder = classNames(classes.placeholder, className, {
+    [classes.placeholder_animated]: needAnimation && isLoaded,
   });
 
-  const image = (
-    <NextImage
-      alt={alt}
-      aria-hidden={!alt}
-      src={src}
-      className={imageClassNames}
-      width={width}
-      height={height}
-      onAnimationEnd={handleOnAnimationEnd}
-      onLoadingComplete={handleOnLoad}
-      {...prop}
-    />
-  );
-
-  if (blurDataURL) {
-    return (
-      <div className={classNames(classes.placeholder, classNamePlaceholder)}>
-        {!canRemovePlaceholder && (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+  return (
+    <div ref={imageRef} className={classNames(classes.root, classNameRoot)}>
+      <NextImage
+        alt={alt}
+        aria-hidden={!alt}
+        src={src}
+        className={classNames(classes.image, className)}
+        width={width}
+        height={height}
+        onLoadingComplete={handleOnLoad}
+        placeholder={blurDataURL ? "blur" : "empty"}
+        blurDataURL={blurDataURL ?? undefined}
+        {...props}
+      />
+      {blurDataURL && needAnimation && !canRemovePlaceholder && (
+        <Fade in={needAnimation && !isLoaded} easing="ease" timeout={600}>
+          <div className={cnPlaceholder} onAnimationEnd={handleOnAnimationEnd}>
+            <div className={classes.backdrop} />
             <img
               alt=""
               aria-hidden
-              src={blurDataURL}
-              className={classNames(className, classes.blur)}
-              width={width}
-              height={height}
+              src={`data:image/svg+xml;charset=utf-8,${getImageBlurSvg({
+                width,
+                height,
+                blurDataURL,
+              })}`}
+              className={classes.blur}
             />
-            <Skeleton
-              className={classNames(className, classes.skeleton)}
-              animation="wave"
-              width="100%"
-              height="100%"
-            />
-          </>
-        )}
-        {image}
-      </div>
-    );
-  }
-
-  return image;
+            <Skeleton className={classes.skeleton} animation="wave" />
+          </div>
+        </Fade>
+      )}
+    </div>
+  );
 };
