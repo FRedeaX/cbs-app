@@ -79,7 +79,7 @@ export const GalleryRow: FC<GalleryRowProps> = ({
               height={450 / aspectRatio}
               sizes={`${sizes}vw`}
               className={classes.image}
-              classNamePlaceholder={classes.placeholder}
+              classNameRoot={classes.placeholder}
               loading="lazy"
               blurDataURL={image.blurDataURL}
             />
