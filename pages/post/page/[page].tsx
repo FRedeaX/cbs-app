@@ -4,6 +4,7 @@ import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { getMenu, getPosters, getPosts, getResources } from "@/core/ssr";
+import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { HomeLayout, HomePage } from "@/routes/Home";
@@ -36,9 +37,13 @@ export const getStaticProps: GetStaticProps<
       throw new Error(ERROR_MESSAGE.PAGE_PARAMS_UNDEFINED);
     }
 
+    if (params.page.endsWith(".css.map")) return staticNotFound;
+
     const page = parseInt(params.page, 10);
     if (Number.isNaN(page)) {
-      throw new Error(`pageNumber ${ERROR_MESSAGE.IS_NOT_NUMBER}`);
+      throw new SSRError(`pageNumber ${ERROR_MESSAGE.IS_NOT_NUMBER}`, {
+        params,
+      });
     }
 
     const menuData = getMenu();
