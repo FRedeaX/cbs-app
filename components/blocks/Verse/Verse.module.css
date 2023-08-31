@@ -1,5 +1,5 @@
 .root {
-  --typography-font-family: var(--font-family-roboto-slab);
+  --typography-font-family: var(--font-family-serif);
   --typography-font-size: 1.4375rem;
   --typography-line-height: max(28px, 1.374em);
 
