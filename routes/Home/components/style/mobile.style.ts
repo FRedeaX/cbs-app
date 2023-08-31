@@ -4,7 +4,7 @@ import { BoxProps } from "@mui/material";
 export const sxTabList: BoxProps["sx"] = {
   paddingLeft: `var(--gap)`,
   "& .MuiTab-root": {
-    fontFamily: `var(--font-family-roboto-slab)`,
+    fontFamily: `var(--font-family-serif)`,
     fontSize: `1.25rem`,
     color: `rgba(30, 30, 30, 0.9)`,
     textTransform: `initial`,

@@ -4,7 +4,7 @@
   --pullquote-sides-padding: 30px;
 
   position: relative;
-  font-family: var(--font-family-roboto-slab);
+  font-family: var(--font-family-serif);
   font-style: italic;
 }
 

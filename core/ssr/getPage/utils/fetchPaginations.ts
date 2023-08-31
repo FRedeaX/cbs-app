@@ -20,7 +20,8 @@ export const fetchPaginations = async ({
       query: pagination.gql.CHILDREN_PAGE_PAGINATION,
       id: uri,
       endCursor,
-      pageInfoCallback: (data) => data.page.children.pageInfo,
+      pageInfoCallback: (data) =>
+        data.page?.children?.pageInfo ?? { hasNextPage: false, endCursor: "" },
     });
 
   return paginations;

@@ -15,7 +15,7 @@ export const lightTheme = createTheme(
       fontFamily: `var(--font-family-roboto)`,
       h1: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 2.125rem) -
             (
@@ -33,7 +33,7 @@ export const lightTheme = createTheme(
       },
       h2: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 2rem) -
             (
@@ -48,7 +48,7 @@ export const lightTheme = createTheme(
       },
       h3: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.875rem) -
             (
@@ -63,7 +63,7 @@ export const lightTheme = createTheme(
       },
       h4: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.75rem) -
             (
@@ -77,7 +77,7 @@ export const lightTheme = createTheme(
       },
       h5: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.6875rem) -
             (
@@ -91,7 +91,7 @@ export const lightTheme = createTheme(
       },
       h6: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.625rem) -
             (
@@ -167,7 +167,8 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
       sectionTitle: {
-        fontFamily: `var(--font-family-roboto-slab)`,
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
+        fontFamily: `var(--font-family-serif)`,
         fontSize: `1.25rem`,
         fontWeight: `400`,
         cursor: "default",
@@ -178,6 +179,7 @@ export const lightTheme = createTheme(
         paddingLeft: `calc(var(--gap) * 2.5)`,
       },
       responsiveText: {
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `calc(
           var(--typography-font-size, 1.25rem) -

@@ -7,7 +7,7 @@
 }
 
 .TableHead {
-  --typography-font-family: var(--font-family-roboto-slab);
+  --typography-font-family: var(--font-family-serif);
   --typography-font-size: 1.35rem;
 }
 
