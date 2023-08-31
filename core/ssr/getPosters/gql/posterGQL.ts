@@ -30,7 +30,7 @@ type PosterItemFieldsGQL = {
   };
 };
 
-type GetPosterQuery = {
+export type GetPosterQuery = {
   posters: { nodes: PosterItemFieldsGQL[] };
 };
 

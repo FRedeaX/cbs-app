@@ -1,6 +1,6 @@
 import { Nullable, NullableAll } from "@/helpers/typings/utility-types";
 
-import { PosterGQL } from "../gql/posterGQL";
+import { GetPosterQuery } from "../gql/posterGQL";
 
 type Venue = {
   name: string;
@@ -112,7 +112,7 @@ const isPush = (
  * Преобразует объект posterDate.
  */
 export const dateConversion = (
-  posterList: PosterGQL["posters"]["nodes"],
+  posterList: GetPosterQuery["posters"]["nodes"],
 ): Nullable<IPoster[]> => {
   if (!posterList) return null;
   const result: IPoster[] = [];
