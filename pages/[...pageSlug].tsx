@@ -10,7 +10,6 @@ import {
 import { getMenu, getPage, getPath } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
-import { NonNullableKey } from "@/helpers/typings/utility-types";
 import { RoutePage } from "@/routes/Page/Route.Page";
 import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
@@ -34,7 +33,7 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
-  page: NonNullableKey<Awaited<ReturnType<typeof getPage>>, "data">;
+  page: NonNullable<Awaited<ReturnType<typeof getPage>>>;
 };
 
 interface Params extends ParsedUrlQuery {
@@ -60,7 +59,7 @@ export const getStaticProps: GetStaticProps<
 
     const [menu, page] = await Promise.all([menuData, pageData]);
 
-    if (page.data === null) {
+    if (page === null) {
       return staticNotFound;
     }
 

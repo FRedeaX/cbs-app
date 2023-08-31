@@ -1,14 +1,16 @@
 import { gql } from "@apollo/client";
 
+import { Nullable } from "@/helpers/typings/utility-types";
+
 export type ChildrenPagePaginationGQL = {
-  page: {
+  page: Nullable<{
     children: {
       pageInfo: {
         hasNextPage: boolean;
         endCursor: string;
       };
     };
-  };
+  }>;
 };
 
 export const CHILDREN_PAGE_PAGINATION = gql`

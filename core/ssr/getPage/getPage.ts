@@ -33,6 +33,8 @@ export const getPage = async (pathname: string[]) => {
 
   const { page, children } = await fetchPage(variables);
 
+  if (page === null) return null;
+
   if (!pageNumber) {
     paginationList = await fetchPaginations({
       uri,
