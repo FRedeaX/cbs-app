@@ -41,9 +41,8 @@
   --is-font-size-adaptive: 0;
   --typography-font-size: 1.625rem;
   --typography-font-weight: 600;
-
-  margin-top: 4px;
-  margin-bottom: 4px;
+  --typography-margin-top: 4px;
+  --typography-margin-bottom: 4px;
 }
 
 .description {

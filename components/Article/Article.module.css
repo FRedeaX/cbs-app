@@ -27,6 +27,14 @@
   position: relative;
 }
 
+.blocks {
+  --typography-margin-top: var(--block-margin-top, var(--g-block-margin-top));
+  --typography-margin-bottom: var(
+    --block-margin-bottom,
+    var(--g-block-margin-bottom)
+  );
+}
+
 .Share {
   --social-margin: 0 4px 0 0;
 }

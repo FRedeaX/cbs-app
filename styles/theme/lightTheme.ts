@@ -167,6 +167,7 @@ export const lightTheme = createTheme(
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
       sectionTitle: {
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
         fontFamily: `var(--font-family-serif)`,
         fontSize: `1.25rem`,
         fontWeight: `400`,
@@ -178,6 +179,7 @@ export const lightTheme = createTheme(
         paddingLeft: `calc(var(--gap) * 2.5)`,
       },
       responsiveText: {
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `calc(
           var(--typography-font-size, 1.25rem) -
