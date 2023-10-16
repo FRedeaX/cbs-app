@@ -28,7 +28,8 @@ export const Offer: FC<OfferProps> = ({ id, categories }) => {
     config,
   );
 
-  if (!data || !(data.similarPosts || data.postsByCategory)) return null;
+  if (!data || !(data.similarPosts?.length || data.postsByCategory?.length))
+    return null;
 
   return (
     <OfferTabs
