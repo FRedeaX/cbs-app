@@ -7,7 +7,7 @@ import {
   NextPage,
 } from "next";
 
-import { getMenu, getPage, getPath } from "@/core/ssr";
+import { getMenu, getMetadata, getPage, getPath } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RoutePage } from "@/routes/Page/Route.Page";
@@ -34,6 +34,7 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   page: NonNullable<Awaited<ReturnType<typeof getPage>>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 interface Params extends ParsedUrlQuery {
@@ -56,8 +57,13 @@ export const getStaticProps: GetStaticProps<
 
     const menuData = getMenu();
     const pageData = getPage(pageSlug);
+    const metadataData = getMetadata();
 
-    const [menu, page] = await Promise.all([menuData, pageData]);
+    const [menu, page, metadata] = await Promise.all([
+      menuData,
+      pageData,
+      metadataData,
+    ]);
 
     if (page === null) {
       return staticNotFound;
@@ -67,6 +73,7 @@ export const getStaticProps: GetStaticProps<
       props: {
         menu,
         page: { ...page, data: page.data },
+        metadata,
       },
       revalidate: REVALIDATE.PAGE,
     };
@@ -78,9 +85,10 @@ export const getStaticProps: GetStaticProps<
 
 type PageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Page: NextPage<PageProps> = ({ menu, page }) => (
+const Page: NextPage<PageProps> = ({ menu, page, metadata }) => (
   <Layout menu={menu}>
     <SEO
+      domenTitle={metadata.title}
       title={page.data.title}
       description={page.data.excerpt}
       video={page.data.video}

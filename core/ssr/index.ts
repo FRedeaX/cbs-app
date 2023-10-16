@@ -8,3 +8,4 @@ export * from "./getPosts/getPosts";
 export * from "./getPostsByCategory/getPostsByCategory";
 export * from "./getResources/getResources";
 export * as getPosters from "./getPosters";
+export * from "./getMetadata/getMetadata";

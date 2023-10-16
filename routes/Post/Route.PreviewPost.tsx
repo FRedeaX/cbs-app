@@ -11,9 +11,13 @@ import { RoutePost } from "./Route.Post";
 
 type RoutePreviewPostProps = {
   id: number;
+  domenTitle: string;
 };
 
-export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({ id }) => {
+export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({
+  id,
+  domenTitle,
+}) => {
   const timeNow = Date.now();
 
   const {
@@ -49,8 +53,9 @@ export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({ id }) => {
 
   return (
     <>
-      <TitleIntervalUpdate timeNow={timeNow} />
+      <TitleIntervalUpdate domenTitle={domenTitle} timeNow={timeNow} />
       <SEO
+        domenTitle={domenTitle}
         title={loading ? "Загрузка..." : data.post.title}
         description={data.post.excerpt}
         video={blocks.data.video}

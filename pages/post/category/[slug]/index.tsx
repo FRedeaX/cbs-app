@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 import {
   getMenu,
+  getMetadata,
   getPosters,
   getPostsByCategory,
   getResources,
@@ -42,6 +43,7 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPostsByCategory>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
   resources: Awaited<ReturnType<typeof getResources>>;
   name: string;
 };
@@ -63,12 +65,14 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPostsByCategory({ slug });
     const postersData = getPosters.load().then(getPosters.filter);
+    const metadataData = getMetadata();
     const resourcesData = getResources();
 
-    const [menu, posts, posters, resources] = await Promise.all([
+    const [menu, posts, posters, metadata, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      metadataData,
       resourcesData,
     ]);
 
@@ -85,6 +89,7 @@ export const getStaticProps: GetStaticProps<
         name,
         posts,
         posters,
+        metadata,
         resources,
       },
       revalidate: REVALIDATE.POST,
@@ -102,6 +107,7 @@ const Home: NextPage<HomeProps> = ({
   name,
   posts,
   posters,
+  metadata,
   resources,
 }) => {
   const {
@@ -111,6 +117,7 @@ const Home: NextPage<HomeProps> = ({
   return (
     <Layout menu={menu} pageLoading={isFallback}>
       <SEO
+        domenTitle={metadata.title}
         title={`Категория: ${name}`}
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />

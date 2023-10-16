@@ -5,7 +5,7 @@ import {
   NextPage,
 } from "next";
 
-import { getMenu, getBiblioteki } from "@/core/ssr";
+import { getMenu, getBiblioteki, getMetadata } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { Library } from "@/components/Pages/Library/Library";
@@ -15,6 +15,7 @@ import { Layout } from "@/components/UI/Layout/Layout";
 type GetServerSidePropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   page: Awaited<ReturnType<typeof getBiblioteki>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 export const getServerSideProps: GetServerSideProps<
@@ -23,11 +24,16 @@ export const getServerSideProps: GetServerSideProps<
   try {
     const menuData = getMenu();
     const pageData = getBiblioteki();
+    const metadataData = getMetadata();
 
-    const [menu, page] = await Promise.all([menuData, pageData]);
+    const [menu, page, metadata] = await Promise.all([
+      menuData,
+      pageData,
+      metadataData,
+    ]);
 
     return {
-      props: { menu, page },
+      props: { menu, page, metadata },
     };
   } catch (error) {
     exceptionLog(error);
@@ -37,9 +43,13 @@ export const getServerSideProps: GetServerSideProps<
 
 type BibliotekiProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Biblioteki: NextPage<BibliotekiProps> = ({ menu, page }) => (
+const Biblioteki: NextPage<BibliotekiProps> = ({ menu, page, metadata }) => (
   <Layout menu={menu}>
-    <SEO title={page.title} description={page.excerpt} />
+    <SEO
+      domenTitle={metadata.title}
+      title={page.title}
+      description={page.excerpt}
+    />
     <Container maxWidth="xl">
       <Library filialList={page.filialList} />
     </Container>

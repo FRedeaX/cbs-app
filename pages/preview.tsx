@@ -7,7 +7,7 @@ import {
 } from "next";
 import dynamic from "next/dynamic";
 
-import { getMenu } from "@/core/ssr";
+import { getMenu, getMetadata } from "@/core/ssr";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE } from "@/constants";
 
@@ -16,6 +16,7 @@ const previewType: string[] = ["page", "post", "poster"];
 
 type GetServerSidePropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
   id: number;
   type: PreviewType;
 };
@@ -42,10 +43,15 @@ export const getServerSideProps: GetServerSideProps<
     throw new Error(`previewID ${ERROR_MESSAGE.IS_NOT_NUMBER}`);
   }
 
-  const menu = await getMenu();
+  const menuData = getMenu();
+  const metadataData = getMetadata();
+
+  const [menu, metadata] = await Promise.all([menuData, metadataData]);
+
   return {
     props: {
       menu,
+      metadata,
       id: previewID,
       type: type as PreviewType,
     },
@@ -63,9 +69,9 @@ const PreviewRender = dynamic(
 
 type PreviewProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Preview: NextPage<PreviewProps> = ({ menu, id, type }) => (
+const Preview: NextPage<PreviewProps> = ({ menu, metadata, id, type }) => (
   <Layout menu={menu}>
-    <PreviewRender id={id} type={type} />
+    <PreviewRender id={id} type={type} domenTitle={metadata.title} />
   </Layout>
 );
 

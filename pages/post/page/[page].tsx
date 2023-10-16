@@ -3,7 +3,13 @@ import { ParsedUrlQuery } from "querystring";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { getMenu, getPosters, getPosts, getResources } from "@/core/ssr";
+import {
+  getMenu,
+  getMetadata,
+  getPosters,
+  getPosts,
+  getResources,
+} from "@/core/ssr";
 import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
@@ -21,6 +27,7 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPosts>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
   resources: Awaited<ReturnType<typeof getResources>>;
 };
 
@@ -49,12 +56,14 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPosts({ page });
     const postersData = getPosters.load().then(getPosters.filter);
+    const metadataData = getMetadata();
     const resourcesData = getResources();
 
-    const [menu, posts, posters, resources] = await Promise.all([
+    const [menu, posts, posters, metadata, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      metadataData,
       resourcesData,
     ]);
 
@@ -63,6 +72,7 @@ export const getStaticProps: GetStaticProps<
         menu,
         posts,
         posters,
+        metadata,
         resources,
       },
       revalidate: REVALIDATE.POST,
@@ -75,7 +85,13 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, posts, posters, resources }) => {
+const Home: NextPage<HomeProps> = ({
+  menu,
+  posts,
+  posters,
+  metadata,
+  resources,
+}) => {
   const {
     isFallback,
     query: { page },
@@ -84,6 +100,7 @@ const Home: NextPage<HomeProps> = ({ menu, posts, posters, resources }) => {
   return (
     <Layout menu={menu} pageLoading={isFallback}>
       <SEO
+        domenTitle={metadata.title}
         title={`Страница ${page}`}
         description={`Мероприятия библиотек города Байконур, страница №${page}`}
       />
