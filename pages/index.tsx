@@ -1,6 +1,12 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { getMenu, getPosts, getPosters, getResources } from "@/core/ssr";
+import {
+  getMenu,
+  getPosts,
+  getPosters,
+  getResources,
+  getMetadata,
+} from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { HomeLayout, HomePage } from "@/routes/Home";
@@ -12,6 +18,7 @@ type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posts: Awaited<ReturnType<typeof getPosts>>;
   posters: Awaited<ReturnType<typeof getPosters.load>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
   resources: Awaited<ReturnType<typeof getResources>>;
 };
 
@@ -22,18 +29,21 @@ export const getStaticProps: GetStaticProps<
     const menuData = getMenu();
     const postsData = getPosts();
     const postersData = getPosters.load().then(getPosters.filter);
+    const metadataData = getMetadata();
     const resourcesData = getResources();
 
-    const [menu, posts, posters, resources] = await Promise.all([
+    const [menu, posts, posters, metadata, resources] = await Promise.all([
       menuData,
       postsData,
       postersData,
+      metadataData,
       resourcesData,
     ]);
 
     return {
       props: {
         menu,
+        metadata,
         posters,
         posts,
         resources,
@@ -48,9 +58,15 @@ export const getStaticProps: GetStaticProps<
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<HomeProps> = ({ menu, posters, resources, posts }) => (
+const Home: NextPage<HomeProps> = ({
+  menu,
+  metadata,
+  posters,
+  resources,
+  posts,
+}) => (
   <Layout menu={menu}>
-    <SEO description="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур" />
+    <SEO domenTitle={metadata.title} description={metadata.description} />
     <HomeLayout posters={posters} resources={resources}>
       <HomePage
         posts={posts.data}

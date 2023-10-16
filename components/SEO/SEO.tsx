@@ -7,6 +7,7 @@ type Video = {
 };
 
 type SEOProp = {
+  domenTitle: string;
   title?: string;
   description?: string;
   url?: string;
@@ -14,10 +15,15 @@ type SEOProp = {
   video?: Video[];
 };
 
-export const SEO: FC<SEOProp> = ({ title, description, url, image, video }) => {
-  const fullTitle = title
-    ? `${title} | Библиотеки города Байконур`
-    : "Библиотеки города Байконур";
+export const SEO: FC<SEOProp> = ({
+  domenTitle,
+  title,
+  description,
+  url,
+  image,
+  video,
+}) => {
+  const fullTitle = title ? `${title} | ${domenTitle}` : domenTitle;
 
   return (
     <Head>
@@ -33,10 +39,7 @@ export const SEO: FC<SEOProp> = ({ title, description, url, image, video }) => {
         video.map(({ id, href }) => (
           <meta key={id} property="og:video" content={href} />
         ))}
-      <meta
-        property="og:site_name"
-        content="Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур"
-      />
+      <meta property="og:site_name" content={domenTitle} />
     </Head>
   );
 };

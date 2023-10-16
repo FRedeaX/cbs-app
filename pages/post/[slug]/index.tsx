@@ -7,7 +7,7 @@ import {
   NextPage,
 } from "next";
 
-import { getMenu, getPathsToPosts, getPost } from "@/core/ssr";
+import { getMenu, getMetadata, getPathsToPosts, getPost } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RoutePost } from "@/routes/Post/Route.Post";
@@ -34,6 +34,7 @@ export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   post: NonNullable<Awaited<ReturnType<typeof getPost>>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 interface Params extends ParsedUrlQuery {
@@ -52,18 +53,20 @@ export const getStaticProps: GetStaticProps<
 
     const menuData = getMenu();
     const postData = getPost({ slug });
+    const metadataData = getMetadata();
 
-    const [menu, post] = await Promise.all([menuData, postData]);
+    const [menu, post, metadata] = await Promise.all([
+      menuData,
+      postData,
+      metadataData,
+    ]);
 
     if (post === null) {
       return staticNotFound;
     }
 
     return {
-      props: {
-        menu,
-        post,
-      },
+      props: { menu, post, metadata },
       revalidate: REVALIDATE.POST,
     };
   } catch (error) {
@@ -74,9 +77,10 @@ export const getStaticProps: GetStaticProps<
 
 type PostPageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const PostPage: NextPage<PostPageProps> = ({ menu, post }) => (
+const PostPage: NextPage<PostPageProps> = ({ menu, post, metadata }) => (
   <Layout menu={menu}>
     <SEO
+      domenTitle={metadata.title}
       title={post.title}
       description={post.excerpt}
       image={post.featuredImage?.node.sourceUrl}

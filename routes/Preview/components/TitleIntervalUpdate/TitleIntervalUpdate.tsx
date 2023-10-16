@@ -4,10 +4,12 @@ import { useInterval } from "@/helpers/frontend/hooks";
 import { SEO } from "@/components/SEO/SEO";
 
 type TitleIntervalUpdateProps = {
+  domenTitle: string;
   timeNow: number;
 };
 
 export const TitleIntervalUpdate: FC<TitleIntervalUpdateProps> = ({
+  domenTitle,
   timeNow,
 }) => {
   const [title, setTitle] = useState("");
@@ -24,5 +26,5 @@ export const TitleIntervalUpdate: FC<TitleIntervalUpdateProps> = ({
 
   useInterval(updateCallback, 1000);
 
-  return <SEO title={`${title}`} />;
+  return <SEO domenTitle={domenTitle} title={title} />;
 };

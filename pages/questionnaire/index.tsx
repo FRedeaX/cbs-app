@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { getMenu } from "@/core/ssr";
+import { getMenu, getMetadata } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RouteQuestionnaire } from "@/routes/Questionnaire";
@@ -11,6 +11,7 @@ export const questionnaireIsCompleted = true;
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -21,12 +22,13 @@ export const getStaticProps: GetStaticProps<
       return staticNotFound;
     }
 
-    const menu = await getMenu();
+    const menuData = getMenu();
+    const metadataData = getMetadata();
+
+    const [menu, metadata] = await Promise.all([menuData, metadataData]);
 
     return {
-      props: {
-        menu,
-      },
+      props: { menu, metadata },
     };
   } catch (error) {
     exceptionLog(error);
@@ -36,9 +38,15 @@ export const getStaticProps: GetStaticProps<
 
 type QuestionnairePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const QuestionnairePage: NextPage<QuestionnairePageProps> = ({ menu }) => (
+const QuestionnairePage: NextPage<QuestionnairePageProps> = ({
+  menu,
+  metadata,
+}) => (
   <Layout menu={menu}>
-    <SEO title="Анкета пользователя Библиотеки Модельного стандарта" />
+    <SEO
+      domenTitle={metadata.title}
+      title="Анкета пользователя Библиотеки Модельного стандарта"
+    />
     <RouteQuestionnaire />
   </Layout>
 );

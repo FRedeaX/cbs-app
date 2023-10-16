@@ -11,9 +11,13 @@ import { RoutePage } from "./Route.Page";
 
 type RoutePreviewPageProps = {
   id: number;
+  domenTitle: string;
 };
 
-export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({ id }) => {
+export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
+  id,
+  domenTitle,
+}) => {
   const timeNow = Date.now();
 
   const {
@@ -53,8 +57,9 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({ id }) => {
 
   return (
     <>
-      <TitleIntervalUpdate timeNow={timeNow} />
+      <TitleIntervalUpdate domenTitle={domenTitle} timeNow={timeNow} />
       <SEO
+        domenTitle={domenTitle}
         title={loading ? "Загрузка..." : data.page.title}
         description={data.page.excerpt}
         video={blocks.data.video}

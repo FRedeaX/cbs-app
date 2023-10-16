@@ -9,20 +9,21 @@ import { RoutePreviewPost } from "../Post/Route.PreviewPost";
 type PreviewProps = {
   id: number;
   type: "page" | "post" | "poster";
+  domenTitle: string;
 };
 
-export const RoutePreview: FC<PreviewProps> = ({ id, type }) => {
+export const RoutePreview: FC<PreviewProps> = ({ id, type, domenTitle }) => {
   switch (type) {
     case "page":
-      return <RoutePreviewPage id={id} />;
+      return <RoutePreviewPage id={id} domenTitle={domenTitle} />;
 
     case "post":
-      return <RoutePreviewPost id={id} />;
+      return <RoutePreviewPost id={id} domenTitle={domenTitle} />;
 
     default:
       return (
         <>
-          <SEO title="Страница не найдена" />
+          <SEO domenTitle={domenTitle} title="Страница не найдена" />
           <NotFound />
         </>
       );

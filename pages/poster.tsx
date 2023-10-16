@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { getMenu, getPosters } from "@/core/ssr";
+import { getMenu, getMetadata, getPosters } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RoutePoster } from "@/routes/Poster/Route.Poster";
@@ -11,6 +11,7 @@ import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
   posters: NonNullable<Awaited<ReturnType<typeof getPosters.load>>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -19,8 +20,13 @@ export const getStaticProps: GetStaticProps<
   try {
     const menuData = await getMenu();
     const postersData = await getPosters.load();
+    const metadataData = getMetadata();
 
-    const [menu, posters] = await Promise.all([menuData, postersData]);
+    const [menu, posters, metadata] = await Promise.all([
+      menuData,
+      postersData,
+      metadataData,
+    ]);
 
     if (posters === null) {
       throw new Error(ERROR_MESSAGE.DATA_OF_NULL);
@@ -30,6 +36,7 @@ export const getStaticProps: GetStaticProps<
       props: {
         menu,
         posters,
+        metadata,
       },
       revalidate: REVALIDATE.PAGE,
     };
@@ -41,9 +48,10 @@ export const getStaticProps: GetStaticProps<
 
 type PosterProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Poster: NextPage<PosterProps> = ({ menu, posters }) => (
+const Poster: NextPage<PosterProps> = ({ menu, posters, metadata }) => (
   <Layout menu={menu}>
     <SEO
+      domenTitle={metadata.title}
       title="Анонсы"
       description="Анонс мероприятий библиотек города Байконур"
     />
