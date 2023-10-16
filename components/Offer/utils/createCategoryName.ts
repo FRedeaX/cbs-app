@@ -1,12 +1,17 @@
 export const createCategoryName = (categories: string[]) => {
-  // Добавляем перенос строки по середине.
-  const index = Math.floor(categories.length / 2);
+  const { length } = categories;
   const category = [...categories];
-  category[index] = `\n${category[index]}`;
+
+  // Добавляем перенос строки по середине, если
+  // количество категорий больше одного
+  if (length > 1) {
+    const index = Math.floor(length / 2);
+    category[index] = `\n${category[index]}`;
+  }
 
   const label = category.join(", ");
   const title = `Статьи по категори${
-    categories.length === 1 ? "и" : "ям"
+    length === 1 ? "и" : "ям"
   } ${categories.join(", ")}`;
 
   return { label, title };
