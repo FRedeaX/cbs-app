@@ -4,7 +4,7 @@ import { FC } from "react";
 import { createMarkup } from "@/helpers";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { PosterItemDate } from "@/components/poster/PosterItem/components/PosterItem.Date/PosterItem.Date";
-import { DateEnd, DateStart } from "@/components/poster/PosterItem/types";
+import { Date } from "@/components/poster/PosterItem/types";
 
 import classes from "./Poster-item.module.css";
 import { PosterItemVenue } from "./components/PosterItem.Venue/PosterItem.Venue";
@@ -27,8 +27,8 @@ export interface IPoster {
     }>;
   };
   posterDate: {
-    dateStart: DateStart;
-    dateEnd: DateEnd;
+    dateStart: Date;
+    dateEnd: Nullable<Date>;
     time: string | null;
   };
   formOfEvent: {

@@ -2,3 +2,10 @@
   font-size: 1.6em;
   font-weight: 100;
 }
+
+@media screen and (width >= 480px) {
+  .root_range {
+    display: block;
+    margin-bottom: 5px;
+  }
+}

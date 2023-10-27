@@ -1,9 +1,5 @@
-import { NullableAll } from "@/helpers/typings/utility-types";
-
-export type DateStart = {
-  day: string;
+export type Date = {
+  day: number;
   month: number;
   monthText: string;
 };
-
-export type DateEnd = NullableAll<DateStart>;
