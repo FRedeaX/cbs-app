@@ -7,7 +7,7 @@ export type ChildrenPagePaginationGQL = {
     children: {
       pageInfo: {
         hasNextPage: boolean;
-        endCursor: string;
+        endCursor: Nullable<string>;
       };
     };
   }>;

@@ -1,5 +1,6 @@
 import { clientRedis } from "@/lib/redis";
 import { exceptionLog } from "@/helpers";
+import { Nullable } from "@/helpers/typings/utility-types";
 
 import { initialPagination } from "../constant";
 
@@ -14,7 +15,7 @@ export interface ILoadByRedis {
   /**
    * Сursor первой страницы для валидации кэша
    */
-  endCursor?: string;
+  endCursor?: Nullable<string>;
 }
 
 export const loadByRedis = async ({
@@ -22,15 +23,15 @@ export const loadByRedis = async ({
   endCursor,
 }: ILoadByRedis): Promise<Pagination[] | null> => {
   try {
-    const response = (await clientRedis?.get(key)) as string | null;
+    const response = await clientRedis?.get(key);
     if (response === null) return null;
 
     const pagination = await JSON.parse(response);
 
-    if (
-      endCursor === undefined ||
-      (pagination[1] !== undefined && endCursor === pagination[1].cursor)
-    ) {
+    // Возвращаем пагинацию, если
+    // endCursor не предоставлен или
+    // endCursor равен ссылке на вторую страницу
+    if (!endCursor || endCursor === pagination?.[1].cursor) {
       // eslint-disable-next-line no-console
       console.log(`load pagination: ${key}`);
       return pagination;

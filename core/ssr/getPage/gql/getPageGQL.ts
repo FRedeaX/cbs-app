@@ -65,7 +65,7 @@ type GetPageQuery = {
         children: {
           nodes: (PageFieldsGQL & ChildrenPageFieldsGQL)[];
           pageInfo: {
-            endCursor: string;
+            endCursor: Nullable<string>;
           };
         };
       }
