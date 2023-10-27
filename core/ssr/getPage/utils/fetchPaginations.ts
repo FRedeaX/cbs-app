@@ -21,7 +21,10 @@ export const fetchPaginations = async ({
       id: uri,
       endCursor,
       pageInfoCallback: (data) =>
-        data.page?.children?.pageInfo ?? { hasNextPage: false, endCursor: "" },
+        data.page?.children?.pageInfo ?? {
+          hasNextPage: false,
+          endCursor: null,
+        },
     });
 
   return paginations;

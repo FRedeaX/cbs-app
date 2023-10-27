@@ -45,7 +45,7 @@ export type PostListQuery = {
       };
     })[];
     pageInfo: {
-      endCursor: string;
+      endCursor: Nullable<string>;
     };
   };
 };

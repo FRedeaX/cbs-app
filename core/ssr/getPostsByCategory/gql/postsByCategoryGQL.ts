@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { DeepMergeTwoTypes } from "@/helpers/typings/utility-types";
+import { DeepMergeTwoTypes, Nullable } from "@/helpers/typings/utility-types";
 
 import { PostFieldsGQL, postFieldsGQL } from "../../getPosts/gql/postListGQL";
 
@@ -17,7 +17,7 @@ export type PostsByCategoryQuery = {
     posts: {
       nodes: DeepMergeTwoTypes<CategoryFieldsGQL, PostFieldsGQL>[];
       pageInfo: {
-        endCursor: string;
+        endCursor: Nullable<string>;
       };
     };
   };

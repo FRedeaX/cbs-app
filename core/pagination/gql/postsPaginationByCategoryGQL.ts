@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+import { Nullable } from "@/helpers/typings/utility-types";
+
 export type PostsPaginationByCategoryGQL = {
   category: {
     posts: {
@@ -8,7 +10,7 @@ export type PostsPaginationByCategoryGQL = {
       }[];
       pageInfo: {
         hasNextPage: boolean;
-        endCursor: string;
+        endCursor: Nullable<string>;
       };
     };
   };
