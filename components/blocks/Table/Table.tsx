@@ -19,6 +19,7 @@ import { Nullable } from "../../../helpers/typings/utility-types";
 import { Paragraph } from "../Paragraph/Paragraph";
 import { parseBlockStyle } from "../utils/parseBlockStyle";
 import { Color, FontSize, Gradient } from "../utils/types";
+
 import classes from "./Table.module.css";
 import { Cell } from "./utils/tableGQL";
 
@@ -92,10 +93,7 @@ export const Table: FC<TableProps> = ({
                   <TableCell
                     key={`hcell_${cellIndex}`}
                     align={cell.align || "center"}>
-                    <Paragraph
-                      component="span"
-                      dangerouslySetInnerHTML={createMarkup(cell.content)}
-                    />
+                    <Paragraph component="span" content={cell.content} />
                   </TableCell>
                 ))}
               </TableRow>
@@ -111,10 +109,7 @@ export const Table: FC<TableProps> = ({
                   <TableCell
                     key={`cell_${cellIndex}`}
                     align={cell.align || undefined}>
-                    <Paragraph
-                      component="span"
-                      dangerouslySetInnerHTML={createMarkup(cell.content)}
-                    />
+                    <Paragraph component="span" content={cell.content} />
                   </TableCell>
                 ))}
               </TableRow>
