@@ -1,13 +1,12 @@
 .root {
   position: relative;
   width: 100%;
-  margin-top: calc(var(--carousel-offset-top, 0) * -1);
-  margin-bottom: calc(var(--carousel-offset-bottom, 0) * -1);
+  margin-top: calc(var(--carousel-offset-y, 0) * -1);
+  margin-bottom: calc(var(--carousel-offset-y, 0) * -1);
 }
 
 .Scroller {
-  padding-top: var(--carousel-offset-top, 0);
-  padding-bottom: var(--carousel-offset-bottom, 0);
+  padding: var(--carousel-offset-y, 0) var(--carousel-offset-x, 0);
 }
 
 .itemList {

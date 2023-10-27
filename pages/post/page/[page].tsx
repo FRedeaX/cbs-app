@@ -13,10 +13,11 @@ import {
 import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
-import { HomeLayout, HomePage } from "@/routes/Home";
 import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
+import { HomeLayout } from "src/widgets/home/Layout";
+import { HomePost } from "src/widgets/home/Post";
 
 export const getStaticPaths = () => ({
   paths: [{ params: { page: "2" } }],
@@ -105,9 +106,14 @@ const Home: NextPage<HomeProps> = ({
         description={`Мероприятия библиотек города Байконур, страница №${page}`}
       />
       <HomeLayout posters={posters} resources={resources}>
-        <HomePage
+        <HomePost
+          title="Мероприятия"
           posts={posts.data}
-          pagination={{ count: posts.pageCount, uri: "/post" }}
+          pagination={{
+            count: posts.pageCount,
+            firstPageLink: "/",
+            uri: "/post",
+          }}
         />
       </HomeLayout>
     </Layout>

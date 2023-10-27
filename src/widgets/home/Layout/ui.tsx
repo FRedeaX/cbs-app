@@ -2,17 +2,17 @@ import { Box, Container } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
-import { ResourceProps } from "@/components/Widget/Resource/Resource";
 import { IPoster } from "@/components/poster/PosterItem/PosterItem";
+import { ResourceCardItem } from "src/entities/card/Resource";
 
-import { AsideIsomorphic } from "./components/Aside.Isomorphic";
-import { AsideMobile } from "./components/Aside.Mobile";
+import { AsideIsomorphic } from "./AsideIsomorphic";
+import { AsideMobile } from "./AsideMobile";
 import {
   sxAside,
   sxAsideIsomorphic,
   sxAsideMobile,
   sxContainer,
-} from "./style/layout.style";
+} from "./styles";
 
 type HomeLayoutProps = {
   children: ReactNode;
@@ -21,7 +21,7 @@ type HomeLayoutProps = {
     title: string;
     uri: string;
     children: {
-      nodes: (ResourceProps & { id: string })[];
+      nodes: (ResourceCardItem & { id: string })[];
     };
   }>;
 };

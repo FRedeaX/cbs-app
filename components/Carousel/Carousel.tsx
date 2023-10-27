@@ -1,8 +1,9 @@
+import { Box, BoxProps } from "@mui/material";
 import classNames from "classnames";
 import { FC, ReactElement } from "react";
 
-import { CSSProperties } from "../../helpers/typings/utility-types";
-import { Scroller } from "../Scroller/Scroller";
+import { Scroller, ScrollerProps } from "../Scroller/Scroller";
+
 import {
   CarouselControls,
   CarouselControlsProps,
@@ -13,23 +14,24 @@ import { useCarouselContext } from "./context";
 
 export type CarouselProps = {
   children: ReactElement[];
+  sx?: BoxProps["sx"];
   className?: string;
+  scrollerProps?: Pick<ScrollerProps, "sx" | "className">;
 } & CarouselControlsProps;
 
 export const Carousel: FC<CarouselProps> = ({
   children,
+  sx,
   className,
+  scrollerProps,
   isButtonsOnSides,
   isShadow,
 }) => {
-  const { rootRefCallback, itemListRefCallback, itemMargin } =
-    useCarouselContext();
+  const { rootRefCallback, itemListRefCallback } = useCarouselContext();
   const { handleOnScroll } = useCarousel();
 
-  const sidesDivStyle: CSSProperties = { minWidth: `${itemMargin}px` };
-
   return (
-    <div className={classes.root}>
+    <Box sx={sx} className={classNames(classes.root, className)}>
       <CarouselControls
         isButtonsOnSides={isButtonsOnSides}
         isShadow={isShadow}
@@ -38,13 +40,12 @@ export const Carousel: FC<CarouselProps> = ({
       <Scroller
         ref={rootRefCallback}
         onScroll={handleOnScroll}
-        className={classNames(classes.Scroller, className)}>
-        {itemMargin > 0 && <div style={sidesDivStyle} />}
+        sx={scrollerProps?.sx}
+        className={classNames(classes.Scroller, scrollerProps?.className)}>
         <div ref={itemListRefCallback} className={classes.itemList}>
           {children}
         </div>
-        {itemMargin > 0 && <div style={sidesDivStyle} />}
       </Scroller>
-    </div>
+    </Box>
   );
 };

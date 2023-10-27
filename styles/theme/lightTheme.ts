@@ -205,7 +205,7 @@ export const lightTheme = createTheme(
         xs: 0,
         sm: 800,
         md: 960,
-        lg: 1310,
+        lg: 1300,
         xl: 1500,
       },
     },

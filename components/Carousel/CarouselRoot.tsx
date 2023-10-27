@@ -7,7 +7,9 @@ export const CarouselRoot: FC<
   CarouselProps & Omit<CarouselProviderProps, "children">
 > = ({
   children,
+  sx,
   className,
+  scrollerProps,
   isButtonsOnSides,
   isShadow,
   itemMargin,
@@ -21,7 +23,9 @@ export const CarouselRoot: FC<
     isResponsiveWidthsChildren={isResponsiveWidthsChildren}
     skip={skip}>
     <Carousel
+      sx={sx}
       className={className}
+      scrollerProps={scrollerProps}
       isButtonsOnSides={isButtonsOnSides}
       isShadow={isShadow}>
       {children}

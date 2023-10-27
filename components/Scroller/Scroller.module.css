@@ -14,7 +14,7 @@
 }
 
 .root_scrollSnap {
-  scroll-padding: var(--carousel-scroll-snap-padding, 0);
+  scroll-padding: var(--scroller-scroll-snap-padding, 0);
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
 }

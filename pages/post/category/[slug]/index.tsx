@@ -13,10 +13,11 @@ import {
 import { SSRError } from "@/core/ssr/utils/ssrEror";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
-import { HomeLayout, HomePage } from "@/routes/Home";
 import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
+import { HomeLayout } from "src/widgets/home/Layout";
+import { HomePost } from "src/widgets/home/Post";
 
 export async function getStaticPaths() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
@@ -122,10 +123,13 @@ const Home: NextPage<HomeProps> = ({
         description={`Мероприятия библиотек города Байконур по категории ${name}`}
       />
       <HomeLayout posters={posters} resources={resources}>
-        <HomePage
+        <HomePost
+          title={`Категория: ${name}`}
           posts={posts.data}
-          pagination={{ count: posts.pageCount, uri: `/post/category/${slug}` }}
-          categoryName={name}
+          pagination={{
+            count: posts.pageCount,
+            uri: `/post/category/${slug}`,
+          }}
         />
       </HomeLayout>
     </Layout>

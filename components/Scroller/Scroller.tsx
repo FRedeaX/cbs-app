@@ -1,3 +1,4 @@
+import { Box, BoxProps } from "@mui/material";
 import classNames from "classnames";
 import {
   FC,
@@ -14,7 +15,7 @@ type HandleOnKeyDown = (event: KeyboardEvent<HTMLDivElement>) => void;
 
 type HandleOnScroll = (event: WheelEvent<HTMLDivElement>) => void;
 
-type ScrollerProps = {
+export type ScrollerProps = {
   children: ReactNode;
   /**
    * @default false
@@ -22,6 +23,7 @@ type ScrollerProps = {
   isScrollSnap?: boolean;
   onKeyDown?: HandleOnKeyDown;
   onScroll?: HandleOnScroll;
+  sx?: BoxProps["sx"];
   className?: string;
   ref?: Ref<HTMLDivElement>;
   refItemList?: Ref<HTMLDivElement>;
@@ -34,6 +36,7 @@ export const Scroller: FC<ScrollerProps> = forwardRef(
       isScrollSnap = false,
       onKeyDown,
       onScroll,
+      sx,
       className,
       refItemList,
     },
@@ -47,11 +50,12 @@ export const Scroller: FC<ScrollerProps> = forwardRef(
       className={classNames(classes.root, {
         [classes.root_scrollSnap]: isScrollSnap,
       })}>
-      <div
+      <Box
+        sx={sx}
         ref={refItemList}
         className={classNames(classes.itemList, className)}>
         {children}
-      </div>
+      </Box>
     </div>
   ),
 );

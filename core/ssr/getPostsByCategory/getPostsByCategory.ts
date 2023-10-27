@@ -44,7 +44,7 @@ export const getPostsByCategory = async ({
   if (!page) {
     paginationList = await fetchPaginations({
       slug,
-      endCursor: pageInfo?.endCursor,
+      endCursor: pageInfo.endCursor,
     });
   }
 

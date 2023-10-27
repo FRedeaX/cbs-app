@@ -4,9 +4,9 @@ import { FC } from "react";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
 import { Link } from "@/components/UI/Link/Link";
-import { ResourceProps, Resource } from "@/components/Widget/Resource/Resource";
 import { IPoster } from "@/components/poster/PosterItem/PosterItem";
 import { PosterRoot } from "@/components/poster/PosterRoot/PosterRoot";
+import { Resource, ResourceCardItem } from "src/entities/card/Resource";
 
 type AsideIsomorphicProps = {
   posters: Nullable<IPoster[]>;
@@ -14,7 +14,7 @@ type AsideIsomorphicProps = {
     title: string;
     uri: string;
     children: {
-      nodes: (ResourceProps & { id: string })[];
+      nodes: (ResourceCardItem & { id: string })[];
     };
   }>;
 };
@@ -36,12 +36,7 @@ export const AsideIsomorphic: FC<AsideIsomorphicProps> = ({
           isButtonsOnSides={false}
           isResponsiveWidthsChildren>
           {resources.children.nodes.map((item) => (
-            <Resource
-              key={item.id}
-              title={item.title}
-              uri={item.uri}
-              featuredImage={item.featuredImage}
-            />
+            <Resource key={item.id} data={item} />
           ))}
         </CarouselRoot>
       </Box>

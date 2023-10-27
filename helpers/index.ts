@@ -1,7 +1,6 @@
 import asyncLoadScript from "./asyncLoadScript";
 import createMarkup from "./createMarkup";
 import delay from "./delay";
-import lineClamp from "./lineClamp";
 import throttler from "./throttler";
 import verticalAlignToFlext from "./verticalAlignToFlext";
 
@@ -22,7 +21,6 @@ export {
   asyncLoadScript,
   createMarkup,
   delay,
-  lineClamp,
   throttler,
   verticalAlignToFlext,
 };

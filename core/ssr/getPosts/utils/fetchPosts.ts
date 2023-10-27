@@ -39,7 +39,6 @@ export const fetchPosts = async ({
   }
   if (data === undefined) throw errors;
   const { nodes } = data.posts;
-  if (nodes.length === 0) return { data: null, pageInfo: null };
 
   const uniquePosts = removeDuplicateTag<typeof nodes[0]>(nodes).data;
 

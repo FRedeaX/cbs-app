@@ -3,11 +3,11 @@ import { Tab } from "@mui/material";
 import { FC, SyntheticEvent, useCallback, useState } from "react";
 
 import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
-import { ResourceProps, Resource } from "@/components/Widget/Resource/Resource";
 import { IPoster } from "@/components/poster/PosterItem/PosterItem";
 import { PosterRoot } from "@/components/poster/PosterRoot/PosterRoot";
+import { Resource, ResourceCardItem } from "src/entities/card/Resource";
 
-import { sxTabList, sxTabPanel } from "./style/mobile.style";
+import { sxTabList, sxTabPanel } from "./styles";
 
 const TAB_POSTER = "poster";
 const TAB_RESOURCE = "resource";
@@ -22,7 +22,7 @@ type AsideMobileProps = {
   resources: {
     title: string;
     children: {
-      nodes: (ResourceProps & { id: string })[];
+      nodes: (ResourceCardItem & { id: string })[];
     };
   };
 };
@@ -48,12 +48,7 @@ export const AsideMobile: FC<AsideMobileProps> = ({ posters, resources }) => {
           isButtonsOnSides={false}
           isResponsiveWidthsChildren>
           {resources.children.nodes.map((item) => (
-            <Resource
-              key={item.id}
-              title={item.title}
-              uri={item.uri}
-              featuredImage={item.featuredImage}
-            />
+            <Resource key={item.id} data={item} />
           ))}
         </CarouselRoot>
       </TabPanel>
