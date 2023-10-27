@@ -90,9 +90,11 @@ export const File: FC<FileProps> = ({
           className={classes.button}
           startIcon={<InsertDriveFileRoundedIcon />}>
           <div>
-            <Paragraph component="span" className={classes.buttonText}>
-              {fileName}
-            </Paragraph>
+            <Paragraph
+              component="span"
+              content={fileName}
+              className={classes.buttonText}
+            />
             {fileSize && (
               <span className={classes.buttonFileSize}>
                 <SeparationDot />

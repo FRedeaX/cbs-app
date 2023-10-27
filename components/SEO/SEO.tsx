@@ -6,7 +6,7 @@ type Video = {
   href: string;
 };
 
-type SEOProp = {
+export type SEOProp = {
   domenTitle: string;
   title?: string;
   description?: string;
