@@ -9,10 +9,11 @@ import {
 } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
-import { HomeLayout, HomePage } from "@/routes/Home";
 import { SEO } from "@/components/SEO/SEO";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { REVALIDATE } from "@/constants";
+import { HomeLayout } from "src/widgets/home/Layout";
+import { HomePost } from "src/widgets/home/Post";
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
@@ -41,13 +42,7 @@ export const getStaticProps: GetStaticProps<
     ]);
 
     return {
-      props: {
-        menu,
-        metadata,
-        posters,
-        posts,
-        resources,
-      },
+      props: { menu, metadata, posters, posts, resources },
       revalidate: REVALIDATE.POST,
     };
   } catch (error) {
@@ -68,9 +63,14 @@ const Home: NextPage<HomeProps> = ({
   <Layout menu={menu}>
     <SEO domenTitle={metadata.title} description={metadata.description} />
     <HomeLayout posters={posters} resources={resources}>
-      <HomePage
+      <HomePost
+        title="Мероприятия"
         posts={posts.data}
-        pagination={{ count: posts.pageCount, uri: "/post" }}
+        pagination={{
+          count: posts.pageCount,
+          firstPageLink: "/",
+          uri: "/post",
+        }}
       />
     </HomeLayout>
   </Layout>

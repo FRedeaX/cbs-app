@@ -71,6 +71,7 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
           isPreview: true,
         }}
         childrenPage={childrenPage}
+        domenTitle={domenTitle}
       />
       {blocks.error && <>Ошибка в обработке блоков: {blocks.error?.message}.</>}
     </>

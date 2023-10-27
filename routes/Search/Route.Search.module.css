@@ -1,38 +1,92 @@
 .body {
+  --gap: 10px;
+  --is-font-size-adaptive: 0;
+
   display: flex;
   padding-top: 10px;
 }
 
-@media screen and (width <= 768px) {
-  .body {
-    flex-direction: column;
-  }
+.body_touch {
+  flex-direction: column;
 }
 
 .Aside {
   --seacrh-filter-margin: 0 0 20px 0;
   --custome-scrollbar-overflow-y: auto;
   --custome-scrollbar-max-height: calc(8 * 32px);
+
+  flex-shrink: 0;
 }
 
-@media screen and (width > 768px) {
-  .Aside {
-    flex-basis: 280px;
-    flex-shrink: 0;
-    padding: 10px 20px 0 0;
+.body_desktope .Aside {
+  flex-basis: 280px;
+  padding: 10px 20px 0 0;
+}
+
+@media screen and (width <= 735px) {
+  .body_desktope .Aside {
+    flex-shrink: 0.3;
+    min-width: 185px;
   }
 }
 
 .result {
+  --card-margin-x: calc(var(--gap) / 2);
+  --card-margin-y: calc(var(--gap) / 2);
+
   position: relative;
+
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -10px;
+  justify-content: center;
+
+  margin-right: calc(var(--card-margin-y) * -1);
 }
 
-@media screen and (width < 1100px) {
-  .result {
-    --card-image-flex: 0;
+@media screen and (width > 1024px) {
+  .body_desktope .result {
+    --card-direction: row;
+    --card-width: 100%;
+  }
+}
+
+@media screen and (width <= 1024px) {
+  .body_desktope .result {
+    --card-width: 288px;
+  }
+}
+
+@media screen and (width <= 905px) {
+  .body_desktope .result {
+    --card-width: 100%;
+    --card-max-width: 400px;
+    --card-media-width: 100%;
+  }
+}
+
+.body_touch .result {
+  max-width: 960px;
+  margin: auto;
+}
+
+@media screen and (width >= 768px) {
+  .body_touch .result {
+    --card-direction: row;
+    --card-width: 100%;
+  }
+}
+
+@media screen and (width < 768px) {
+  .body_touch .result {
+    --card-width: 288px;
+  }
+}
+
+@media screen and (width <= 630px) {
+  .body_touch .result {
+    --card-width: 100%;
+    --card-max-width: 400px;
+    --card-media-width: 100%;
   }
 }
 
@@ -48,14 +102,6 @@
 
   background-color: rgba(255, 255, 255, 50%);
   border-radius: 24px;
-}
-
-@media screen and (width <= 925px) and (width > 768px) {
-  .result {
-    --card-width: 100%;
-    --card-max-width: 400px;
-    --card-margin-x: auto;
-  }
 }
 
 .Pagination {

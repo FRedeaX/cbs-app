@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Fade, Skeleton } from "@mui/material";
+import { Box, Fade, Skeleton } from "@mui/material";
 import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/future/image";
 import { FC, useCallback, useState, useRef, useEffect } from "react";
@@ -8,15 +8,12 @@ import { FC, useCallback, useState, useRef, useEffect } from "react";
 import { Nullable } from "../../helpers/typings/utility-types";
 
 import classes from "./Image.module.css";
+import { sxRoot } from "./Image.style";
 import { getImageBlurSvg } from "./utils/getImageBlurSvg";
 
 const ANIMATION_DELAY_MS = 50;
 
 export type ImageProps = {
-  /**
-   * Дополнительный класс для обертки.
-   */
-  classNameRoot?: string;
   /**
    * Заполнитель для отображения во время загрузки картинки.
    */
@@ -39,7 +36,6 @@ export const Image: FC<ImageProps> = ({
   blurDataURL,
   alt,
   className,
-  classNameRoot,
   width,
   height,
   src,
@@ -85,7 +81,7 @@ export const Image: FC<ImageProps> = ({
   });
 
   return (
-    <div ref={imageRef} className={classNames(classes.root, classNameRoot)}>
+    <Box ref={imageRef} sx={sxRoot}>
       <NextImage
         alt={alt}
         aria-hidden={!alt}
@@ -116,6 +112,6 @@ export const Image: FC<ImageProps> = ({
           </div>
         </Fade>
       )}
-    </div>
+    </Box>
   );
 };

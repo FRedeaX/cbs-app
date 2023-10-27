@@ -38,7 +38,7 @@ export const getPosts = async ({ page }: GetPosts = {}) => {
   const { data, pageInfo } = await fetchPosts(variables);
 
   if (!page) {
-    paginationList = await fetchPaginations({ endCursor: pageInfo?.endCursor });
+    paginationList = await fetchPaginations({ endCursor: pageInfo.endCursor });
   }
 
   return { data, pageCount: getLastPageNumber(paginationList) };

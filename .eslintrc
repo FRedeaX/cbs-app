@@ -63,6 +63,31 @@
         },
         "pathGroups": [
           {
+            "pattern": "@/src/page/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/src/widgets/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/src/features/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/src/entities/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/src/shared/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@/lib/**",
             "group": "internal",
             "position": "before"

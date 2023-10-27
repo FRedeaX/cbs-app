@@ -13,6 +13,7 @@ export type PaginationProps = {
   uri: string;
   /**
    * Альтернативный путь к 1 странице.
+   * @default uri
    */
   firstPageLink?: string;
 } & Omit<MUIPaginationProps, "renderItem">;

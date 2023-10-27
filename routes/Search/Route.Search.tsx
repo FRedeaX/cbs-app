@@ -1,8 +1,9 @@
-import { Box, Container, useMediaQuery } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
 import { SearchResponseFrontend } from "@/core/elastic/search/type";
+import { UAPlatform } from "@/helpers/backend";
 import {
   SearchFilters,
   SearchForm,
@@ -14,17 +15,17 @@ import { SearchPagination } from "@/components/Search/components/Pagination/Sear
 import { SuggestionProvider } from "@/components/Search/components/Suggestion/context";
 import { useQuerySearch } from "@/components/Search/utils/hooks";
 
-import { SearchAside, SearchAsideUAPlatform } from "./Aside/Search.Aside";
+import { SearchAside } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
 
 export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
-} & SearchAsideUAPlatform;
+  platform: UAPlatform;
+};
 
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
   const { data, isLoading } = useQuerySearch(ssrData);
-  const isHorizontal = useMediaQuery("(min-width: 1100px)");
 
   return (
     <Container maxWidth="xl" sx={{ marginTop: "2em" }}>
@@ -37,7 +38,7 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
         </SuggestionProvider>
       </InputProvider>
 
-      <Box className={classes.body}>
+      <Box className={classNames(classes.body, classes[`body_${platform}`])}>
         <SearchAside
           className={classes.Aside}
           count={data?.hits.hits.length && data?.hits.total.value}
@@ -60,7 +61,7 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
             className={classNames(classes.result, {
               [classes["result--loading"]]: isLoading,
             })}>
-            <SearchResultList data={data?.hits} isHorizontal={isHorizontal} />
+            <SearchResultList data={data?.hits} />
           </Box>
 
           {data && data.hits.hits.length > 0 && (

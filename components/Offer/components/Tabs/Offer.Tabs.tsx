@@ -4,26 +4,30 @@ import { FC, SyntheticEvent, useCallback, useMemo, useState } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
 import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
-import { Card, IData } from "@/components/Widget/Card/Card";
+import { PostCard, PostCardItem } from "src/entities/card/Post";
 
 import { createCategoryName } from "../../utils/createCategoryName";
 import { handleOnClick } from "../../utils/goal";
 
-import classes from "./Offer.Tabs.module.css";
 import {
   sxOfferHeader,
   sxOfferRoot,
   sxOfferTab,
   sxOfferTabPanel,
+  sxScroller,
 } from "./Offer.Tabs.style";
 
 const TAB_SIMILAR = "similarPosts";
 const TAB_CATEGORY = "postsByCategory";
 
+type CardItem = PostCardItem & {
+  id: string;
+};
+
 type OfferTabProps = {
   categories: string[];
-  similarPosts: Nullable<IData[]>;
-  postsByCategory: Nullable<IData[]>;
+  similarPosts: Nullable<CardItem[]>;
+  postsByCategory: Nullable<CardItem[]>;
 };
 
 type TabListHandler = (
@@ -44,11 +48,7 @@ export const OfferTabs: FC<OfferTabProps> = ({
   const tabName = useMemo(() => createCategoryName(categories), [categories]);
 
   return (
-    <Container
-      maxWidth="md"
-      disableGutters
-      sx={sxOfferRoot}
-      className={classes.root}>
+    <Container maxWidth="md" disableGutters sx={sxOfferRoot}>
       <TabContext value={value}>
         <Box sx={sxOfferHeader}>
           <TabList
@@ -71,14 +71,13 @@ export const OfferTabs: FC<OfferTabProps> = ({
         </Box>
         {similarPosts && (
           <TabPanel value={TAB_SIMILAR} sx={sxOfferTabPanel}>
-            <CarouselRoot itemMargin={5}>
+            <CarouselRoot itemMargin={5} scrollerProps={{ sx: sxScroller }}>
               {similarPosts.map((post) => (
-                <Card
+                <PostCard
                   key={post.id}
                   data={post}
-                  isClamp
-                  className={classes.Card}
-                  onClick={handleOnClick}
+                  lineClamp={6}
+                  cardProps={{ onClick: handleOnClick }}
                 />
               ))}
             </CarouselRoot>
@@ -86,14 +85,13 @@ export const OfferTabs: FC<OfferTabProps> = ({
         )}
         {postsByCategory && (
           <TabPanel value={TAB_CATEGORY} sx={sxOfferTabPanel}>
-            <CarouselRoot itemMargin={5}>
+            <CarouselRoot itemMargin={5} scrollerProps={{ sx: sxScroller }}>
               {postsByCategory.map((post) => (
-                <Card
+                <PostCard
                   key={post.id}
                   data={post}
-                  isClamp
-                  className={classes.Card}
-                  onClick={handleOnClick}
+                  lineClamp={6}
+                  cardProps={{ onClick: handleOnClick }}
                 />
               ))}
             </CarouselRoot>
