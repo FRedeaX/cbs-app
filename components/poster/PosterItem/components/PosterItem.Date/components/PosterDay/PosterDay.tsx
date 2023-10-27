@@ -1,11 +1,13 @@
+import classNames from "classnames";
 import { FC } from "react";
 
+import { Date } from "@/components/poster/PosterItem/types";
+
 import classes from "./PosterDay.module.css";
-import { DateEnd, DateStart } from "@/components/poster/PosterItem/types";
 
 type PosterDayProps = {
-  startDay?: DateStart["day"];
-  endDay?: DateEnd["day"];
+  startDay?: Date["day"];
+  endDay?: Date["day"];
 };
 
 export const PosterDay: FC<PosterDayProps> = ({ startDay, endDay }) => {
@@ -21,5 +23,12 @@ export const PosterDay: FC<PosterDayProps> = ({ startDay, endDay }) => {
     rangeDays += endDay;
   }
 
-  return <span className={classes.root}>{rangeDays || day}</span>;
+  return (
+    <span
+      className={classNames(classes.root, {
+        [classes.root_range]: startDay && endDay,
+      })}>
+      {rangeDays || day}
+    </span>
+  );
 };

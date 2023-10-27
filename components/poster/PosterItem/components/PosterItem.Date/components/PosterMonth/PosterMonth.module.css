@@ -1,5 +1,6 @@
 @media screen and (width < 480px) {
   .root {
+    flex-shrink: 0;
     margin-right: 4px;
   }
 }

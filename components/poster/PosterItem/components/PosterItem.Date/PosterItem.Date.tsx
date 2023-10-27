@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { SeparationDot } from "@/components/SeparationDot/SeparationDot";
 
-import { DateEnd, DateStart } from "../../types";
+import { Date } from "../../types";
 
 import classes from "./PosterItem.Date.module.css";
 import { PosterDay } from "./components/PosterDay/PosterDay";
@@ -12,8 +12,8 @@ import { PosterTime } from "./components/PosterTime/PosterTime";
 
 type PosterItemDateProps = {
   posterDate: {
-    dateStart: DateStart;
-    dateEnd: DateEnd;
+    dateStart: Date;
+    dateEnd: Nullable<Date>;
     time: Nullable<string>;
   };
 };
@@ -21,7 +21,7 @@ type PosterItemDateProps = {
 export const PosterItemDate: FC<PosterItemDateProps> = ({ posterDate }) => {
   const { dateStart, dateEnd, time } = posterDate;
 
-  if (dateEnd.month !== null && dateStart.month !== dateEnd.month) {
+  if (dateEnd && dateStart.month !== dateEnd.month) {
     return (
       <div className={classes.root}>
         <div>
@@ -45,7 +45,7 @@ export const PosterItemDate: FC<PosterItemDateProps> = ({ posterDate }) => {
   return (
     <div className={classes.root}>
       <PosterMonth month={dateStart.monthText}>
-        <PosterDay startDay={dateStart.day} endDay={dateEnd.day} />
+        <PosterDay startDay={dateStart.day} endDay={dateEnd?.day} />
       </PosterMonth>
       {time !== null && (
         <>

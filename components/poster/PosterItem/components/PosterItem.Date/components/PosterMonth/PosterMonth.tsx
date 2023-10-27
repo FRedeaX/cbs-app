@@ -1,10 +1,11 @@
 import { FC, ReactNode } from "react";
 
+import { Date } from "@/components/poster/PosterItem/types";
+
 import classes from "./PosterMonth.module.css";
-import { DateEnd, DateStart } from "@/components/poster/PosterItem/types";
 
 type PosterMonthProps = {
-  month: DateStart["monthText"] | DateEnd["monthText"];
+  month: Date["monthText"];
   children: ReactNode;
 };
 
