@@ -36,7 +36,7 @@ type SearchCategoryNode = {
 
 export type SearchSource = {
   title: string;
-  excerpt?: string;
+  excerpt: string;
   link: string;
   thumbnail: { url: string };
   categories: SearchCategoryNode[];
