@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { NotFound } from "@/components/NotFound/NotFound";
-import { SEO } from "@/components/SEO/SEO";
+import { SEO, SEOProp } from "@/components/SEO/SEO";
 
 import { RoutePreviewPage } from "../Page/Route.PreviewPage";
 import { RoutePreviewPost } from "../Post/Route.PreviewPost";
@@ -9,16 +9,15 @@ import { RoutePreviewPost } from "../Post/Route.PreviewPost";
 type PreviewProps = {
   id: number;
   type: "page" | "post" | "poster";
-  domenTitle: string;
-};
+} & Pick<SEOProp, "domenTitle">;
 
 export const RoutePreview: FC<PreviewProps> = ({ id, type, domenTitle }) => {
   switch (type) {
     case "page":
-      return <RoutePreviewPage id={id} domenTitle={domenTitle} />;
+      return <RoutePreviewPage domenTitle={domenTitle} id={id} />;
 
     case "post":
-      return <RoutePreviewPost id={id} domenTitle={domenTitle} />;
+      return <RoutePreviewPost domenTitle={domenTitle} id={id} />;
 
     default:
       return (

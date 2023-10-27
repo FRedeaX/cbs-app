@@ -102,6 +102,7 @@ const Page: NextPage<PageProps> = ({ menu, page, metadata }) => (
       childrenPage={page.children}
       pagination={page.pagination}
       pageNumber={page.pageNumber ?? undefined}
+      domenTitle={metadata.title}
     />
   </Layout>
 );
