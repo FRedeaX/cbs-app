@@ -3,13 +3,12 @@ import { FC } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
 import { Article, ArticleProps } from "@/components/Article/Article";
-import { SEO } from "@/components/SEO/SEO";
+import { SEO, SEOProp } from "@/components/SEO/SEO";
 import {
   Pagination,
   PaginationProps,
 } from "@/components/UI/Pagination/Pagination";
-import { IData } from "@/components/Widget/Card/Card";
-import CardListUngrouped from "@/components/Widget/Card/CardListUngrouped/CardListUngrouped";
+import { PostCard, PostCardItem } from "src/entities/card/Post";
 
 import {
   sxCardBox,
@@ -18,20 +17,25 @@ import {
   sxPagination,
 } from "./Route.Page.style";
 
+type CardItem = PostCardItem & {
+  id: string;
+};
+
 type RoutePageProps = {
   page: ArticleProps;
   childrenPage: Nullable<{
-    nodes: IData[];
+    nodes: CardItem[];
   }>;
   pagination?: Nullable<PaginationProps>;
   pageNumber?: number;
-};
+} & Pick<SEOProp, "domenTitle">;
 
 export const RoutePage: FC<RoutePageProps> = ({
   page,
   childrenPage,
   pagination,
   pageNumber,
+  domenTitle,
 }) =>
   childrenPage === null ? (
     <Article
@@ -46,7 +50,12 @@ export const RoutePage: FC<RoutePageProps> = ({
       component="section"
       maxWidth="md"
       disableGutters>
-      {pageNumber && <SEO title={`${page.title} — Cтраница ${pageNumber}`} />}
+      {pageNumber && (
+        <SEO
+          domenTitle={domenTitle}
+          title={`${page.title} — Cтраница ${pageNumber}`}
+        />
+      )}
       <Box sx={sxHeaderBox}>
         <Typography align="center" variant="h1" gutterBottom={!!pageNumber}>
           {page.title}
@@ -58,7 +67,9 @@ export const RoutePage: FC<RoutePageProps> = ({
         )}
       </Box>
       <Box sx={sxCardBox}>
-        <CardListUngrouped nodes={childrenPage.nodes} isHorizontal />
+        {childrenPage.nodes.map((item) => (
+          <PostCard key={item.id} data={item} />
+        ))}
       </Box>
       {pagination && (
         <Pagination
