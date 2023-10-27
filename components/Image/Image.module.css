@@ -1,9 +1,3 @@
-.root {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--image-border-radius, var(--g-image-border-radius));
-}
-
 .image {
   display: flex;
 
@@ -13,6 +7,12 @@
   font: 0 / 0 a;
 
   border: 0;
+  border-radius: var(--image-border-radius, var(--g-image-border-radius));
+}
+
+.placeholder {
+  overflow: hidden;
+  border-radius: var(--image-border-radius, var(--g-image-border-radius));
 }
 
 .placeholder_animated {
