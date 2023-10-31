@@ -42,7 +42,7 @@
 }
 
 .title {
-  --typography-font-family: var(--font-family-roboto-slab);
+  --typography-font-family: var(--font-family-serif);
   --typography-font-size: 20px;
 
   /* color: hsla(0, 3%, 33%, 1); */

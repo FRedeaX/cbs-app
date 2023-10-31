@@ -42,7 +42,7 @@
   --carousel-button-visibility: 0.3;
 
   position: absolute;
-  top: -28px;
+  top: var(--carousel-button-top, -28px);
   right: 0;
 }
 

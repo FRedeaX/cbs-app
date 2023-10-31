@@ -18,6 +18,7 @@ import { useGalleryContext } from "../../context";
 import { useDrag } from "../../utils";
 import { ImageData } from "../Gallery.Row/Gallery.Row";
 import { GalleryViewerHeader } from "../Gallery.ViewerHeader/Gallery.ViewerHeader";
+
 import classes from "./Gallery.Viewer.module.css";
 
 type GalleryViewerProps = {
@@ -117,7 +118,6 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
                 width={image.width}
                 height={image.height}
                 sizes="100vw"
-                classNamePlaceholder={classes.placeholder}
                 loading="lazy"
                 blurDataURL={image.blurDataURL}
               />

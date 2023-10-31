@@ -1,43 +1,13 @@
-import { gql } from "@apollo/client";
 import classNames from "classnames";
-import Link from "next/link";
-import { FC, LegacyRef, forwardRef } from "react";
+import { FC } from "react";
 
-import { createMarkup } from "../../../helpers";
+import { createMarkup } from "@/helpers";
+import { Nullable } from "@/helpers/typings/utility-types";
+import { PosterItemDate } from "@/components/poster/PosterItem/components/PosterItem.Date/PosterItem.Date";
+import { Date } from "@/components/poster/PosterItem/types";
+
 import classes from "./Poster-item.module.css";
-import PosterDate from "./PosterHeader/PosterDate";
-
-export const posterItemGQL = {
-  fragments: gql`
-    fragment posterItem on Poster {
-      content
-      excerpt
-      posterDepartments {
-        nodes {
-          name
-          description
-          slug
-        }
-      }
-      posterDate {
-        date
-        dataend
-        time
-      }
-      formOfEvent {
-        value
-      }
-      title
-      id
-    }
-  `,
-};
-
-interface IDate {
-  day: string | null;
-  month: number | null;
-  monthText: string | null;
-}
+import { PosterItemVenue } from "./components/PosterItem.Venue/PosterItem.Venue";
 
 export interface IPoster {
   content: string;
@@ -45,13 +15,20 @@ export interface IPoster {
   posterDepartments: {
     nodes: Array<{
       name: string;
-      description: string;
+      description: Nullable<string>;
+      slug: string;
+    }>;
+  };
+  posterLocations: {
+    nodes: Array<{
+      name: string;
+      description: Nullable<string>;
       slug: string;
     }>;
   };
   posterDate: {
-    dateStart: IDate;
-    dateEnd: IDate;
+    dateStart: Date;
+    dateEnd: Nullable<Date>;
     time: string | null;
   };
   formOfEvent: {
@@ -63,83 +40,55 @@ export interface IPoster {
 
 interface PosterItemProps {
   data: IPoster;
-  count: number;
   className?: string;
-
-  /**
-   * прокидываем HTML data-* атрибут
-   * see Carousel.List components
-   */
-  "data-idx"?: string;
 }
 
-const PosterItem: FC<PosterItemProps> = forwardRef(
-  (
-    {
-      data: {
-        posterDate,
-        formOfEvent,
-        title,
-        content,
-        excerpt,
-        posterDepartments,
-      },
-      count,
-      className,
-      "data-idx": dataIdx,
-    },
-    ref: LegacyRef<HTMLDivElement>,
-  ) => (
-    <div
-      ref={ref}
-      className={classNames(className, classes.block, {
-        [classes.block_count_1]: count !== undefined && count === 1,
-      })}
-      data-idx={dataIdx}>
-      <div className={classes.header}>
-        <PosterDate
-          dateStart={posterDate.dateStart}
-          dateEnd={posterDate.dateEnd}
-        />
-        {posterDate.time !== null && (
-          <div className={classes.time}>{posterDate.time}</div>
-        )}
-      </div>
-      <div className={classes.body}>
-        <h3 className={classes.title}>{title}</h3>
-        <div
-          className={classes.content}
-          dangerouslySetInnerHTML={createMarkup(content)}
-        />
-        <div className={classes.description}>{excerpt}</div>
-      </div>
-      {posterDepartments.nodes[0] && (
-        <div className={classes.footer}>
-          <Link
-            href={`/biblioteki/?lib=${posterDepartments.nodes[0].slug}`}
-            prefetch={false}>
-            <a className={classes.link}>{posterDepartments.nodes[0].name}</a>
-          </Link>
-          <a
-            href={`tel:833622${posterDepartments.nodes[0].description
-              .split("-")
-              .join("")}`}
-            className={classNames(classes.info, classes.link)}
-            title="Cправки по телефону">
-            {posterDepartments.nodes[0].description}
-          </a>
+export const PosterItem: FC<PosterItemProps> = ({
+  data: {
+    posterDate,
+    formOfEvent,
+    title,
+    content,
+    excerpt,
+    posterDepartments,
+    posterLocations,
+  },
+  className,
+}) => (
+  <div className={classNames(classes.root, className)}>
+    <div className={classes.header}>
+      <PosterItemDate posterDate={posterDate} />
+      {(posterDepartments.nodes[0] || posterLocations.nodes[0]) && (
+        <div className={classes.venue}>
+          <PosterItemVenue
+            department={posterDepartments.nodes[0]}
+            locations={posterLocations.nodes[0]}
+          />
         </div>
       )}
-      {formOfEvent.value === "online" && (
-        <span
-          className={classes.type}
-          title="Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС">
-          онлайн
-        </span>
-      )}
     </div>
-  ),
+    <div className={classes.body}>
+      <h3 className={classes.title}>{title}</h3>
+      <div
+        className={classes.content}
+        dangerouslySetInnerHTML={createMarkup(content)}
+      />
+      <div className={classes.description}>{excerpt}</div>
+    </div>
+    {(posterDepartments.nodes[0] || posterLocations.nodes[0]) && (
+      <div className={classes.footer}>
+        <PosterItemVenue
+          department={posterDepartments.nodes[0]}
+          locations={posterLocations.nodes[0]}
+        />
+      </div>
+    )}
+    {formOfEvent.value === "online" && (
+      <span
+        className={classes.type}
+        title="Мероприятие будет проведено в онлайн-режиме на сайте ГКУ ЦБС">
+        онлайн
+      </span>
+    )}
+  </div>
 );
-
-PosterItem.displayName = "PosterItem";
-export default PosterItem;

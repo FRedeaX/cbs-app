@@ -1,7 +1,10 @@
 import { ApiError } from "next/dist/server/api-utils";
 
+import { isEmptyString } from "@/helpers";
+
 import { esClient } from "../../../lib/elastic/client";
 import { reverseKeyboard } from "../../reverseKeyboard";
+
 import { createBodySearch } from "./createBodySearch";
 import {
   SearchHits,
@@ -16,9 +19,26 @@ export const searchQuery = async (
 ): Promise<SearchResponseFrontend> => {
   const text = typeof query.text === "string" ? query.text.trim() : null;
   const reverseLanguageText = text ? reverseKeyboard(text, "EngToRus") : "";
-  const departments = query.departments?.split(",") ?? null;
-  const categories = query.categories?.split(",") ?? null;
+
+  const departmentsData = query.departments;
+  const isEmptyDepartments =
+    !!departmentsData && isEmptyString(departmentsData);
+  const departments =
+    isEmptyDepartments || !departmentsData ? null : departmentsData.split(",");
+
+  const categoriesData = query.categories;
+  const isEmptyCategories = !!categoriesData && isEmptyString(categoriesData);
+  const categories =
+    isEmptyCategories || !categoriesData ? null : categoriesData.split(",");
+
   const page = parseInt(query.page ?? "1", 10) - 1;
+  const rangeDate = {
+    gt: typeof query.gtDate === "string" ? query.gtDate : undefined,
+    gte: typeof query.gteDate === "string" ? query.gteDate : undefined,
+    lt: typeof query.ltDate === "string" ? query.ltDate : undefined,
+    lte: typeof query.lteDate === "string" ? query.lteDate : undefined,
+  };
+  const excludedId = query.excludedId?.split(",") ?? null;
 
   const data = await esClient.search<SearchHits>({
     index: process.env.ES_INDEX_NAME,
@@ -28,6 +48,8 @@ export const searchQuery = async (
       departments,
       categories,
       page,
+      rangeDate,
+      excludedId,
     ),
   });
 

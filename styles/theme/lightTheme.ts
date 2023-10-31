@@ -12,9 +12,10 @@ export const lightTheme = createTheme(
       mode: "light",
     },
     typography: {
+      fontFamily: `var(--font-family-roboto)`,
       h1: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 2.125rem) -
             (
@@ -32,7 +33,7 @@ export const lightTheme = createTheme(
       },
       h2: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 2rem) -
             (
@@ -47,7 +48,7 @@ export const lightTheme = createTheme(
       },
       h3: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.875rem) -
             (
@@ -62,7 +63,7 @@ export const lightTheme = createTheme(
       },
       h4: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.75rem) -
             (
@@ -76,7 +77,7 @@ export const lightTheme = createTheme(
       },
       h5: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.6875rem) -
             (
@@ -90,7 +91,7 @@ export const lightTheme = createTheme(
       },
       h6: {
         color: `var(--black)`,
-        fontFamily: `var(--typography-font-family, var(--font-family-roboto-slab))`,
+        fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
           var(--typography-font-size, 1.625rem) -
             (
@@ -152,6 +153,7 @@ export const lightTheme = createTheme(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         textTransform: `var(--typography-text-transform, initial)`,
+        textWrap: `balance`,
       },
       overline: {
         display: "block",
@@ -164,7 +166,20 @@ export const lightTheme = createTheme(
         // @ts-ignore
         textTransform: `var(--typography-text-transform, uppercase)`,
       },
+      sectionTitle: {
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
+        fontFamily: `var(--font-family-serif)`,
+        fontSize: `1.25rem`,
+        fontWeight: `400`,
+        cursor: "default",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        textWrap: `balance`,
+        color: `rgba(30, 30, 30, 0.9)`,
+        paddingLeft: `calc(var(--gap) * 2.5)`,
+      },
       responsiveText: {
+        margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `calc(
           var(--typography-font-size, 1.25rem) -
@@ -185,12 +200,34 @@ export const lightTheme = createTheme(
         letterSpacing: `var(--typography-letter-spacing)`,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 800,
+        md: 960,
+        lg: 1300,
+        xl: 1500,
+      },
+    },
     components: {
       MuiTypography: {
         defaultProps: {
           variantMapping: {
+            sectionTitle: "h2",
             responsiveText: "p",
           },
+        },
+      },
+      MuiContainer: {
+        styleOverrides: {
+          root: ({ ownerState, theme }) => ({
+            ...(!ownerState.disableGutters && {
+              [theme.breakpoints.up("sm")]: {
+                paddingLeft: `var(--g-layout-padding-sides)`,
+                paddingRight: `var(--g-layout-padding-sides)`,
+              },
+            }),
+          }),
         },
       },
     },

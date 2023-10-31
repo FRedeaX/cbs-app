@@ -3,8 +3,9 @@ import { AppProps as NextAppProps } from "next/app";
 import { FC, useEffect } from "react";
 import smoothScroll from "smoothscroll-polyfill";
 
-import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 import { lightTheme } from "@/styles/theme/lightTheme";
+import "@/styles/fonts/roboto";
 import "@/styles/styles.css";
 import "@/styles/variables/global.css";
 import "@/styles/variables/wp.css";

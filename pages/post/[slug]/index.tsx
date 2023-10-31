@@ -1,61 +1,40 @@
 import { ParsedUrlQuery } from "querystring";
 
-import { gql } from "@apollo/client";
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-import { useRouter } from "next/router";
+import {
+  GetStaticPathsResult,
+  GetStaticProps,
+  InferGetStaticPropsType,
+  NextPage,
+} from "next";
 
-import { client } from "@/lib/apollo/client";
-import { getMenu } from "@/core/backend";
-import { transformBlocks } from "@/core/backend/transformBlocks";
+import { getMenu, getMetadata, getPathsToPosts, getPost } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
-import { sortingCategories, staticNotFound } from "@/helpers/backend";
-import { GET_POST_CONTENT_BY_BLOCKS, Post } from "@/routes/Post/Post";
-import Head from "@/components/Head/Head";
-import Layout from "@/components/UI/Layout/Layout";
+import { staticNotFound } from "@/helpers/backend";
+import { RoutePost } from "@/routes/Post/Route.Post";
+import { SEO } from "@/components/SEO/SEO";
+import { Layout } from "@/components/UI/Layout/Layout";
+import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
 
-export async function getStaticPaths() {
-  const paths = await client
-    .query({
-      query: gql`
-        query articlesQuery {
-          posts {
-            nodes {
-              slug
-            }
-          }
-        }
-      `,
-      fetchPolicy: "network-only",
-    })
-    .then(({ data, error }) => {
-      if (error !== undefined) throw new Error(error.message);
-      if (data.posts.nodes.length === 0)
-        throw new Error(`
-          function: getStaticPaths, 
-          message: data.posts.nodes of null
-        `);
+type Path = { slug: string };
 
-      return data.posts.nodes.map((post: any) => ({
-        params: {
-          slug: post.slug,
-          // slug: [post.slug],
-        },
-      }));
-    })
-    .catch((error) => {
-      exceptionLog(error);
-      return [];
-    });
+export const getStaticPaths = async (): Promise<GetStaticPathsResult<Path>> => {
+  try {
+    const paths = await getPathsToPosts();
 
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    exceptionLog(error);
+    return { paths: [], fallback: "blocking" };
+  }
+};
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
-  post: any;
+  post: NonNullable<Awaited<ReturnType<typeof getPost>>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 interface Params extends ParsedUrlQuery {
@@ -67,72 +46,56 @@ export const getStaticProps: GetStaticProps<
   Params
 > = async ({ params }) => {
   try {
-    if (typeof params?.slug !== "string") {
-      throw new Error("params page is not string");
+    if (params === undefined) {
+      throw new Error(ERROR_MESSAGE.PAGE_PARAMS_UNDEFINED);
+    }
+    const { slug } = params;
+
+    const menuData = getMenu();
+    const postData = getPost({ slug });
+    const metadataData = getMetadata();
+
+    const [menu, post, metadata] = await Promise.all([
+      menuData,
+      postData,
+      metadataData,
+    ]);
+
+    if (post === null) {
+      return staticNotFound;
     }
 
-    const menu = await getMenu();
-    const post = await client
-      .query({
-        query: GET_POST_CONTENT_BY_BLOCKS,
-        variables: {
-          id: params.slug, // params.slug[0],
-          type: "SLUG",
-        },
-        fetchPolicy: "network-only",
-      })
-      // .then(({ data }) => transformBlocks(data.post))
-      .then(async ({ data, error }) => {
-        if (error !== undefined) throw error;
-        if (data.post === null) throw new Error("data.page of null");
-
-        return {
-          ...data.post,
-          ...(await transformBlocks(data.post.blocks)),
-          categories: {
-            nodes: await sortingCategories([...data.post.categories.nodes]),
-          },
-        };
-      })
-      .catch((error) => {
-        throw error;
-      });
-
     return {
-      props: {
-        menu,
-        post,
-      },
-      revalidate: parseInt(process.env.POST_REVALIDATE ?? "60", 10),
+      props: { menu, post, metadata },
+      revalidate: REVALIDATE.POST,
     };
   } catch (error) {
+    exceptionLog(error);
     return staticNotFound;
   }
 };
 
-type PagePostProps = InferGetStaticPropsType<typeof getStaticProps>;
+type PostPageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const PagePost: NextPage<PagePostProps> = ({ menu, post }) => {
-  const { isFallback } = useRouter();
-  return (
-    <Layout menu={menu} loading={isFallback} size="m">
-      <Head
-        title={post?.title}
-        description={post?.excerpt}
-        image={post?.featuredImage?.node?.sourceUrl}
-        video={post?.video}
-        url={post?.uri}
-      />
-      <Post
-        id={post?.id}
-        href={post?.link}
-        title={post?.title}
-        blocks={post?.blocks}
-        categories={post?.categories}
-        image={post?.featuredImage?.node?.sourceUrl}
-      />
-    </Layout>
-  );
-};
+const PostPage: NextPage<PostPageProps> = ({ menu, post, metadata }) => (
+  <Layout menu={menu}>
+    <SEO
+      domenTitle={metadata.title}
+      title={post.title}
+      description={post.excerpt}
+      image={post.featuredImage?.node.sourceUrl}
+      video={post.video}
+      url={post.uri}
+    />
+    <RoutePost
+      id={post.id}
+      href={post.link}
+      title={post.title}
+      blocks={post.blocks}
+      categories={post.categories.nodes}
+      imageUrl={post.featuredImage?.node.sourceUrl}
+    />
+  </Layout>
+);
 
-export default PagePost;
+export default PostPage;

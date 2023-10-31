@@ -1,19 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Skeleton } from "@mui/material";
+import { Box, Fade, Skeleton } from "@mui/material";
 import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/future/image";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useState, useRef, useEffect } from "react";
 
 import { Nullable } from "../../helpers/typings/utility-types";
+
 import classes from "./Image.module.css";
+import { sxRoot } from "./Image.style";
+import { getImageBlurSvg } from "./utils/getImageBlurSvg";
 
 const ANIMATION_DELAY_MS = 50;
 
 export type ImageProps = {
-  /**
-   * Дополнительный класс для обертки.
-   */
-  classNamePlaceholder?: string;
   /**
    * Заполнитель для отображения во время загрузки картинки.
    */
@@ -28,28 +28,30 @@ export type ImageProps = {
   height: number;
 } & Omit<NextImageProps, "placeholder" | "blurDataURL" | "width" | "height">;
 
+type ImageRef = HTMLDivElement & {
+  children: [HTMLImageElement];
+};
+
 export const Image: FC<ImageProps> = ({
   blurDataURL,
   alt,
   className,
-  classNamePlaceholder,
   width,
   height,
   src,
-  ...prop
+  ...props
 }) => {
   const [isLoaded, setLoaded] = useState(false);
-  const [isFailed, setFailed] = useState(false);
   const [needAnimation, setNeedAnimation] = useState(false);
   const [canRemovePlaceholder, setCanRemovePlaceholder] = useState(false);
 
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<Nullable<ImageRef>>(null);
 
   const isRendered = useCallback(() => {
     if (!imageRef.current) {
       return false;
     }
-    const { naturalWidth, naturalHeight } = imageRef.current;
+    const { naturalWidth, naturalHeight } = imageRef.current.children[0];
 
     return naturalWidth > 0 && naturalHeight > 0;
   }, [imageRef]);
@@ -66,12 +68,6 @@ export const Image: FC<ImageProps> = ({
     };
   }, [isLoaded, isRendered, setNeedAnimation]);
 
-  useEffect(() => {
-    if (!isLoaded && imageRef.current && imageRef.current.complete) {
-      setLoaded(true);
-    }
-  }, [isLoaded]);
-
   const handleOnAnimationEnd = useCallback(() => {
     setCanRemovePlaceholder(true);
   }, []);
@@ -80,58 +76,42 @@ export const Image: FC<ImageProps> = ({
     setLoaded(true);
   }, []);
 
-  const handleOnError = useCallback(() => {
-    setFailed(true);
-  }, []);
-
-  const imageClassNames = classNames(className, classes.image, {
-    [classes.image_loaded]: isLoaded,
-    [classes.image_loading]: needAnimation,
-    [classes.image_animated]: needAnimation && isLoaded,
+  const cnPlaceholder = classNames(classes.placeholder, className, {
+    [classes.placeholder_animated]: needAnimation && isLoaded,
   });
 
-  const image = (
-    <NextImage
-      alt={alt}
-      aria-hidden={alt ? "false" : "true"}
-      src={isFailed ? "" : src}
-      className={imageClassNames}
-      width={width}
-      height={height}
-      onAnimationEnd={handleOnAnimationEnd}
-      onError={handleOnError}
-      onLoad={handleOnLoad}
-      {...prop}
-    />
-  );
-
-  if (typeof blurDataURL === "string") {
-    return (
-      <div className={classNames(classes.placeholder, classNamePlaceholder)}>
-        {needAnimation && !canRemovePlaceholder && (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+  return (
+    <Box ref={imageRef} sx={sxRoot}>
+      <NextImage
+        alt={alt}
+        aria-hidden={!alt}
+        src={src}
+        className={classNames(classes.image, className)}
+        width={width}
+        height={height}
+        onLoadingComplete={handleOnLoad}
+        placeholder={blurDataURL ? "blur" : "empty"}
+        blurDataURL={blurDataURL ?? undefined}
+        {...props}
+      />
+      {blurDataURL && needAnimation && !canRemovePlaceholder && (
+        <Fade in={needAnimation && !isLoaded} easing="ease" timeout={600}>
+          <div className={cnPlaceholder} onAnimationEnd={handleOnAnimationEnd}>
+            <div className={classes.backdrop} />
             <img
               alt=""
-              aria-hidden="true"
-              src={blurDataURL}
-              className={classNames(className, classes.blur)}
-              width={width}
-              height={height}
+              aria-hidden
+              src={`data:image/svg+xml;charset=utf-8,${getImageBlurSvg({
+                width,
+                height,
+                blurDataURL,
+              })}`}
+              className={classes.blur}
             />
-            <Skeleton
-              // sx={sxSkeleton}
-              className={classNames(className, classes.skeleton)}
-              animation="wave"
-              width={width}
-              height={height}
-            />
-          </>
-        )}
-        {image}
-      </div>
-    );
-  }
-
-  return image;
+            <Skeleton className={classes.skeleton} animation="wave" />
+          </div>
+        </Fade>
+      )}
+    </Box>
+  );
 };

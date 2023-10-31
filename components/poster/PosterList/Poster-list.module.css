@@ -1,9 +1,0 @@
-.block {
-  --carousel-icon-button-width: 36px;
-  --carousel-icon-button-height: 36px;
-  --carousel-scroll-snap-padding: 5px;
-
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: -5px;
-}

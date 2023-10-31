@@ -1,26 +1,34 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { getMenu } from "@/core/backend";
+import { getMenu, getMetadata } from "@/core/ssr";
 import { exceptionLog } from "@/helpers";
 import { staticNotFound } from "@/helpers/backend";
 import { RouteQuestionnaire } from "@/routes/Questionnaire";
-import Head from "@/components/Head/Head";
-import Layout from "@/components/UI/Layout/Layout";
+import { SEO } from "@/components/SEO/SEO";
+import { Layout } from "@/components/UI/Layout/Layout";
+
+export const questionnaireIsCompleted = true;
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
 };
 
 export const getStaticProps: GetStaticProps<
   GetStaticPropsResult
 > = async () => {
   try {
-    const menu = await getMenu();
+    if (questionnaireIsCompleted) {
+      return staticNotFound;
+    }
+
+    const menuData = getMenu();
+    const metadataData = getMetadata();
+
+    const [menu, metadata] = await Promise.all([menuData, metadataData]);
 
     return {
-      props: {
-        menu,
-      },
+      props: { menu, metadata },
     };
   } catch (error) {
     exceptionLog(error);
@@ -30,9 +38,15 @@ export const getStaticProps: GetStaticProps<
 
 type QuestionnairePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const QuestionnairePage: NextPage<QuestionnairePageProps> = ({ menu }) => (
-  <Layout menu={menu} paddingSides={15}>
-    <Head title="Анкета пользователя Библиотеки Модельного стандарта" />
+const QuestionnairePage: NextPage<QuestionnairePageProps> = ({
+  menu,
+  metadata,
+}) => (
+  <Layout menu={menu}>
+    <SEO
+      domenTitle={metadata.title}
+      title="Анкета пользователя Библиотеки Модельного стандарта"
+    />
     <RouteQuestionnaire />
   </Layout>
 );

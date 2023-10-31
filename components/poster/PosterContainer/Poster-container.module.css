@@ -1,9 +1,0 @@
-/* .wrapper {
-  margin-top: 10px;
-} */
-
-.wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -5px;
-}

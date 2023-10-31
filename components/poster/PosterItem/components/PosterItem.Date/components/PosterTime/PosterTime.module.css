@@ -1,0 +1,18 @@
+.root {
+  font-size: 1.4em;
+  font-weight: 100;
+}
+
+@media screen and (width < 480px) {
+  .root {
+    flex-shrink: 0;
+    margin-top: 2px;
+    margin-left: 5px;
+  }
+}
+
+@media screen and (width >= 480px) {
+  .root {
+    margin-top: 5px;
+  }
+}

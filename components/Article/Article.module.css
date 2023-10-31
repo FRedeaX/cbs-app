@@ -18,13 +18,21 @@
 }
 
 .category-link {
-  font-family: var(--font-family-roboto-slab);
+  font-family: var(--font-family-serif);
   font-size: 14px;
   font-weight: 400;
 }
 
 .body {
   position: relative;
+}
+
+.blocks {
+  --typography-margin-top: var(--block-margin-top, var(--g-block-margin-top));
+  --typography-margin-bottom: var(
+    --block-margin-bottom,
+    var(--g-block-margin-bottom)
+  );
 }
 
 .Share {

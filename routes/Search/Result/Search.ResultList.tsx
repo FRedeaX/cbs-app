@@ -1,18 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 import { FC } from "react";
 
-import { Card, ICardProps } from "../../../components/Widget/Card/Card";
+// import { Card, ICardProps } from "../../../components/Widget/Card/Card";
+import { PostCard } from "src/entities/card/Post";
+
 import { Paragraph } from "../../../components/blocks/Paragraph/Paragraph";
 import { SearchHits } from "../../../core/elastic/search/type";
-import { Maybe, Omit } from "../../../helpers/typings/utility-types";
+import { Maybe } from "../../../helpers/typings/utility-types";
 
-type Data = { data: Maybe<SearchHits> };
-type ISearchResultListProps = Data & Omit<ICardProps, keyof Data>;
+type ISearchResultListProps = { data: Maybe<SearchHits> };
 
-export const SearchResultList: FC<ISearchResultListProps> = ({
-  data,
-  ...all
-}) => {
+export const SearchResultList: FC<ISearchResultListProps> = ({ data }) => {
   if (data === undefined) return null;
 
   if (data.total.value === 0) {
@@ -26,7 +24,7 @@ export const SearchResultList: FC<ISearchResultListProps> = ({
   return (
     <>
       {data.hits.map((node) => (
-        <Card
+        <PostCard
           key={node?._id}
           data={{
             title:
@@ -44,12 +42,7 @@ export const SearchResultList: FC<ISearchResultListProps> = ({
               nodes: [...node._source.departments, ...node._source.categories],
             },
           }}
-          prefetch={false}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...all}
-          // isSmall
-          // isClamp
-          // lineClamp={3}
+          linkProps={{ prefetch: false }}
         />
       ))}
     </>

@@ -18,6 +18,7 @@ type ControlCheckboxGroupProps = {
     | string
     | {
         text: string;
+        required?: boolean;
       }
   )[];
 };
@@ -75,7 +76,11 @@ export const ControlCheckboxGroup: FC<ControlCheckboxGroupProps> = ({
                 }
                 label={answer.text}
               />
-              <TextField variant="standard" onChange={handleOnChange} />
+              <TextField
+                required={answer.required && isAnother}
+                variant="standard"
+                onChange={handleOnChange}
+              />
             </div>
           );
         })}

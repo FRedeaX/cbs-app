@@ -1,4 +1,5 @@
-import { GetPlaceholderResult, getPlaceholder } from "../../../placeholder";
+import { GetPlaceholderResult, getPlaceholder } from "@/core/placeholder";
+
 import { getSizeOf } from "./getSizeOf";
 
 type ImageTransformBlocks = {
@@ -21,7 +22,7 @@ export const getSizesAndPlaceholder = async <T = Record<string, unknown>>(
 ): Promise<ImageTransformBlocksResult & T> => {
   try {
     const { width, height } = await getSizeOf(url);
-    const { blurDataURL } = await getPlaceholder(id);
+    const { blurDataURL } = await getPlaceholder({ id });
 
     return {
       ...data,

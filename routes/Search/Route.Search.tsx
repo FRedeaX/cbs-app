@@ -1,34 +1,34 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
-import { RouteContainer } from "../../components/RouteContainer/RouteContainer";
+import { SearchResponseFrontend } from "@/core/elastic/search/type";
+import { UAPlatform } from "@/helpers/backend";
 import {
   SearchFilters,
   SearchForm,
   SearchInput,
   SearchSuggestion,
-} from "../../components/Search/components";
-import { InputProvider } from "../../components/Search/components/Input/context";
-import { SearchPagination } from "../../components/Search/components/Pagination/Search.Pagination";
-import { SuggestionProvider } from "../../components/Search/components/Suggestion/context";
-import { useQuerySearch } from "../../components/Search/utils/hooks";
-import { SearchResponseFrontend } from "../../core/elastic/search/type";
-import { SearchAside, SearchAsideUAPlatform } from "./Aside/Search.Aside";
+} from "@/components/Search/components";
+import { InputProvider } from "@/components/Search/components/Input/context";
+import { SearchPagination } from "@/components/Search/components/Pagination/Search.Pagination";
+import { SuggestionProvider } from "@/components/Search/components/Suggestion/context";
+import { useQuerySearch } from "@/components/Search/utils/hooks";
+
+import { SearchAside } from "./Aside/Search.Aside";
 import { SearchResultList } from "./Result/Search.ResultList";
 import classes from "./Route.Search.module.css";
 
 export type RouteSearchProps = {
   ssrData: SearchResponseFrontend;
-} & SearchAsideUAPlatform;
+  platform: UAPlatform;
+};
 
-// eslint-disable-next-line arrow-body-style
 export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
   const { data, isLoading } = useQuerySearch(ssrData);
-  const isHorizontal = useMediaQuery("(min-width: 1100px)");
 
   return (
-    <RouteContainer className={classes.root}>
+    <Container maxWidth="xl" sx={{ marginTop: "2em" }}>
       <InputProvider>
         <SuggestionProvider>
           <SearchForm>
@@ -38,7 +38,7 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
         </SuggestionProvider>
       </InputProvider>
 
-      <Box className={classes.body}>
+      <Box className={classNames(classes.body, classes[`body_${platform}`])}>
         <SearchAside
           className={classes.Aside}
           count={data?.hits.hits.length && data?.hits.total.value}
@@ -61,7 +61,7 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
             className={classNames(classes.result, {
               [classes["result--loading"]]: isLoading,
             })}>
-            <SearchResultList data={data?.hits} isHorizontal={isHorizontal} />
+            <SearchResultList data={data?.hits} />
           </Box>
 
           {data && data.hits.hits.length > 0 && (
@@ -72,6 +72,6 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
           )}
         </Box>
       </Box>
-    </RouteContainer>
+    </Container>
   );
 };

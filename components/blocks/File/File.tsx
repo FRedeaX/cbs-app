@@ -1,14 +1,20 @@
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import { FC } from "react";
 
 import { Nullable } from "../../../helpers/typings/utility-types";
 import { SeparationDot } from "../../SeparationDot/SeparationDot";
 import { Paragraph } from "../Paragraph/Paragraph";
 import { HorizontalAlign } from "../utils/types";
+
 import classes from "./File.module.css";
+
+const DynamicTooltip = dynamic(() => import("@mui/material/Tooltip"), {
+  ssr: true,
+});
 
 type FileProps = {
   /**
@@ -84,9 +90,11 @@ export const File: FC<FileProps> = ({
           className={classes.button}
           startIcon={<InsertDriveFileRoundedIcon />}>
           <div>
-            <Paragraph component="span" className={classes.buttonText}>
-              {fileName}
-            </Paragraph>
+            <Paragraph
+              component="span"
+              content={fileName}
+              className={classes.buttonText}
+            />
             {fileSize && (
               <span className={classes.buttonFileSize}>
                 <SeparationDot />
@@ -98,7 +106,7 @@ export const File: FC<FileProps> = ({
           </div>
         </Button>
         {showDownloadButton && (
-          <Tooltip
+          <DynamicTooltip
             title={`Скачать "${fileName}"${titleFileSize}`}
             arrow
             disableInteractive>
@@ -109,7 +117,7 @@ export const File: FC<FileProps> = ({
               target="_blank">
               <ArrowDownwardRoundedIcon />
             </IconButton>
-          </Tooltip>
+          </DynamicTooltip>
         )}
       </div>
       {displayPreview && (

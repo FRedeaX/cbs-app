@@ -3,18 +3,26 @@ import { ParsedUrlQuery } from "querystring";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { client } from "@/lib/apollo/client";
-import { RKEY_POSTS_BY_CATEGORY } from "@/lib/redis";
-import { getMenu, pagination } from "@/core/backend";
-import { plaiceholder, staticNotFound } from "@/helpers/backend";
-import Head from "@/components/Head/Head";
-import HomePage from "@/components/Pages/HomePage/HomePage";
-import { fetchArticlesByCategory } from "@/components/Posts/PostsRoot";
-import Layout from "@/components/UI/Layout/Layout";
-
-import { getPageInfoCategory } from "..";
+import {
+  getMenu,
+  getMetadata,
+  getPosters,
+  getPostsByCategory,
+  getResources,
+} from "@/core/ssr";
+import { SSRError } from "@/core/ssr/utils/ssrEror";
+import { staticNotFound } from "@/helpers/backend";
+import { SEO } from "@/components/SEO/SEO";
+import { Layout } from "@/components/UI/Layout/Layout";
+import { ERROR_MESSAGE, REVALIDATE } from "@/constants";
+import { HomeLayout } from "src/widgets/home/Layout";
+import { HomePost } from "src/widgets/home/Post";
 
 export async function getStaticPaths() {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return { paths: [], fallback: "blocking" };
+  }
+
   return {
     paths: [
       { params: { slug: "meropriyatie", page: "2" } },
@@ -33,84 +41,64 @@ export async function getStaticPaths() {
 
 type GetStaticPropsResult = {
   menu: Awaited<ReturnType<typeof getMenu>>;
-  posts: any;
-  lastPageNumber: ReturnType<typeof pagination.getLastPageNumber>;
-  categoryName: string;
+  posts: Awaited<ReturnType<typeof getPostsByCategory>>;
+  posters: Awaited<ReturnType<typeof getPosters.load>>;
+  metadata: Awaited<ReturnType<typeof getMetadata>>;
+  resources: Awaited<ReturnType<typeof getResources>>;
+  name: string;
 };
 
 interface Params extends ParsedUrlQuery {
+  slug: string;
   page: string;
 }
-
-type PaginationData = pagination.gql.PostsPaginationByCategoryGQL;
 
 export const getStaticProps: GetStaticProps<
   GetStaticPropsResult,
   Params
 > = async ({ params }) => {
   try {
-    if (typeof params?.page !== "string") {
-      throw new Error("params page is not string");
+    if (params === undefined) {
+      throw new Error(ERROR_MESSAGE.PAGE_PARAMS_UNDEFINED);
     }
 
     const { slug } = params;
-    if (typeof slug !== "string") {
-      throw new Error("slug is string");
+    const page = parseInt(params.page, 10);
+    if (Number.isNaN(page)) {
+      throw new Error(`pageNumber ${ERROR_MESSAGE.IS_NOT_NUMBER}`);
     }
 
-    const pageNumber = parseInt(params.page, 10);
-    if (Number.isNaN(pageNumber)) {
-      throw new Error("pageNumber is NaN");
+    const menuData = getMenu();
+    const postsData = getPostsByCategory({ slug, page });
+    const postersData = getPosters.load().then(getPosters.filter);
+    const metadataData = getMetadata();
+    const resourcesData = getResources();
+
+    const [menu, posts, posters, metadata, resources] = await Promise.all([
+      menuData,
+      postsData,
+      postersData,
+      metadataData,
+      resourcesData,
+    ]);
+
+    const name = posts.data?.[0].categories.nodes.find(
+      (node) => node.slug === slug,
+    )?.name;
+    if (name === undefined) {
+      throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { slug, page });
     }
-
-    const menu = await getMenu();
-    const paginationList = await pagination.load<PaginationData>({
-      key: `${RKEY_POSTS_BY_CATEGORY}${slug}`,
-      query: pagination.gql.POSTS_PAGINATION_BY_CATEGORY_GQL,
-      id: slug,
-      pageInfoCallback: getPageInfoCategory,
-    });
-
-    const carrentPage = paginationList[pageNumber - 1];
-    if (carrentPage === undefined) throw new Error("carrentPage of undefined");
-
-    const { cursor } = carrentPage;
-    const { posts, categoryName } = await client
-      .query({
-        query: fetchArticlesByCategory,
-        variables: {
-          id: slug,
-          first: cursor === "" ? 10 : 20,
-          cursor,
-        },
-        fetchPolicy: "network-only",
-      })
-      .then(async ({ data, error }) => {
-        if (error !== undefined) throw new Error(error.message);
-        if (data.category?.posts.nodes.length === 0)
-          throw new Error("data.category.posts.nodes of null");
-
-        const plaiceholderRes = await plaiceholder(data.category.posts.nodes);
-        return {
-          posts: plaiceholderRes,
-          categoryName:
-            data.category.posts.nodes[0].categories.nodes.filter(
-              (node: any) => node.slug === slug,
-            )?.[0]?.name || null,
-        };
-      })
-      .catch((error) => {
-        throw error;
-      });
 
     return {
       props: {
         menu,
-        lastPageNumber: pagination.getLastPageNumber(paginationList),
+        name,
         posts,
-        categoryName,
+        posters,
+        metadata,
+        resources,
       },
-      revalidate: parseInt(process.env.POST_REVALIDATE ?? "60", 10),
+      revalidate: REVALIDATE.POST,
     };
   } catch (error) {
     return staticNotFound;
@@ -121,27 +109,33 @@ type HomeProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const Home: NextPage<HomeProps> = ({
   menu,
+  name,
   posts,
-  lastPageNumber,
-  categoryName,
+  posters,
+  metadata,
+  resources,
 }) => {
   const {
     isFallback,
     query: { slug, page },
   } = useRouter();
   return (
-    <Layout menu={menu} loading={isFallback} paddingSides={false}>
-      <Head
-        title={`Категория: ${categoryName} — cтраница ${page}`}
-        description={`Мероприятия библиотек города Байконур по категории ${categoryName}, cтраница ${page}`}
+    <Layout menu={menu} pageLoading={isFallback}>
+      <SEO
+        domenTitle={metadata.title}
+        title={`Категория: ${name} — cтраница ${page}`}
+        description={`Мероприятия библиотек города Байконур по категории ${name}, cтраница ${page}`}
       />
-      <HomePage
-        posts={posts}
-        pages={lastPageNumber}
-        paginationURI={`/post/category/${slug}`}
-        categoryName={categoryName}
-        isGroupCards={false}
-      />
+      <HomeLayout posters={posters} resources={resources}>
+        <HomePost
+          title={`Категория: ${name}`}
+          posts={posts.data}
+          pagination={{
+            count: posts.pageCount,
+            uri: `/post/category/${slug}`,
+          }}
+        />
+      </HomeLayout>
     </Layout>
   );
 };

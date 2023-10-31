@@ -3,6 +3,7 @@ import { DocumentNode } from "graphql";
 import { client } from "../../lib/apollo/client";
 import delay from "../delay";
 import { exceptionLog } from "../exceptionLog";
+import { Nullable } from "../typings/utility-types";
 
 export type queryNode = DocumentNode;
 /**
@@ -21,10 +22,10 @@ type criticalVariables = {
 
   first?: FirstVariable;
 };
-type CallbackFn<TData> = (data: TData) => Promise<void>;
+type CallbackFn<TData> = (data: TData) => Promise<void> | void;
 export type PageInfo = {
   hasNextPage: boolean;
-  endCursor: string;
+  endCursor: Nullable<string>;
 };
 type PageInfoCallback<TData> = (data: TData) => PageInfo;
 type UpdatedVariablesCallback<TVariables> = () => TVariables;
@@ -41,7 +42,7 @@ export interface IRecursiveLoadParties<TData, TVariables> {
   variables?: TVariables & criticalVariables;
 
   /**
-   * Асинхронная функция, выполняемая для каждой партии
+   * Функция или асинхронная функция, выполняемая для каждой партии
    *
    * @param data
    */
@@ -94,7 +95,6 @@ export async function recursiveLoadParties<
     const { data } = await client.query({
       query,
       variables,
-      fetchPolicy: "network-only",
     });
 
     await callbackFn(data);
@@ -104,7 +104,7 @@ export async function recursiveLoadParties<
     if (pageInfo.hasNextPage) {
       const newVariables = {
         ...variables,
-        cursor: pageInfo.endCursor,
+        cursor: pageInfo.endCursor ?? "",
         ...updatedVariablesCallback?.(),
       } as TVariables & criticalVariables;
 

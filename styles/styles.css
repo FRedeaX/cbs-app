@@ -12,18 +12,7 @@
 #__next {
   display: flex;
   flex-direction: column;
-}
-
-@media screen and (max-width: 950px) {
-  .main {
-    margin-top: 80px;
-  }
-}
-
-@media screen and (min-width: 951px) {
-  .main {
-    margin-top: 100px;
-  }
+  min-height: 100vh;
 }
 
 body {
@@ -31,8 +20,7 @@ body {
 
   margin: 0;
 
-  font-family: Roboto, Helvetica, Arial, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  font-family: var(--font-family-roboto);
   word-break: break-word;
 
   background-color: var(--background-color-white);

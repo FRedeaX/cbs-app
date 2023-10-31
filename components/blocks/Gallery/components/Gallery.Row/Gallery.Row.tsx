@@ -13,6 +13,7 @@ import {
 } from "../../../../VisuallyHidden/VisuallyHidden";
 import { GalleryButton } from "../Gallery.Button/Gallery.Button";
 import { GalleryMore } from "../Gallery.More/Gallery.More";
+
 import classes from "./Gallery.Row.module.css";
 
 export type ImageData = {
@@ -79,7 +80,6 @@ export const GalleryRow: FC<GalleryRowProps> = ({
               height={450 / aspectRatio}
               sizes={`${sizes}vw`}
               className={classes.image}
-              classNamePlaceholder={classes.placeholder}
               loading="lazy"
               blurDataURL={image.blurDataURL}
             />

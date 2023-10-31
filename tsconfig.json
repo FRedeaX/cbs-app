@@ -14,11 +14,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/base/*": ["base/*"],
+      "@/base": ["base"],
       "@/components/*": ["components/*"],
-      "@/constants/*": ["constants/*"],
+      "@/constants": ["constants"],
       "@/core/*": ["core/*"],
       "@/helpers": ["helpers"],
       "@/helpers/*": ["helpers/*"],
@@ -28,6 +33,6 @@
       "@/styles/*": ["styles/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

@@ -2,7 +2,8 @@ import { IconButton } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
-import { Void } from "../../../../helpers/typings/utility-types";
+import { Void } from "@/helpers/typings/utility-types";
+
 import classes from "./Header.Toggle.module.css";
 
 type HeaderToggleProps = {

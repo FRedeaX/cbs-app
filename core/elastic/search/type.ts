@@ -1,22 +1,42 @@
+// eslint-disable-next-line import/no-unresolved
 import { SearchResponse } from "@elastic/elasticsearch/api/types";
 
-import { Nullable } from "../../../helpers/typings/utility-types";
+import { Nullable } from "@/helpers/typings/utility-types";
 
 export type SearchParams = {
   text?: string;
   categories?: string;
   departments?: string;
   page?: string;
+  /**
+   * Больше.
+   */
+  gtDate?: string;
+  /**
+   * Больше или равно.
+   */
+  gteDate?: string;
+  /**
+   * Меньше.
+   */
+  ltDate?: string;
+  /**
+   * Меньше или равно.
+   */
+  lteDate?: string;
+  excludedId?: string;
 };
 
 type SearchCategoryNode = {
+  id: string;
   name: string;
   slug: string;
+  uri: string;
 };
 
 export type SearchSource = {
   title: string;
-  excerpt?: string;
+  excerpt: string;
   link: string;
   thumbnail: { url: string };
   categories: SearchCategoryNode[];
@@ -75,7 +95,7 @@ export type SearchResponseBackend = {
   aggregations: Aggregations<BucketsAggregations, BucketsAggregations>;
 } & SearchResponse<SearchHits>;
 
-export type SearchResponseFrontend = {
+export type SearchResponseFrontend = SearchResponse<SearchSource> & {
   aggregations: Aggregations<ListBucketsAggregations, BucketsAggregations>;
   hits: SearchHits;
-} & SearchResponse<SearchHits>;
+};

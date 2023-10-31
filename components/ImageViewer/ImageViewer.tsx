@@ -1,9 +1,18 @@
-import { SwipeableDrawer, SwipeableDrawerProps } from "@mui/material";
+import { SwipeableDrawerProps } from "@mui/material";
+import dynamic from "next/dynamic";
 import { FC, ReactNode } from "react";
 
-import { noop } from "../../helpers";
-import { useClientHeight } from "../../helpers/frontend/hooks";
+import { noop } from "@/helpers";
+import { useClientHeight } from "@/helpers/frontend/hooks";
+
 import classes from "./ImageViewer.module.css";
+
+const DynamicSwipeableDrawer = dynamic(
+  () => import("@mui/material/SwipeableDrawer"),
+  {
+    ssr: true,
+  },
+);
 
 type ImageViewerProps = {
   children: ReactNode;
@@ -18,7 +27,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({
   const height = useClientHeight();
 
   return (
-    <SwipeableDrawer
+    <DynamicSwipeableDrawer
       anchor="bottom"
       open={open}
       onOpen={noop}
@@ -35,6 +44,6 @@ export const ImageViewer: FC<ImageViewerProps> = ({
         className={classes.root}>
         {children}
       </div>
-    </SwipeableDrawer>
+    </DynamicSwipeableDrawer>
   );
 };
