@@ -1,13 +1,10 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-import { roboto } from "@/styles/fonts/roboto";
-
 class _Document extends Document {
   render() {
     return (
       <Html lang="ru">
         <Head>
-          <style>{roboto}</style>
           <link rel="preconnect" href="https://mc.yandex.ru/" />
 
           <link rel="shortcut icon" href="/logos/favicon.ico" />
