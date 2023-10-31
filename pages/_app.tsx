@@ -5,6 +5,7 @@ import smoothScroll from "smoothscroll-polyfill";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 import { lightTheme } from "@/styles/theme/lightTheme";
+import "@/styles/fonts/roboto";
 import "@/styles/styles.css";
 import "@/styles/variables/global.css";
 import "@/styles/variables/wp.css";
