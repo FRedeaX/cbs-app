@@ -1,1 +1,1 @@
-export * from "./ui";
+export { CardContent } from "./ui";

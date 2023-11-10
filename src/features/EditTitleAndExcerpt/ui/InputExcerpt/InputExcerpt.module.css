@@ -1,0 +1,11 @@
+.input {
+  margin: -2px -8px 0;
+  padding: 2px 8px 0;
+  border-radius: 6px;
+  transition: background-color ease 350ms;
+}
+
+.input:hover,
+.input:focus {
+  background-color: var(--black-10);
+}

@@ -8,9 +8,6 @@ type CardContentProps = {
 export const CardContent: FC<CardContentProps> = ({ children }) => (
   <Box
     sx={{
-      "--typography-line-height": "1.5",
-      "--typography-color": "var(--black-70)",
-
       display: "flex",
       flexDirection: "column",
       flexGrow: 1,

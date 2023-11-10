@@ -1,2 +1,2 @@
 export * from "./ui";
-export type { PostCardItem } from "./type";
+export { type PostCardItem } from "./type";

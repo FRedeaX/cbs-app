@@ -1,0 +1,1 @@
+export { PostCardExcerpt } from "./ui";

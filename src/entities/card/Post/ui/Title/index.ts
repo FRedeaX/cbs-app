@@ -1,0 +1,1 @@
+export { PostCardTitle } from "./ui";

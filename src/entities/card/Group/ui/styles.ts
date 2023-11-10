@@ -1,11 +1,13 @@
 import { BoxProps, ContainerProps, TypographyProps } from "@mui/material";
 
 export const sxContainer: ContainerProps["sx"] = {
-  "--transform-translate": `6px`,
+  "--transform-translate": `var(--group-cards-transform-translate, 6px)`,
 
   "--carousel-offset-y": `var(--transform-translate)`,
   "--card-direction": `column`,
   "--card-width": `288px`,
+  "--card-margin-y": `calc(var(--gap) / 2)`,
+  "--card-margin-x": `calc(var(--gap) / 2)`,
   "--card-transform-translate-y": `calc(var(--transform-translate) * -1)`,
 
   marginY: `var(--gap)`,
@@ -13,16 +15,6 @@ export const sxContainer: ContainerProps["sx"] = {
   "@media (max-width: 960px)": {
     width: `calc(100% + var(--gap))`,
   },
-};
-
-export const sxCarousel: BoxProps["sx"] = {
-  "@media (min-width: 961px)": {
-    marginLeft: `calc(var(--gap) / 2 * -1)`,
-  },
-};
-
-export const sxScroller: BoxProps["sx"] = {
-  justifyContent: `center`,
 };
 
 export const sxHeader: BoxProps["sx"] = {
@@ -40,4 +32,14 @@ export const sxTitle: TypographyProps["sx"] = {
 
 export const sxSubtitle: TypographyProps["sx"] = {
   color: `var(--black-80)`,
+};
+
+export const sxCarousel: BoxProps["sx"] = {
+  "@media (min-width: 961px)": {
+    marginLeft: `calc(var(--gap) / 2 * -1)`,
+  },
+};
+
+export const sxScroller: BoxProps["sx"] = {
+  justifyContent: `center`,
 };

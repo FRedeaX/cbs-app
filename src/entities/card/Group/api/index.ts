@@ -1,0 +1,1 @@
+export { useGetTagQuery } from "./getTagGQL";

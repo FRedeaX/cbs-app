@@ -23,6 +23,7 @@ export const useGetBlocksQuery = (
     variables,
     fetcherData,
     {
+      keepPreviousData: true,
       revalidateOnFocus: false,
       fallbackData: { blocks: [], video: [] },
       ...config,
