@@ -2,7 +2,7 @@ import { BoxProps } from "@mui/material";
 
 export const sxRoot: BoxProps["sx"] = {
   position: "relative",
-  display: "flex",
+  display: "var(--image-display, block)",
   width: "100%",
   height: "100%",
 };

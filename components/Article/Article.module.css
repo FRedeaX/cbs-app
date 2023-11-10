@@ -7,6 +7,18 @@
   padding: 0 var(--g-article-padding-sides);
 }
 
+@media screen and (width <= 1600px) {
+  .container {
+    --is-font-size-adaptive: 1;
+  }
+}
+
+@media screen and (width > 1600px) {
+  .container {
+    --is-font-size-adaptive: 0;
+  }
+}
+
 .header {
   margin: 2em 0 1.3em;
 }

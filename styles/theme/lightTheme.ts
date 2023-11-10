@@ -172,8 +172,6 @@ export const lightTheme = createTheme(
         fontSize: `1.25rem`,
         fontWeight: `400`,
         cursor: "default",
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         textWrap: `balance`,
         color: `rgba(30, 30, 30, 0.9)`,
         paddingLeft: `calc(var(--gap) * 2.5)`,

@@ -14,6 +14,8 @@ export const CardMedia: FC<CardMediaProps> = ({
 }) => (
   <Box
     sx={{
+      "--image-display": `flex`,
+
       display: "flex",
       flexShrink: 0,
       width: `var(--card-media-width, ${width}px)`,
