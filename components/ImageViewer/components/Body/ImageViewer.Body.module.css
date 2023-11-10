@@ -5,3 +5,8 @@
 
   width: 100vw;
 }
+
+.root img {
+  max-height: var(--image-viewer-body);
+  object-fit: contain;
+}

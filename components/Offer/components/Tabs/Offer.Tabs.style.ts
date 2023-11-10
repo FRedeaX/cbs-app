@@ -4,7 +4,6 @@ import { BoxProps, ContainerProps, TabProps } from "@mui/material";
 export const sxOfferRoot: ContainerProps["sx"] = {
   "--transform-translate": `6px`,
 
-  "--is-font-size-adaptive": 0,
   "--carousel-offset-y": `var(--transform-translate)`,
   "--carousel-offset-x": `5px`,
   "--card-width": "calc(288px)",

@@ -1,15 +1,15 @@
-import { CSSProperties } from "./helpers/typings/utility-types";
+import { TypographyStyle } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
-    sectionTitle: CSSProperties;
-    responsiveText: CSSProperties;
+    sectionTitle: TypographyStyle;
+    responsiveText: TypographyStyle;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    sectionTitle?: CSSProperties;
-    responsiveText?: CSSProperties;
+    sectionTitle?: TypographyStyle;
+    responsiveText?: TypographyStyle;
   }
 }
 
