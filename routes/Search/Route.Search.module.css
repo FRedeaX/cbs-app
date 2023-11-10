@@ -1,6 +1,5 @@
 .body {
   --gap: 10px;
-  --is-font-size-adaptive: 0;
 
   display: flex;
   padding-top: 10px;

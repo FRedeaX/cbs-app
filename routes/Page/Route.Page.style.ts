@@ -11,8 +11,6 @@ export const sxHeaderBox: BoxProps["sx"] = {
 };
 
 export const sxCardBox: BoxProps["sx"] = {
-  "--is-font-size-adaptive": 0,
-
   "--card-margin-x": "calc(var(--gap) / 2)",
   "--card-margin-y": "calc(var(--gap) / 2)",
 

@@ -3,7 +3,6 @@ import { ContainerProps, BoxProps } from "@mui/material";
 export const sxContainer: ContainerProps["sx"] = {
   "--gap": "10px",
 
-  "--is-font-size-adaptive": 0,
   "--carousel-offset-x": `calc(var(--gap) / 2)`,
 
   display: "flex",
