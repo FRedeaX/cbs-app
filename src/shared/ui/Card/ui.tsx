@@ -29,7 +29,7 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
 
       backgroundColor: "var(--card-background-color, #fff)",
       borderRadius: "var(--card-border-radius, 16px)",
-      boxShadow: "rgba(30, 30, 30, 10%) 0 2px 6px",
+      boxShadow: "rgba(30, 30, 30, 0.1) 0 2px 6px",
 
       transitionTimingFunction: "cubic-bezier(0.21, 0.01, 0.3, 0.07)",
       transitionDuration: "0.3s",
@@ -37,7 +37,7 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
 
       "@media (hover: hover)": {
         ":hover": {
-          boxShadow: "rgba(62, 68, 81, 20%) 0 3px 12px 0",
+          boxShadow: "rgba(62, 68, 81, 0.2) 0 3px 12px 0",
           transform: "translateY(var(--card-transform-translate-y))",
         },
       },
