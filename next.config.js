@@ -15,6 +15,8 @@ const withTM = require("next-transpile-modules")([
   "@mui/material",
   "@mui/lab",
   "@mui/icons-material",
+  "swr",
+  "graphql-request",
 ]);
 
 const nextConfig = withTM({

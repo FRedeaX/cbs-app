@@ -1,0 +1,96 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { Box } from "@mui/material";
+import { FC, ReactElement } from "react";
+
+import { createMarkup } from "@/helpers";
+import { Category } from "@/components/Posts/Category/Category";
+import {
+  Card,
+  CardContent,
+  CardLink,
+  CardLinkProps,
+  CardMedia,
+  CardProps,
+} from "src/shared/ui";
+
+import { PostCardItem } from "../type";
+
+import { PostCardExcerpt } from "./Excerpt";
+import { PostCardTitle } from "./Title";
+
+export type PostCardProps = {
+  data: PostCardItem;
+  mediaPriority?: boolean;
+  /**
+   * Количество строк для усечения текста многоточием.
+   */
+  lineClamp?: number;
+  cardProps?: Omit<CardProps, "children">;
+  linkProps?: Omit<CardLinkProps, "href" | "children">;
+  slots?: {
+    title?: ReactElement;
+    excerpt?: ReactElement;
+    content?: ReactElement;
+  };
+};
+
+export const PostCard: FC<PostCardProps> = ({
+  data,
+  mediaPriority,
+  lineClamp,
+  cardProps,
+  linkProps,
+  slots = {},
+}) => {
+  const title = slots.title || (
+    <PostCardTitle>
+      <CardLink
+        href={data.uri}
+        dangerouslySetInnerHTML={createMarkup(data.title)}
+        {...linkProps}
+      />
+    </PostCardTitle>
+  );
+
+  const excerpt = slots.excerpt || (
+    <PostCardExcerpt dangerouslySetInnerHTML={createMarkup(data.excerpt)} />
+  );
+
+  const content = slots.content || (
+    <Box
+      sx={{
+        ...(lineClamp && {
+          display: `-webkit-box`,
+          hyphens: `auto`,
+          overflow: `hidden`,
+          WebkitBoxOrient: `vertical`,
+          WebkitLineClamp: lineClamp,
+        }),
+      }}>
+      {title}
+      {excerpt}
+    </Box>
+  );
+
+  return (
+    <Card {...cardProps}>
+      {data.featuredImage?.node.sourceUrl && (
+        <CardMedia
+          src={data.featuredImage.node.sourceUrl}
+          alt=""
+          width={288}
+          height={162}
+          loading={mediaPriority ? "eager" : "lazy"}
+        />
+      )}
+      <CardContent>
+        {content}
+        {data.categories && (
+          <Box sx={{ marginTop: "auto", zIndex: 1 }}>
+            <Category data={data.categories.nodes} />
+          </Box>
+        )}
+      </CardContent>
+    </Card>
+  );
+};

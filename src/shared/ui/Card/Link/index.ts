@@ -1,1 +1,1 @@
-export * from "./ui";
+export { CardLink, type CardLinkProps } from "./ui";

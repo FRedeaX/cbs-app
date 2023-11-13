@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
@@ -6,10 +6,11 @@ import {
   Pagination,
   PaginationProps,
 } from "@/components/UI/Pagination/Pagination";
+import { GroupCards } from "src/entities/card/Group";
 import { PostCard, PostCardItem } from "src/entities/card/Post";
+import { PostCardList } from "src/entities/card/PostList";
 
-import { GroupCards } from "./GroupCards/ui";
-import { sxCard, sxPagination, sxSection, sxTitle } from "./styles";
+import { sxCard, sxPagination, sxTitle } from "./styles";
 
 type CardItem = PostCardItem & {
   id: string;
@@ -34,12 +35,12 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
   let column = 0;
 
   return (
-    <Box sx={sxSection} component="section">
+    <PostCardList>
       <Typography sx={sxTitle} variant="sectionTitle">
         {title}
       </Typography>
       {posts.map((item, index) => {
-        const tag = item.tags?.nodes.at(0);
+        const tag = item.tags?.nodes[0];
 
         if (tag !== undefined) {
           column = 0;
@@ -47,7 +48,7 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
             <GroupCards
               key={tag.id}
               title={tag.name}
-              description={tag.name}
+              description={tag.description}
               items={tag.posts.nodes}
               renderItem={(tagItem, tagIndex) => (
                 <PostCard
@@ -61,7 +62,7 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
         }
 
         const isNewRow = !(column % 2);
-        const isNextTag = posts[index + 1]?.tags?.nodes.at(0);
+        const isNextTag = posts[index + 1]?.tags?.nodes[0];
         const isLastItem = index === posts.length - 1;
 
         column += 1;
@@ -83,10 +84,10 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
       {pagination && (
         <Pagination
           sx={sxPagination}
-          count={pagination.count}
-          uri={pagination.uri}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...pagination}
         />
       )}
-    </Box>
+    </PostCardList>
   );
 };

@@ -29,6 +29,7 @@ export const useQuerySearch = (ssrData: SearchResponseFrontend) => {
     },
     fetcherData,
     {
+      keepPreviousData: true,
       fallbackData: ssrData,
     },
   );
