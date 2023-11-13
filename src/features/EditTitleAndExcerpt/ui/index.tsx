@@ -1,4 +1,4 @@
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 import { Box, FormHelperText } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FC, useCallback } from "react";
@@ -16,17 +16,23 @@ const Schema = object().shape({
   excerpt: string(),
 });
 
-type FormProps = {
+type EditTitleAndExcerptProps = {
   id: string | number;
   title: string;
   excerpt: string;
+  buttonProps?: Pick<LoadingButtonProps, "sx">;
 };
 
-export const EditTitleAndExcerpt: FC<FormProps> = ({ id, title, excerpt }) => {
+export const EditTitleAndExcerpt: FC<EditTitleAndExcerptProps> = ({
+  id,
+  title,
+  excerpt,
+  buttonProps,
+}) => {
   const { error, trigger } = useUpdatePost();
 
   const onSubmit = useCallback(
-    async (value: Omit<FormProps, "id">) => {
+    async (value: Pick<EditTitleAndExcerptProps, "title" | "excerpt">) => {
       await trigger({
         id,
         title: value.title,
@@ -58,7 +64,7 @@ export const EditTitleAndExcerpt: FC<FormProps> = ({ id, title, excerpt }) => {
                 size="small"
                 variant="outlined"
                 color={error ? "error" : "primary"}
-                sx={{ marginTop: 1 }}>
+                sx={{ marginTop: 1, ...buttonProps?.sx }}>
                 <span>{error ? "Ошибка. Повторить" : "Сохранить"}</span>
               </LoadingButton>
             </Box>

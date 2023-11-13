@@ -13,7 +13,7 @@ type PreviewTagProps = {
 
 export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
   const { data } = useGetTagQuery(
-    { id, type: "DATABASE_ID" },
+    { id, type: "DATABASE_ID", isPreview: true },
     { revalidateIfStale: false, revalidateOnFocus: false },
   );
 

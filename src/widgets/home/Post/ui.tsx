@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
@@ -8,8 +8,9 @@ import {
 } from "@/components/UI/Pagination/Pagination";
 import { GroupCards } from "src/entities/card/Group";
 import { PostCard, PostCardItem } from "src/entities/card/Post";
+import { PostCardList } from "src/entities/card/PostList";
 
-import { sxCard, sxPagination, sxSection, sxTitle } from "./styles";
+import { sxCard, sxPagination, sxTitle } from "./styles";
 
 type CardItem = PostCardItem & {
   id: string;
@@ -34,7 +35,7 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
   let column = 0;
 
   return (
-    <Box sx={sxSection} component="section">
+    <PostCardList>
       <Typography sx={sxTitle} variant="sectionTitle">
         {title}
       </Typography>
@@ -87,6 +88,6 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
           {...pagination}
         />
       )}
-    </Box>
+    </PostCardList>
   );
 };
