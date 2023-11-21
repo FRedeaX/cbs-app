@@ -22,6 +22,11 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
   const { tags, ...currentPost } = data.post;
   const { name, description, posts } = tags.nodes[0];
 
+  const filtered = posts.nodes.filter(
+    (item) => item.title !== currentPost.title,
+  );
+  filtered.unshift(currentPost);
+
   return (
     <Box
       sx={{
@@ -31,9 +36,7 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
       <GroupCards
         title={name}
         description={description}
-        items={
-          currentPost.isPreview ? [currentPost, ...posts.nodes] : posts.nodes
-        }
+        items={filtered}
         renderItem={(item, index) => (
           <PostCard
             key={item.id}
@@ -43,7 +46,7 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
               content: (
                 <>
                   <EditTitleAndExcerpt
-                    id={item.id}
+                    id={item.revisionOf?.node.id || item.id}
                     title={item.title}
                     excerpt={item.excerpt}
                   />
