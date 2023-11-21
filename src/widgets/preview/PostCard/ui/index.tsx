@@ -6,6 +6,8 @@ import { PostCard } from "src/entities/card/Post";
 import { PostCardList } from "src/entities/card/PostList";
 import { EditTitleAndExcerpt } from "src/features/EditTitleAndExcerpt";
 
+import { sxButton } from "./styles";
+
 type PreviewPostCardProps = {
   id: number;
 };
@@ -32,15 +34,7 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
                   title={data.post.title}
                   excerpt={data.post.excerpt}
                   buttonProps={{
-                    sx: {
-                      "@media (min-width: 768px)": {
-                        position: `absolute`,
-                        left: 10,
-                        bottom: 10,
-                        width: 268,
-                        backgroundColor: `rgb(255 255 255 / 85%)`,
-                      },
-                    },
+                    ...(data.post.featuredImage && { sx: sxButton }),
                   }}
                 />
               ),
