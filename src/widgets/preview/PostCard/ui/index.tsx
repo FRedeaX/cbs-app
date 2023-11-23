@@ -30,7 +30,7 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
             slots={{
               content: (
                 <EditTitleAndExcerpt
-                  id={data.post.revisionOf?.node.id || data.post.id}
+                  id={data.post.revisionOf?.node.id || data.post.databaseId}
                   title={data.post.title}
                   excerpt={data.post.excerpt}
                   buttonProps={{

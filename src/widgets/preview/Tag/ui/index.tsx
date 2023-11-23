@@ -46,7 +46,7 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
               content: (
                 <>
                   <EditTitleAndExcerpt
-                    id={item.revisionOf?.node.id || item.id}
+                    id={item.revisionOf?.node.id || item.databaseId}
                     title={item.title}
                     excerpt={item.excerpt}
                   />

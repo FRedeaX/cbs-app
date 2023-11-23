@@ -19,6 +19,11 @@ type GetTagVariables = {
  */
 type PostPreviewFieldsGQL = {
   /**
+   * Для обновления лучше использовать databaseId (wordpress) вместо id (GraphQL),
+   * т.к. до публикации id в некоторых случаях не соответствует типу записи.
+   */
+  databaseId: number;
+  /**
    * Если текущий узел (запись) является ревизией (в предварительном просмотре),
    * в этом поле отображается узел, для которого это ревизия.
    * Возвращает значение null, если запись не является ревизией.
@@ -33,6 +38,7 @@ type PostPreviewFieldsGQL = {
 const postPreviewFieldsGQL = {
   fragments: gql`
     fragment postPreviewFieldsGQL on Post {
+      databaseId
       revisionOf {
         node {
           id
