@@ -10,11 +10,13 @@ import {
 import {
   ImageViewer,
   ImageViewerBody,
+  ImageViewerButton,
   ImageViewerFigure,
   ImageViewerHeader,
+  ImageViewerZoom,
 } from "../../ImageViewer";
-import { ImageViewerButton } from "../../ImageViewer/components/Button/ImageViewer.Button";
 import { AlignImage } from "../utils/types";
+
 import classes from "./Image.module.css";
 
 type ImagePropsExtends = "alt" | "src" | "width" | "height" | "blurDataURL";
@@ -67,17 +69,18 @@ export const Image: FC<ImageProps> = ({
         <ImageViewerBody>
           <ImageViewerFigure
             className={classes.imageWrapper}
-            aspectRatio={width / height}
             figcaptionText={captionOrAlt}>
-            <AnimatedImage
-              alt={alt}
-              src={src}
-              width={width}
-              height={height}
-              sizes="100vw"
-              loading="lazy"
-              blurDataURL={blurDataURL}
-            />
+            <ImageViewerZoom>
+              <AnimatedImage
+                alt={alt}
+                src={src}
+                width={width}
+                height={height}
+                sizes="100vw"
+                loading="lazy"
+                blurDataURL={blurDataURL}
+              />
+            </ImageViewerZoom>
           </ImageViewerFigure>
         </ImageViewerBody>
       </ImageViewer>

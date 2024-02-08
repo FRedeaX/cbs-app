@@ -1,12 +1,18 @@
 .root {
   --scroller-overflow-x: hidden;
   --carousel-button-left: 10px;
+  --gallery-spacer: 1;
 
-  width: calc(100vw + 10px);
-  margin: 0 -10px;
+  touch-action: none;
+  width: calc(100vw + (10px / var(--gallery-spacer)));
+  margin: 0 calc(-10px / var(--gallery-spacer));
+}
+
+.root_animated {
+  --gallery-spacer: 2.5;
 }
 
 .imageWrapper {
-  width: calc(100vw + 20px);
-  padding: 0 10px;
+  width: calc(100vw + (20px / var(--gallery-spacer)));
+  padding: 0 calc(10px / var(--gallery-spacer));
 }

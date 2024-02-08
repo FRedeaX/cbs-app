@@ -1,9 +1,11 @@
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
 
-import { ImageViewerHeader } from "../../../../ImageViewer";
+import { ImageViewerHeader } from "@/components/ImageViewer";
+
 import { useGalleryContext } from "../../context";
 import { ImageData } from "../Gallery.Row/Gallery.Row";
+
 import classes from "./Gallery.ViewerHeader.module.css";
 import { useGalleryViewerHeader } from "./useGalleryViewerHeader";
 
@@ -21,11 +23,11 @@ export const GalleryViewerHeader: FC<GalleryViewerHeaderProps> = ({
     <ImageViewerHeader
       hrefDownload={index !== null ? images[index].url : undefined}
       onClose={setToggle}>
-      {index !== null ? (
+      {index !== null && (
         <div className={classes.counter}>
           <Typography>{`${index + 1} / ${images.length}`}</Typography>
         </div>
-      ) : null}
+      )}
     </ImageViewerHeader>
   );
 };

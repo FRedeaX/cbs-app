@@ -1,10 +1,11 @@
 import { FC, useCallback } from "react";
 
-import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
+import { useCarousel } from "@/components/Carousel";
 import {
   ImageViewerButton,
   ImageViewerButtonProps,
-} from "../../../../ImageViewer/components/Button/ImageViewer.Button";
+} from "@/components/ImageViewer";
+
 import { useGalleryContext } from "../../context";
 
 type GalleryButtonProps = {

@@ -1,8 +1,10 @@
 import { FC } from "react";
 
-import { Figure, FigureFigcaption } from "../../../../Figure";
+import { Figure, FigureFigcaption } from "@/components/Figure";
+
 import { splitByLines } from "../../utils";
-import { GalleryRow, GalleryRowProps } from "../Gallery.Row/Gallery.Row";
+import { GalleryRow, GalleryRowProps } from "../Gallery.Row";
+
 import classes from "./Gallery.Cards.module.css";
 
 export type GalleryCardsProps = {

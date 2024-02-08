@@ -5,7 +5,7 @@ import classes from "./ImageViewer.Body.module.css";
 
 type ImageViewerBodyProps = {
   children: ReactNode;
-  className?: string;
+  className?: string | classNames.ArgumentArray;
 };
 
 export const ImageViewerBody: FC<ImageViewerBodyProps> = ({

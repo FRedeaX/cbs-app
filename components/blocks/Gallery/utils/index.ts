@@ -1,3 +1,3 @@
 export * from "./galleryGQL";
+export * from "./isAnimatedSprings";
 export * from "./splitByLines";
-export * from "./useDrag";

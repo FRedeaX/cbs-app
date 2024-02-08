@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { Nullable, Void } from "../../../../helpers/typings/utility-types";
+import { Nullable, Void } from "@/helpers/typings/utility-types";
 
 type GalleryContextProps = {
   isOpen: boolean;

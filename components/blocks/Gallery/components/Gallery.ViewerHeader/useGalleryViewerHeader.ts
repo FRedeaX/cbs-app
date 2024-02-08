@@ -1,30 +1,30 @@
 import { useEffect, useRef } from "react";
 
-import useIntersectionObserver from "../../../../../helpers/frontend/hooks/useIntersectionObserver";
-import { Nullable } from "../../../../../helpers/typings/utility-types";
-import { useCarouselContext } from "../../../../Carousel/context";
+import useIntersectionObserver from "@/helpers/frontend/hooks/useIntersectionObserver";
+import { Nullable } from "@/helpers/typings/utility-types";
+import { useCarouselContext } from "@/components/Carousel/context";
 
 export const useGalleryViewerHeader = () => {
   const { itemListRef } = useCarouselContext();
-  const index = useRef<Nullable<number>>(null);
-  const [ref, { entryList }] = useIntersectionObserver({
+  const indexRef = useRef<Nullable<number>>(null);
+  const [observerRef, { entryList }] = useIntersectionObserver({
     threshold: 0.45,
   });
 
   useEffect(() => {
     if (itemListRef.current !== undefined) {
-      ref(itemListRef.current);
+      observerRef(itemListRef.current);
     }
-  }, [itemListRef, ref]);
+  }, [itemListRef, observerRef]);
 
   if (entryList !== undefined) {
     entryList.forEach((entry) => {
       if (entry.isIntersecting) {
         const target = entry.target as HTMLDivElement;
-        index.current = Math.round(target.offsetLeft / target.offsetWidth);
+        indexRef.current = Math.round(target.offsetLeft / target.offsetWidth);
       }
     });
   }
 
-  return index.current;
+  return indexRef.current;
 };

@@ -1,18 +1,16 @@
 import classNames from "classnames";
 import { FC } from "react";
 
-import {
-  CSSProperties,
-  Nullable,
-} from "../../../../../helpers/typings/utility-types";
-import { Figure, FigureFigcaption } from "../../../../Figure";
-import { Image } from "../../../../Image/Image";
+import { CSSProperties, Nullable } from "@/helpers/typings/utility-types";
+import { Figure, FigureFigcaption } from "@/components/Figure";
+import { Image } from "@/components/Image";
 import {
   VisuallyHidden,
   VisuallyHiddenProps,
-} from "../../../../VisuallyHidden/VisuallyHidden";
-import { GalleryButton } from "../Gallery.Button/Gallery.Button";
-import { GalleryMore } from "../Gallery.More/Gallery.More";
+} from "@/components/VisuallyHidden";
+
+import { GalleryButton } from "../Gallery.Button";
+import { GalleryMore } from "../Gallery.More";
 
 import classes from "./Gallery.Row.module.css";
 

@@ -14,7 +14,41 @@ type GetTagVariables = {
   isPreview?: boolean;
 };
 
-type PostFieldsGQL = PostListFieldsGQL & { isPreview: boolean };
+/**
+ * Preview фрагмент
+ */
+type PostPreviewFieldsGQL = {
+  /**
+   * Для обновления лучше использовать databaseId (wordpress) вместо id (GraphQL),
+   * т.к. до публикации id в некоторых случаях не соответствует типу записи.
+   */
+  databaseId: number;
+  /**
+   * Если текущий узел (запись) является ревизией (в предварительном просмотре),
+   * в этом поле отображается узел, для которого это ревизия.
+   * Возвращает значение null, если запись не является ревизией.
+   */
+  revisionOf: Nullable<{
+    node: {
+      id: string;
+    };
+  }>;
+};
+
+const postPreviewFieldsGQL = {
+  fragments: gql`
+    fragment postPreviewFieldsGQL on Post {
+      databaseId
+      revisionOf {
+        node {
+          id
+        }
+      }
+    }
+  `,
+};
+
+type PostFieldsGQL = PostListFieldsGQL & PostPreviewFieldsGQL;
 
 type GetTagQuery = {
   post: PostFieldsGQL & {
@@ -34,7 +68,7 @@ const getTagDocument = gql`
   query GetTagDocument($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {
       ...postListFieldsGQL
-      isPreview
+      ...postPreviewFieldsGQL
       tags {
         nodes {
           description
@@ -42,7 +76,7 @@ const getTagDocument = gql`
           posts {
             nodes {
               ...postListFieldsGQL
-              isPreview
+              ...postPreviewFieldsGQL
             }
           }
         }
@@ -50,6 +84,7 @@ const getTagDocument = gql`
     }
   }
   ${postListFieldsGQL.fragments}
+  ${postPreviewFieldsGQL.fragments}
 `;
 
 export const useGetTagQuery = (

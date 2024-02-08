@@ -1,14 +1,13 @@
-import { SwipeableDrawerProps } from "@mui/material";
+import { ModalProps, Backdrop, Fade } from "@mui/material";
 import dynamic from "next/dynamic";
 import { FC, ReactNode } from "react";
 
-import { noop } from "@/helpers";
 import { useClientHeight } from "@/helpers/frontend/hooks";
 
 import classes from "./ImageViewer.module.css";
 
-const DynamicSwipeableDrawer = dynamic(
-  () => import("@mui/material/SwipeableDrawer"),
+const DynamicModal = dynamic(
+  () => import("@mui/base/Modal").then((res) => res.Modal),
   {
     ssr: true,
   },
@@ -16,7 +15,7 @@ const DynamicSwipeableDrawer = dynamic(
 
 type ImageViewerProps = {
   children: ReactNode;
-} & Pick<SwipeableDrawerProps, "open" | "onClose" | "onKeyDown">;
+} & Pick<ModalProps, "open" | "onClose" | "onKeyDown">;
 
 export const ImageViewer: FC<ImageViewerProps> = ({
   children,
@@ -27,23 +26,27 @@ export const ImageViewer: FC<ImageViewerProps> = ({
   const height = useClientHeight();
 
   return (
-    <DynamicSwipeableDrawer
-      anchor="bottom"
+    <DynamicModal
       open={open}
-      onOpen={noop}
-      onClose={onClose}
+      onClose={(event, reason) => {
+        if (reason === "escapeKeyDown") onClose?.(event, reason);
+      }}
       onKeyDown={onKeyDown}
-      swipeAreaWidth={0}
-      ModalProps={{
-        // Возможны проблемы в React 18.
-        // see https://mui.com/material-ui/react-drawer/#keep-mounted
-        keepMounted: false,
-      }}>
-      <div
-        style={{ "--image-viewer-height": `${height}px` }}
-        className={classes.root}>
-        {children}
-      </div>
-    </DynamicSwipeableDrawer>
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          style: { backgroundColor: "var(--white)" },
+        },
+      }}
+      className={classes.root}>
+      <Fade in={open}>
+        <div
+          style={{ "--image-viewer-height": `${height}px` }}
+          className={classes.body}>
+          {children}
+        </div>
+      </Fade>
+    </DynamicModal>
   );
 };
