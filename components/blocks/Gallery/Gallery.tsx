@@ -7,6 +7,7 @@ import classes from "./Gallery.module.css";
 import { GalleryCards, GalleryCardsProps } from "./components/Gallery.Cards";
 import { GalleryViewer } from "./components/Gallery.Viewer";
 import { GalleryProvider } from "./context";
+import { isAnimatedSprings } from "./utils";
 
 type GalleryProps = {
   /**
@@ -26,18 +27,23 @@ export const Gallery: FC<GalleryProps> = ({
 }) => {
   if (images.length === 0) return null;
 
+  const isAnimatedDrag = isAnimatedSprings(images.length);
+
   return (
     <div
       className={classNames(
         classes.root,
-        { [classes.root_imageCrop]: imageCrop },
+        {
+          [classes.root_imageCrop]: imageCrop,
+          [classes.root_animated]: isAnimatedDrag,
+        },
         className,
       )}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}>
       <GalleryProvider>
         <CarouselProvider
-          itemMargin={-10}
+          itemMargin={isAnimatedDrag ? -4 : -10}
           typeMovement="transform"
           isResponsiveWidthsChildren>
           <GalleryViewer images={images} />

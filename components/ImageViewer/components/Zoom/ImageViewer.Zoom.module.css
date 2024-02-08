@@ -1,0 +1,10 @@
+.root {
+  touch-action: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: var(--image-viewer-body);
+}

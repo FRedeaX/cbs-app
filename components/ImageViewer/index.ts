@@ -3,4 +3,4 @@ export * from "./components/Body";
 export * from "./components/Button";
 export * from "./components/Figure";
 export * from "./components/Header";
-
+export * from "./components/Zoom";
