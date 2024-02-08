@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { FC, ReactNode } from "react";
 
-import { Figure, FigureFigcaption } from "../../../Figure";
+import { Figure, FigureFigcaption } from "@/components/Figure";
+
 import classes from "./ImageViewer.Figure.module.css";
 
 type ImageViewerFigureProps = {

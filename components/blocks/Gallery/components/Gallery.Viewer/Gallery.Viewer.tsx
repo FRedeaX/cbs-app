@@ -1,23 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FC, KeyboardEvent, useCallback } from "react";
 
-import { Carousel } from "../../../../Carousel/Carousel";
 import {
+  Carousel,
   SCROLL_TIME,
   scrollTo,
-} from "../../../../Carousel/Carousel.utils/scrollTo";
-import { useCarousel } from "../../../../Carousel/Carousel.utils/useCarousel";
-import { useCarouselContext } from "../../../../Carousel/context";
-import { Image } from "../../../../Image/Image";
+  useCarousel,
+  useCarouselContext,
+} from "@/components/Carousel";
+import { Image } from "@/components/Image";
 import {
   ImageViewer,
   ImageViewerBody,
   ImageViewerFigure,
-} from "../../../../ImageViewer";
+} from "@/components/ImageViewer";
+
 import { useGalleryContext } from "../../context";
 import { useDrag } from "../../utils";
-import { ImageData } from "../Gallery.Row/Gallery.Row";
-import { GalleryViewerHeader } from "../Gallery.ViewerHeader/Gallery.ViewerHeader";
+import { ImageData } from "../Gallery.Row";
+import { GalleryViewerHeader } from "../Gallery.ViewerHeader";
 
 import classes from "./Gallery.Viewer.module.css";
 

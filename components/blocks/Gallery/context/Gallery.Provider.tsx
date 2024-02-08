@@ -1,6 +1,7 @@
 import { FC, ReactNode, useMemo } from "react";
 
-import { useToggle } from "../../../../helpers/frontend/hooks";
+import { useToggle } from "@/helpers/frontend/hooks";
+
 import { GalleryContext } from "./Gallery.Context";
 
 type GalleryProviderProps = {

@@ -1,13 +1,11 @@
 import classNames from "classnames";
 import { FC, HTMLAttributes } from "react";
 
-import { CarouselProvider } from "../../Carousel/context";
+import { CarouselProvider } from "@/components/Carousel";
+
 import classes from "./Gallery.module.css";
-import {
-  GalleryCards,
-  GalleryCardsProps,
-} from "./components/Gallery.Cards/Gallery.Cards";
-import { GalleryViewer } from "./components/Gallery.Viewer/Gallery.Viewer";
+import { GalleryCards, GalleryCardsProps } from "./components/Gallery.Cards";
+import { GalleryViewer } from "./components/Gallery.Viewer";
 import { GalleryProvider } from "./context";
 
 type GalleryProps = {
