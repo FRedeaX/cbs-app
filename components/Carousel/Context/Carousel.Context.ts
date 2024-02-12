@@ -1,3 +1,5 @@
+"use client";
+
 import { MutableRefObject, createContext } from "react";
 
 import { Maybe, Nullable } from "../../../helpers/typings/utility-types";
