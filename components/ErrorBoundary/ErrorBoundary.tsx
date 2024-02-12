@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@mui/material";
 import { Component, ReactNode, ErrorInfo } from "react";
 
