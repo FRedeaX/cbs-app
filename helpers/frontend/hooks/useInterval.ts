@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect } from "react";
 
 import { Maybe, Void } from "@/helpers/typings/utility-types";

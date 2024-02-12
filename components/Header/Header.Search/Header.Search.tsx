@@ -13,7 +13,7 @@ export const HeaderSearch: FC = () => {
 
   if (pathname === SEARCH_PATHNAME) return null;
   return (
-    <Link href="/search" prefetch={false} passHref>
+    <Link href="/search" prefetch={false} passHref legacyBehavior>
       <IconButton className={classes.button} aria-label="Найти">
         <SearchRoundedIcon fontSize="small" />
       </IconButton>

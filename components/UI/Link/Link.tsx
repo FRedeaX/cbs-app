@@ -9,19 +9,8 @@ type NJSLinkProps = Pick<
 >;
 export type LinkProps = Omit<MUILinkProps, keyof NJSLinkProps> & NJSLinkProps;
 
-export const Link: FC<LinkProps> = forwardRef(
-  ({ href, replace, scroll, shallow, prefetch, ...props }, ref) => (
-    <NextLink
-      ref={ref}
-      href={href}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      prefetch={prefetch}
-      passHref>
-      <MUILink {...props} />
-    </NextLink>
-  ),
-);
+export const Link: FC<LinkProps> = forwardRef((props, ref) => (
+  <MUILink component={NextLink} ref={ref} {...props} />
+));
 
 Link.displayName = "Link";

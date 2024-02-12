@@ -1,11 +1,11 @@
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
-import { Link as MUILink } from "@mui/material";
 import classNames from "classnames";
-import Link from "next/link";
 import { FC } from "react";
 
-import classes from "./PosterItem.Venue.module.css";
 import { Maybe, Nullable } from "@/helpers/typings/utility-types";
+import { Link } from "@/components/UI/Link/Link";
+
+import classes from "./PosterItem.Venue.module.css";
 
 type Venue = {
   name: string;
@@ -29,17 +29,19 @@ export const PosterItemVenue: FC<PosterItemVenueProps> = ({
   return (
     <>
       {department ? (
-        <Link href={`/biblioteki/?lib=${venue.slug}`} prefetch={false} passHref>
-          <MUILink underline="hover" color="inherit">
-            {venue.name}
-          </MUILink>
+        <Link
+          href={`/biblioteki/?lib=${venue.slug}`}
+          prefetch={false}
+          underline="hover"
+          color="inherit">
+          {venue.name}
         </Link>
       ) : (
         <span>{venue.name}</span>
       )}
 
       {venue.description && (
-        <MUILink
+        <Link
           href={`tel:833622${venue.description.split("-").join("")}`}
           title="Cправки по телефону"
           className={classNames(classes.phone)}
@@ -49,7 +51,7 @@ export const PosterItemVenue: FC<PosterItemVenueProps> = ({
             <PhoneRoundedIcon fontSize="inherit" />
           </span>
           {venue.description}
-        </MUILink>
+        </Link>
       )}
     </>
   );

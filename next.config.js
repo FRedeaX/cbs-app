@@ -11,27 +11,37 @@ const alias = {
   "@mui/system": "@mui/system/legacy",
 };
 
-const withTM = require("next-transpile-modules")([
+const transpilePackages = [
   "@mui/material",
   "@mui/lab",
   "@mui/icons-material",
   "swr",
   "graphql-request",
-]);
+  "@react-spring/animated",
+  "@react-spring/core",
+  "@react-spring/shared",
+  "@react-spring/web",
+];
 
-const nextConfig = withTM({
+const nextConfig = {
   output: "standalone",
+  transpilePackages,
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
 
   images: {
-    domains: [`${process.env.DOMAIN}`, "cbsbaikonur.ru"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cbsbaikonur.ru",
+      },
+    ],
     formats: ["image/webp"],
   },
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true,
     scrollRestoration: true,
     // staticPageGenerationTimeout: 180,
     // images: {
@@ -55,7 +65,7 @@ const nextConfig = withTM({
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },
-});
+};
 
 const userSentryWebpackPluginOptions = {
   // For all available options, see:

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Maybe } from "../../typings/utility-types";
+
 import useIntersectionObserver, {
   IntersectionObserverHookArgs,
   IntersectionObserverHookResult,

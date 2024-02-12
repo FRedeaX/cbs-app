@@ -13,7 +13,7 @@ export const NotFound = () => (
       }}>
       Страница не найдена
     </h1>
-    <Link href="/">
+    <Link href="/" legacyBehavior>
       <Button variant="outlined">На главную</Button>
     </Link>
   </div>

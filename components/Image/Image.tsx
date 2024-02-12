@@ -1,8 +1,10 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, Fade, Skeleton } from "@mui/material";
 import classNames from "classnames";
-import NextImage, { ImageProps as NextImageProps } from "next/future/image";
+import NextImage, { ImageProps as NextImageProps } from "next/image";
 import { FC, useCallback, useState, useRef, useEffect } from "react";
 
 import { Nullable } from "../../helpers/typings/utility-types";
@@ -89,7 +91,7 @@ export const Image: FC<ImageProps> = ({
         className={classNames(classes.image, className)}
         width={width}
         height={height}
-        onLoadingComplete={handleOnLoad}
+        onLoad={handleOnLoad}
         placeholder={blurDataURL ? "blur" : "empty"}
         blurDataURL={blurDataURL ?? undefined}
         {...props}
