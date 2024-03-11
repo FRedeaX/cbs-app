@@ -24,7 +24,7 @@ export const getPost = async ({ slug: id }: GetPost) => {
   const { post } = data;
   if (post === null) return null;
 
-  const { blocks, video } = await transformBlocks(post.blocks);
+  const { blocks, videos } = await transformBlocks(post.blocks);
 
   // Рубрики относящиеся к филиалу (отделу)
   // добавляем в начало массива
@@ -38,6 +38,6 @@ export const getPost = async ({ slug: id }: GetPost) => {
     ...post,
     blocks,
     categories,
-    video,
+    videos,
   };
 };

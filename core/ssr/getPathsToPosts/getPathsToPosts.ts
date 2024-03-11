@@ -15,7 +15,7 @@ export const getPathsToPosts = async (): Promise<GetPathsToPosts> => {
   if (metrika.length === 0) return wp;
 
   return wp.reduce<GetPathsToPosts>((acc, w) => {
-    if (metrika.findIndex((m) => m.params.slug === w.params.slug) > 0) {
+    if (metrika.findIndex((m) => m.slug === w.slug) > 0) {
       return acc;
     }
 

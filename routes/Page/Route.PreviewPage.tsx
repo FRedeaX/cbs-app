@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { FC } from "react";
 
-import { useGetPageQuery } from "@/core/ssr/getPage/gql/getPageGQL";
+import { useGetPageQuery } from "@/core/ssr/getPage/gql/useGetPageQuery";
 import { SEO } from "@/components/SEO/SEO";
 
 import { TitleIntervalUpdate } from "../Preview/components/TitleIntervalUpdate/TitleIntervalUpdate";

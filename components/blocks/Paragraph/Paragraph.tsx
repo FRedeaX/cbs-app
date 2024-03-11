@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 import classNames from "classnames";
-import { ElementType, FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes } from "react";
 
 import { createMarkup } from "../../../helpers";
 import {
@@ -9,7 +9,10 @@ import {
 } from "../../../helpers/typings/utility-types";
 import { parseBlockStyle } from "../utils/parseBlockStyle";
 import { Color, FontSize, Gradient, HorizontalAlign } from "../utils/types";
+
 import classes from "./Paragraph.module.css";
+
+type ExcludeProps = "className" | "style";
 
 type ParagraphProps = {
   /**
@@ -34,13 +37,8 @@ type ParagraphProps = {
    * Дополнительный класс.
    */
   className?: string | classNames.ArgumentArray;
-  /**
-   * Компонент, используемый для корневого узла.
-   * Либо строка для использования HTML-элемента, либо компонент.
-   * @default "p"
-   */
-  component?: ElementType;
-} & Omit<HTMLAttributes<HTMLParagraphElement>, "className" | "style">;
+} & Omit<HTMLAttributes<HTMLParagraphElement>, ExcludeProps> &
+  Omit<TypographyProps, ExcludeProps>;
 
 export const Paragraph: FC<ParagraphProps> = ({
   align,
@@ -70,7 +68,7 @@ export const Paragraph: FC<ParagraphProps> = ({
       align={align}
       variant="responsiveText"
       component={component}
-      className={classNames(classes.root, className)}
+      className={classNames(className, classes.root)}
       dangerouslySetInnerHTML={createMarkup(content)}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}

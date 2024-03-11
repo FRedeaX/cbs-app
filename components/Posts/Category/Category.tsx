@@ -31,9 +31,9 @@ export const Category: FC<CategoryProps> = ({ data, className }) => (
           <span
             key={id}
             className={classNames(
+              className,
               classes.link,
               classes["link--cursor"],
-              className,
             )}>
             {name}
           </span>

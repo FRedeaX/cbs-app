@@ -6,7 +6,7 @@ import { Nullable } from "../../../../../helpers/typings/utility-types";
 import {
   TransformBlocks,
   TransformErrorBlock,
-  VideoByBloks,
+  UrlVideoByBlock,
 } from "../../utils/type";
 
 type YoutubeResponseOembed = {
@@ -36,7 +36,7 @@ export type TransformEmbedBlock = {
 
 type TransformEmbedBlockResult = {
   block: TransformBlocks<TransformEmbedBlock | TransformErrorBlock>;
-  video: Nullable<VideoByBloks>;
+  video: Nullable<UrlVideoByBlock>;
 };
 
 export const transformEmbedBlock = async (
@@ -67,7 +67,7 @@ export const transformEmbedBlock = async (
           caption,
         },
       },
-      video: { id: url.slice(-4), href: url },
+      video: url,
     };
   } catch (error) {
     return {

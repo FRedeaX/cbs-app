@@ -1,5 +1,7 @@
+"use client";
+
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { FC } from "react";
 
 import { TransformEmbedBlock } from "../../core/backend/transformBlocks/blocks/embed/transformEmbedBlock";
@@ -12,6 +14,7 @@ import {
   TransformErrorBlock,
 } from "../../core/backend/transformBlocks/utils/type";
 import { exceptionLog } from "../../helpers";
+
 import classes from "./Blocks.module.css";
 import { Columns } from "./Columns/Columns";
 import { Column } from "./Columns/components/Column/Column";
@@ -45,6 +48,7 @@ import { Verse } from "./Verse/Verse";
 import { VerseBlockGQL } from "./Verse/utils/verseGQL";
 import { Video } from "./Video/Video";
 import { VideoBlockGQL } from "./Video/utils/videoGQL";
+import * as styles from "./styles";
 
 type BlocksProps = {
   blocks: (TransformBlocks & Pick<TransformErrorBlock, "message">)[];
@@ -57,7 +61,8 @@ type BlocksProps = {
 };
 
 const Blocks: FC<BlocksProps> = ({ blocks, isMediaStickySides = true }) => {
-  const router = useRouter();
+  // TODO: RSC
+  const pathname = usePathname();
   // console.log(blocks);
 
   /**
@@ -86,11 +91,8 @@ const Blocks: FC<BlocksProps> = ({ blocks, isMediaStickySides = true }) => {
                 textColor={attributes.textColor || undefined}
                 backgroundColor={attributes.backgroundColor || undefined}
                 style={attributes.style}
-                className={[
-                  classes.block,
-                  classes.Paragraph,
-                  attributes.className,
-                ]}
+                sx={styles.block}
+                className={attributes.className}
               />
             );
           }
@@ -404,6 +406,7 @@ const Blocks: FC<BlocksProps> = ({ blocks, isMediaStickySides = true }) => {
                 gradient={attributes.gradient || undefined}
                 textColor={attributes.textColor || undefined}
                 style={attributes.style}
+                sx={[styles.block, styles.heading]}
                 className={[classes.block, classes.Heading]}
               />
             );
@@ -462,7 +465,7 @@ const Blocks: FC<BlocksProps> = ({ blocks, isMediaStickySides = true }) => {
             // eslint-disable-next-line no-console
             console.warn({
               message: block.message || "Блок не найден",
-              path: { asPath: router.asPath, route: router.route },
+              path: pathname,
               name: block.name,
             });
             return null;

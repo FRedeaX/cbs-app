@@ -4,18 +4,18 @@ import { transformFileBlock } from "./blocks/file/transformFileBlock";
 import { transformGalleryBlock } from "./blocks/gallery/transformGalleryBlock";
 import { transformImageBlock } from "./blocks/image/transformImageBlock";
 import { transformMediaTextBlock } from "./blocks/mediaText/transformMediaTextBlock";
-import { TransformBlocks, VideoByBloks } from "./utils/type";
+import { TransformBlocks, UrlVideoByBlock } from "./utils/type";
 
 type Result = {
   blocks: TransformBlocks[];
-  video: VideoByBloks[];
+  videos: UrlVideoByBlock[];
 };
 
 export const transformBlocks = async (
   blocks: TransformBlocks[],
 ): Promise<Result> => {
   const blockList: unknown[] = [];
-  const video: VideoByBloks[] = [];
+  const videos: UrlVideoByBlock[] = [];
   const promise: unknown[] = [];
 
   blocks.forEach((block, index: number) => {
@@ -69,7 +69,7 @@ export const transformBlocks = async (
         promise.push(
           transformEmbedBlock(block).then((data) => {
             blockList[index] = data.block;
-            if (data.video) video.push(data.video);
+            if (data.video) videos.push(data.video);
           }),
         );
         break;
@@ -104,5 +104,5 @@ export const transformBlocks = async (
     }
   });
   await Promise.all(promise);
-  return { blocks: blockList as TransformBlocks[], video };
+  return { blocks: blockList as TransformBlocks[], videos };
 };
