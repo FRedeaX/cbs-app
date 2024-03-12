@@ -23,7 +23,13 @@ export const generateMetadata = async ({
     notFound();
   }
 
-  const { title, excerpt: description, uri: url, featuredImage, videos } = post;
+  const {
+    title,
+    excerpt: description,
+    link: url,
+    featuredImage,
+    videos,
+  } = post;
 
   return {
     title,

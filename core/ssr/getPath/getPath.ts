@@ -1,5 +1,3 @@
-import { GetStaticPathsResult } from "next";
-
 import { recursiveLoadParties } from "@/helpers/backend";
 
 import { isSkipPage } from "../utils/isSkipPage";
@@ -11,7 +9,7 @@ type Path = { pageSlug: string[] };
 export const getPath = async () => {
   if (process.env.SKIP_BUILD_STATIC_GENERATION) return [];
 
-  const path: GetStaticPathsResult<Path>["paths"] = [];
+  const path: Path[] = [];
   await recursiveLoadParties<GetPathQuery>({
     query: getPathDocument,
     callbackFn: ({ pages }) => {
@@ -19,7 +17,7 @@ export const getPath = async () => {
         if (isSkipPage({ template })) return;
 
         const pageSlug = uri.split("/").filter(Boolean);
-        path.push({ params: { pageSlug } });
+        path.push({ pageSlug });
       });
     },
     pageInfoCallback: (data) => data.pages.pageInfo,
