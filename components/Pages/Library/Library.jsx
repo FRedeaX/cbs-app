@@ -1,5 +1,7 @@
+"use client";
+
 import { Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState, useRef } from "react";
 
 import { asyncLoadScript } from "../../../helpers";
@@ -12,9 +14,10 @@ import LibraryInfo from "./LibraryInfo/LibraryInfo";
 
 export const Library = ({ filialList }) => {
   const router = useRouter();
-  const {
-    query: { lib, schedule, holiday },
-  } = router;
+  const searchParams = useSearchParams();
+  const lib = searchParams.get("lib");
+  const schedule = searchParams.get("schedule");
+  const holiday = searchParams.get("holiday");
 
   const mapRef = useRef(null);
   const [isMap, setIsMap] = useState(false);

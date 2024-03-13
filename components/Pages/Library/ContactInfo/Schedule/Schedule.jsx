@@ -1,10 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
 import { Typography } from "@mui/material";
 import classNames from "classnames";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 import LibraryButton from "../../LibraryButton/LibraryButton";
 import classesInfo from "../Contact-info.module.css";
+
 import classes from "./Schedule.module.css";
 import ScheduleList from "./ScheduleList/ScheduleList";
 
@@ -13,9 +14,10 @@ const SCHEDULE_DEFAULT = "default";
 const SCHEDULE_AUP = "aup";
 
 const Schedule = (props) => {
-  const {
-    query: { lib, schedule, holiday },
-  } = useRouter();
+  const searchParams = useSearchParams();
+  const lib = searchParams.get("lib");
+  const schedule = searchParams.get("schedule");
+  const holiday = searchParams.get("holiday");
 
   return (
     <div className={classesInfo.info}>

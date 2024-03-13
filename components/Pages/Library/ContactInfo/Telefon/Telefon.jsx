@@ -3,6 +3,7 @@ import classNames from "classnames";
 import React, { useState } from "react";
 
 import classesInfo from "../Contact-info.module.css";
+
 import classes from "./Telefon.module.css";
 
 const Telefon = ({ telefon, cls }) => {
@@ -39,7 +40,7 @@ const Telefon = ({ telefon, cls }) => {
     }
   }
   return (
-    <div className={classNames(classesInfo.info, classesInfo["info--mt"])}>
+    <div className={classesInfo.info}>
       {/* {console.log("Telefon")} */}
       <Typography
         component="h3"
