@@ -14,61 +14,26 @@ type GetTagVariables = {
   isPreview?: boolean;
 };
 
-/**
- * Preview фрагмент
- */
-type PostPreviewFieldsGQL = {
-  /**
-   * Для обновления лучше использовать databaseId (wordpress) вместо id (GraphQL),
-   * т.к. до публикации id в некоторых случаях не соответствует типу записи.
-   */
-  databaseId: number;
-  /**
-   * Если текущий узел (запись) является ревизией (в предварительном просмотре),
-   * в этом поле отображается узел, для которого это ревизия.
-   * Возвращает значение null, если запись не является ревизией.
-   */
-  revisionOf: Nullable<{
-    node: {
-      id: string;
-    };
-  }>;
-};
-
-const postPreviewFieldsGQL = {
-  fragments: gql`
-    fragment postPreviewFieldsGQL on Post {
-      databaseId
-      revisionOf {
-        node {
-          id
-        }
-      }
-    }
-  `,
-};
-
-type PostFieldsGQL = PostListFieldsGQL & PostPreviewFieldsGQL;
-
 type GetTagQuery = {
-  post: PostFieldsGQL & {
-    tags: {
-      nodes: {
-        description: Nullable<string>;
-        name: string;
-        posts: {
-          nodes: PostFieldsGQL[];
-        };
-      }[];
-    };
-  };
+  post: Nullable<
+    PostListFieldsGQL & {
+      tags: {
+        nodes: {
+          description: Nullable<string>;
+          name: string;
+          posts: {
+            nodes: PostListFieldsGQL[];
+          };
+        }[];
+      };
+    }
+  >;
 };
 
 const getTagDocument = gql`
   query GetTagDocument($id: ID!, $type: PostIdType, $isPreview: Boolean) {
     post(id: $id, idType: $type, asPreview: $isPreview) {
       ...postListFieldsGQL
-      ...postPreviewFieldsGQL
       tags {
         nodes {
           description
@@ -76,7 +41,6 @@ const getTagDocument = gql`
           posts {
             nodes {
               ...postListFieldsGQL
-              ...postPreviewFieldsGQL
             }
           }
         }
@@ -84,7 +48,6 @@ const getTagDocument = gql`
     }
   }
   ${postListFieldsGQL.fragments}
-  ${postPreviewFieldsGQL.fragments}
 `;
 
 export const useGetTagQuery = (

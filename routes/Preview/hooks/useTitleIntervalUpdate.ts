@@ -1,19 +1,21 @@
-import { useState, useCallback, FC } from "react";
+"use client";
+
+import { useCallback } from "react";
 
 import { useInterval } from "@/helpers/frontend/hooks";
-import { SEO } from "@/components/SEO/SEO";
 
 type TitleIntervalUpdateProps = {
-  domenTitle: string;
   timeNow: number;
+  loading: boolean;
 };
 
-export const TitleIntervalUpdate: FC<TitleIntervalUpdateProps> = ({
-  domenTitle,
+export const useTitleIntervalUpdate = ({
   timeNow,
-}) => {
-  const [title, setTitle] = useState("");
+  loading,
+}: TitleIntervalUpdateProps) => {
   const updateCallback = useCallback(() => {
+    if (loading) return;
+
     const date = new Date(Date.now() - timeNow);
     const seconds = date.getSeconds();
     const minutes = date.getMinutes();
@@ -21,10 +23,8 @@ export const TitleIntervalUpdate: FC<TitleIntervalUpdateProps> = ({
     const Hours = date.getUTCHours();
     const HoursText = Hours > 0 ? `${Hours} ч.` : "";
 
-    setTitle(`Обновлено ${HoursText} ${minutesText} ${seconds} сек. назад`);
-  }, [timeNow]);
+    document.title = `Обновлено ${HoursText} ${minutesText} ${seconds} сек. назад | Предварительный просмотр`;
+  }, [loading, timeNow]);
 
   useInterval(updateCallback, 1000);
-
-  return <SEO domenTitle={domenTitle} title={title} />;
 };

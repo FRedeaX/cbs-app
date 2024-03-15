@@ -37,6 +37,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cbsbaikonur.ru",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
     ],
     formats: ["image/webp"],
   },

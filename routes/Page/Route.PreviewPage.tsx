@@ -1,23 +1,20 @@
+"use client";
+
 /* eslint-disable no-console */
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import { useGetPageQuery } from "@/core/ssr/getPage/gql/useGetPageQuery";
-import { SEO } from "@/components/SEO/SEO";
 
-import { TitleIntervalUpdate } from "../Preview/components/TitleIntervalUpdate/TitleIntervalUpdate";
 import { useGetBlocksQuery } from "../Preview/hooks/useGetBlocksQuery";
+import { useTitleIntervalUpdate } from "../Preview/hooks/useTitleIntervalUpdate";
 
 import { RoutePage } from "./Route.Page";
 
 type RoutePreviewPageProps = {
   id: number;
-  domenTitle: string;
 };
 
-export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
-  id,
-  domenTitle,
-}) => {
+export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({ id }) => {
   const timeNow = Date.now();
 
   const {
@@ -40,6 +37,11 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
       : null,
   );
 
+  useTitleIntervalUpdate({ timeNow, loading });
+  useEffect(() => {
+    if (loading) document.title = "Загрузка... | Предварительный просмотр";
+  }, [loading]);
+
   if (blocks.error) {
     console.error(blocks.error);
   }
@@ -57,13 +59,6 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
 
   return (
     <>
-      <TitleIntervalUpdate domenTitle={domenTitle} timeNow={timeNow} />
-      <SEO
-        domenTitle={domenTitle}
-        title={loading ? "Загрузка..." : data.page.title}
-        description={data.page.excerpt}
-        video={blocks.data.video}
-      />
       <RoutePage
         page={{
           title: data.page.title,
@@ -71,7 +66,6 @@ export const RoutePreviewPage: FC<RoutePreviewPageProps> = ({
           isPreview: true,
         }}
         childrenPage={childrenPage}
-        domenTitle={domenTitle}
       />
       {blocks.error && <>Ошибка в обработке блоков: {blocks.error?.message}.</>}
     </>

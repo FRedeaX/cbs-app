@@ -1,23 +1,20 @@
+"use client";
+
 /* eslint-disable no-console */
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
-import { useGetPostQuery } from "@/core/ssr/getPost/gql/getPostGQL";
-import { SEO } from "@/components/SEO/SEO";
+import { useGetPostQuery } from "@/core/ssr/getPost/gql/useGetPostQuery";
 
-import { TitleIntervalUpdate } from "../Preview/components/TitleIntervalUpdate/TitleIntervalUpdate";
 import { useGetBlocksQuery } from "../Preview/hooks/useGetBlocksQuery";
+import { useTitleIntervalUpdate } from "../Preview/hooks/useTitleIntervalUpdate";
 
 import { RoutePost } from "./Route.Post";
 
 type RoutePreviewPostProps = {
   id: number;
-  domenTitle: string;
 };
 
-export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({
-  id,
-  domenTitle,
-}) => {
+export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({ id }) => {
   const timeNow = Date.now();
 
   const {
@@ -40,6 +37,11 @@ export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({
       : null,
   );
 
+  useTitleIntervalUpdate({ timeNow, loading });
+  useEffect(() => {
+    if (loading) document.title = "Загрузка... | Предварительный просмотр";
+  }, [loading]);
+
   if (blocks.error) {
     console.error(blocks.error);
   }
@@ -53,13 +55,6 @@ export const RoutePreviewPost: FC<RoutePreviewPostProps> = ({
 
   return (
     <>
-      <TitleIntervalUpdate domenTitle={domenTitle} timeNow={timeNow} />
-      <SEO
-        domenTitle={domenTitle}
-        title={loading ? "Загрузка..." : data.post.title}
-        description={data.post.excerpt}
-        video={blocks.data.video}
-      />
       <RoutePost
         title={data.post.title}
         categories={data.post.categories.nodes}
