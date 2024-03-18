@@ -1,3 +1,5 @@
+"use client";
+
 import { LoadingButton } from "@mui/lab";
 import { Typography } from "@mui/material";
 import { FC, FormEventHandler, useCallback, useState } from "react";
