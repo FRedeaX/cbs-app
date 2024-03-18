@@ -46,7 +46,7 @@ export const transformFields = ({
     order: menuOrder,
     name: bibliotekiBase.name,
     address: bibliotekiBase.address,
-    shortName: bibliotekiBase.shortname,
+    shortName: bibliotekiBase.shortName,
     id: bibliotekiBase.id,
     email: bibliotekiBase.email,
     point: [parseFloat(point[0]), parseFloat(point[1])],
@@ -56,15 +56,15 @@ export const transformFields = ({
       schedule: transformSchedule<BibliotekiSchedule>(bibliotekiSchedule),
       scheduleAup: transformSchedule<BibliotekiScheduleAup>(
         bibliotekiScheduleAup,
-        "aup",
+        "Aup",
       ),
     },
     scheduleSecondary: {
-      schedule: bibliotekiSchedule.isholiday
+      schedule: bibliotekiSchedule.isHoliday
         ? parseStringToObject(bibliotekiSchedule.holiday)
         : null,
-      scheduleAup: bibliotekiScheduleAup.isholidayaup
-        ? parseStringToObject(bibliotekiScheduleAup.holidayaup)
+      scheduleAup: bibliotekiScheduleAup.isHolidayAup
+        ? parseStringToObject(bibliotekiScheduleAup.holidayAup)
         : null,
     },
   };
