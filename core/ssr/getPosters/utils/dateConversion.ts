@@ -10,13 +10,13 @@ export const dateConversion = (
   posterList: GetPosterQuery["posters"]["nodes"],
 ): Poster[] =>
   posterList.map((poster) => {
-    const { date, dataend } = poster.posterDate;
+    const { date, dateEnd } = poster.posterDate;
 
     return {
       ...poster,
       posterDate: {
         dateStart: parseDate(date),
-        dateEnd: dataend ? parseDate(dataend) : null,
+        dateEnd: dateEnd ? parseDate(dateEnd) : null,
         time: poster.posterDate.time,
       },
     };
