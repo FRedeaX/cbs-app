@@ -1,7 +1,8 @@
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { FC, ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import { fill } from "../utils/fill";
+
 import {
   InputContext,
   InputIsFocus,
@@ -11,8 +12,8 @@ import {
 
 export const InputProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const ref = useRef<InputRef>(null);
-  const { query } = useRouter();
-  const [value, setValue] = useState<InputValue>(fill(query.text));
+  const query = useSearchParams();
+  const [value, setValue] = useState<InputValue>(fill(query?.get("text")));
   const [isFocus, setFocus] = useState<InputIsFocus>(false);
 
   const handleSetFocus = useCallback(() => {

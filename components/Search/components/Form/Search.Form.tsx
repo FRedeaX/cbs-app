@@ -1,11 +1,11 @@
-import ClickAwayListener from "@mui/base/ClickAwayListener";
-import FocusTrap from "@mui/base/FocusTrap";
+import { ClickAwayListener, FocusTrap } from "@mui/base";
 import { FC, ReactNode } from "react";
 
 import { KeyDownAwayListener } from "../../../../base";
 import { SEARCH_PATHNAME } from "../../../../constants";
 import { useInputContext } from "../Input/context";
 import { useInput } from "../Input/utils";
+
 import classes from "./Search.Form.module.css";
 
 interface ISearchFormProps {

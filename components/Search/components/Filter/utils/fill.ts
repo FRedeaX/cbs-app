@@ -1,8 +1,9 @@
-import { Maybe, Nullable } from "../../../../../helpers/typings/utility-types";
+import { Maybe, Nullable } from "@/helpers/typings/utility-types";
+
 import { FilterList } from "./type";
 
 export const fill = (
-  filter: Maybe<string | string[]>,
+  filter: Maybe<Nullable<string | string[]>>,
 ): Nullable<FilterList> => {
   if (typeof filter !== "string") return null;
 

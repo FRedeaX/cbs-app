@@ -1,4 +1,4 @@
-import { Maybe } from "../../../../../helpers/typings/utility-types";
+import { MaybeOrNullable } from "@/helpers/typings/utility-types";
 
-export const fill = (text: Maybe<string | string[]>): string =>
+export const fill = (text: MaybeOrNullable<string | string[]>): string =>
   typeof text === "string" ? text : "";

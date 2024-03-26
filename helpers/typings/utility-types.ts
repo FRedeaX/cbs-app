@@ -17,6 +17,11 @@ export type Nullable<T> = T | null;
 export type Maybe<T> = T | undefined;
 
 /**
+ * Возвращает тип который может быть null или undefined.
+ */
+export type MaybeOrNullable<T> = Maybe<Nullable<T>>;
+
+/**
  * Возвращает тип в котором переданные ключи являются обязательными.
  */
 export type Defaultize<TSource, TKeys extends keyof TSource> = TSource & {
