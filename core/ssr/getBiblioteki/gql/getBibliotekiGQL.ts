@@ -8,17 +8,17 @@ type BibliotekiBase = {
   email: Nullable<string>;
   name: string;
   point: string;
-  shortname: string;
+  shortName: string;
   id: string;
   telefon: Nullable<string>;
 };
 
 export type BibliotekiSchedule = {
-  cleanupday: [string, string];
+  cleanupDay: [string, string];
   friday: string;
   holiday: string;
-  isholiday: boolean;
-  lunchbreak: [string, string];
+  isHoliday: boolean;
+  lunchBreak: [string, string];
   monday: string;
   saturday: string;
   sunday: string;
@@ -28,17 +28,17 @@ export type BibliotekiSchedule = {
 };
 
 export type BibliotekiScheduleAup = {
-  cleanupdayaup: [string, string];
-  fridayaup: string;
-  holidayaup: string;
-  isholidayaup: boolean;
-  lunchbreakaup: [string, string];
-  mondayaup: string;
-  saturdayaup: string;
-  sundayaup: string;
-  thursdayaup: string;
-  tuesdayaup: string;
-  wednesdayaup: string;
+  cleanupDayAup: [string, string];
+  fridayAup: string;
+  holidayAup: string;
+  isHolidayAup: boolean;
+  lunchBreakAup: [string, string];
+  mondayAup: string;
+  saturdayAup: string;
+  sundayAup: string;
+  thursdayAup: string;
+  tuesdayAup: string;
+  wednesdayAup: string;
 };
 
 export type BibliotekaFieldsGQL = {
@@ -72,16 +72,16 @@ export const getBibliotekiDocument = gql`
               email
               name
               point
-              shortname
+              shortName
               id
               telefon
             }
             bibliotekiSchedule {
-              cleanupday
+              cleanupDay
               friday
               holiday
-              isholiday
-              lunchbreak
+              isHoliday
+              lunchBreak
               monday
               saturday
               sunday
@@ -90,17 +90,17 @@ export const getBibliotekiDocument = gql`
               wednesday
             }
             bibliotekiScheduleAup {
-              cleanupdayaup
-              fridayaup
-              holidayaup
-              isholidayaup
-              lunchbreakaup
-              mondayaup
-              saturdayaup
-              sundayaup
-              thursdayaup
-              tuesdayaup
-              wednesdayaup
+              cleanupDayAup
+              fridayAup
+              holidayAup
+              isHolidayAup
+              lunchBreakAup
+              mondayAup
+              saturdayAup
+              sundayAup
+              thursdayAup
+              tuesdayAup
+              wednesdayAup
             }
           }
         }

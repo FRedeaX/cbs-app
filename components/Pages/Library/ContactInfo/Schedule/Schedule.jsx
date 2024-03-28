@@ -23,6 +23,7 @@ const Schedule = (props) => {
         <div style={{ display: "flex" }}>
           <Typography
             component="h3"
+            marginRight={1.75}
             className={classNames(classesInfo.title, classes.title)}>
             График работы
           </Typography>

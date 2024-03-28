@@ -22,7 +22,7 @@ type PosterItemFieldsGQL = {
   };
   posterDate: {
     date: string;
-    dataend: Nullable<string>;
+    dateEnd: Nullable<string>;
     time: Nullable<string>;
   };
   formOfEvent: {
@@ -57,7 +57,7 @@ const posterItemFieldsGQL = {
       }
       posterDate {
         date
-        dataend
+        dateEnd
         time
       }
       formOfEvent {

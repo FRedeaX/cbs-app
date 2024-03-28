@@ -40,14 +40,14 @@ export const transformSchedule = <T extends Record<string, any>>(
       time: schedule[`sunday${prefix}`],
     },
   ];
-  const lunchBreak = schedule[`lunchbreak${prefix}`][0] !== "false";
-  const cleanupDay = schedule[`cleanupday${prefix}`][0] !== "false";
+  const lunchBreak = schedule[`lunchBreak${prefix}`][0] !== "false";
+  const cleanupDay = schedule[`cleanupDay${prefix}`][0] !== "false";
 
   if (lunchBreak) {
     res.push({
       lunchBreak,
       day: "Обед",
-      time: schedule[`lunchbreak${prefix}`][1],
+      time: schedule[`lunchBreak${prefix}`][1],
     });
   }
 
@@ -55,7 +55,7 @@ export const transformSchedule = <T extends Record<string, any>>(
     res.push({
       cleanupDay,
       day: "Санитарный день",
-      time: schedule[`cleanupday${prefix}`][1],
+      time: schedule[`cleanupDay${prefix}`][1],
     });
   }
 
