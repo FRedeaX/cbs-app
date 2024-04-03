@@ -2,7 +2,6 @@ import { Metadata, Viewport } from "next";
 import { ReactNode } from "react";
 
 import { getMenu, getMetadata } from "@/core/ssr";
-import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { Providers } from "src/app/providers";
 
@@ -38,11 +37,9 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
     <html lang="ru">
       <body>
         <Polyfill />
-        <ErrorBoundary>
-          <Providers>
-            <Layout menu={menu}>{children}</Layout>
-          </Providers>
-        </ErrorBoundary>
+        <Providers>
+          <Layout menu={menu}>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );

@@ -1,67 +1,47 @@
-"use client";
-
 import { Button } from "@mui/material";
-import { Component, ReactNode, ErrorInfo } from "react";
+import { useEffect, FC } from "react";
 
 import { exceptionLog } from "@/helpers";
+import { Void } from "@/helpers/typings/utility-types";
 
 type ErrorBoundaryProps = {
-  children: ReactNode;
+  error: Error & { digest?: string };
+  reset: Void;
 };
 
-type ErrorBoundaryState = {
-  /**
-   * @default false
-   */
-  hasError: boolean;
+export const ErrorBoundary: FC<ErrorBoundaryProps> = ({ error, reset }) => {
+  useEffect(() => {
+    exceptionLog(error);
+  }, [error]);
+
+  return (
+    <div
+      style={{
+        margin: "auto",
+        textAlign: "center",
+      }}>
+      <h1
+        style={{
+          fontSize: "20px",
+          fontWeight: "400",
+          marginTop: "24px",
+        }}>
+        Что-то пошло не так...
+      </h1>
+      <Button sx={{ marginRight: 1 }} variant="outlined" onClick={reset}>
+        Пробовать снова
+      </Button>
+      <Button
+        sx={{ marginRight: 1 }}
+        variant="outlined"
+        onClick={() => window.location.reload()}>
+        Обновить страницу
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={() => window.location.replace(window.location.origin)}>
+        На главную
+      </Button>
+    </div>
+  );
 };
-
-export class ErrorBoundary extends Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    exceptionLog({ error, errorInfo });
-  }
-
-  render() {
-    const {
-      props: { children },
-      state: { hasError },
-    } = this;
-    if (hasError) {
-      return (
-        <div
-          style={{
-            margin: "auto",
-            textAlign: "center",
-          }}>
-          <h1
-            style={{
-              fontSize: "20px",
-              fontWeight: "400",
-            }}>
-            Что-то пошло не так...
-            <br />
-            Попробуйте обновить страницу.
-          </h1>
-          <Button variant="outlined" onClick={() => window.location.reload()}>
-            Обновить
-          </Button>
-        </div>
-      );
-    }
-
-    return children;
-  }
-}
