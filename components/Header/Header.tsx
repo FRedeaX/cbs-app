@@ -1,4 +1,6 @@
-import FocusTrap from "@mui/base/FocusTrap";
+"use client";
+
+import { FocusTrap } from "@mui/base/FocusTrap";
 import { Backdrop } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";

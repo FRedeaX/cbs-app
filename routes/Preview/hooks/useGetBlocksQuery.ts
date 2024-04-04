@@ -25,7 +25,7 @@ export const useGetBlocksQuery = (
     {
       keepPreviousData: true,
       revalidateOnFocus: false,
-      fallbackData: { blocks: [], video: [] },
+      fallbackData: { blocks: [], videos: [] },
       ...config,
     },
     // Используем утверждение типов т.к.

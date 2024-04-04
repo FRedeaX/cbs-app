@@ -3,8 +3,11 @@ import { QueryOptions, gql } from "@apollo/client";
 import { client } from "@/lib/apollo/client";
 
 type GetMetadataQuery = {
-  description: string;
-  title: string;
+  generalSettings: {
+    description: string;
+    title: string;
+    url: string;
+  };
 };
 
 const getMetadataDocument = gql`
@@ -12,6 +15,7 @@ const getMetadataDocument = gql`
     generalSettings {
       description
       title
+      url
     }
   }
 `;

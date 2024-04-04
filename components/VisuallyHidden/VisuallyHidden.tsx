@@ -9,7 +9,7 @@ export type VisuallyHiddenProps = {
   /**
    * @default false
    */
-  isHidden: boolean;
+  isHidden?: boolean;
 };
 
 /**

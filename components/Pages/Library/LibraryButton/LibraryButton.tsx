@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { ReactNode } from "react";
+
 import Button from "../../../UI/Button/Button";
+
 import classes from "./LibraryButton.module.css";
 
 interface ILibraryButton {
@@ -17,7 +19,7 @@ const LibraryButton = ({
   isActive,
   className,
 }: ILibraryButton): JSX.Element => (
-  <Link href={href} passHref replace scroll={false} shallow>
+  <Link href={href} passHref replace scroll={false} shallow legacyBehavior>
     <Button
       view="link"
       className={classNames(

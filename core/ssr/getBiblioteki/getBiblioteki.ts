@@ -16,5 +16,5 @@ export const getBiblioteki = async () => {
     .map((filial) => transformFields(filial))
     .sort((a, b) => a.order - b.order);
 
-  return { title, excerpt, filialList };
+  return { title, description: excerpt, filialList };
 };

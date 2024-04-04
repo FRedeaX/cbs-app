@@ -14,7 +14,4 @@ export type TransformErrorBlock = {
   innerBlocks: null;
 };
 
-export type VideoByBloks = {
-  id: string;
-  href: string;
-};
+export type UrlVideoByBlock = string;

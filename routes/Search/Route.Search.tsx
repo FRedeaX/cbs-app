@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Container } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";

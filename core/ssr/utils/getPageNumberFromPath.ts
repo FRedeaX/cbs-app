@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from "@/constants";
+import { parsePageNumber } from "./parsePageNumber";
 
 /**
  * Возвращаем номер страницы,
@@ -17,10 +17,5 @@ export const getPageNumberFromPath = (path: string[]) => {
     return null;
   }
 
-  const pageNumber = parseInt(path.at(-1) ?? "", 10);
-  if (Number.isNaN(pageNumber)) {
-    throw new Error(`pageNumber ${ERROR_MESSAGE.IS_NOT_NUMBER}`);
-  }
-
-  return pageNumber;
+  return parsePageNumber(path.at(-1) ?? "");
 };

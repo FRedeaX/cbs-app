@@ -15,7 +15,7 @@
 
 .text {
   /* font-size: 14px; */
-  color: white;
+  --typography-color: white;
 }
 
 @media screen and (width <= 500px) {

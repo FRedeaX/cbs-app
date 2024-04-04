@@ -1,8 +1,7 @@
 import { Stack } from "@mui/material";
 import { FC } from "react";
 
-import { NotFound } from "@/components/NotFound/NotFound";
-import { SEO, SEOProp } from "@/components/SEO/SEO";
+import { Error } from "@/components/Error/Error";
 import { PreviewPostCard } from "src/widgets/preview/PostCard";
 import { PreviewTag } from "src/widgets/preview/Tag";
 
@@ -12,28 +11,23 @@ import { RoutePreviewPost } from "../Post/Route.PreviewPost";
 type PreviewProps = {
   id: number;
   type: "page" | "post" | "poster";
-} & Pick<SEOProp, "domenTitle">;
+};
 
-export const RoutePreview: FC<PreviewProps> = ({ id, type, domenTitle }) => {
+export const RoutePreview: FC<PreviewProps> = ({ id, type }) => {
   switch (type) {
     case "page":
-      return <RoutePreviewPage domenTitle={domenTitle} id={id} />;
+      return <RoutePreviewPage id={id} />;
 
     case "post":
       return (
         <Stack spacing={5}>
-          <RoutePreviewPost domenTitle={domenTitle} id={id} />
+          <RoutePreviewPost id={id} />
           <PreviewPostCard id={id} />
           <PreviewTag id={id} />
         </Stack>
       );
 
     default:
-      return (
-        <>
-          <SEO domenTitle={domenTitle} title="Страница не найдена" />
-          <NotFound />
-        </>
-      );
+      return <Error statusCode={404} title="Страница не найдена" />;
   }
 };

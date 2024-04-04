@@ -38,13 +38,12 @@
 
 .blur {
   opacity: 0.95;
-  filter: blur(var(--image-filter-blur, 10px));
 }
 
 .placeholder,
 .backdrop,
 .blur,
-.skeleton {
+.placeholder .skeleton {
   position: absolute;
   top: 0;
   right: 0;
@@ -52,7 +51,7 @@
   left: 0;
 }
 
-.skeleton {
+.placeholder .skeleton {
   transform: none;
   background-color: transparent;
 }

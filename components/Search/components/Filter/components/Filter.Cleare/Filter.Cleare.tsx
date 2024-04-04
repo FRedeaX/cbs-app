@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, ReactNode } from "react";
 
 import { CSSProperties } from "../../../../../../helpers/typings/utility-types";
@@ -7,15 +7,13 @@ import { CSSProperties } from "../../../../../../helpers/typings/utility-types";
 type FilterCleareProps = { children: ReactNode; sx?: CSSProperties };
 
 export const FilterCleare: FC<FilterCleareProps> = ({ children, sx }) => {
-  const { query, push: routerPush } = useRouter();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const handleCleare = (): void => {
-    routerPush(
-      {
-        query: { text: query.text },
-      },
-      undefined,
-      { shallow: true },
-    );
+    const params = new URLSearchParams(searchParams ?? {});
+    router.push(`${pathname}?text=${params.get("text")}`);
   };
 
   return (

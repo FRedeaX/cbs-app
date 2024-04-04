@@ -15,8 +15,8 @@
 
 .subtitle {
   margin-bottom: 15px;
-  color: var(--subtitle-сolor);
   font-weight: 400;
+  color: var(--subtitle-сolor);
 }
 
 .controls {
@@ -46,13 +46,13 @@
 }
 
 .aside {
-  flex-basis: 30%;
   box-sizing: border-box;
   min-width: 322px; /* 380px 325px; */
 
   /* grid-area: contactInfo; */
   margin-left: 15px;
   padding-left: 15px;
+
   border-left: 1px solid #dbdbdb;
 }
 
@@ -79,21 +79,24 @@
 
   .aside {
     display: grid;
-    flex-basis: 100%;
     grid-column-gap: 40px;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: max-content 3fr;
+
     margin-top: 20px;
     margin-left: 0;
     padding-left: 0;
+
     border: none;
   }
 }
 
-@media screen and (max-width: 446px) {
+@media screen and (max-width: 600px) {
   .aside {
     display: block;
   }
+}
 
+@media screen and (max-width: 446px) {
   .controls {
     margin-bottom: 10px;
   }

@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FocusEvent, KeyboardEvent, MouseEvent, useCallback } from "react";
 
 import { SearchParams } from "@/core/elastic/type";
@@ -22,28 +22,21 @@ export const useSuggestion = () => {
     suggestionList,
     setSuggestionList,
   } = useSuggestionContext();
-  const { push: routerPush } = useRouter();
+  const router = useRouter();
 
   /**
    * Сохраняет запрос в историю перед переходом к результату.
    */
-  const onClickLink = useCallback<OnClickLink>(
-    ({ currentTarget }) => {
-      routerPush(
-        createQueryLink<SearchParams>(
-          `${window.location.origin}/${SEARCH_PATHNAME}`,
-          { text: currentTarget.innerText },
-        ),
-        undefined,
-        {
-          shallow: true,
-          scroll: false,
-        },
-      );
-    },
+  const onClickLink = useCallback<OnClickLink>(({ currentTarget }) => {
+    router.push(
+      createQueryLink<SearchParams>(
+        `${window.location.origin}${SEARCH_PATHNAME}`,
+        { text: currentTarget.innerText },
+      ),
+      { scroll: false },
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  }, []);
 
   /**
    * Выделяет `suggestion` при наведении курсора или при фокусировке с клавиатуры.
@@ -84,17 +77,13 @@ export const useSuggestion = () => {
           event.preventDefault();
 
           const { _source } = suggestionList[highlightedIndex];
-          routerPush(
-            createQueryLink(`${window.location.origin}/${SEARCH_PATHNAME}`, {
+          router.push(
+            createQueryLink(`${window.location.origin}${SEARCH_PATHNAME}`, {
               text: _source.title,
             }),
-            undefined,
-            {
-              shallow: true,
-              scroll: false,
-            },
+            { scroll: false },
           );
-          routerPush(_source.link);
+          router.push(_source.link);
 
           break;
         }

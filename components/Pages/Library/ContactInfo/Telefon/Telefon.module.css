@@ -21,10 +21,6 @@
   flex: 4.2;
 }
 
-.item a {
-  flex: 1;
-}
-
 .subtitle {
   display: block;
   margin: 0 0 9px;

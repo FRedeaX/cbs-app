@@ -1,3 +1,5 @@
+"use client";
+
 import { ruRU } from "@mui/material/locale";
 import { createTheme } from "@mui/material/styles";
 
@@ -17,13 +19,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 2.125rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 26 до 34
+            var(--typography-font-size, 2.125rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 26 до 34
         // fontVariant: `small-caps slashed-zero`,
         fontFeatureSettings: `"smcp", "zero"`,
         fontWeight: 600,
@@ -35,13 +37,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 2rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 24 до 32
+            var(--typography-font-size, 2rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 24 до 32
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
         letterSpacing: 0,
@@ -50,13 +52,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 1.875rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 22 до 30
+            var(--typography-font-size, 1.875rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 22 до 30
         fontWeight: `var(--typography-font-weight, 400)`,
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
@@ -65,13 +67,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 1.75rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 20 до 28
+            var(--typography-font-size, 1.75rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 20 до 28
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
       },
@@ -79,13 +81,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 1.6875rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 19 до 27
+            var(--typography-font-size, 1.6875rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 19 до 27
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
       },
@@ -93,13 +95,13 @@ export const lightTheme = createTheme(
         color: `var(--black)`,
         fontFamily: `var(--typography-font-family, var(--font-family-serif))`,
         fontSize: `calc(
-          var(--typography-font-size, 1.625rem) -
-            (
-              var(--downgrading-font-size) * 2 +
-              var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 18 до 26
+            var(--typography-font-size, 1.625rem) -
+              (
+                var(--downgrading-font-size) * 2 +
+                var(--downgrading-font-size) * 2 * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 18 до 26
         lineHeight: `var(--typography-line-height, max(28px, 0.82em))`,
         textWrap: `balance`,
       },
@@ -180,13 +182,13 @@ export const lightTheme = createTheme(
         margin: `var(--typography-margin-top) 0 var(--typography-margin-bottom)`,
         fontFamily: `var(--typography-font-family, var(--font-family-roboto))`,
         fontSize: `calc(
-          var(--typography-font-size, 1.25rem) -
-            (
-              var(--downgrading-font-size) +
-              var(--downgrading-font-size) * ${fontSizeMultiplier}
-            ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
-            var(--is-font-size-adaptive)
-        )`, // от 16 до 20
+            var(--typography-font-size, 1.25rem) -
+              (
+                var(--downgrading-font-size) +
+                var(--downgrading-font-size) * ${fontSizeMultiplier}
+              ) * ((${TOP_LIMIT_FONT_SIZE}px - 100vw) / ${TOP_LIMIT_FONT_SIZE}) *
+              var(--is-font-size-adaptive)
+          )`, // от 16 до 20
         fontWeight: `var(--typography-font-weight, 400)`,
         fontStyle: `var(--typography-font-style, inherit)`,
         lineHeight: `var(--typography-line-height, max(28px, 1.5em))`,

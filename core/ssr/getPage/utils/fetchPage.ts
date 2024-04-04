@@ -47,7 +47,7 @@ export const fetchPage = async ({
   }
 
   const { children, ...page } = data.page;
-  const { blocks, video } = await transformBlocks(page.blocks);
+  const { blocks, videos } = await transformBlocks(page.blocks);
 
   const childrenData: Nullable<typeof children> =
     blocks.length === 0 ? { nodes: [], pageInfo: children.pageInfo } : null;
@@ -67,7 +67,7 @@ export const fetchPage = async ({
     page: {
       ...page,
       blocks,
-      video,
+      videos,
     },
     children: childrenData,
   };

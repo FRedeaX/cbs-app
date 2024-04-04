@@ -36,5 +36,7 @@ export const sxCardBox: BoxProps["sx"] = {
 };
 
 export const sxPagination: PaginationProps["sx"] = {
-  padding: "var(--gap)",
+  margin: "calc(var(--gap) * 1.5) var(--gap)",
+  display: "flex",
+  justifyContent: "center",
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Container } from "@mui/material";
 import { FC } from "react";
 
@@ -18,7 +20,7 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
     { revalidateIfStale: false, revalidateOnFocus: false },
   );
 
-  if (data === undefined || data.post.tags.nodes.length) return null;
+  if (!data?.post || data.post.tags.nodes.length) return null;
 
   return (
     <Box sx={{ "--gap": `10px` }}>
@@ -30,7 +32,7 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
             slots={{
               content: (
                 <EditTitleAndExcerpt
-                  id={data.post.revisionOf?.node.id || data.post.databaseId}
+                  id={id}
                   title={data.post.title}
                   excerpt={data.post.excerpt}
                   buttonProps={{

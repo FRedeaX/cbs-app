@@ -20,18 +20,20 @@ export const Category: FC<CategoryProps> = ({ data, className }) => (
     <Scroller>
       {data.map(({ id, uri, name }) =>
         uri ? (
-          <Link key={id} href={uri} prefetch={false}>
-            <a className={classNames(classes.link, className)}>
-              <span className={classes.text}>{name}</span>
-            </a>
+          <Link
+            key={id}
+            href={uri}
+            prefetch={false}
+            className={classNames(className, classes.link)}>
+            <span className={classes.text}>{name}</span>
           </Link>
         ) : (
           <span
             key={id}
             className={classNames(
+              className,
               classes.link,
               classes["link--cursor"],
-              className,
             )}>
             {name}
           </span>

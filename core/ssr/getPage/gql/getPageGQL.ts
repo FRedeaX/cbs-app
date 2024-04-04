@@ -1,9 +1,7 @@
 import { QueryOptions, gql } from "@apollo/client";
-import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
 import { client } from "@/lib/apollo/client";
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
-import { FetcherGQLData, fetcherGQLData } from "@/helpers/fetcherGQLData";
 import { Nullable } from "@/helpers/typings/utility-types";
 import { columnsBlockGQL } from "@/components/blocks/Columns/utils/columnsGQL";
 import { embedBlockGQL } from "@/components/blocks/Embed/utils/embedGQL";
@@ -22,27 +20,13 @@ import { spacerBlockGQL } from "@/components/blocks/Spacer/utils/spacerGQL";
 import { tableBlockGQL } from "@/components/blocks/Table/utils/tableGQL";
 import { verseBlockGQL } from "@/components/blocks/Verse/utils/verseGQL";
 import { videoBlockGQL } from "@/components/blocks/Video/utils/videoGQL";
-import { REVALIDATE } from "@/constants";
 
-type GetPageQueryVariables = {
+export type GetPageQueryVariables = {
   id: string | number;
   idType: "DATABASE_ID" | "ID" | "SLUG" | "URI";
   isPreview?: boolean;
   cursor?: string;
   first?: number;
-};
-
-type PageFieldsGQL = {
-  id: string;
-  title: string;
-  excerpt: string;
-  template: {
-    templateName: "Default" | "Library" | "Redirect";
-  };
-};
-
-type PageSareComponentsFieldsGQL = {
-  link: string;
 };
 
 type Image = {
@@ -52,12 +36,25 @@ type Image = {
   };
 };
 
-type ChildrenPageFieldsGQL = {
-  uri: string;
+type PageFieldsGQL = {
+  id: string;
+  title: string;
+  excerpt: string;
+  template: {
+    templateName: "Default" | "Library" | "Redirect";
+  };
   featuredImage: Nullable<Image>;
 };
 
-type GetPageQuery = {
+type PageSareComponentsFieldsGQL = {
+  link: string;
+};
+
+type ChildrenPageFieldsGQL = {
+  uri: string;
+};
+
+export type GetPageQuery = {
   page: Nullable<
     PageFieldsGQL &
       PageSareComponentsFieldsGQL & {
@@ -81,6 +78,12 @@ const pageFieldsGQL = {
       template {
         templateName
       }
+      featuredImage {
+        node {
+          databaseId
+          sourceUrl(size: THUMBNAIL)
+        }
+      }
     }
   `,
 };
@@ -93,7 +96,7 @@ const pageSareComponentsFieldsGQL = {
   `,
 };
 
-const getPageDocument = gql`
+export const getPageDocument = gql`
   query GetPageDocument(
     $id: ID!
     $idType: PageIdType
@@ -129,12 +132,6 @@ const getPageDocument = gql`
           ... on Page {
             ...pageFieldsGQL
             uri
-            featuredImage {
-              node {
-                databaseId
-                sourceUrl(size: THUMBNAIL)
-              }
-            }
           }
         }
         pageInfo {
@@ -170,17 +167,3 @@ export const clientGetPageQuery = (
   const options = { query: getPageDocument, ...baseOptions };
   return client.query<GetPageQuery, GetPageQueryVariables>(options);
 };
-
-export const useGetPageQuery = (
-  variables: GetPageQueryVariables,
-  config?: SWRConfiguration<
-    GetPageQuery,
-    Error,
-    Fetcher<GetPageQuery, FetcherGQLData<GetPageQueryVariables>>
-  >,
-) =>
-  useSWR<GetPageQuery, Error, FetcherGQLData<GetPageQueryVariables>>(
-    { document: getPageDocument, variables },
-    fetcherGQLData,
-    { refreshInterval: REVALIDATE.PREVIEW_POLL_INTERVAL, ...config },
-  );

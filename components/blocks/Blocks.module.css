@@ -22,13 +22,7 @@
   }
 }
 
-/* .Heading {
-  --block-margin-bottom: 0;
-} */
-
 .File + .File,
-.Heading + .Heading,
-.Heading + .Paragraph,
 .Heading + .List {
   --block-margin-top: calc(
     var(--g-block-margin-top) - var(--g-block-margin-bottom)

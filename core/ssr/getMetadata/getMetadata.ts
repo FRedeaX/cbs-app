@@ -7,12 +7,14 @@ import { clientGetMetadataQuery } from "./gql/getMetadataGQL";
 type GetMetadata = {
   description: string;
   title: string;
+  url: string;
 };
 
 const FALLBACK_METADATA: GetMetadata = {
   description:
     "Новости, анонсы, мероприятия, книжные новинки библиотек города Байконур",
   title: "Библиотеки города Байконур",
+  url: "https://cbsbaikonur.ru",
 };
 
 export const getMetadata = async (): Promise<GetMetadata> => {
@@ -25,8 +27,11 @@ export const getMetadata = async (): Promise<GetMetadata> => {
     exceptionLog(errors);
   }
 
+  const { description, title, url } = data.generalSettings;
+
   return {
-    description: data.description || FALLBACK_METADATA.description,
-    title: data.title || FALLBACK_METADATA.title,
+    description: description || FALLBACK_METADATA.description,
+    title: title || FALLBACK_METADATA.title,
+    url: url || FALLBACK_METADATA.url,
   };
 };

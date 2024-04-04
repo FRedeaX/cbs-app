@@ -8,8 +8,14 @@ import { FetchPage, fetchPage } from "./utils/fetchPage";
 import { fetchPaginations } from "./utils/fetchPaginations";
 
 export const getPage = async (pathname: string[]) => {
+  if (pathname.length === 0) {
+    throw new SSRError(ERROR_MESSAGE.URL_IS_UNDEFINED, { pathname });
+  }
+
   const pageNumber = getPageNumberFromPath(pathname);
-  const uri = pageNumber ? pathname.slice(0, -2).join("/") : pathname.join("/");
+  const uri = `/${
+    pageNumber ? pathname.slice(0, -2).join("/") : pathname.join("/")
+  }`;
 
   let paginationList: Awaited<ReturnType<typeof fetchPaginations>> = [];
   let variables: FetchPage = {

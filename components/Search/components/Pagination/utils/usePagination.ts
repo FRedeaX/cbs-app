@@ -1,27 +1,29 @@
-import { useRouter } from "next/router";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ChangeEvent, useCallback, useEffect, useState, useMemo } from "react";
 
-import { omit } from "../../../../../helpers";
 import { fill } from "./fill";
 
 export const usePagination = () => {
-  const { query, push: routerPush } = useRouter();
-  const [page, setPage] = useState<number>(fill(query.page));
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = searchParams?.get("page");
+  const [page, setPage] = useState<number>(fill(currentPage));
+  const params = useMemo(
+    () => new URLSearchParams(searchParams ?? {}),
+    [searchParams],
+  );
 
   useEffect(() => {
-    setPage(fill(query.page));
-  }, [query.page]);
+    setPage(fill(currentPage));
+  }, [currentPage]);
 
   useEffect(() => {
-    routerPush(
-      {
-        query: page > 1 ? { ...query, page } : omit(query, ["page"]),
-      },
-      undefined,
-      { shallow: true, scroll: true },
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+    if (page > 1) params.set("page", page.toString());
+    else params.delete("page");
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: true });
+  }, [page, params, pathname, router]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<unknown>, value: number) => {

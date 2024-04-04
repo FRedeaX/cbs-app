@@ -1,3 +1,5 @@
+"use client";
+
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { Box, Button } from "@mui/material";
 import { FC } from "react";
@@ -17,7 +19,7 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
     { revalidateIfStale: false, revalidateOnFocus: false },
   );
 
-  if (data === undefined || !data.post.tags.nodes.length) return null;
+  if (!data?.post || !data.post.tags.nodes.length) return null;
 
   const { tags, ...currentPost } = data.post;
   const { name, description, posts } = tags.nodes[0];
@@ -46,7 +48,12 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
               content: (
                 <>
                   <EditTitleAndExcerpt
-                    id={item.revisionOf?.node.id || item.databaseId}
+                    /**
+                     * Используем id страницы, если это карточка текущей страницы,
+                     * т.к. до публикации id или databaseId в некоторых случаях
+                     * возвращает идентификатор последней ревизии.
+                     */
+                    id={item.id === currentPost.id ? id : item.id}
                     title={item.title}
                     excerpt={item.excerpt}
                   />

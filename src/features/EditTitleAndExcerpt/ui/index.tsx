@@ -1,3 +1,5 @@
+"use client";
+
 import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 import { Box, FormHelperText } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";

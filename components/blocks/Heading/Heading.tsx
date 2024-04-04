@@ -1,6 +1,6 @@
 import { Typography, TypographyProps } from "@mui/material";
 import classNames from "classnames";
-import { FC } from "react";
+import { FC, HTMLAttributes } from "react";
 
 import { createMarkup } from "../../../helpers";
 import { Nullable } from "../../../helpers/typings/utility-types";
@@ -42,7 +42,8 @@ export type HeadingProps = {
   fontSize?: FontSize;
   gradient?: Gradient;
   style?: Nullable<string>;
-};
+} & Omit<HTMLAttributes<HTMLHeadingElement>, "className" | "style"> &
+  Pick<TypographyProps, "sx">;
 
 export const Heading: FC<HeadingProps> = ({
   anchor,
@@ -55,6 +56,7 @@ export const Heading: FC<HeadingProps> = ({
   fontSize,
   gradient,
   style,
+  sx,
 }) => {
   const variant = `h${level}` as TypographyProps["variant"];
   const styleTypography = parseBlockStyle({
@@ -68,6 +70,7 @@ export const Heading: FC<HeadingProps> = ({
   return (
     <Typography
       id={anchor || undefined}
+      sx={sx}
       style={styleTypography}
       align={textAlign}
       variant={variant}

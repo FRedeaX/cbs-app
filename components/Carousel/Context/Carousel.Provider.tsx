@@ -1,9 +1,12 @@
+"use client";
+
 import { FC, ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { exceptionLog } from "../../../helpers";
 import { fillOffsetArray } from "../Carousel.utils/fillOffsetArray";
 import { offsetSides } from "../Carousel.utils/offsetSides";
 import { scrollTo } from "../Carousel.utils/scrollTo";
+
 import {
   CarouselContext,
   CarouselContextHTMLNode,

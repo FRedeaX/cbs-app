@@ -1,12 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import NorthWestRoundedIcon from "@mui/icons-material/NorthWestRounded";
-import { Box, Link } from "@mui/material";
-import LinkNext from "next/link";
+import { Box } from "@mui/material";
 import { FC } from "react";
+
+import { Link } from "@/components/UI/Link/Link";
 
 import { SuggestHit, SuggestSource } from "../../../../../../core/elastic/type";
 import { CSSProperties } from "../../../../../../helpers/typings/utility-types";
 import { useSuggestion } from "../../utils/useSuggestion";
+
 import classes from "./Suggestion.Text.module.css";
 import { TextHighlight } from "./Text.Highlight/Text.Highlight";
 
@@ -28,14 +30,17 @@ export const SuggestionText: FC<SuggestionTextProps> = ({ suggestion }) => {
 
   return (
     <Box sx={sxRoot} className={classes.root}>
-      <LinkNext href={suggestion._source.link} prefetch={false} passHref>
-        <Link sx={sxLink} underline="none" onClick={onClickLink}>
-          <TextHighlight
-            highlight={suggestion.highlight.title}
-            text={suggestion._source.title}
-          />
-        </Link>
-      </LinkNext>
+      <Link
+        href={suggestion._source.link}
+        prefetch={false}
+        sx={sxLink}
+        underline="none"
+        onClick={onClickLink}>
+        <TextHighlight
+          highlight={suggestion.highlight.title}
+          text={suggestion._source.title}
+        />
+      </Link>
       <NorthWestRoundedIcon fontSize="small" color="disabled" />
     </Box>
   );

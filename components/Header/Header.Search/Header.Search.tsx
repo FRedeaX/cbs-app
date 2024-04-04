@@ -1,7 +1,7 @@
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { IconButton } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { FC } from "react";
 
 import { SEARCH_PATHNAME } from "@/constants";
@@ -9,11 +9,11 @@ import { SEARCH_PATHNAME } from "@/constants";
 import classes from "./Header.Search.module.css";
 
 export const HeaderSearch: FC = () => {
-  const { pathname } = useRouter();
+  const pathname = usePathname();
 
   if (pathname === SEARCH_PATHNAME) return null;
   return (
-    <Link href="/search" prefetch={false} passHref>
+    <Link href="/search" prefetch={false} passHref legacyBehavior>
       <IconButton className={classes.button} aria-label="Найти">
         <SearchRoundedIcon fontSize="small" />
       </IconButton>

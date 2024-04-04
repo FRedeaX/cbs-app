@@ -32,7 +32,7 @@ export const getPathByMetrika = async () => {
     });
 
     return data.map((element) =>
-      createPath(element.dimensions[0].name.split("/").at(-1) as string),
+      createPath(element.dimensions[0].name.split("/").at(-1) || "/"),
     );
   } catch (error) {
     exceptionLog(error);

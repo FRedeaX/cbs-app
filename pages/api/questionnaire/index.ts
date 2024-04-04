@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { clientMongo } from "@/lib/mongo/client";
 import { exceptionLog } from "@/helpers";
-import { questionnaireIsCompleted } from "pages/questionnaire";
+import { questionnaireIsCompleted } from "app/questionnaire/constant";
 
 const dbName = "questionnaire";
 

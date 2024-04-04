@@ -1,4 +1,4 @@
-import { IncomingHttpHeaders } from "http2";
+import { headers as nextHeaders } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 
 import { UA } from "./const";
@@ -17,14 +17,16 @@ export type UAPlatform = typeof UA.desktope | typeof UA.touch;
  * @returns UA
  */
 export const getUAPlatform = (
-  headers: IncomingHttpHeaders,
+  headers: ReturnType<typeof nextHeaders>,
   fallback: Fallback = UA.desktope,
 ): UAPlatform => {
-  if (headers["sec-ch-ua-mobile"] === "?0") return UA.desktope;
-  if (headers["sec-ch-ua-mobile"] === "?1") return UA.touch;
+  if (headers.get("sec-ch-ua-mobile") === "?0") return UA.desktope;
+  if (headers.get("sec-ch-ua-mobile") === "?1") return UA.touch;
 
-  if (headers["user-agent"] === undefined) return fallback;
-  const ua = getSelectorsByUserAgent(headers["user-agent"]);
+  const headersUA = headers.get("user-agent");
+  if (headersUA === null) return fallback;
+
+  const ua = getSelectorsByUserAgent(headersUA);
   if (ua.isDesktop) return UA.desktope;
   if (ua.isMobile) return UA.touch;
 

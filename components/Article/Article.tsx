@@ -1,20 +1,13 @@
 import { Typography } from "@mui/material";
-import dynamic from "next/dynamic";
 import { FC } from "react";
 
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
 
 import { Category, CategoryProps } from "../Posts/Category/Category";
+import Share from "../Share/Share";
+import Blocks from "../blocks/Blocks";
 
 import classes from "./Article.module.css";
-
-const DynamicBlocks = dynamic(() => import("../blocks/Blocks"), {
-  ssr: true,
-});
-
-const DynamicShare = dynamic(() => import("../Share/Share"), {
-  ssr: true,
-});
 
 export type ArticleProps = {
   title: string;
@@ -49,10 +42,10 @@ export const Article: FC<ArticleProps> = ({
     </header>
     <div className={classes.body}>
       <div>
-        <DynamicBlocks blocks={blocks} />
+        <Blocks blocks={blocks} />
       </div>
       {!isPreview && href && blocks.length > 0 && (
-        <DynamicShare
+        <Share
           cls={classes.Share}
           clsLink={classes.link}
           title={title}
