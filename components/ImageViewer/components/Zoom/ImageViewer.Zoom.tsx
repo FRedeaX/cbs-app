@@ -15,9 +15,10 @@ import {
   forwardRef,
   useImperativeHandle,
   useRef,
+  HTMLAttributes,
 } from "react";
 
-import { Void } from "@/helpers/typings/utility-types";
+import { CSSProperties, Void } from "@/helpers/typings/utility-types";
 
 import {
   clamp,
@@ -31,6 +32,15 @@ import {
 import classes from "./ImageViewer.Zoom.module.css";
 
 type Vector = [number, number];
+
+type PointerEvents = CSSProperties["pointerEvents"];
+
+type Spring = {
+  x: number;
+  y: number;
+  scale: number;
+  pointerEvents: PointerEvents;
+};
 
 export type ImageViewerZoomImperativeRef = {
   /**
@@ -61,7 +71,7 @@ type ImageViewerZoomProps = {
   children: ReactNode;
   className?: string | classNames.ArgumentArray;
   ref?: Ref<ImageViewerZoomImperativeRef>;
-};
+} & Omit<HTMLAttributes<HTMLDivElement>, "className">;
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 3;
@@ -84,10 +94,11 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
     const memoXYRef = useRef<Vector>([0, 0]);
     const axisOverflow = useRef<number>(0);
 
-    const [style, api] = useSpring(() => ({
+    const [style, api] = useSpring<Spring>(() => ({
       x: 0,
       y: 0,
       scale: MIN_SCALE,
+      pointerEvents: "initial",
       config: { clamp: true },
       onStart: () => {
         active.lock();
@@ -243,6 +254,7 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
           let y = memo[0][1] - (mx - 1) * memo[1][1];
           let scale = s;
           let config = configEasing;
+          let pointerEvents: PointerEvents = "none";
 
           // Сохраняем положение xy, если
           // масштабирование меньше верхней границы
@@ -268,9 +280,10 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
             x = clamp(x, -offsetX, offsetX);
             y = clamp(y, -offsetY, offsetY);
             config = configSpring.gentle;
+            pointerEvents = scale > MIN_SCALE ? "none" : "initial";
           }
 
-          api.start({ x, y, scale, config });
+          api.start({ x, y, scale, pointerEvents, config });
 
           return memo;
         },
@@ -300,6 +313,7 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
             };
           },
           rubberband: true,
+          pointer: { touch: true },
           eventOptions: { passive: false },
         },
 
@@ -307,6 +321,8 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
           from: () => [style.scale.get(), 0],
           rubberband: true,
           scaleBounds: { min: MIN_SCALE },
+          // TODO: mouse scroll
+          modifierKey: null,
         },
       },
     );
