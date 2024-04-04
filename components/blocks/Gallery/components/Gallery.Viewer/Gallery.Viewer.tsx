@@ -49,13 +49,18 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
 
   const handleOnKeyDown = useCallback<HandleOnKeyDown>(
     (event) => {
+      const currentIndex = indexOfVisibleElement.current;
+      const zoom = imagesRef.current[currentIndex];
+
       if (event.code === "ArrowRight" || event.code === "KeyD") {
         containerMovement("next");
+        zoom?.onReset();
       } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
         containerMovement("prev");
+        zoom?.onReset();
       }
     },
-    [containerMovement],
+    [containerMovement, indexOfVisibleElement],
   );
 
   const isAnimatedDrag = isAnimatedSprings(images.length);
@@ -148,6 +153,7 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
     },
   );
 
+  // TODO: Кнопки управления карусели [prev, next] не сбрасывают масштабирование изображения
   return (
     <ImageViewer open={isOpen} onClose={setToggle} onKeyDown={handleOnKeyDown}>
       <GalleryViewerHeader images={images} />
@@ -161,6 +167,11 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
               <ImageViewerZoom
+                style={{
+                  "--image-max-width": `calc(var(--image-viewer-body) * ${
+                    image.width / image.height
+                  })`,
+                }}
                 ref={(el) => {
                   imagesRef.current[index] = el;
                 }}>

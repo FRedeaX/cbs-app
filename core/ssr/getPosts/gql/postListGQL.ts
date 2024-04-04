@@ -88,7 +88,7 @@ export const postListQuery = gql`
             tagId
             name
             slug
-            posts {
+            posts(first: 20) {
               nodes {
                 ...postFieldsGQL
               }

@@ -6,6 +6,7 @@ declare module "csstype" {
   interface Properties extends CSSProperties {
     "--gap"?: string;
     "--scrollbar-width"?: string;
+    "--image-max-width"?: csstype.Properties["maxWidth"];
     "--image-viewer-height"?: string;
     "--has-header-hidden"?: 1;
     "--typography-font-size"?: csstype.Properties["fontSize"];
