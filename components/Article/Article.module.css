@@ -29,7 +29,7 @@
   letter-spacing: 0.034em;
 }
 
-.category-link {
+.category .category-link {
   font-family: var(--font-family-serif);
   font-size: 14px;
   font-weight: 400;
