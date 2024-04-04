@@ -161,6 +161,11 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
               <ImageViewerZoom
+                style={{
+                  "--image-max-width": `calc(var(--image-viewer-body) * ${
+                    image.width / image.height
+                  })`,
+                }}
                 ref={(el) => {
                   imagesRef.current[index] = el;
                 }}>
