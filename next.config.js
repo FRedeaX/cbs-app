@@ -17,16 +17,15 @@ const transpilePackages = [
   "@mui/icons-material",
   "swr",
   "graphql-request",
-  "@react-spring/animated",
-  "@react-spring/core",
-  "@react-spring/shared",
-  "@react-spring/web",
 ];
 
 const nextConfig = {
   output: "standalone",
   transpilePackages,
-  reactStrictMode: true,
+
+  // События и конфигурация не применяется к useSpring
+  // Подробнее: https://github.com/pmndrs/react-spring/issues/2146#issuecomment-1743513157
+  reactStrictMode: false,
   typescript: {
     ignoreBuildErrors: true,
   },
