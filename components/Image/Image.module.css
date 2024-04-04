@@ -38,7 +38,6 @@
 
 .blur {
   opacity: 0.95;
-  filter: blur(var(--image-filter-blur, 10px));
 }
 
 .placeholder,

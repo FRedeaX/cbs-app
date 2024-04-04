@@ -41,6 +41,7 @@ export const Image: FC<ImageProps> = ({
   width,
   height,
   src,
+  style,
   ...props
 }) => {
   const [isLoaded, setLoaded] = useState(false);
@@ -88,6 +89,7 @@ export const Image: FC<ImageProps> = ({
         alt={alt}
         aria-hidden={!alt}
         src={src}
+        style={style}
         className={classNames(classes.image, className)}
         width={width}
         height={height}
@@ -107,6 +109,7 @@ export const Image: FC<ImageProps> = ({
                 width,
                 height,
                 blurDataURL,
+                objectFit: style?.objectFit,
               })}`}
               className={classes.blur}
             />
