@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { getMenu, getMetadata } from "@/core/ssr";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { Providers } from "src/app/providers";
+import { Scripts } from "src/app/scripts";
 
 import { Polyfill } from "./Polyfill";
 
@@ -40,6 +41,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         <Providers>
           <Layout menu={menu}>{children}</Layout>
         </Providers>
+        <Scripts />
       </body>
     </html>
   );
