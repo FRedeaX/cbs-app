@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { FC } from "react";
 
-import { NotFound } from "@/components/NotFound/NotFound";
+import { Error } from "@/components/Error/Error";
 import { PreviewPostCard } from "src/widgets/preview/PostCard";
 import { PreviewTag } from "src/widgets/preview/Tag";
 
@@ -28,6 +28,6 @@ export const RoutePreview: FC<PreviewProps> = ({ id, type }) => {
       );
 
     default:
-      return <NotFound />;
+      return <Error statusCode={404} title="Страница не найдена" />;
   }
 };
