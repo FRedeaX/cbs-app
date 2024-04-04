@@ -44,14 +44,6 @@ const nextConfig = {
     ],
     formats: ["image/webp"],
   },
-  experimental: {
-    // optimizeCss: true,
-    scrollRestoration: true,
-    // staticPageGenerationTimeout: 180,
-    // images: {
-    // unoptimized: true,
-    // },
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
