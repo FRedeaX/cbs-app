@@ -1,5 +1,6 @@
 import { Container } from "@mui/material";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import { getBiblioteki } from "@/core/ssr";
 import { Library } from "@/components/Pages/Library/Library";
@@ -23,7 +24,9 @@ const Page = async () => {
 
   return (
     <Container maxWidth="xl">
-      <Library filialList={biblioteki.filialList} />
+      <Suspense>
+        <Library filialList={biblioteki.filialList} />
+      </Suspense>
     </Container>
   );
 };

@@ -10,6 +10,8 @@ type Props = {
   };
 };
 
+export const dynamic = "force-static";
+
 export const generateStaticParams = getPath();
 
 export const generateMetadata = async ({
