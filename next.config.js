@@ -11,13 +11,7 @@ const alias = {
   "@mui/system": "@mui/system/legacy",
 };
 
-const transpilePackages = [
-  "@mui/material",
-  "@mui/lab",
-  "@mui/icons-material",
-  "swr",
-  "graphql-request",
-];
+const transpilePackages = ["@mui/material", "@mui/lab", "@mui/icons-material"];
 
 const nextConfig = {
   output: "standalone",
