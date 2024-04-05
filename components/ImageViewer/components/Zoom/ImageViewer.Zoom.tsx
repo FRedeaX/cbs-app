@@ -313,7 +313,6 @@ export const ImageViewerZoom: FC<ImageViewerZoomProps> = forwardRef(
             };
           },
           rubberband: true,
-          pointer: { touch: true },
           eventOptions: { passive: false },
         },
 

@@ -6,7 +6,7 @@ import { Nullable } from "@/helpers/typings/utility-types";
 import { columnsBlockGQL } from "@/components/blocks/Columns/utils/columnsGQL";
 import { embedBlockGQL } from "@/components/blocks/Embed/utils/embedGQL";
 import { fileBlockGQL } from "@/components/blocks/File/utils/fileGQL";
-import { galleryBlockGQL } from "@/components/blocks/Gallery/utils";
+import { galleryBlockGQL } from "@/components/blocks/Gallery/utils/galleryGQL";
 import { headingBlockGQL } from "@/components/blocks/Heading/utils/headingGQL";
 import { htmlBlockGQL } from "@/components/blocks/Html/utils/htmlGQL";
 import { imageBlockGQL } from "@/components/blocks/Image/utils/imageGQL";

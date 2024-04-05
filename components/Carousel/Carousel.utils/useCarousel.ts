@@ -1,6 +1,9 @@
 import { WheelEvent, useCallback } from "react";
 
+import { Void } from "@/helpers/typings/utility-types";
+
 import { useCarouselContext } from "../context";
+
 import { getNextScroll } from "./getNextScroll";
 import { getPrevScroll } from "./getPrevScroll";
 import { offsetSides } from "./offsetSides";
@@ -17,7 +20,12 @@ export type useCarouselHandleOnScroll = (
 
 type useCarouselScrollToIndex = (index: number) => void;
 
-export const useCarousel = () => {
+/**
+ *
+ * @param fn функция, выполняемая до прокручивания контейнера
+ * @returns
+ */
+export const useCarousel = (fn?: Void) => {
   const {
     rootRef,
     scroll,
@@ -75,6 +83,9 @@ export const useCarousel = () => {
       const root = rootRef.current;
       if (root === null) return;
 
+      // TODO: state {scroll, index, ...}
+      fn?.();
+
       const currentScroll = scroll.current;
       const itemWidthAccACS = itemWidthAccumulatedASC.current;
       const itemWidthAccDESC = itemWidthAccumulatedDESC.current;
@@ -120,6 +131,7 @@ export const useCarousel = () => {
       itemMargin,
       typeMovement,
       indexOfVisibleElement,
+      fn,
     ],
   );
 
