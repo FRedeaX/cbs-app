@@ -26,6 +26,7 @@ export const Carousel: FC<CarouselProps> = ({
   scrollerProps,
   isButtonsOnSides,
   isShadow,
+  onClick,
 }) => {
   const { rootRefCallback, itemListRefCallback } = useCarouselContext();
   const { handleOnScroll } = useCarousel();
@@ -35,6 +36,7 @@ export const Carousel: FC<CarouselProps> = ({
       <CarouselControls
         isButtonsOnSides={isButtonsOnSides}
         isShadow={isShadow}
+        onClick={onClick}
       />
 
       <Scroller

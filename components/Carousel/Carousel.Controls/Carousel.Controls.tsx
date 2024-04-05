@@ -5,6 +5,8 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import { Fade } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
+import { Void } from "@/helpers/typings/utility-types";
+
 import _isIntersection from "../../../helpers/frontend/isIntersection";
 import { CarouselButton } from "../Carousel.Button/Carousel.Button";
 import CarouselButtonSides from "../Carousel.Button/Carousel.Button.Sides";
@@ -27,14 +29,20 @@ export type CarouselControlsProps = {
    * @default true
    */
   isShadow?: boolean;
+
+  /**
+   * Функция, выполняемая до дествий кнопок управления
+   */
+  onClick?: Void;
 };
 
 export const CarouselControls: FC<CarouselControlsProps> = ({
   isButtonsOnSides = true,
   isShadow = true,
+  onClick,
 }) => {
   const { isPrev, isNext } = useCarouselControls();
-  const { containerMovement } = useCarousel();
+  const { containerMovement } = useCarousel(onClick);
 
   const iconSize = isButtonsOnSides ? "medium" : "small";
 

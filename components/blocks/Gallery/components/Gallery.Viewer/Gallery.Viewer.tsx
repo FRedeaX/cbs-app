@@ -38,7 +38,6 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
   const imagesRef = useRef<Nullable<ImageViewerZoomImperativeRef>[]>([]);
 
   const { isOpen, setToggle } = useGalleryContext();
-  const { containerMovement } = useCarousel();
   const {
     rootRef,
     scroll,
@@ -47,20 +46,24 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
     indexOfVisibleElement,
   } = useCarouselContext();
 
+  const onReset = useCallback(() => {
+    const currentIndex = indexOfVisibleElement.current;
+    const zoom = imagesRef.current[currentIndex];
+
+    zoom?.onReset();
+  }, [indexOfVisibleElement]);
+
+  const { containerMovement } = useCarousel(onReset);
+
   const handleOnKeyDown = useCallback<HandleOnKeyDown>(
     (event) => {
-      const currentIndex = indexOfVisibleElement.current;
-      const zoom = imagesRef.current[currentIndex];
-
       if (event.code === "ArrowRight" || event.code === "KeyD") {
         containerMovement("next");
-        zoom?.onReset();
       } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
         containerMovement("prev");
-        zoom?.onReset();
       }
     },
-    [containerMovement, indexOfVisibleElement],
+    [containerMovement],
   );
 
   const isAnimatedDrag = isAnimatedSprings(images.length);
@@ -123,7 +126,6 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
         if (directionMovement && calculatedMovement > screenPercentage) {
           scrollTime /= Math.max(avx, 1);
           containerMovement(mx < 0 ? "next" : "prev", scrollTime);
-          zoom.onReset();
         } else {
           scrollTo(root, {
             left: lx,
@@ -153,14 +155,13 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
     },
   );
 
-  // TODO: Кнопки управления карусели [prev, next] не сбрасывают масштабирование изображения
   return (
     <ImageViewer open={isOpen} onClose={setToggle} onKeyDown={handleOnKeyDown}>
       <GalleryViewerHeader images={images} />
       <ImageViewerBody
         className={[classes.root, { [classes.root_animated]: isAnimatedDrag }]}
         {...dragProps()}>
-        <Carousel isShadow={false}>
+        <Carousel isShadow={false} onClick={onReset}>
           {images.map((image, index) => (
             <ImageViewerFigure
               key={image.id}
