@@ -20,28 +20,30 @@ export type PaginationProps = {
 } & Omit<MUIPaginationProps, "renderItem">;
 
 export const Pagination: FC<PaginationProps> = ({
-  count,
+  count = 1,
   uri,
   firstPageLink,
   page,
   ...props
-}) => (
-  <MUIPagination
-    count={count}
-    page={page}
-    siblingCount={page ?? 1 >= 5 ? 2 : 1}
-    shape="rounded"
-    {...props}
-    renderItem={(item) => (
-      <PaginationItem
-        component={Link}
-        href={
-          item.page === 1
-            ? `${firstPageLink ?? uri}`
-            : `${uri}/page/${item.page}`
-        }
-        {...item}
-      />
-    )}
-  />
-);
+}) =>
+  count > 1 ? (
+    <MUIPagination
+      count={count}
+      page={page}
+      siblingCount={page ?? 1 >= 5 ? 2 : 1}
+      hideNextButton={page === count}
+      shape="rounded"
+      {...props}
+      renderItem={(item) => (
+        <PaginationItem
+          component={Link}
+          href={
+            item.page === 1
+              ? `${firstPageLink ?? uri}`
+              : `${uri}/page/${item.page}`
+          }
+          {...item}
+        />
+      )}
+    />
+  ) : null;

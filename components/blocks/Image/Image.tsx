@@ -77,6 +77,7 @@ export const Image: FC<ImageProps> = ({
                 width={width}
                 height={height}
                 sizes="100vw"
+                quality={85}
                 loading="lazy"
                 blurDataURL={blurDataURL}
               />
