@@ -117,13 +117,13 @@ const NavItems = ({
             {!!childItems?.nodes.length && (
               <NavList
                 id={!parentIdList && id}
-                data={childItems}
+                data={childItems.nodes}
                 direction="column"
                 subList
                 subLvl={subItem ? subLvl : 1}
                 isSubListReset={parentIdList && parentIdList === parentId}
                 isRight={isRight}
-                headerLabel={!!childItems?.nodes.length && label}
+                headerLabel={!!childItems.nodes.length && label}
               />
             )}
           </li>

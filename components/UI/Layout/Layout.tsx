@@ -14,7 +14,7 @@ const DynamicCircularProgress = dynamic(
 );
 
 type LayoutProps = {
-  menu: HeaderProps["menus"];
+  menu: HeaderProps;
   /**
    * @default false
    */
@@ -28,7 +28,7 @@ export const Layout: FC<LayoutProps> = ({
   children,
 }) => (
   <>
-    <Header menus={menu} />
+    <Header primary={menu.primary} secondary={menu.secondary} />
     <main className={classes.main}>
       {pageLoading ? (
         <div className={classes.loader}>

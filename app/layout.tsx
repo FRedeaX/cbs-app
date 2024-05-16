@@ -1,7 +1,7 @@
 import { Metadata, Viewport } from "next";
 import { ReactNode } from "react";
 
-import { getMenu, getMetadata } from "@/core/ssr";
+import { getHeaderMenu, getMetadata } from "@/core/ssr";
 import { Layout } from "@/components/UI/Layout/Layout";
 import { Providers } from "src/app/providers";
 import { Scripts } from "src/app/scripts";
@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 export const revalidate = 600;
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
-  const menu = await getMenu();
+  const menu = await getHeaderMenu();
 
   return (
     <html lang="ru">
