@@ -3,6 +3,7 @@ import classNamesBind from "classnames/bind";
 
 // eslint-disable-next-line import/no-cycle
 import NavItems from "../NavItems/NavItems";
+
 import classes from "./Nav-list.module.css";
 
 const NavList = ({
@@ -64,7 +65,7 @@ const NavList = ({
       onKeyPress={closeAllHendler}
       role="presentation">
       <NavItems
-        data={data.nodes}
+        data={data}
         subItem={subList}
         subLvl={subLvl}
         parentIdList={id}

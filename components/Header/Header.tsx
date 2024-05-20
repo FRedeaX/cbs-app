@@ -16,19 +16,19 @@ import HeaderSocial from "./HeaderSocial/HeaderSocial";
 import NavList from "./NavList/NavList";
 import { HeaderScroll } from "./components/Header.Scroll/Header.Scroll";
 import { HeaderToggle } from "./components/Header.Toggle/Header.Toggle";
-import { MenuGQL } from "./utils/menuGQL";
+import { Menu } from "./type";
 
 const sxBackdrop: CSSProperties = { zIndex: "calc(var(--header-z-index) - 1)" };
 
 export type HeaderProps = {
-  menus: Nullable<MenuGQL["menus"]["nodes"]>;
+  primary: Nullable<Menu>;
+  secondary: Nullable<Menu>;
 };
 
-export const Header: FC<HeaderProps> = ({ menus }) => {
+export const Header: FC<HeaderProps> = ({ primary, secondary }) => {
   const [isOpen, setIsOpen, { setFalse: setClose }] = useToggle();
   usePreventScroll({ enabled: isOpen });
 
-  if (!menus) return null;
   return (
     <>
       <header
@@ -55,17 +55,17 @@ export const Header: FC<HeaderProps> = ({ menus }) => {
                 className={classNames(classes.menu, {
                   [classes.menu_mobile_active]: isOpen,
                 })}>
-                <nav className={classes.primary}>
-                  {menus[0]?.menuItems && <NavList data={menus[0].menuItems} />}
-                </nav>
+                {primary?.length && (
+                  <nav className={classes.primary}>
+                    <NavList data={primary} />
+                  </nav>
+                )}
                 <div className={classNames(classes.secondary)}>
                   <div className={classes.search}>
                     <HeaderSearch />
                   </div>
                   <HeaderSocial className={classes.Social_desktope} />
-                  {menus[1]?.menuItems && (
-                    <NavList data={menus[1].menuItems} isRight />
-                  )}
+                  {secondary?.length && <NavList data={secondary} isRight />}
                 </div>
               </div>
             </div>

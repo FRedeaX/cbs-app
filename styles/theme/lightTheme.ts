@@ -176,6 +176,7 @@ export const lightTheme = createTheme(
         cursor: "default",
         textWrap: `balance`,
         color: `rgba(30, 30, 30, 0.9)`,
+        maxWidth: `var(--typography-max-width)`,
         paddingLeft: `calc(var(--gap) * 2.5)`,
       },
       responsiveText: {
