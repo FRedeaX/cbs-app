@@ -1,64 +1,66 @@
-import { ContainerProps, BoxProps } from "@mui/material";
+import { ContainerProps, SxProps } from "@mui/material";
+import { CSSSelectorObjectOrCssVariables } from "@mui/system";
 
-export const sxContainer: ContainerProps["sx"] = {
+/**
+ * 1. Для устройств не поддерживающих display: "grid"
+ */
+
+export const root: ContainerProps["sx"] = {
   "--gap": "10px",
 
-  "--carousel-offset-x": `calc(var(--gap) / 2)`,
-
-  display: "flex",
   paddingY: "var(--gap)",
 
+  "@media (min-width: 1335px)": {
+    display: "grid",
+    gridTemplate: `
+    "post sidebarTop" max-content
+    "post sidebarBottom" 1fr / 1fr 340px
+    `,
+  },
+
   "@media (max-width: 1334px)": {
-    flexDirection: "column",
+    "--carousel-offset-x": `calc(var(--gap) / 2)`,
   },
 };
 
-export const sxAside: BoxProps["sx"] = {
+export const post: SxProps = {
+  gridArea: "post",
+};
+
+export const sidebarTop: CSSSelectorObjectOrCssVariables = {
+  gridArea: "sidebarTop",
+};
+
+export const sidebarBottom: CSSSelectorObjectOrCssVariables = {
+  gridArea: "sidebarBottom",
+};
+
+export const sidebar: CSSSelectorObjectOrCssVariables = {
+  "--carousel-button-top": "-30px",
   "--carousel-icon-button-width": "36px",
   "--carousel-icon-button-height": "36px",
+  "--card-width": "288px" /* 1. */,
+  "--card-media-width": "var(--card-width)",
   "--card-margin-y": "var(--gap)",
   "--card-margin-x": "calc(var(--gap) / 2)",
+
+  "--typography-max-width":
+    "calc(100% - var(--carousel-icon-button-width) * 2)",
+
+  maxWidth: "960px" /* 1. */,
+  margin: "auto" /* 1. */,
 
   "@media (min-width: 480px) and (max-width: 1334px)": {
     "--poster-item-width": "440px",
   },
-  "@media (max-width: 1334px)": {
-    // "--carousel-shadow-display": "none",
-    "--carousel-button-top": "-35px",
-    "--card-width": "288px",
-
-    maxWidth: "960px",
-    width: "100%",
-    margin: "auto",
-    paddingRight: `var(--gap)`,
-  },
   "@media (min-width: 1335px)": {
-    "--carousel-shadow-display": "none",
-    "--carousel-button-top": "-30px",
-    "--card-width": "330px",
+    height: "max-content",
 
     "@supports(display: grid)": {
-      "--poster-item-height": "max-content",
+      "--carousel-shadow-display": "none" /* 1. */,
+      "--card-width": "330px" /* 1. */,
+
+      margin: "initial" /* 1. */,
     },
-
-    position: "sticky",
-    top: "10px",
-    order: 1,
-    width: "340px",
-    height: "max-content",
-  },
-};
-
-export const sxAsideMobile: BoxProps["sx"] = {
-  "--carousel-button-top": "-41px",
-
-  "@media (min-width: 1335px)": {
-    display: "none",
-  },
-};
-
-export const sxAsideIsomorphic: BoxProps["sx"] = {
-  "@media (max-width: 1334px)": {
-    display: "none",
   },
 };

@@ -6,7 +6,7 @@ export * from "./getPathsToPosts/getPathsToPosts";
 export * from "./getPost/getPost";
 export * from "./getPosts/getPosts";
 export * from "./getPostsByCategory/getPostsByCategory";
-export * from "./getResources/getResources";
+export * from "./getSidebar/getSidebar";
 export * as getPosters from "./getPosters";
 export * from "./getMetadata/getMetadata";
 export * as ssrUtils from "./utils";

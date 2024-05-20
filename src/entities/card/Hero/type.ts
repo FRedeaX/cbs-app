@@ -1,6 +1,6 @@
 import { Nullable } from "@/helpers/typings/utility-types";
 
-export type ResourceCardItem = {
+export type HeroCardItem = {
   title: string;
   uri: string;
   featuredImage: Nullable<{

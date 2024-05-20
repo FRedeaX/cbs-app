@@ -4,13 +4,13 @@ import { FC } from "react";
 import { VisuallyHidden } from "@/components/VisuallyHidden/VisuallyHidden";
 import { Card, CardLink, CardMedia } from "src/shared/ui";
 
-import { ResourceCardItem } from "./type";
+import { HeroCardItem } from "./type";
 
-type ResourceProps = {
-  data: ResourceCardItem;
+type HeroCardProps = {
+  data: HeroCardItem;
 };
 
-export const Resource: FC<ResourceProps> = ({
+export const HeroCard: FC<HeroCardProps> = ({
   data: { title, uri, featuredImage },
 }) => (
   <Card>
@@ -22,8 +22,8 @@ export const Resource: FC<ResourceProps> = ({
         <CardMedia
           src={featuredImage.node.sourceUrl}
           alt=""
-          width={288}
-          height={162}
+          width={330}
+          height={186}
         />
       )}
     </CardLink>
