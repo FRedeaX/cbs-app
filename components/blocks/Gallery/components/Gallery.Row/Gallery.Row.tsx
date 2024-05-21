@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { FC } from "react";
 
 import { CSSProperties, Nullable } from "@/helpers/typings/utility-types";
@@ -42,7 +41,7 @@ export type GalleryRowProps = {
   /**
    * Дополнительный класс для обертки изображения.
    */
-  classNameWrapper?: string | classNames.ArgumentArray;
+  classNameWrapper?: string;
 };
 
 export const GalleryRow: FC<GalleryRowProps> = ({
@@ -63,10 +62,7 @@ export const GalleryRow: FC<GalleryRowProps> = ({
       };
 
       return (
-        <Figure
-          key={image.id}
-          style={style}
-          className={classNames(classes.wrapper, classNameWrapper)}>
+        <Figure key={image.id} style={style} className={classNameWrapper}>
           <GalleryButton className={classes.button} index={index + offset}>
             {!!moreCount && index === images.length - 1 && (
               <GalleryMore count={moreCount} />

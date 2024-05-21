@@ -1,5 +1,5 @@
 .root {
   position: relative;
   display: var(--figure-display, block);
-  margin: 0;
+  margin: var(--figure-margin, 0);
 }
