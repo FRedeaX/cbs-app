@@ -1,10 +1,8 @@
 .root {
-  display: flex;
-}
+  --figure-display: flex;
+  --figure-margin: var(--gallery-image-margin);
 
-.wrapper {
   display: flex;
-  margin: var(--gallery-image-margin);
 }
 
 .button {
