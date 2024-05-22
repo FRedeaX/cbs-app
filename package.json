@@ -27,7 +27,7 @@
     "@mui/system": "^5.15.11",
     "@react-spring/web": "^9.7.3",
     "@redis/client": "^1.2.0",
-    "@sentry/nextjs": "^7.109.0",
+    "@sentry/nextjs": "^8.2.1",
     "@use-gesture/react": "^10.3.0",
     "autosuggest-highlight": "^3.3.4",
     "classnames": "^2.3.1",

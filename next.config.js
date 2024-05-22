@@ -41,6 +41,10 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  experimental: {
+    instrumentationHook: true,
+  },
+
   webpack: (config, { isServer }) => {
     const newConfig = config;
 
@@ -56,19 +60,15 @@ const nextConfig = {
   // },
 };
 
-const userSentryWebpackPluginOptions = {
+const sentryBuildOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
-
   silent: true,
   org: "cbs-ai",
   project: "nextjs",
-};
 
-const sentryOptions = {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
   widenClientFileUpload: true,
   transpileClientSDK: true,
   tunnelRoute: "/monitoring",
@@ -76,8 +76,4 @@ const sentryOptions = {
   disableLogger: true,
 };
 
-module.exports = withSentryConfig(
-  nextConfig,
-  userSentryWebpackPluginOptions,
-  sentryOptions,
-);
+module.exports = withSentryConfig(nextConfig, sentryBuildOptions);
