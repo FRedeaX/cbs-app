@@ -14,7 +14,8 @@ export type GetUrlFileSizeResult = {
 export const getUrlFileSize = async (
   url: string,
 ): Promise<GetUrlFileSizeResult> => {
-  const bytesSize = await ufs(url);
+  const encodeURL = new URL(url);
+  const bytesSize = await ufs(encodeURL);
   const fileSize = size(bytesSize).toString();
 
   return { fileSize };
