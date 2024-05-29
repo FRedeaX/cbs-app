@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { getPostsByCategory, ssrUtils } from "@/core/ssr";
 import { HomePost } from "src/widgets/home/Post";
@@ -35,6 +36,8 @@ export const generateMetadata = async ({
 
   const page = ssrUtils.parsePageNumber(params.page);
   const posts = await getPostsByCategory({ slug, page });
+  if (posts === null) notFound();
+
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);
 
   return {
@@ -48,6 +51,8 @@ const Page = async ({ params }: Props) => {
 
   const page = ssrUtils.parsePageNumber(params.page);
   const posts = await getPostsByCategory({ slug, page });
+  if (posts === null) notFound();
+
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);
 
   return (
