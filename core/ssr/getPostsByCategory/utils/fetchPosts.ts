@@ -38,6 +38,8 @@ export const fetchPosts = async ({
     throw new SSRError(error.message, { error, slug: id, first, cursor });
   }
   if (data === undefined) throw errors;
+  if (data.category === null) return null;
+
   const { nodes } = data.category.posts;
 
   const postsListData = nodes.map((post) => addsFeaturesToPost(post));

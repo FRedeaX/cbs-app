@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { getPostsByCategory, ssrUtils } from "@/core/ssr";
 import { HomePost } from "src/widgets/home/Post";
@@ -33,6 +34,8 @@ export const generateMetadata = async ({
   const { slug } = params;
 
   const posts = await getPostsByCategory({ slug });
+  if (posts === null) notFound();
+
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);
 
   return {
@@ -45,6 +48,9 @@ const Page = async ({ params }: Props) => {
   const { slug } = params;
 
   const posts = await getPostsByCategory({ slug });
+  // TODO: Выполнить поиск и предложить варианты (redirect)
+  if (posts === null) notFound();
+
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);
 
   return (

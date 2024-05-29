@@ -39,7 +39,10 @@ export const getPostsByCategory = async ({
     };
   }
 
-  const { data, pageInfo } = await fetchPosts(variables);
+  const posts = await fetchPosts(variables);
+
+  if (posts === null) return null;
+  const { data, pageInfo } = posts;
 
   if (!page) {
     paginationList = await fetchPaginations({
