@@ -53,6 +53,7 @@ COPY --from=builder /app/globals.d.ts ./
 COPY --from=builder /app/instrumentation.ts ./
 COPY --from=builder /app/next-env.d.ts ./
 COPY --from=builder /app/sentry.client.config.ts ./
+COPY --from=builder /app/sentry.server.config.ts ./
 COPY --from=builder /app/tsconfig.json ./
 
 # Automatically leverage output traces to reduce image size
