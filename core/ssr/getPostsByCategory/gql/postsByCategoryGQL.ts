@@ -13,14 +13,14 @@ export type CategoryFieldsGQL = {
 };
 
 export type PostsByCategoryQuery = {
-  category: {
+  category: Nullable<{
     posts: {
       nodes: DeepMergeTwoTypes<CategoryFieldsGQL, PostFieldsGQL>[];
       pageInfo: {
         endCursor: Nullable<string>;
       };
     };
-  };
+  }>;
 };
 
 export const postsByCategoryQuery = gql`
