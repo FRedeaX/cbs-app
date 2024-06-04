@@ -41,6 +41,7 @@ export const fetchPosts = async ({
   if (data.category === null) return null;
 
   const { nodes } = data.category.posts;
+  if (nodes.length === 0) return null;
 
   const postsListData = nodes.map((post) => addsFeaturesToPost(post));
   const postsList = await Promise.all(postsListData);
