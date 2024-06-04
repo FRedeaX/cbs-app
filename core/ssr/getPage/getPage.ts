@@ -2,6 +2,7 @@ import { getLastPageNumber } from "@/core/pagination";
 import { ERROR_MESSAGE } from "@/constants";
 
 import { getPageNumberFromPath } from "../utils/getPageNumberFromPath";
+import { isNotValidPageNumber } from "../utils/isNotValidPageNumber";
 import { SSRError } from "../utils/ssrEror";
 
 import { FetchPage, fetchPage } from "./utils/fetchPage";
@@ -13,6 +14,8 @@ export const getPage = async (pathname: string[]) => {
   }
 
   const pageNumber = getPageNumberFromPath(pathname);
+  if (pageNumber && isNotValidPageNumber(pageNumber)) return null;
+
   const uri = `/${
     pageNumber ? pathname.slice(0, -2).join("/") : pathname.join("/")
   }`;
@@ -24,6 +27,8 @@ export const getPage = async (pathname: string[]) => {
 
   if (pageNumber) {
     paginationList = await fetchPaginations({ uri });
+    if (isNotValidPageNumber(pageNumber, paginationList.length)) return null;
+
     const currentPage = paginationList[pageNumber - 1];
     if (currentPage === undefined) {
       throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { pathname });
