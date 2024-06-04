@@ -32,10 +32,7 @@ const Page = async ({ params }: Props) => {
 
   const page = ssrUtils.parsePageNumber(params.page);
   const posts = await getPosts({ page });
-
-  if (posts === null) {
-    notFound();
-  }
+  if (posts === null) notFound();
 
   return (
     <HomePost

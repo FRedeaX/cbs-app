@@ -1,6 +1,7 @@
 import { getLastPageNumber } from "@/core/pagination";
 import { ERROR_MESSAGE } from "@/constants";
 
+import { isNotValidPageNumber } from "../utils/isNotValidPageNumber";
 import { SSRError } from "../utils/ssrEror";
 
 import { fetchPaginations } from "./utils/fetchPaginations";
@@ -22,6 +23,8 @@ export const getPosts = async ({ page }: GetPosts = {}) => {
 
   if (page) {
     paginationList = await fetchPaginations();
+    if (isNotValidPageNumber(page, paginationList.length)) return null;
+
     const currentPage = paginationList[page - 1];
     if (currentPage === undefined) {
       throw new SSRError(ERROR_MESSAGE.DATA_OF_NULL, { page });
