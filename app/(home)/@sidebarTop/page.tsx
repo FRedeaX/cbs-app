@@ -10,7 +10,7 @@ const Page = async () => {
 
   return (
     <>
-      {posters?.length && <HomePoster posters={posters} />}
+      {posters?.length ? <HomePoster posters={posters} /> : null}
       {sidebar?.map(({ id, template, title, uri, children }) => (
         <HomeHero
           key={id}
