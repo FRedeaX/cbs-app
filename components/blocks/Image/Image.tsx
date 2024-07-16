@@ -68,6 +68,8 @@ export const Image: FC<ImageProps> = ({
         <ImageViewerHeader onClose={setToggle} />
         <ImageViewerBody>
           <ImageViewerFigure
+            width={width}
+            height={height}
             className={classes.imageWrapper}
             figcaptionText={captionOrAlt}>
             <ImageViewerZoom>
