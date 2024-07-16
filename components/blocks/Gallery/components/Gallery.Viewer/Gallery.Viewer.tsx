@@ -165,6 +165,8 @@ export const GalleryViewer: FC<GalleryViewerProps> = ({ images }) => {
           {images.map((image, index) => (
             <ImageViewerFigure
               key={image.id}
+              width={image.width}
+              height={image.height}
               className={classes.imageWrapper}
               figcaptionText={image.caption || image.alt}>
               <ImageViewerZoom
