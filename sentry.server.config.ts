@@ -9,7 +9,7 @@ Sentry.init({
   dsn: "https://0453608349524a9b8f1f1056543c5bab@o397370.ingest.us.sentry.io/5898663",
   integrations: [Sentry.anrIntegration({ captureStackTrace: true })],
 
-  tracesSampleRate: 0.3,
+  tracesSampleRate: 0.03,
 
   debug: false,
   enabled,
