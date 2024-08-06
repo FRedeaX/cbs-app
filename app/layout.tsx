@@ -1,4 +1,5 @@
 import { Metadata, Viewport } from "next";
+import { Roboto } from "next/font/google";
 import { ReactNode } from "react";
 
 import { getHeaderMenu, getMetadata } from "@/core/ssr";
@@ -8,10 +9,16 @@ import { Scripts } from "src/app/scripts";
 
 import { Polyfill } from "./Polyfill";
 
-import "@/styles/fonts/roboto";
 import "@/styles/styles.css";
 import "@/styles/variables/global.css";
 import "@/styles/variables/wp.css";
+
+const roboto = Roboto({
+  display: "swap",
+  subsets: ["cyrillic"],
+  variable: "--font-family-roboto",
+  weight: ["100", "300", "400", "500"],
+});
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { title, description, url } = await getMetadata();
@@ -35,7 +42,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
   const menu = await getHeaderMenu();
 
   return (
-    <html lang="ru">
+    <html lang="ru" className={roboto.variable}>
       <body>
         <Polyfill />
         <Providers>
