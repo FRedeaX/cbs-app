@@ -35,7 +35,7 @@ export const generateMetadata = async ({
   const { slug } = params;
 
   const page = ssrUtils.parsePageNumber(params.page);
-  const posts = await getPostsByCategory({ slug, page });
+  const posts = await getPostsByCategory({ slug, page }, true);
   if (posts === null) notFound();
 
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);

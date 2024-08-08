@@ -33,7 +33,7 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const { slug } = params;
 
-  const posts = await getPostsByCategory({ slug });
+  const posts = await getPostsByCategory({ slug }, true);
   if (posts === null) notFound();
 
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);

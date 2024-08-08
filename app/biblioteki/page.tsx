@@ -6,7 +6,7 @@ import { getBiblioteki } from "@/core/ssr";
 import { Library } from "@/components/Pages/Library/Library";
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { title, description } = await getBiblioteki();
+  const { title, description } = await getBiblioteki(true);
 
   return {
     title,

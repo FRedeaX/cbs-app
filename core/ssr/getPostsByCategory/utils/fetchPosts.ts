@@ -25,11 +25,13 @@ export type FetchPosts = {
   cursor?: string;
 };
 
-export const fetchPosts = async ({
-  slug: id,
-  first = 10,
-  cursor = "",
-}: FetchPosts) => {
+/**
+ * @param metadata Если значение равно true, то результат будет содержать только те данные, которые необходимы для формирования метаданных страницы.
+ */
+export const fetchPosts = async (
+  { slug: id, first = 10, cursor = "" }: FetchPosts,
+  metadata = false,
+) => {
   const { data, error, errors } = await client.query<PostsByCategoryQuery>({
     query: postsByCategoryQuery,
     variables: { id, first, cursor },
@@ -40,11 +42,13 @@ export const fetchPosts = async ({
   if (data === undefined) throw errors;
   if (data.category === null) return null;
 
-  const { nodes } = data.category.posts;
-  if (nodes.length === 0) return null;
+  const postList = data.category.posts;
+  if (postList.nodes.length === 0) return null;
 
-  const postsListData = nodes.map((post) => addsFeaturesToPost(post));
-  const postsList = await Promise.all(postsListData);
+  if (!metadata) {
+    const postListData = postList.nodes.map((post) => addsFeaturesToPost(post));
+    postList.nodes = await Promise.all(postListData);
+  }
 
-  return { data: postsList, pageInfo: data.category.posts.pageInfo };
+  return postList;
 };

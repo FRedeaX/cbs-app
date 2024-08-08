@@ -14,10 +14,13 @@ type GetPostsByCategory = Pick<FetchPosts, "slug"> & {
   page?: number;
 };
 
-export const getPostsByCategory = async ({
-  slug,
-  page,
-}: GetPostsByCategory) => {
+/**
+ * @param metadata Если значение равно true, то результат будет содержать только те данные, которые необходимы для формирования метаданных страницы.
+ */
+export const getPostsByCategory = async (
+  { slug, page }: GetPostsByCategory,
+  metadata = false,
+) => {
   let paginationList: Awaited<ReturnType<typeof fetchPaginations>> = [];
   let variables: FetchPosts = {
     slug,
@@ -42,10 +45,11 @@ export const getPostsByCategory = async ({
     };
   }
 
-  const posts = await fetchPosts(variables);
-
+  const posts = await fetchPosts(variables, metadata);
   if (posts === null) return null;
-  const { data, pageInfo } = posts;
+
+  const { nodes: data, pageInfo } = posts;
+  if (metadata) return { data };
 
   if (!page) {
     paginationList = await fetchPaginations({
