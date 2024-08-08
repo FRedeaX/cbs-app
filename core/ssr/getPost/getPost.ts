@@ -12,7 +12,10 @@ export type GetPost = {
   slug: string;
 };
 
-export const getPost = async ({ slug: id }: GetPost) => {
+/**
+ * @param metadata Если значение равно true, то результат будет содержать только те данные, которые необходимы для формирования метаданных страницы.
+ */
+export const getPost = async ({ slug: id }: GetPost, metadata = false) => {
   const { data, error, errors } = await clientGetPostQuery({
     variables: { id, type: "SLUG" },
   });
@@ -24,7 +27,9 @@ export const getPost = async ({ slug: id }: GetPost) => {
   const { post } = data;
   if (post === null) return null;
 
-  const { blocks, videos } = await transformBlocks(post.blocks);
+  const { blocks, videos } = await transformBlocks(post.blocks, metadata);
+
+  if (metadata) return { ...post, blocks, videos };
 
   // Рубрики относящиеся к филиалу (отделу)
   // добавляем в начало массива

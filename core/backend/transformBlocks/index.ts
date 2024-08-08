@@ -11,8 +11,12 @@ type Result = {
   videos: UrlVideoByBlock[];
 };
 
+/**
+ * @param metadata Если значение равно true, то результат будет содержать минимальный набор блоков необходимый для формирования метаданных страницы.
+ */
 export const transformBlocks = async (
   blocks: TransformBlocks[],
+  metadata = false,
 ): Promise<Result> => {
   const blockList: unknown[] = [];
   const videos: UrlVideoByBlock[] = [];
@@ -21,6 +25,7 @@ export const transformBlocks = async (
   blocks.forEach((block, index: number) => {
     switch (block.name) {
       case "core/image": {
+        if (metadata) break;
         promise.push(
           transformImageBlock(block).then((data) => {
             blockList[index] = data;
@@ -30,6 +35,7 @@ export const transformBlocks = async (
       }
 
       case "core/media-text": {
+        if (metadata) break;
         promise.push(
           transformBlocks(block.innerBlocks).then((data) =>
             transformMediaTextBlock(
@@ -44,6 +50,7 @@ export const transformBlocks = async (
       }
 
       case "core/gallery": {
+        if (metadata) break;
         promise.push(
           transformGalleryBlock(block).then((data) => {
             blockList[index] = data;
@@ -54,6 +61,7 @@ export const transformBlocks = async (
 
       case "core/columns":
       case "core/column": {
+        if (metadata) break;
         promise.push(
           transformBlocks(block.innerBlocks).then((data) => {
             blockList[index] = {
@@ -66,6 +74,7 @@ export const transformBlocks = async (
       }
 
       case "core/embed": {
+        if (metadata) break;
         promise.push(
           transformEmbedBlock(block).then((data) => {
             blockList[index] = data.block;
@@ -76,6 +85,7 @@ export const transformBlocks = async (
       }
 
       case "core/quote": {
+        if (metadata) break;
         promise.push(
           transformBlocks(block.innerBlocks).then((data) => {
             blockList[index] = {
@@ -89,6 +99,7 @@ export const transformBlocks = async (
       }
 
       case "core/file": {
+        if (metadata) break;
         promise.push(
           transformFileBlock(block).then((data) => {
             blockList[index] = data;

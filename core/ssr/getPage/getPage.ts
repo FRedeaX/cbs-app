@@ -8,7 +8,10 @@ import { SSRError } from "../utils/ssrEror";
 import { FetchPage, fetchPage } from "./utils/fetchPage";
 import { fetchPaginations } from "./utils/fetchPaginations";
 
-export const getPage = async (pathname: string[]) => {
+/**
+ * @param metadata Если значение равно true, то результат будет содержать только те данные, которые необходимы для формирования метаданных страницы.
+ */
+export const getPage = async (pathname: string[], metadata = false) => {
   if (pathname.length === 0) {
     throw new SSRError(ERROR_MESSAGE.URL_IS_UNDEFINED, { pathname });
   }
@@ -42,9 +45,11 @@ export const getPage = async (pathname: string[]) => {
     };
   }
 
-  const { page, children } = await fetchPage(variables);
-
+  const page = await fetchPage(variables, metadata);
   if (page === null) return null;
+
+  const { children, ...data } = page;
+  if (metadata) return { data, children, pageNumber };
 
   if (!pageNumber) {
     paginationList = await fetchPaginations({
@@ -56,5 +61,5 @@ export const getPage = async (pathname: string[]) => {
   const count = getLastPageNumber(paginationList);
   const pagination = count > 1 ? { count, uri } : null;
 
-  return { data: page, children, pagination, pageNumber };
+  return { data, children, pagination, pageNumber };
 };

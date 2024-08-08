@@ -1,5 +1,4 @@
 import { transformBlocks } from "@/core/backend/transformBlocks";
-import { Nullable } from "@/helpers/typings/utility-types";
 
 import { addsFeaturesToPage } from "../../utils/addsFeaturesToPage";
 import { isSkipPage } from "../../utils/isSkipPage";
@@ -24,11 +23,13 @@ export type FetchPage = {
   cursor?: string;
 };
 
-export const fetchPage = async ({
-  uri: id,
-  first = 10,
-  cursor = "",
-}: FetchPage) => {
+/**
+ * @param metadata Если значение равно true, то результат будет содержать только те данные, которые необходимы для формирования метаданных страницы.
+ */
+export const fetchPage = async (
+  { uri: id, first = 10, cursor = "" }: FetchPage,
+  metadata = false,
+) => {
   const { data, error, errors } = await clientGetPageQuery({
     variables: {
       id,
@@ -42,33 +43,30 @@ export const fetchPage = async ({
     throw new SSRError(error.message, { error, uri: id, first, cursor });
   }
   if (data === undefined) throw errors;
-  if (data.page === null || isSkipPage(data.page)) {
-    return { page: null, children: null };
-  }
+  if (data.page === null || isSkipPage(data.page)) return null;
 
   const { children, ...page } = data.page;
-  const { blocks, videos } = await transformBlocks(page.blocks);
+  const { blocks, videos } = await transformBlocks(page.blocks, metadata);
 
-  const childrenData: Nullable<typeof children> =
-    blocks.length === 0 ? { nodes: [], pageInfo: children.pageInfo } : null;
+  const childrenList = children.nodes.length !== 0 ? children : null;
 
-  if (childrenData !== null) {
-    type ChildrenList = Promise<typeof children["nodes"][0]>[];
-    const childrenList = children.nodes.reduce<ChildrenList>((acc, element) => {
+  if (childrenList !== null && !metadata) {
+    type ChildrenData = Promise<typeof children["nodes"][0]>[];
+    const childrenData = children.nodes.reduce<ChildrenData>((acc, element) => {
       if (isSkipPage(element)) return acc;
       acc.push(addsFeaturesToPage(element));
       return acc;
     }, []);
 
-    childrenData.nodes = await Promise.all(childrenList);
+    childrenList.nodes = await Promise.all(childrenData);
   }
 
   return {
-    page: {
-      ...page,
-      blocks,
-      videos,
-    },
-    children: childrenData,
+    // page: {
+    ...page,
+    blocks,
+    videos,
+    // },
+    children: childrenList,
   };
 };

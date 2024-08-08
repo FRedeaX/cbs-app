@@ -17,7 +17,7 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const { slug } = params;
 
-  const post = await getPost({ slug });
+  const post = await getPost({ slug }, true);
 
   if (post === null) {
     notFound();
