@@ -20,7 +20,7 @@ export const generateMetadata = async ({
   const page = await getPage(pageSlug, true);
 
   if (page === null) {
-    return notFound();
+    notFound();
   }
 
   const {
