@@ -6,8 +6,8 @@ import { Nullable } from "@/helpers/typings/utility-types";
 import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
 import { PostCard, PostCardItem } from "src/entities/card/Post";
 
-import { createCategoryName } from "../../utils/createCategoryName";
-import { handleOnClick } from "../../utils/goal";
+import { createCategoryName } from "../../lib/createCategoryName";
+import { handleOnClick } from "../../lib/goal";
 
 import {
   sxOfferHeader,

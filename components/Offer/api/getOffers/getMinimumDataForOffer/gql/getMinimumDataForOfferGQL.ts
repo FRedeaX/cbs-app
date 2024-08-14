@@ -4,6 +4,7 @@ import { Nullable } from "@/helpers/typings/utility-types";
 
 export type GetMinimumDataForOfferQuery = {
   post: Nullable<{
+    id: string;
     categories: {
       nodes: {
         name: string;
@@ -18,7 +19,8 @@ export type GetMinimumDataForOfferQuery = {
 
 export const getMinimumDataForOfferDocument = gql`
   query GetMinimumDataForOffer($id: ID!) {
-    post(id: $id) {
+    post(id: $id, idType: SLUG) {
+      id
       categories {
         nodes {
           name

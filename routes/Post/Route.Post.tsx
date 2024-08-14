@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
 import { Defaultize } from "@/helpers/typings/utility-types";
 import { Article, ArticleProps } from "@/components/Article/Article";
-import { DynamicOffer } from "@/components/Offer";
+import { Offer } from "@/components/Offer";
 
 import classes from "./Route.Post.module.css";
 
@@ -27,6 +27,10 @@ export const RoutePost: FC<PostProps> = ({
       imageUrl={imageUrl}
     />
 
-    {id && <DynamicOffer id={id} categories={categories.map((c) => c.name)} />}
+    {id && (
+      <Suspense>
+        <Offer id={id} categories={categories.map((c) => c.name)} />
+      </Suspense>
+    )}
   </div>
 );
