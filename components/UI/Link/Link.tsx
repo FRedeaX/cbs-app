@@ -7,7 +7,8 @@ type NJSLinkProps = Pick<
   NextLinkProps,
   "href" | "replace" | "scroll" | "shallow" | "prefetch"
 >;
-export type LinkProps = Omit<MUILinkProps, keyof NJSLinkProps> & NJSLinkProps;
+export type LinkProps = Omit<MUILinkProps, keyof NJSLinkProps | "ref"> &
+  NJSLinkProps;
 
 export const Link: FC<LinkProps> = forwardRef((props, ref) => (
   <MUILink component={NextLink} ref={ref} {...props} />
