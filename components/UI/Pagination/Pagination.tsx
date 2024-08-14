@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { Link } from "../Link/Link";
+import { PaginationLink } from "./Link";
 
 export type PaginationProps = {
   uri: string;
@@ -36,7 +36,7 @@ export const Pagination: FC<PaginationProps> = ({
       {...props}
       renderItem={(item) => (
         <PaginationItem
-          component={Link}
+          component={PaginationLink}
           href={
             item.page === 1
               ? `${firstPageLink ?? uri}`
