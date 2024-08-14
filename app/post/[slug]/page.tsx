@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getPathsToPosts, getPost } from "@/core/ssr";
 import { RoutePost } from "@/routes/Post/Route.Post";
+import { preloadOffers } from "@/components/Offer/api";
 
 type Props = {
   params: {
@@ -50,6 +51,7 @@ export const generateMetadata = async ({
 const Page = async ({ params }: Props) => {
   const { slug } = params;
 
+  preloadOffers(slug);
   const post = await getPost({ slug });
 
   if (post === null) {
@@ -58,7 +60,7 @@ const Page = async ({ params }: Props) => {
 
   return (
     <RoutePost
-      id={post.id}
+      id={slug}
       href={post.link}
       title={post.title}
       blocks={post.blocks}

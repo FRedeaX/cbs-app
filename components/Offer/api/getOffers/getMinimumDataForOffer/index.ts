@@ -12,7 +12,7 @@ import {
 /**
  * Возвращаем минимально необходимый набор данных
  * для последующих запросов на формирование предложения.
- * @param id текущей записи
+ * @param id ярлык текущей записи
  */
 export const getMinimumDataForOffer = async (id: string) => {
   const { data, error, errors } =
@@ -22,6 +22,7 @@ export const getMinimumDataForOffer = async (id: string) => {
         id,
       },
     });
+
   if (error !== undefined) throw new ApiError(500, error.message);
   if (data === undefined) throw errors;
   const { post } = data;
@@ -32,7 +33,7 @@ export const getMinimumDataForOffer = async (id: string) => {
   );
 
   return {
-    notIn: id,
+    excludedId: post.id,
     keywords: post.postsFields.keywords,
     categories: categories.nodes.map((c) => c.name).join(","),
     departments: departments.nodes.map((d) => d.name).join(","),

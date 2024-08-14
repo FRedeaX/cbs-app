@@ -1,0 +1,1 @@
+export { DynamicOfferTabs } from "./Tabs";

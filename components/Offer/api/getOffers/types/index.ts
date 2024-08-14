@@ -1,8 +1,8 @@
 import { Nullable } from "@/helpers/typings/utility-types";
 
-import { convertData } from "../utils";
+import { offerAdapter } from "../adapter";
 
-type ConvertData = Nullable<ReturnType<typeof convertData>>;
+type ConvertData = Nullable<ReturnType<typeof offerAdapter>>;
 export type ResponseOfferData = {
   similarPosts: ConvertData;
   postsByCategory: ConvertData;
