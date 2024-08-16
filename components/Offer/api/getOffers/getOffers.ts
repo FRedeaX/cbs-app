@@ -1,3 +1,5 @@
+"use server";
+
 import { searchQuery } from "@/core/elastic";
 import { SearchParams } from "@/core/elastic/type";
 import { exceptionLog } from "@/helpers";
