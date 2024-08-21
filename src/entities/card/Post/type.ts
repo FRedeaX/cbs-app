@@ -1,5 +1,5 @@
 import { Nullable } from "@/helpers/typings/utility-types";
-import { CategoryProps } from "@/components/Posts/Category/Category";
+import { CategoryItemProps } from "src/shared/ui/category";
 
 export type PostCardItem = {
   title: string;
@@ -12,6 +12,6 @@ export type PostCardItem = {
     };
   }>;
   categories?: {
-    nodes: CategoryProps["data"];
+    nodes: CategoryItemProps[];
   };
 };
