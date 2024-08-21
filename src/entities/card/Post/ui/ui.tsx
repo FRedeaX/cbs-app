@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { FC, ReactElement } from "react";
 
 import { createMarkup } from "@/helpers";
-import { Category } from "@/components/Posts/Category/Category";
 import {
   Card,
   CardContent,
@@ -17,6 +16,7 @@ import { PostCardItem } from "../type";
 
 import { PostCardExcerpt } from "./Excerpt";
 import { PostCardTitle } from "./Title";
+import { Category } from "src/shared/ui/category";
 
 export type PostCardProps = {
   data: PostCardItem;
@@ -87,7 +87,12 @@ export const PostCard: FC<PostCardProps> = ({
         {content}
         {data.categories && (
           <Box sx={{ marginTop: "auto", zIndex: 1 }}>
-            <Category data={data.categories.nodes} />
+            <Category.Container
+              items={data.categories.nodes}
+              renderItem={(item) => (
+                <Category.Item key={item.id} name={item.name} uri={item.uri} />
+              )}
+            />
           </Box>
         )}
       </CardContent>
