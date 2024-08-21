@@ -1,0 +1,46 @@
+.root {
+  position: relative;
+
+  display: inline-block;
+
+  min-width: max-content;
+  padding-top: 10px;
+
+  font-size: 12px;
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.root:last-child {
+  margin-right: 20px;
+}
+
+.root::after {
+  content: "•";
+  margin: 0 5px 0 4px;
+}
+
+.root:last-child::after {
+  content: none;
+}
+
+.root:hover .text,
+.root:focus-visible .text {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .root:hover {
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .root::after {
+    margin: 0 4px;
+  }
+}
+
+.root--cursor {
+  cursor: default;
+}

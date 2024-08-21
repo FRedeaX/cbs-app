@@ -3,15 +3,15 @@ import { FC } from "react";
 
 import { TransformBlocks } from "@/core/backend/transformBlocks/utils/type";
 
-import { Category, CategoryProps } from "../Posts/Category/Category";
 import Share from "../Share/Share";
 import Blocks from "../blocks/Blocks";
 
 import classes from "./Article.module.css";
+import { Category, CategoryItemProps } from "src/shared/ui/category";
 
 export type ArticleProps = {
   title: string;
-  categories?: CategoryProps["data"];
+  categories?: CategoryItemProps[];
   blocks: TransformBlocks[];
   /**
    * @default false
@@ -36,7 +36,17 @@ export const Article: FC<ArticleProps> = ({
       </Typography>
       {categories && (
         <div className={classes.category}>
-          <Category data={categories} className={classes["category-link"]} />
+          <Category.Container
+            items={categories}
+            renderItem={(item) => (
+              <Category.Item
+                className={classes["category-link"]}
+                key={item.id}
+                name={item.name}
+                uri={item.uri}
+              />
+            )}
+          />
         </div>
       )}
     </header>

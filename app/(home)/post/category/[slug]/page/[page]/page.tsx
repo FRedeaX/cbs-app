@@ -11,23 +11,7 @@ type Props = {
   };
 };
 
-export const generateStaticParams = () => {
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
-    return [];
-  }
-
-  return [
-    { slug: "meropriyatie", page: "2" },
-    { slug: "vyistavka", page: "2" },
-    { slug: "novosti", page: "2" },
-    { slug: "tsgb", page: "2" },
-    { slug: "tsgdb", page: "2" },
-    { slug: "filial-1", page: "2" },
-    { slug: "filial-5", page: "2" },
-    { slug: "ooefkitl", page: "2" },
-    { slug: "ibo", page: "2" },
-  ];
-};
+export const dynamic = "force-dynamic";
 
 export const generateMetadata = async ({
   params,
