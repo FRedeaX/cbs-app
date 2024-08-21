@@ -10,13 +10,7 @@ type Props = {
   };
 };
 
-export const generateStaticParams = () => {
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
-    return [];
-  }
-
-  return [{ page: "2" }];
-};
+export const dynamic = "force-dynamic";
 
 export const generateMetadata = async ({
   params,

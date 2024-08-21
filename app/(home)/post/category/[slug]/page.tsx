@@ -48,7 +48,7 @@ const Page = async ({ params }: Props) => {
   const { slug } = params;
 
   const posts = await getPostsByCategory({ slug });
-  // TODO: Выполнить поиск и предложить варианты (redirect)
+  // TODO: Выполнить поиск и предложить варианты (default page)
   if (posts === null) notFound();
 
   const name = ssrUtils.findCategoryName(posts.data[0].categories.nodes, slug);
