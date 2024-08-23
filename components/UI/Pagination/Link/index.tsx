@@ -1,7 +1,7 @@
-import { FC } from "react";
+import { forwardRef } from "react";
 
 import { Link, LinkProps } from "@/components/UI/Link/Link";
 
-export const PaginationLink: FC<LinkProps> = (props) => (
-  <Link {...props} prefetch={false} />
+export const PaginationLink = forwardRef<HTMLAnchorElement, LinkProps>(
+  (props, ref) => <Link {...props} ref={ref} prefetch={false} />,
 );
