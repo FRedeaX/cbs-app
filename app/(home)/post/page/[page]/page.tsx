@@ -10,8 +10,6 @@ type Props = {
   };
 };
 
-export const dynamic = "force-dynamic";
-
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
