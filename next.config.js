@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('next').NextConfig} */
-
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withPigment } = require("@pigment-css/nextjs-plugin");
+const { withSentryConfig: withSentry } = require("@sentry/nextjs");
 
 const alias = {
   // "@mui/base": "@mui/base/legacy",
@@ -13,6 +12,7 @@ const alias = {
 
 const transpilePackages = ["@mui/material", "@mui/lab", "@mui/icons-material"];
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
   transpilePackages,
@@ -77,4 +77,12 @@ const sentryBuildOptions = {
   disableLogger: true,
 };
 
-module.exports = withSentryConfig(nextConfig, sentryBuildOptions);
+/** @type {import('@pigment-css/nextjs-plugin').PigmentOptions} */
+const pigmentConfig = {
+  transformLibraries: ["@mui/material"],
+};
+
+const withSentryConfig = withSentry(nextConfig, sentryBuildOptions);
+const withPigmentConfig = withPigment(withSentryConfig, pigmentConfig);
+
+module.exports = withPigmentConfig;

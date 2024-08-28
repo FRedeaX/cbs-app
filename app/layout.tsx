@@ -9,6 +9,7 @@ import { Scripts } from "src/app/scripts";
 
 import { Polyfill } from "./Polyfill";
 
+import "@mui/material-pigment-css/styles.css";
 import "@/styles/styles.css";
 import "@/styles/variables/global.css";
 import "@/styles/variables/wp.css";
