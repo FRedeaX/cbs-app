@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box } from "@mui/material";
 import { FC, ReactElement } from "react";
 
 import { createMarkup } from "@/helpers";
@@ -57,7 +56,7 @@ export const PostCard: FC<PostCardProps> = ({
   );
 
   const content = slots.content || (
-    <Box
+    <div
       sx={{
         ...(lineClamp && {
           display: `-webkit-box`,
@@ -69,7 +68,7 @@ export const PostCard: FC<PostCardProps> = ({
       }}>
       {title}
       {excerpt}
-    </Box>
+    </div>
   );
 
   return (
@@ -86,14 +85,14 @@ export const PostCard: FC<PostCardProps> = ({
       <CardContent>
         {content}
         {data.categories && (
-          <Box sx={{ marginTop: "auto", zIndex: 1 }}>
+          <div sx={{ marginTop: "auto", zIndex: 1 }}>
             <Category.Container
               items={data.categories.nodes}
               renderItem={(item) => (
                 <Category.Item key={item.id} name={item.name} uri={item.uri} />
               )}
             />
-          </Box>
+          </div>
         )}
       </CardContent>
     </Card>

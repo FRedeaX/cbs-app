@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box } from "@mui/material";
 import { FC } from "react";
 
 import { Image, ImageProps } from "@/components/Image/Image";
@@ -12,7 +11,7 @@ export const CardMedia: FC<CardMediaProps> = ({
   height,
   ...props
 }) => (
-  <Box
+  <div
     sx={{
       "--image-display": `flex`,
 
@@ -20,14 +19,14 @@ export const CardMedia: FC<CardMediaProps> = ({
       flexShrink: 0,
       width: `var(--card-media-width, ${width}px)`,
     }}>
-    <Box
+    <div
       sx={{
         flexGrow: 1,
         position: "relative",
         paddingBottom: `calc(${height} / ${width} * 100%)`,
         overflow: "hidden",
       }}>
-      <Box
+      <div
         sx={{
           position: "absolute",
           width: "100%",
@@ -43,7 +42,7 @@ export const CardMedia: FC<CardMediaProps> = ({
           height={height}
           alt={alt}
         />
-      </Box>
-    </Box>
-  </Box>
+      </div>
+    </div>
+  </div>
 );

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { Card, CardContent } from "src/shared/ui";
 import { PostCardTitle } from "../Title";
 import { PostCardExcerpt } from "../Excerpt";
@@ -24,7 +24,7 @@ export const PostCardSkeleton: FC = () => (
         <Skeleton animation="wave" />
         <Skeleton animation="wave" />
       </PostCardExcerpt>
-      <Box sx={{ marginTop: "auto", zIndex: 1 }}>
+      <div sx={{ marginTop: "auto", zIndex: 1 }}>
         <Category.Container
           items={Array.from(new Array(1))}
           renderItem={(_, index) => (
@@ -37,7 +37,7 @@ export const PostCardSkeleton: FC = () => (
             </Fragment>
           )}
         />
-      </Box>
+      </div>
     </CardContent>
   </Card>
 );

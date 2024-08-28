@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC } from "react";
 
 import { Link } from "@/components/UI/Link/Link";
@@ -10,12 +10,12 @@ export type HomePosterProps = {
 };
 
 export const HomePoster: FC<HomePosterProps> = ({ posters }) => (
-  <Box sx={{ paddingY: "var(--gap)" }}>
+  <div sx={{ paddingY: "var(--gap)" }}>
     <Typography variant="sectionTitle" noWrap>
       <Link href="/poster" underline="hover" color="inherit">
         Анонсы
       </Link>
     </Typography>
     <PosterRoot posters={posters} />
-  </Box>
+  </div>
 );

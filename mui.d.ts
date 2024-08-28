@@ -1,5 +1,18 @@
 import { TypographyStyle } from "@mui/material";
 
+import type { Theme, SxProps } from "@mui/material/styles";
+
+declare global {
+  namespace React {
+    interface HTMLAttributes {
+      sx?: SxProps<Theme>;
+    }
+    interface SVGProps {
+      sx?: SxProps<Theme>;
+    }
+  }
+}
+
 declare module "@mui/material/styles" {
   interface TypographyVariants {
     sectionTitle: TypographyStyle;

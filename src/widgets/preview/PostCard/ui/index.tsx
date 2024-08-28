@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { FC } from "react";
 
 import { useGetTagQuery } from "src/entities/card/Group/api";
@@ -23,7 +23,7 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
   if (!data?.post || data.post.tags.nodes.length) return null;
 
   return (
-    <Box sx={{ "--gap": `10px` }}>
+    <div sx={{ "--gap": `10px` }}>
       <Container maxWidth="md" disableGutters>
         <PostCardList>
           <PostCard
@@ -44,6 +44,6 @@ export const PreviewPostCard: FC<PreviewPostCardProps> = ({ id }) => {
           />
         </PostCardList>
       </Container>
-    </Box>
+    </div>
   );
 };

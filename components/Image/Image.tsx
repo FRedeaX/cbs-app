@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Fade, Skeleton } from "@mui/material";
+import { Fade, Skeleton } from "@mui/material";
 import classNames from "classnames";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 import { FC, useCallback, useState, useRef, useEffect } from "react";
@@ -84,7 +84,7 @@ export const Image: FC<ImageProps> = ({
   });
 
   return (
-    <Box ref={imageRef} sx={sxRoot}>
+    <div ref={imageRef} sx={sxRoot}>
       <NextImage
         alt={alt}
         aria-hidden={!alt}
@@ -117,6 +117,6 @@ export const Image: FC<ImageProps> = ({
           </div>
         </Fade>
       )}
-    </Box>
+    </div>
   );
 };

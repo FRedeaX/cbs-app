@@ -1,12 +1,12 @@
 "use client";
 
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { Carousel, CarouselProps } from "./Carousel";
 import { CarouselProvider, CarouselProviderProps } from "./context";
 
 export const CarouselRoot: FC<
-  CarouselProps & Omit<CarouselProviderProps, "children">
+  PropsWithChildren<CarouselProps & Omit<CarouselProviderProps, "children">>
 > = ({
   children,
   sx,

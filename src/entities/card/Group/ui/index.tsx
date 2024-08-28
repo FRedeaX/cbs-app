@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { ReactElement } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
@@ -28,7 +28,7 @@ export const GroupCards = <T extends object>({
 }: GroupCardsProps<T>) => (
   <Container sx={sxContainer} maxWidth="md" disableGutters>
     {(title || description) && (
-      <Box sx={sxHeader}>
+      <div sx={sxHeader}>
         {title && (
           <Typography sx={sxTitle} variant="h3">
             {title}
@@ -39,7 +39,7 @@ export const GroupCards = <T extends object>({
             {description}
           </Typography>
         )}
-      </Box>
+      </div>
     )}
     <CarouselRoot
       sx={sxCarousel}

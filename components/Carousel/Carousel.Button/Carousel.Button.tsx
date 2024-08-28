@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import classNames from "classnames";
 import { FC, ReactNode, useCallback } from "react";
 
@@ -29,7 +29,7 @@ export const CarouselButton: FC<CarouselButtonProps> = ({
   }, [direction, onClick]);
 
   return (
-    <Box
+    <div
       className={classNames(
         classes.root,
         classes.root_visibility,
@@ -46,6 +46,6 @@ export const CarouselButton: FC<CarouselButtonProps> = ({
         aria-label={direction === "next" ? "Следующий" : "Предыдущий"}>
         {children}
       </IconButton>
-    </Box>
+    </div>
   );
 };

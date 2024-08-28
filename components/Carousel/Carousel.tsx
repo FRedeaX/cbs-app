@@ -1,6 +1,6 @@
-import { Box, BoxProps } from "@mui/material";
+import { SxProps } from "@mui/material";
 import classNames from "classnames";
-import { FC, ReactElement } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { Scroller, ScrollerProps } from "../Scroller/Scroller";
 
@@ -13,13 +13,12 @@ import { useCarousel } from "./Carousel.utils/useCarousel";
 import { useCarouselContext } from "./context";
 
 export type CarouselProps = {
-  children: ReactElement[];
-  sx?: BoxProps["sx"];
+  sx?: SxProps;
   className?: string;
   scrollerProps?: Pick<ScrollerProps, "sx" | "className">;
 } & CarouselControlsProps;
 
-export const Carousel: FC<CarouselProps> = ({
+export const Carousel: FC<PropsWithChildren<CarouselProps>> = ({
   children,
   sx,
   className,
@@ -32,7 +31,7 @@ export const Carousel: FC<CarouselProps> = ({
   const { handleOnScroll } = useCarousel();
 
   return (
-    <Box sx={sx} className={classNames(classes.root, className)}>
+    <div sx={sx} className={classNames(classes.root, className)}>
       <CarouselControls
         isButtonsOnSides={isButtonsOnSides}
         isShadow={isShadow}
@@ -48,6 +47,6 @@ export const Carousel: FC<CarouselProps> = ({
           {children}
         </div>
       </Scroller>
-    </Box>
+    </div>
   );
 };

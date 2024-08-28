@@ -1,10 +1,15 @@
-import { Box, BoxProps } from "@mui/material";
-import { FC, PropsWithChildren, MouseEventHandler } from "react";
+import { SxProps } from "@mui/system";
+import {
+  FC,
+  PropsWithChildren,
+  MouseEventHandler,
+  HTMLAttributes,
+} from "react";
 
-export type CardProps = Omit<BoxProps, "sx"> & {
+export type CardProps = Omit<HTMLAttributes<HTMLElement>, "sx"> & {
   /** Событие при нажатии на карточу. */
   onClick?: MouseEventHandler;
-  sx?: Omit<BoxProps["sx"], "flexDirection">;
+  sx?: Omit<SxProps, "flexDirection">;
 };
 
 export const Card: FC<PropsWithChildren<CardProps>> = ({
@@ -13,7 +18,7 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
   sx,
   ...props
 }) => (
-  <Box
+  <article
     sx={{
       "--typography-font-family": "var(--font-family-roboto)",
 
@@ -43,10 +48,9 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
       },
       ...sx,
     }}
-    component="article"
     onClick={onClick}
     // eslint-disable-next-line react/jsx-props-no-spreading
     {...props}>
     {children}
-  </Box>
+  </article>
 );

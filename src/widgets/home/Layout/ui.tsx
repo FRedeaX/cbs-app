@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import * as styles from "./styles";
@@ -14,15 +14,15 @@ type HomeLayoutProps = {
 export const HomeLayout: FC<HomeLayoutProps> = ({ children, slots }) => (
   <Container sx={styles.root} maxWidth="lg" disableGutters>
     {slots?.sidebarTop && (
-      <Box sx={[styles.sidebar, styles.sidebarTop]}>{slots.sidebarTop}</Box>
+      <div sx={[styles.sidebar, styles.sidebarTop]}>{slots.sidebarTop}</div>
     )}
     <Container sx={styles.post} maxWidth="md" disableGutters>
       {children}
     </Container>
     {slots?.sidebarBottom && (
-      <Box sx={[styles.sidebar, styles.sidebarBottom]} component="aside">
+      <aside sx={[styles.sidebar, styles.sidebarBottom]}>
         {slots?.sidebarBottom}
-      </Box>
+      </aside>
     )}
   </Container>
 );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import classNames from "classnames";
 import { FC } from "react";
 
@@ -40,7 +40,7 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
         </SuggestionProvider>
       </InputProvider>
 
-      <Box className={classNames(classes.body, classes[`body_${platform}`])}>
+      <div className={classNames(classes.body, classes[`body_${platform}`])}>
         <SearchAside
           className={classes.Aside}
           count={data?.hits.hits.length && data?.hits.total.value}
@@ -58,13 +58,13 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
             facet={data?.aggregations.facets.categories.buckets}
           />
         </SearchAside>
-        <Box>
-          <Box
+        <div>
+          <div
             className={classNames(classes.result, {
               [classes["result--loading"]]: isLoading,
             })}>
             <SearchResultList data={data?.hits} />
-          </Box>
+          </div>
 
           {data && data.hits.hits.length > 0 && (
             <SearchPagination
@@ -72,8 +72,8 @@ export const RouteSearch: FC<RouteSearchProps> = ({ ssrData, platform }) => {
               className={classes.Pagination}
             />
           )}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </Container>
   );
 };

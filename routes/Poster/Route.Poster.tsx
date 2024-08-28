@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { IPoster, PosterItem } from "@/components/poster/PosterItem/PosterItem";
@@ -12,15 +12,15 @@ type RoutePosterProps = {
 export const RoutePoster: FC<RoutePosterProps> = ({ posters }) =>
   posters.length ? (
     <Container maxWidth="md">
-      <Box sx={sxHeaderBox}>
+      <div sx={sxHeaderBox}>
         <Typography align="center" variant="h1">
           Анонсы
         </Typography>
-      </Box>
-      <Box sx={sxPosterListBox}>
+      </div>
+      <div sx={sxPosterListBox}>
         {posters.map((poster) => (
           <PosterItem key={poster.id} data={poster} />
         ))}
-      </Box>
+      </div>
     </Container>
   ) : null;

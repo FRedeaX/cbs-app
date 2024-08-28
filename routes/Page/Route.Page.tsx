@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
@@ -49,7 +49,7 @@ export const RoutePage: FC<RoutePageProps> = ({
       component="section"
       maxWidth="md"
       disableGutters>
-      <Box sx={sxHeaderBox}>
+      <div sx={sxHeaderBox}>
         <Typography align="center" variant="h1" gutterBottom={!!pageNumber}>
           {page.title}
         </Typography>
@@ -58,12 +58,12 @@ export const RoutePage: FC<RoutePageProps> = ({
             {pageNumber} страница
           </Typography>
         )}
-      </Box>
-      <Box sx={sxCardBox}>
+      </div>
+      <div sx={sxCardBox}>
         {childrenPage.nodes.map((item) => (
           <PostCard key={item.id} data={item} />
         ))}
-      </Box>
+      </div>
       {pagination && (
         <Pagination
           sx={sxPagination}

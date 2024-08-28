@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Container, Tab } from "@mui/material";
+import { Container, Tab } from "@mui/material";
 import { FC, SyntheticEvent, useCallback, useMemo, useState } from "react";
 
 import { Nullable } from "@/helpers/typings/utility-types";
@@ -50,7 +50,7 @@ export const OfferTabs: FC<OfferTabProps> = ({
   return (
     <Container maxWidth="md" disableGutters sx={sxOfferRoot}>
       <TabContext value={value}>
-        <Box sx={sxOfferHeader}>
+        <div sx={sxOfferHeader}>
           <TabList
             onChange={handleChange}
             variant="scrollable"
@@ -68,7 +68,7 @@ export const OfferTabs: FC<OfferTabProps> = ({
               value={TAB_CATEGORY}
             />
           </TabList>
-        </Box>
+        </div>
         {similarPosts && (
           <TabPanel value={TAB_SIMILAR} sx={sxOfferTabPanel}>
             <CarouselRoot itemMargin={5} scrollerProps={{ sx: sxScroller }}>

@@ -1,5 +1,5 @@
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import { FC, ReactNode, useState } from "react";
 
@@ -58,11 +58,11 @@ export const AsideTouch: FC<AsideTouchProps> = ({ children, count }) => {
         onOpen={() => setOpen(true)}
         open={isOpen}
         PaperProps={{ sx: sxAsidePaper }}>
-        <Box sx={sxAsideHeader} className={classes.header}>
+        <div sx={sxAsideHeader} className={classes.header}>
           <Typography component="h2" align="center" sx={sxAsideTypography}>
             Фильтры
           </Typography>
-        </Box>
+        </div>
         <Container className={classes.drawer}>{children}</Container>
         <Container sx={sxControls} className={classes.controls}>
           <FilterCleare sx={sxButtonCleare}>Сбросить</FilterCleare>

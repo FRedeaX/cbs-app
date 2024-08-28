@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 type CardContentProps = {
@@ -6,7 +5,7 @@ type CardContentProps = {
 };
 
 export const CardContent: FC<CardContentProps> = ({ children }) => (
-  <Box
+  <div
     sx={{
       display: "flex",
       flexDirection: "column",
@@ -18,5 +17,5 @@ export const CardContent: FC<CardContentProps> = ({ children }) => (
       borderStyle: "var(--card-content-border-style)",
     }}>
     {children}
-  </Box>
+  </div>
 );

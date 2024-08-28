@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import NorthWestRoundedIcon from "@mui/icons-material/NorthWestRounded";
-import { Box } from "@mui/material";
 import { FC } from "react";
 
 import { Link } from "@/components/UI/Link/Link";
@@ -29,7 +28,7 @@ export const SuggestionText: FC<SuggestionTextProps> = ({ suggestion }) => {
   const { onClickLink } = useSuggestion();
 
   return (
-    <Box sx={sxRoot} className={classes.root}>
+    <div sx={sxRoot} className={classes.root}>
       <Link
         href={suggestion._source.link}
         prefetch={false}
@@ -42,6 +41,6 @@ export const SuggestionText: FC<SuggestionTextProps> = ({ suggestion }) => {
         />
       </Link>
       <NorthWestRoundedIcon fontSize="small" color="disabled" />
-    </Box>
+    </div>
   );
 };

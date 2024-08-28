@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingButton, LoadingButtonProps } from "@mui/lab";
-import { Box, FormHelperText } from "@mui/material";
+import { FormHelperText } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FC, useCallback } from "react";
 import { object, string } from "yup";
@@ -57,7 +57,7 @@ export const EditTitleAndExcerpt: FC<EditTitleAndExcerptProps> = ({
               {(msg) => <FormHelperText error>{msg}</FormHelperText>}
             </ErrorMessage>
             <Field name="excerpt" as={InputExcerpt} />
-            <Box sx={{ marginTop: "auto" }}>
+            <div sx={{ marginTop: "auto" }}>
               <LoadingButton
                 type="submit"
                 loading={isSubmitting}
@@ -69,7 +69,7 @@ export const EditTitleAndExcerpt: FC<EditTitleAndExcerptProps> = ({
                 sx={{ marginTop: 1, ...buttonProps?.sx }}>
                 <span>{error ? "Ошибка. Повторить" : "Сохранить"}</span>
               </LoadingButton>
-            </Box>
+            </div>
           </Form>
         )}
       </Formik>

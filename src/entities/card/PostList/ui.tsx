@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 type PostCardListProps = {
@@ -6,7 +5,7 @@ type PostCardListProps = {
 };
 
 export const PostCardList: FC<PostCardListProps> = ({ children }) => (
-  <Box
+  <section
     sx={{
       "--card-margin-x": "calc(var(--gap) / 2)",
       "--card-margin-y": "calc(var(--gap) / 2)",
@@ -38,8 +37,7 @@ export const PostCardList: FC<PostCardListProps> = ({ children }) => (
       justifyContent: "center",
       paddingY: "var(--gap)",
       paddingX: "calc(var(--gap) / 2)",
-    }}
-    component="section">
+    }}>
     {children}
-  </Box>
+  </section>
 );

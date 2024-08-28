@@ -1,4 +1,4 @@
-import { BoxProps, ContainerProps, TypographyProps } from "@mui/material";
+import { ContainerProps, SxProps, TypographyProps } from "@mui/material";
 
 export const sxContainer: ContainerProps["sx"] = {
   "--transform-translate": `var(--group-cards-transform-translate, 6px)`,
@@ -17,7 +17,7 @@ export const sxContainer: ContainerProps["sx"] = {
   },
 };
 
-export const sxHeader: BoxProps["sx"] = {
+export const sxHeader: SxProps = {
   "--typography-line-height": 1.1,
 
   marginBottom: `var(--gap)`,
@@ -34,12 +34,12 @@ export const sxSubtitle: TypographyProps["sx"] = {
   color: `var(--black-80)`,
 };
 
-export const sxCarousel: BoxProps["sx"] = {
+export const sxCarousel: SxProps = {
   "@media (min-width: 961px)": {
     marginLeft: `calc(var(--gap) / 2 * -1)`,
   },
 };
 
-export const sxScroller: BoxProps["sx"] = {
+export const sxScroller: SxProps = {
   justifyContent: `center`,
 };

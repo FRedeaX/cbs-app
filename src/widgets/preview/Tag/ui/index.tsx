@@ -1,7 +1,7 @@
 "use client";
 
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { FC } from "react";
 
 import { GroupCards } from "src/entities/card/Group";
@@ -30,7 +30,7 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
   filtered.unshift(currentPost);
 
   return (
-    <Box
+    <div
       sx={{
         "--gap": `10px`,
         "--group-cards-transform-translate": 0,
@@ -73,6 +73,6 @@ export const PreviewTag: FC<PreviewTagProps> = ({ id }) => {
           />
         )}
       />
-    </Box>
+    </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC } from "react";
 
 import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
@@ -19,7 +19,7 @@ type HeroProps = {
 };
 
 export const HomeHero: FC<HeroProps> = ({ template, title, uri, data }) => (
-  <Box sx={{ paddingY: "var(--gap)" }}>
+  <div sx={{ paddingY: "var(--gap)" }}>
     <Typography variant="sectionTitle">
       <Link href={uri} underline="hover" color="inherit">
         {title}
@@ -37,5 +37,5 @@ export const HomeHero: FC<HeroProps> = ({ template, title, uri, data }) => (
         return <HeroCard key={item.id} data={item} />;
       })}
     </CarouselRoot>
-  </Box>
+  </div>
 );
