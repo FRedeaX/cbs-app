@@ -57,15 +57,17 @@ export const PostCard: FC<PostCardProps> = ({
 
   const content = slots.content || (
     <div
-      sx={{
-        ...(lineClamp && {
-          display: `-webkit-box`,
-          hyphens: `auto`,
-          overflow: `hidden`,
-          WebkitBoxOrient: `vertical`,
-          WebkitLineClamp: lineClamp,
-        }),
-      }}>
+    // TODO: pigment
+    // sx={{
+    //   ...(lineClamp && {
+    //     display: `-webkit-box`,
+    //     hyphens: `auto`,
+    //     overflow: `hidden`,
+    //     WebkitBoxOrient: `vertical`,
+    //     WebkitLineClamp: lineClamp,
+    //   }),
+    // }}
+    >
       {title}
       {excerpt}
     </div>

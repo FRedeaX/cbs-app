@@ -1,9 +1,4 @@
-import {
-  PaginationProps,
-  TypographyProps,
-} from "@mui/material";
-
-import { CardProps } from "src/shared/ui/Card/ui";
+import { PaginationProps, SxProps, TypographyProps } from "@mui/material";
 
 export const sxTitle: TypographyProps["sx"] = {
   width: "100%",
@@ -18,7 +13,7 @@ export const sxPagination: PaginationProps["sx"] = {
   margin: "calc(var(--gap) * 1.5) var(--gap)",
 };
 
-export const sxCard: CardProps["sx"] = {
+export const sxCard: SxProps = {
   "@media (min-width: 606px) and (max-width: 767px)": {
     "--card-width": "100%",
     "--card-direction": "row",

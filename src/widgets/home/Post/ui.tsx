@@ -73,9 +73,10 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
              * Добавляем стили, если карточка расположена в первой колонке и
              * за ней следует группа карточек или это последняя карточка.
              */
-            cardProps={{
-              sx: { ...(isNewRow && (isNextTag || isLastItem) && sxCard) },
-            }}
+            // TODO: pigment
+            // cardProps={{
+            //   sx: { ...(isNewRow && (isNextTag || isLastItem) && sxCard) },
+            // }}
             data={item}
             mediaPriority={index < 3}
           />

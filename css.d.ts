@@ -4,6 +4,8 @@ import { CSSProperties } from "@/helpers/typings/utility-types";
 
 declare module "csstype" {
   interface Properties extends CSSProperties {
+    "--width"?: string;
+    "--height"?: string;
     "--gap"?: string;
     "--scrollbar-width"?: string;
     "--image-max-width"?: csstype.Properties["maxWidth"];

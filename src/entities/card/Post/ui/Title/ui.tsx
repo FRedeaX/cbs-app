@@ -1,7 +1,8 @@
 import { Typography, TypographyProps } from "@mui/material";
+import { styled } from "@mui/material-pigment-css";
 import { FC } from "react";
 
-export const PostCardTitle: FC<TypographyProps> = ({ sx, ...props }) => (
+export const PostCardTitle: FC<Omit<TypographyProps, "sx">> = (props) => (
   <Typography
     variant="h3"
     sx={{
@@ -15,9 +16,7 @@ export const PostCardTitle: FC<TypographyProps> = ({ sx, ...props }) => (
       ":last-child": {
         paddingBottom: 0,
       },
-      ...sx,
     }}
-    // eslint-disable-next-line react/jsx-props-no-spreading
     {...props}
   />
 );

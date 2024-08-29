@@ -12,18 +12,22 @@ export const CardMedia: FC<CardMediaProps> = ({
   ...props
 }) => (
   <div
+    style={{
+      "--width": `${width}px`,
+      "--height": `${height}px`,
+    }}
     sx={{
       "--image-display": `flex`,
 
       display: "flex",
       flexShrink: 0,
-      width: `var(--card-media-width, ${width}px)`,
+      width: `var(--card-media-width, var(--width))`,
     }}>
     <div
       sx={{
         flexGrow: 1,
         position: "relative",
-        paddingBottom: `calc(${height} / ${width} * 100%)`,
+        paddingBottom: `calc(var(--height) / var(--width) * 100%)`,
         overflow: "hidden",
       }}>
       <div
