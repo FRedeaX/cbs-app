@@ -79,7 +79,7 @@ const sentryBuildOptions = {
 
 /** @type {import('@pigment-css/nextjs-plugin').PigmentOptions} */
 const pigmentConfig = {
-  transformLibraries: ["@mui/material"],
+  transformLibraries: ["@mui/material", "@mui/system"],
 };
 
 const withSentryConfig = withSentry(nextConfig, sentryBuildOptions);
