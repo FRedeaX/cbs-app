@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Image /> должен вернуть полный шаблон компонента (snapshot) 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1fasnog"
+  >
+    <img
+      alt=""
+      aria-hidden="true"
+      class="image"
+      data-nimg="1"
+      decoding="async"
+      height="40"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      style="color: transparent;"
+      width="40"
+    />
+  </div>
+</DocumentFragment>
+`;
