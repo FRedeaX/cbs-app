@@ -2,8 +2,8 @@
 import { CSSProperties } from "@/helpers/typings/utility-types";
 
 type GetImageBlurSvg = {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   blurDataURL: string;
   objectFit?: CSSProperties["objectFit"];
 };
