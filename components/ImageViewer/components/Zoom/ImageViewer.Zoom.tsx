@@ -184,6 +184,7 @@ export const ImageViewerZoom = forwardRef<
         let x = ox * memo[0];
         let y = oy * memo[1];
         let config = configEasing;
+        let pointerEvents: PointerEvents = "none";
 
         // Жест завершен, добавляем инерцию, если
         // не достигли границы родительского элемента
@@ -205,9 +206,10 @@ export const ImageViewerZoom = forwardRef<
           x = clamp(x, -offsetX, offsetX);
           y = clamp(y, -offsetY, offsetY);
           config = { friction: 26 * (velocity + 1) };
+          pointerEvents = "initial";
         }
 
-        api.start({ x, y, config });
+        api.start({ x, y, pointerEvents, config });
 
         return memo;
       },
@@ -247,7 +249,6 @@ export const ImageViewerZoom = forwardRef<
         let y = memo[0][1] - (mx - 1) * memo[1][1];
         let scale = s;
         let config = configEasing;
-        let pointerEvents: PointerEvents = "none";
 
         // Сохраняем положение xy, если
         // масштабирование меньше верхней границы
@@ -273,10 +274,9 @@ export const ImageViewerZoom = forwardRef<
           x = clamp(x, -offsetX, offsetX);
           y = clamp(y, -offsetY, offsetY);
           config = configSpring.gentle;
-          pointerEvents = scale > MIN_SCALE ? "none" : "initial";
         }
 
-        api.start({ x, y, scale, pointerEvents, config });
+        api.start({ x, y, scale, config });
 
         return memo;
       },
