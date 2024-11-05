@@ -2,7 +2,7 @@
   "name": "cbs-app",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start",
     "start:3001": "next start -p 3001",
@@ -41,13 +41,13 @@
     "image-size": "^1.0.1",
     "isomorphic-dompurify": "^0.18.0",
     "mongodb": "^5.5.0",
-    "next": "^14.2.9",
+    "next": "15.0.2",
     "node-fetch": "^3.2.4",
     "node-vibrant": "^3.2.1-alpha.1",
     "plaiceholder": "^2.3.0",
-    "react": "^18.3.1",
+    "react": "18.3.1",
     "react-device-detect": "^2.2.2",
-    "react-dom": "^18.3.1",
+    "react-dom": "18.3.1",
     "sharp": "^0.33.3",
     "smoothscroll-polyfill": "^0.4.4",
     "swr": "^2.2.4",
@@ -61,13 +61,13 @@
     "@types/elasticsearch": "^5.0.40",
     "@types/node": "17.0.32",
     "@types/jest": "^29.5.12",
-    "@types/react": "^18.3.3",
+    "@types/react": "18.3.12",
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/url-file-size": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "eslint": "8.15.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "12.1.6",
+    "eslint-config-next": "15.0.2",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -98,5 +98,8 @@
       "chrome 49",
       "opera 36"
     ]
+  },
+  "overrides": {
+    "@types/react": "18.3.12"
   }
 }

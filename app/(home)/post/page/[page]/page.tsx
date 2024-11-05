@@ -5,20 +5,20 @@ import { getPosts, ssrUtils } from "@/core/ssr";
 import { HomePost } from "src/widgets/home/Post";
 
 type Props = {
-  params: {
+  params: Promise<{
     page: string;
-  };
+  }>;
 };
 
-export const generateMetadata = async ({
-  params,
-}: Props): Promise<Metadata> => {
+export const generateMetadata = async (props: Props): Promise<Metadata> => {
+  const params = await props.params;
   const page = ssrUtils.parsePageNumber(params.page);
 
   return { title: `Страница ${page}` };
 };
 
-const Page = async ({ params }: Props) => {
+const Page = async (props: Props) => {
+  const params = await props.params;
   // TODO: Посчитать количество вхождений.
   if (params.page.endsWith(".css.map")) notFound();
 

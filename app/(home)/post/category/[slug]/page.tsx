@@ -5,9 +5,9 @@ import { getPostsByCategory, ssrUtils } from "@/core/ssr";
 import { HomePost } from "src/widgets/home/Post";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export const generateStaticParams = () => {
@@ -31,7 +31,7 @@ export const generateStaticParams = () => {
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
-  const { slug } = params;
+  const { slug } = await params;
 
   const posts = await getPostsByCategory({ slug }, true);
   if (posts === null) notFound();
@@ -45,7 +45,7 @@ export const generateMetadata = async ({
 };
 
 const Page = async ({ params }: Props) => {
-  const { slug } = params;
+  const { slug } = await params;
 
   const posts = await getPostsByCategory({ slug });
   // TODO: Выполнить поиск и предложить варианты (default page)

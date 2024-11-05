@@ -5,14 +5,14 @@ import { ERROR_MESSAGE } from "@/constants";
 const previewType = ["page", "post", "poster"] as const;
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     type: typeof previewType[number];
     p: Maybe<string>;
-  };
+  }>;
 };
 
-const Page = ({ searchParams }: Props) => {
-  const { type, p } = searchParams;
+const Page = async ({ searchParams }: Props) => {
+  const { type, p } = await searchParams;
   if (typeof type !== "string" || !previewType.includes(type)) {
     throw new Error(`type ${ERROR_MESSAGE.IS_NOT_STRING}`);
   }

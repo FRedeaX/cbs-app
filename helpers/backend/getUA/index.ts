@@ -17,7 +17,7 @@ export type UAPlatform = typeof UA.desktope | typeof UA.touch;
  * @returns UA
  */
 export const getUAPlatform = (
-  headers: ReturnType<typeof nextHeaders>,
+  headers: Awaited<ReturnType<typeof nextHeaders>>,
   fallback: Fallback = UA.desktope,
 ): UAPlatform => {
   if (headers.get("sec-ch-ua-mobile") === "?0") return UA.desktope;
