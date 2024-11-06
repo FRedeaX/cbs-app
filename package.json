@@ -15,10 +15,10 @@
   "dependencies": {
     "@apollo/client": "^3.6.2",
     "@elastic/elasticsearch": "^7.17.0",
-    "@emotion/cache": "^11.11.0",
-    "@emotion/react": "^11.11.3",
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
     "@emotion/server": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/styled": "^11.13.0",
     "@mui/base": "^5.0.0-beta.61",
     "@mui/icons-material": "^6.1.6",
     "@mui/lab": "^6.0.0-beta.14",
