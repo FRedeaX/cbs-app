@@ -41,10 +41,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  experimental: {
-    instrumentationHook: true,
-  },
-
   webpack: (config, { isServer }) => {
     const newConfig = config;
 
