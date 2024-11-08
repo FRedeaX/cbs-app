@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('next').NextConfig} */
-
-const { withSentryConfig } = require("@sentry/nextjs");
+import type { NextConfig } from 'next';
+import { withSentryConfig } from "@sentry/nextjs";
 
 const transpilePackages = ["@mui/material", "@mui/lab", "@mui/icons-material"];
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: "standalone",
   transpilePackages,
 
@@ -55,4 +53,4 @@ const sentryBuildOptions = {
   disableLogger: true,
 };
 
-module.exports = withSentryConfig(nextConfig, sentryBuildOptions);
+export default withSentryConfig(nextConfig, sentryBuildOptions);
