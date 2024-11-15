@@ -11,6 +11,6 @@
   --typography-font-size: 1.35rem;
 }
 
-.TableBody :global .MuiTableRow-hover:hover {
+/* .TableBody :global .MuiTableRow-hover:hover {
   background-color: var(--black-08);
-}
+} */

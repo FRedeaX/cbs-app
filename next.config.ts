@@ -1,19 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('next').NextConfig} */
-
-const { withSentryConfig } = require("@sentry/nextjs");
-
-const alias = {
-  // "@mui/base": "@mui/base/legacy",
-  "@mui/lab": "@mui/lab/legacy",
-  "@mui/material": "@mui/material/legacy",
-  // "@mui/styled-engine": "@mui/styled-engine/legacy",
-  "@mui/system": "@mui/system/legacy",
-};
+import type { NextConfig } from 'next';
+import { withSentryConfig } from "@sentry/nextjs";
 
 const transpilePackages = ["@mui/material", "@mui/lab", "@mui/icons-material"];
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: "standalone",
   transpilePackages,
 
@@ -41,20 +31,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  experimental: {
-    instrumentationHook: true,
-  },
-
-  webpack: (config, { isServer }) => {
-    const newConfig = config;
-
-    if (isServer === false) {
-      newConfig.resolve.alias = { ...config.resolve.alias, ...alias };
-    }
-
-    return newConfig;
-  },
-
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },
@@ -77,4 +53,4 @@ const sentryBuildOptions = {
   disableLogger: true,
 };
 
-module.exports = withSentryConfig(nextConfig, sentryBuildOptions);
+export default withSentryConfig(nextConfig, sentryBuildOptions);

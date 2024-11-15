@@ -5,15 +5,14 @@ import { getPostsByCategory, ssrUtils } from "@/core/ssr";
 import { HomePost } from "src/widgets/home/Post";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
     page: string;
-  };
+  }>;
 };
 
-export const generateMetadata = async ({
-  params,
-}: Props): Promise<Metadata> => {
+export const generateMetadata = async (props: Props): Promise<Metadata> => {
+  const params = await props.params;
   const { slug } = params;
 
   const page = ssrUtils.parsePageNumber(params.page);
@@ -28,7 +27,8 @@ export const generateMetadata = async ({
   };
 };
 
-const Page = async ({ params }: Props) => {
+const Page = async (props: Props) => {
+  const params = await props.params;
   const { slug } = params;
 
   const page = ssrUtils.parsePageNumber(params.page);

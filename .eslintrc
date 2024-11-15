@@ -5,6 +5,7 @@
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     "next/core-web-vitals",
+    "next/typescript",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",

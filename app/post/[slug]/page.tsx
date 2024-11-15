@@ -6,9 +6,9 @@ import { RoutePost } from "@/routes/Post/Route.Post";
 import { preloadOffers } from "@/components/Offer/api";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export const generateStaticParams = getPathsToPosts;
@@ -16,7 +16,7 @@ export const generateStaticParams = getPathsToPosts;
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
-  const { slug } = params;
+  const { slug } = await params;
 
   const post = await getPost({ slug }, true);
 
@@ -49,7 +49,7 @@ export const generateMetadata = async ({
 };
 
 const Page = async ({ params }: Props) => {
-  const { slug } = params;
+  const { slug } = await params;
 
   preloadOffers(slug);
   const post = await getPost({ slug });
