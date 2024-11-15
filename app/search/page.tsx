@@ -7,14 +7,15 @@ import { getUAPlatform } from "@/helpers/backend";
 import { UA } from "@/helpers/backend/getUA/const";
 import { RouteSearch } from "@/routes/Search";
 
-type Props = { searchParams: SearchParams };
+type Props = { searchParams: Promise<SearchParams> };
 
 export const metadata: Metadata = {
   title: "Поиск",
 };
 
-const Page = async ({ searchParams }: Props) => {
-  const headersList = headers();
+const Page = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const headersList = await headers();
   const platform = getUAPlatform(headersList, UA.touch);
 
   const ssrData = await searchQuery(searchParams);

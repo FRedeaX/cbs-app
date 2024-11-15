@@ -5,9 +5,9 @@ import { getPage, getPath } from "@/core/ssr";
 import { RoutePage } from "@/routes/Page/Route.Page";
 
 type Props = {
-  params: {
+  params: Promise<{
     pageSlug: string[];
-  };
+  }>;
 };
 
 export const generateStaticParams = getPath;
@@ -15,7 +15,7 @@ export const generateStaticParams = getPath;
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
-  const { pageSlug } = params;
+  const { pageSlug } = await params;
 
   const page = await getPage(pageSlug, true);
 
@@ -57,7 +57,7 @@ export const generateMetadata = async ({
 };
 
 const Page = async ({ params }: Props) => {
-  const { pageSlug } = params;
+  const { pageSlug } = await params;
 
   const page = await getPage(pageSlug);
 

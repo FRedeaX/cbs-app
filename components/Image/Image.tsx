@@ -12,6 +12,8 @@ import { Nullable } from "../../helpers/typings/utility-types";
 import classes from "./Image.module.css";
 import { sxRoot } from "./Image.style";
 import { getImageBlurSvg } from "./utils/getImageBlurSvg";
+import { isRendered } from "./utils/isRendered";
+import { ref } from "yup";
 
 const ANIMATION_DELAY_MS = 50;
 
@@ -30,10 +32,6 @@ export type ImageProps = {
   height: number;
 } & Omit<NextImageProps, "placeholder" | "blurDataURL" | "width" | "height">;
 
-type ImageRef = HTMLDivElement & {
-  children: [HTMLImageElement];
-};
-
 export const Image: FC<ImageProps> = ({
   blurDataURL,
   alt,
@@ -48,20 +46,12 @@ export const Image: FC<ImageProps> = ({
   const [needAnimation, setNeedAnimation] = useState(false);
   const [canRemovePlaceholder, setCanRemovePlaceholder] = useState(false);
 
-  const imageRef = useRef<Nullable<ImageRef>>(null);
-
-  const isRendered = useCallback(() => {
-    if (!imageRef.current) {
-      return false;
-    }
-    const { naturalWidth, naturalHeight } = imageRef.current.children[0];
-
-    return naturalWidth > 0 && naturalHeight > 0;
-  }, [imageRef]);
+  const imageRef = useRef<Nullable<HTMLImageElement>>(null);
 
   useEffect(() => {
+    const ref = imageRef.current;
     const timer = setTimeout(() => {
-      if (!isLoaded && !isRendered()) {
+      if (!isLoaded && ref && !isRendered(ref)) {
         setNeedAnimation(true);
       }
     }, ANIMATION_DELAY_MS);
@@ -69,7 +59,7 @@ export const Image: FC<ImageProps> = ({
     return () => {
       clearTimeout(timer);
     };
-  }, [isLoaded, isRendered, setNeedAnimation]);
+  }, [isLoaded, setNeedAnimation]);
 
   const handleOnAnimationEnd = useCallback(() => {
     setCanRemovePlaceholder(true);
@@ -86,6 +76,7 @@ export const Image: FC<ImageProps> = ({
   return (
     <div ref={imageRef} sx={sxRoot}>
       <NextImage
+        ref={imageRef}
         alt={alt}
         aria-hidden={!alt}
         src={src}
@@ -100,7 +91,10 @@ export const Image: FC<ImageProps> = ({
       />
       {blurDataURL && needAnimation && !canRemovePlaceholder && (
         <Fade in={needAnimation && !isLoaded} easing="ease" timeout={600}>
-          <div className={cnPlaceholder} onAnimationEnd={handleOnAnimationEnd}>
+          <div
+            data-testid="image-placeholder"
+            className={cnPlaceholder}
+            onAnimationEnd={handleOnAnimationEnd}>
             <div className={classes.backdrop} />
             <img
               alt=""
@@ -120,3 +114,5 @@ export const Image: FC<ImageProps> = ({
     </div>
   );
 };
+
+Image.displayName = "Image";
