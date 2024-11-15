@@ -1,14 +1,17 @@
 /* eslint-disable no-nested-ternary */
 import classNames from "classnames";
+import KeyboardArrowLeftRoundedIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 
 import { createMarkup } from "../../../helpers";
 import { ActiveLink } from "../../UI/ActiveLink/ActiveLink";
 import Button from "../../UI/Button/Button";
-import Icon from "../../UI/Icon/Icon";
 // eslint-disable-next-line import/no-cycle
 import NavList from "../NavList/NavList";
 
 import classes from "./Nav-item.module.css";
+
+const sxIcon = { display: `var(--icon-display, block)` }
 
 const NavItems = ({
   data,
@@ -29,15 +32,7 @@ const NavItems = ({
           <Button
             width="max"
             isTextCenter
-            iconLeft={
-              <Icon
-                type="arrow"
-                size="xs"
-                side="left"
-                direction="left"
-                weight="small"
-              />
-            }
+            iconLeft={ <KeyboardArrowLeftRoundedIcon sx={sxIcon} /> }
             onClick={(event) => onClick(event, true)}>
             <span
               style={{ width: "100%" }}
@@ -77,15 +72,7 @@ const NavItems = ({
                 disableHref>
                 <Button
                   width="max"
-                  iconRight={
-                    <Icon
-                      type="arrow"
-                      size="xs"
-                      side="right"
-                      direction="right"
-                      weight="small"
-                    />
-                  }
+                  iconRight={ <KeyboardArrowRightRoundedIcon sx={sxIcon} /> }
                   onClick={onClick}>
                   <span
                     className={classes.text}
