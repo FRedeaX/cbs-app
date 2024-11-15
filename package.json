@@ -97,8 +97,8 @@
   },
   "browserslist": {
     "production": [
-      "chrome 49",
-      "opera 36"
+      "chrome 109",
+      "opera 95"
     ]
   },
   "overrides": {
