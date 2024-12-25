@@ -72,7 +72,7 @@
 /*
  *  desktop
  */
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
   .menu {
     --icon-display: none;
 
@@ -111,7 +111,7 @@
 /*
  *  mobile
  */
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 1023px) {
   .menu {
     position: fixed;
     top: var(--header-mobile-height);
