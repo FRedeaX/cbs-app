@@ -55,6 +55,7 @@ export const HomePost: FC<HomePostProps> = ({ title, posts, pagination }) => {
                   key={tagItem.id}
                   data={tagItem}
                   mediaPriority={index === 0 && tagIndex < 3}
+                  mediaProps={{ multipliedSize: 1.5 }}
                 />
               )}
             />

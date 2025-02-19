@@ -1,6 +1,7 @@
-import { BoxProps, ContainerProps, TypographyProps } from "@mui/material";
+import { CSSSelectorObjectOrCssVariables } from "@mui/system";
+import { BoxProps, TypographyProps } from "@mui/material";
 
-export const sxContainer: ContainerProps["sx"] = {
+export const sxContainer: CSSSelectorObjectOrCssVariables = {
   "--transform-translate": `var(--group-cards-transform-translate, 6px)`,
 
   "--carousel-offset-y": `var(--transform-translate)`,
@@ -14,6 +15,13 @@ export const sxContainer: ContainerProps["sx"] = {
 
   "@media (max-width: 960px)": {
     width: `calc(100% + var(--gap))`,
+  },
+};
+
+export const sxContainerTwoItems: CSSSelectorObjectOrCssVariables = {
+  "@media (min-width: 606px)": {
+    "--card-width": `calc(100% / 2 - var(--gap) * 1.5)`,
+    "--card-media-width": `100%`,
   },
 };
 
@@ -34,9 +42,15 @@ export const sxSubtitle: TypographyProps["sx"] = {
   color: `var(--black-80)`,
 };
 
-export const sxCarousel: BoxProps["sx"] = {
+export const sxCarousel: CSSSelectorObjectOrCssVariables = {
   "@media (min-width: 961px)": {
     marginLeft: `calc(var(--gap) / 2 * -1)`,
+  },
+};
+
+export const sxCarouselTwoItems: CSSSelectorObjectOrCssVariables = {
+  "@media (min-width: 961px)": {
+    width: `calc(100% + var(--gap))`,
   },
 };
 
