@@ -15,7 +15,7 @@
 /*
  *  desktop
  */
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
   .body {
     border-radius: var(--submenu-border-radius);
   }
@@ -77,7 +77,7 @@
 /*
  *  mobile
  */
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 1023px) {
   .subMenu {
     z-index: 4;
     top: 0;

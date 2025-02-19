@@ -1,1 +1,1 @@
-export { CardMedia } from "./ui";
+export { CardMedia, type CardMediaProps } from "./ui";

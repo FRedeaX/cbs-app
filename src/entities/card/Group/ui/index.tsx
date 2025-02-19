@@ -7,10 +7,12 @@ import { CarouselRoot } from "@/components/Carousel/CarouselRoot";
 import {
   sxScroller,
   sxContainer,
+  sxContainerTwoItems,
   sxHeader,
   sxSubtitle,
   sxTitle,
   sxCarousel,
+  sxCarouselTwoItems,
 } from "./styles";
 
 type GroupCardsProps<T> = {
@@ -26,7 +28,10 @@ export const GroupCards = <T extends object>({
   items,
   renderItem,
 }: GroupCardsProps<T>) => (
-  <Container sx={sxContainer} maxWidth="md" disableGutters>
+  <Container
+    sx={items.length === 2 ? [sxContainer, sxContainerTwoItems] : sxContainer}
+    maxWidth="md"
+    disableGutters>
     {(title || description) && (
       <Box sx={sxHeader}>
         {title && (
@@ -42,7 +47,7 @@ export const GroupCards = <T extends object>({
       </Box>
     )}
     <CarouselRoot
-      sx={sxCarousel}
+      sx={items.length === 2 ? [sxCarousel, sxCarouselTwoItems] : sxCarousel}
       itemMargin={5}
       scrollerProps={{ sx: sxScroller }}>
       {items.map((post, index) => renderItem(post, index))}

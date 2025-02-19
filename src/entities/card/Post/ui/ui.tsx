@@ -9,6 +9,7 @@ import {
   CardLink,
   CardLinkProps,
   CardMedia,
+  CardMediaProps,
   CardProps,
 } from "src/shared/ui";
 
@@ -27,6 +28,10 @@ export type PostCardProps = {
   lineClamp?: number;
   cardProps?: Omit<CardProps, "children">;
   linkProps?: Omit<CardLinkProps, "href" | "children">;
+  mediaProps?: Omit<
+    CardMediaProps,
+    "src" | "alt" | "width" | "height" | "loading"
+  >;
   slots?: {
     title?: ReactElement;
     excerpt?: ReactElement;
@@ -40,6 +45,7 @@ export const PostCard: FC<PostCardProps> = ({
   lineClamp,
   cardProps,
   linkProps,
+  mediaProps,
   slots = {},
 }) => {
   const title = slots.title || (
@@ -76,6 +82,7 @@ export const PostCard: FC<PostCardProps> = ({
     <Card {...cardProps}>
       {data.featuredImage?.node.sourceUrl && (
         <CardMedia
+          {...mediaProps}
           src={data.featuredImage.node.sourceUrl}
           alt=""
           width={288}

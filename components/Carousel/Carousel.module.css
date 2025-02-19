@@ -11,4 +11,5 @@
 
 .itemList {
   display: flex;
+  justify-content: center; /* Для сгруппированных postCard при 2х карточках */
 }

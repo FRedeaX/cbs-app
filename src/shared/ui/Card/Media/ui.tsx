@@ -4,12 +4,19 @@ import { FC } from "react";
 
 import { Image, ImageProps } from "@/components/Image/Image";
 
-type CardMediaProps = ImageProps;
+export type CardMediaProps = ImageProps & {
+  /**
+   * Коэффициент увеличения размера изображения
+   * @default 1
+   */
+  multipliedSize?: number;
+};
 
 export const CardMedia: FC<CardMediaProps> = ({
   alt,
   width,
   height,
+  multipliedSize = 1,
   ...props
 }) => (
   <Box
@@ -39,8 +46,8 @@ export const CardMedia: FC<CardMediaProps> = ({
             width: "inherit",
             objectFit: "cover",
           }}
-          width={width}
-          height={height}
+          width={width * multipliedSize}
+          height={height * multipliedSize}
           alt={alt}
         />
       </Box>

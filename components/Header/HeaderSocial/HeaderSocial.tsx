@@ -29,6 +29,12 @@ const HeaderSocial: FC<HeaderSocialProps> = ({ className }) => (
       clsSVG={classNames([classes.svg, classes["svg--youtube"]])}
       ariaLabel="Мы на YouTube"
     />
+    <Social
+      type="litres"
+      url="https://www.litres.ru/pages/library_fund/?lib=479893632"
+      clsSVG={classes.svg}
+      ariaLabel="Литрес библиотека"
+    />
   </div>
 );
 
