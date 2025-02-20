@@ -44,7 +44,7 @@
 /*
  *  desktop
  */
-@media screen and (min-width: 1024px) {
+@media screen and (width > 1035px) {
   .li_header {
     display: none;
   }
@@ -159,7 +159,7 @@
 /*
  *  mobile
  */
-@media screen and (max-width: 1023px) {
+@media screen and (width <= 1035px) {
   .li_header {
     --button-text-align: center;
 
