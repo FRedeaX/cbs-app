@@ -29,17 +29,13 @@
 }
 
 .link:hover .svg--vk {
-  fill: #4a76a8;
+  fill: var(--brand-color-vk);
 }
 
 .link:hover .svg--ok {
-  fill: #ee8208;
+  fill: var(--brand-color-ok);
 }
 
 .link:hover .svg--youtube {
-  fill: #c00;
-}
-
-.link:hover .svg--fb {
-  fill: #4267b2;
+  fill: var(--brand-color-youtube);
 }

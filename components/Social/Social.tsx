@@ -4,7 +4,7 @@ import { FC } from "react";
 import classes from "./Social.module.css";
 
 type SocialProps = {
-  type: "youtube" | "vk" | "ok" | "fb" | "litres";
+  type: "youtube" | "vk" | "ok" | "litres";
   url: string;
   cls?: string;
   clsLink?: string;
@@ -30,13 +30,6 @@ const Social: FC<SocialProps> = ({
       <svg
         className={classNames(classes.svg, classes[`svg--${type}`], clsSVG)}
         viewBox="0 0 28 28">
-        {type === "fb" && (
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10.5 25v-9.46H7v-4.176h3.5V8.422C10.5 5.596 11.808 3 15.985 3c1.691 0 2.948.163 2.948.163V7.01h-2.712c-1.171 0-1.627.9-1.627 1.991v2.364H19l-.564 4.176h-3.842V25H10.5z"
-          />
-        )}
         {type === "vk" && (
           <path
             fillRule="evenodd"

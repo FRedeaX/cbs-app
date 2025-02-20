@@ -11,13 +11,13 @@
 }
 
 .svg--vk {
-  fill: #4a76a8;
+  fill: var(--brand-color-vk);
 }
 
 .svg--ok {
-  fill: #ee8208;
+  fill: var(--brand-color-ok);
 }
 
 .svg--youtube {
-  fill: #c00;
+  fill: var(--brand-color-youtube);
 }
