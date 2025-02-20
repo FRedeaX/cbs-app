@@ -75,6 +75,13 @@
    * Animation
    */
   --animation-ease-out: cubic-bezier(0.18, 0.24, 0.18, 0.71);
+
+  /*
+   * Фирменные цвета внеших сервисов
+   */
+  --brand-color-vk: #07f;
+  --brand-color-ok: #f70;
+  --brand-color-youtube: #f03;
 }
 
 /* HEADER_HEIGHT */
