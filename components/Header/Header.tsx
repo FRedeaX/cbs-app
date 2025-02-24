@@ -9,6 +9,7 @@ import { usePreventScroll, useToggle } from "@/helpers/frontend/hooks";
 import { CSSProperties, Nullable } from "@/helpers/typings/utility-types";
 import { Logo } from "@/components/Logo/Logo";
 import { KeyDownAwayListener } from "@/base";
+import { Banner } from "src/entities/Banner";
 
 import { HeaderSearch } from "./Header.Search/Header.Search";
 import classes from "./Header.module.css";
@@ -58,6 +59,9 @@ export const Header: FC<HeaderProps> = ({ primary, secondary }) => {
                 {primary?.length && (
                   <nav className={classes.primary}>
                     <NavList data={primary} />
+                    <div className={classes.banner}>
+                      <Banner width={346} height={36} />
+                    </div>
                   </nav>
                 )}
                 <div className={classNames(classes.secondary)}>
