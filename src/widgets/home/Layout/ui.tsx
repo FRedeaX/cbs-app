@@ -1,6 +1,7 @@
 import { Box, Container } from "@mui/material";
 import { FC, ReactNode } from "react";
 
+import { Banner } from "src/entities/Banner";
 import * as styles from "./styles";
 
 type HomeLayoutProps = {
@@ -13,6 +14,9 @@ type HomeLayoutProps = {
 
 export const HomeLayout: FC<HomeLayoutProps> = ({ children, slots }) => (
   <Container sx={styles.root} maxWidth="lg" disableGutters>
+    <Container maxWidth="md" disableGutters>
+      <Banner sx={styles.bannerMobile} width={960} height={100} />
+    </Container>
     {slots?.sidebarTop && (
       <Box sx={[styles.sidebar, styles.sidebarTop]}>{slots.sidebarTop}</Box>
     )}

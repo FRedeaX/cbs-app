@@ -15,7 +15,7 @@ export const HeaderSearch: FC = () => {
   return (
     <Link href="/search" prefetch={false} passHref legacyBehavior>
       <IconButton className={classes.button} aria-label="Найти">
-        <SearchRoundedIcon fontSize="small" />
+        <SearchRoundedIcon sx={{ fontSize: 20 }} />
       </IconButton>
     </Link>
   );

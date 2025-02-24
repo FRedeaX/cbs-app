@@ -64,3 +64,9 @@ export const sidebar: CSSSelectorObjectOrCssVariables = {
     },
   },
 };
+
+export const bannerMobile: CSSSelectorObjectOrCssVariables = {
+  "@media (max-width: 1334px)": {
+    display: "flex",
+  },
+};
