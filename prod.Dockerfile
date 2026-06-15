@@ -1,4 +1,4 @@
-FROM node:20.5.0-alpine AS base
+FROM node:lts-alpine3.23 AS base
 
 # Step 1. Rebuild the source code only when needed
 FROM base AS builder
