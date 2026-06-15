@@ -3,10 +3,10 @@
 import { FC } from "react";
 import { Box, SxProps } from "@mui/system";
 
-import ImageAnons from "@/public/Анонс-мероприятий@20241220.jpg";
-import ImageWork from "@/public/График-работы@20241220.jpg";
-import ImageAnonsFull from "@/public/Анонс-мероприятий.jpg";
-import ImageWorkFull from "@/public/График-работы.jpg";
+import ImageAnons from "@/public/Анонс-мероприятий.jpg";
+import ImageWork from "@/public/График-работы.jpg";
+import ImageAnonsFull from "@/public/Анонс-мероприятий@2026.jpg";
+import ImageWorkFull from "@/public/График-работы@2026.jpg";
 import { useToggle } from "@/helpers/frontend/hooks";
 import { Image } from "@/components/Image";
 import {
@@ -36,7 +36,7 @@ export const Promo: FC<PromoProps> = ({ sx }) => {
       <Box sx={styles.inner}>
         <ImageViewerButton onClick={setToggleWork}>
           <Image
-            width={475}
+            width={960}
             height={100}
             src={ImageWork}
             alt={altWork}
@@ -51,8 +51,8 @@ export const Promo: FC<PromoProps> = ({ sx }) => {
                 <Image
                   alt={altWork}
                   src={ImageWorkFull}
-                  width={3000}
-                  height={1561}
+                  width={1920}
+                  height={1080}
                   loading="lazy"
                 />
               </ImageViewerZoom>
@@ -64,7 +64,7 @@ export const Promo: FC<PromoProps> = ({ sx }) => {
       <Box sx={styles.inner}>
         <ImageViewerButton onClick={setToggleAnons}>
           <Image
-            width={475}
+            width={960}
             height={100}
             src={ImageAnons}
             alt={altAnons}
@@ -79,8 +79,8 @@ export const Promo: FC<PromoProps> = ({ sx }) => {
                 <Image
                   alt={altAnons}
                   src={ImageAnonsFull}
-                  width={3000}
-                  height={1500}
+                  width={6912}
+                  height={3456}
                   loading="lazy"
                 />
               </ImageViewerZoom>

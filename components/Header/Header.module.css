@@ -65,13 +65,13 @@
   width: 100%;
 }
 
-@media screen and (width < 1335px) {
+/* @media screen and (width < 1335px) {
   .banner {
     --image-border-radius: 8px;
 
     display: none;
   }
-}
+} */
 
 .secondary {
   display: flex;

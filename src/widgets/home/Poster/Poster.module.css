@@ -1,0 +1,5 @@
+@media screen and (width < 606px) {
+  .itemList {
+    width: 100%;
+  }
+}

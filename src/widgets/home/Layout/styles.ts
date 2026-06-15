@@ -65,8 +65,28 @@ export const sidebar: CSSSelectorObjectOrCssVariables = {
   },
 };
 
-export const bannerMobile: CSSSelectorObjectOrCssVariables = {
-  "@media (max-width: 1334px)": {
-    display: "flex",
-  },
-};
+// export const bannerMobile: CSSSelectorObjectOrCssVariables = {
+//   "@media (max-width: 1334px)": {
+//     display: "flex",
+//   },
+// };
+
+// export const promoMobile: SxProps = {
+//   "@media (min-width: 1335px)": {
+//     display: "none",
+//   },
+
+//   "@media (max-width: 1334px)": {
+//     display: "flex",
+//   },
+// };
+
+// export const promoDesktope: SxProps = {
+//   "@media (min-width: 1335px)": {
+//     display: "flex",
+//   },
+
+//   "@media (max-width: 1334px)": {
+//     display: "none",
+//   },
+// };
