@@ -1,5 +1,5 @@
-// This file configures the initialization of Sentry on the client.
-// The config you add here will be used whenever a users loads a page in their browser.
+// Инициализация Sentry на клиенте.
+// Выполняется при загрузке страницы в браузере.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
@@ -17,3 +17,6 @@ Sentry.init({
   debug: false,
   enabled,
 });
+
+// Трассировка переходов между страницами App Router
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

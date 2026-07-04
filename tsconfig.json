@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -9,10 +13,10 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -20,18 +24,40 @@
       }
     ],
     "baseUrl": ".",
-    "types": ["@testing-library/jest-dom"],
+    "types": [
+      "@testing-library/jest-dom"
+    ],
     "paths": {
-      "@/base": ["base"],
-      "@/components/*": ["components/*"],
-      "@/constants": ["constants"],
-      "@/core/*": ["core/*"],
-      "@/helpers": ["helpers"],
-      "@/helpers/*": ["helpers/*"],
-      "@/lib/*": ["lib/*"],
-      "@/public/*": ["public/*"],
-      "@/routes/*": ["routes/*"],
-      "@/styles/*": ["styles/*"]
+      "@/base": [
+        "base"
+      ],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/constants": [
+        "constants"
+      ],
+      "@/core/*": [
+        "core/*"
+      ],
+      "@/helpers": [
+        "helpers"
+      ],
+      "@/helpers/*": [
+        "helpers/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/public/*": [
+        "public/*"
+      ],
+      "@/routes/*": [
+        "routes/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ]
     }
   },
   "include": [
@@ -40,7 +66,10 @@
     "**/*.tsx",
     "jest.config.ts",
     "types.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

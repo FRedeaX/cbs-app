@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable react/jsx-props-no-spreading */
 import { Link as MUILink, LinkProps as MUILinkProps } from "@mui/material";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";

@@ -27,10 +27,6 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/webp"],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   // async redirects() {
   //   return redirect([...redirectRoutes], "/");
   // },
@@ -47,10 +43,10 @@ const sentryBuildOptions = {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
   widenClientFileUpload: true,
-  transpileClientSDK: true,
   tunnelRoute: "/monitoring",
-  hideSourceMaps: false,
-  disableLogger: true,
+
+  // Урезание логгера Sentry (webpack.treeshake.removeDebugLogging)
+  // не поддерживается Turbopack, поэтому опция не задаётся
 };
 
 export default withSentryConfig(nextConfig, sentryBuildOptions);
