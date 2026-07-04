@@ -25,6 +25,9 @@ export type PostFieldsGQL = {
   };
   excerpt: string;
   featuredImage: Nullable<Image>;
+  posterSocial: {
+    vk: Nullable<Image>;
+  };
 };
 
 export type PostListQuery = {
@@ -69,6 +72,14 @@ export const postFieldsGQL = {
         node {
           databaseId
           sourceUrl(size: THUMBNAIL)
+        }
+      }
+      posterSocial {
+        vk {
+          node {
+            databaseId
+            sourceUrl(size: LARGE)
+          }
         }
       }
     }

@@ -29,8 +29,12 @@ export const generateMetadata = async ({
     excerpt: description,
     link: url,
     featuredImage,
+    posterSocial,
     videos,
   } = post;
+
+  const imageUrl =
+    posterSocial.vk?.node.sourceUrl ?? featuredImage?.node.sourceUrl;
 
   return {
     title,
@@ -40,8 +44,8 @@ export const generateMetadata = async ({
       description,
       url,
       type: "article",
-      ...(featuredImage && {
-        images: [{ url: featuredImage.node.sourceUrl }],
+      ...(imageUrl && {
+        images: [{ url: imageUrl }],
       }),
       videos,
     },
@@ -58,6 +62,9 @@ const Page = async ({ params }: Props) => {
     notFound();
   }
 
+  const imageUrl =
+    post.posterSocial.vk?.node.sourceUrl ?? post.featuredImage?.node.sourceUrl;
+
   return (
     <RoutePost
       id={slug}
@@ -65,7 +72,7 @@ const Page = async ({ params }: Props) => {
       title={post.title}
       blocks={post.blocks}
       categories={post.categories.nodes}
-      imageUrl={post.featuredImage?.node.sourceUrl}
+      imageUrl={imageUrl}
     />
   );
 };
